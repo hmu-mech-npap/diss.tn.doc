@@ -12,6 +12,7 @@ ssh-keygen -b 4096
 ** ssh agend
 #+begin_src bash
 
+eval $(ssh-agent)
 
-
+ssh-add path/to/key
 #+end_src
