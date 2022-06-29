@@ -1,0 +1,30 @@
+* Tasks
+** TODO Find emacs keybindings.
+** TODO HOW TO PREVIEW ????
+** TODO see how to preview some stuff in org agenda mode
+SCHEDULED: <2022-06-19 Κυρ 21:00>
+    + You should move to ~/org/
+    + spc-m-d-s opens schedule
+    + spc-m-t-t marks as "todo"
+    + shift-arrows on the date to move to next date
+** TODO checkboxes org mode [2/4]
+1. [X] and after ctl-ret adds new
+2. [X] hell yeahh
+3. [ ] adding "[ / ]" with no spaces i get counting
+
+
+** PROJ org agenda stuff [0/2]
+SCHEDULED: <2022-06-20 Δευ 23:00>
+
+- [ ] see projects vs todo stuff
+- [ ]
+
+* Sould do tis every day
+** EVERY DAY STUFF [0/4]
+SCHEDULED: <2022-06-20 Δευ ++1d>
+1. [ ] clean UP
+2. [ ] wash dish
+3. [ ] tools and the room
+
+* github token for forge
+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
