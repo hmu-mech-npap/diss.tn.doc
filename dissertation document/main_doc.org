@@ -231,10 +231,46 @@ In the present case study the aim is to find a way to filter Electromagnetic Int
 As examined with rasing the sampling frequency a surtain amount of noise is imported with distinguishable distortion of the original signal. This could be avoided by reduction of the sampling frequency, but this will introduce Aliasing effect. This was observed when a last recording of the signal with the wind tunnel and were appearing to be less affected than the compressed air measurements. #NOTE Add to the description the reason for
 
 *** UNIV Laboratory setup and measurement tools
-- Setup
+**** Setup
   The idea is to measure Wind speed produced from a large fan inlet inside contained environment to control the direction. After that a wide-angle and a matrix like (setting chamber) diffusers are used for the even distribution of air flow. At the last section there is a contraction section for regulating the area of the test section. This is due to construction size and lab space. ??????????
 
 
 A [[file:~/Pictures/Wind_Tunnel_setup_lab.png][diagram]]
 
-  The
+**** Equipment
+
+***** Wind sensor
+The measurements used in this case study were taken from a differential pressure transduser with the details bellow
+#+title: Device details
+:MODEL: Delta Ohm HD408T
+:WORK_PRINCIPLE: Differential pressure transduser
+:RANGE: 0-10 mbar
+:RESISTANCE: 330 Ω
++ This device is connected with a NI USB-6353 (with optocouplers and max. rate 1.5 MS/s).
+
+
+***** Data collection and analysis
+
+****** Signal Process
+
+The post-process is implemented with basic DSP python libraries and there was also developed a custom library for ease of analysis of surtain datatype files such as .h5 and .tdms and signal processing.
+
+- Filtering method
+  + IIR
+    Those types are more likely to consume more processing power and RAM usage but are really really fast and reliable. They introduce some delay if applied but if the phase shift is not a big deal for the data i.e. some generally stable dc measurement but with frequency fluctuations and the signal will be studied in frequency domain. That example is not the case when the signal measured is A.C..
+  + FIR
+    This method is fundamentaly different because
+  + MEDIAN
+
+- Filter type
+  + Butterworth
+  + Bessel
+  + Chebbyshev
+  + Eliptic
+****** Reording software
+
+The data are collected with LabView as a recording program. Here need more info from Papadaki......
+
+
+
+***** Other measuring devices
