@@ -221,3 +221,20 @@ is called energy density spectrum, since it determines how the energy density is
 [[file:~/Downloads/descrete domain signal book.pdf::743]]
 
 *** Sampling in Time and Frequency
+
+* Laboratory case study
+
+** General idea and method
+*** Intro
+In the present case study the aim is to find a way to filter Electromagnetic Interference at 10-20 kHz via digital signal processing (DSP). The reason for choosing a post-process filtering is the ability to create a system agnopstic processing that could be implemented accross platforms and construction standards. The main goal is to remove those frequencies and find a best way for filtering this particular type of distortion.
+
+As examined with rasing the sampling frequency a surtain amount of noise is imported with distinguishable distortion of the original signal. This could be avoided by reduction of the sampling frequency, but this will introduce Aliasing effect. This was observed when a last recording of the signal with the wind tunnel and were appearing to be less affected than the compressed air measurements. #NOTE Add to the description the reason for
+
+*** UNIV Laboratory setup and measurement tools
+- Setup
+  The idea is to measure Wind speed produced from a large fan inlet inside contained environment to control the direction. After that a wide-angle and a matrix like (setting chamber) diffusers are used for the even distribution of air flow. At the last section there is a contraction section for regulating the area of the test section. This is due to construction size and lab space. ??????????
+
+
+A [[file:~/Pictures/Wind_Tunnel_setup_lab.png][diagram]]
+
+  The
