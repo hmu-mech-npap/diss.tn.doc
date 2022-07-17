@@ -259,7 +259,8 @@ The post-process is implemented with basic DSP python libraries and there was al
   + IIR
     Those types are more likely to consume more processing power and RAM usage but are really really fast and reliable. They introduce some delay if applied but if the phase shift is not a big deal for the data i.e. some generally stable dc measurement but with frequency fluctuations and the signal will be studied in frequency domain. That example is not the case when the signal measured is A.C..
   + FIR
-    This method is fundamentaly different because
+    This method is fundamentaly different in respect to IIR but the ability to manage large datasets with accuracy allthow is present it is not optimized and takes a lot of time. In opposition the frequency response is very good for EMI due to easy delay elimination with a simple equation.
+    [[~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::468]]
   + MEDIAN
 
 - Filter type
@@ -270,6 +271,10 @@ The post-process is implemented with basic DSP python libraries and there was al
 ****** Reording software
 
 The data are collected with LabView as a recording program. Here need more info from Papadaki......
+
+Here the signal is transfered via Telecommunication cable for minimizing the system file.
+
+Εδώ η ιδέα είναι να εξηγηθεί λίγο η επεξεργασία που γίνεται από το λαμπβιου για λόγους αναφοράς.
 
 
 
