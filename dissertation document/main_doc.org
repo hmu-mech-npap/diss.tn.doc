@@ -1,3 +1,6 @@
+#+TITLE: Dissertation
+#+AUTHOR: Nickolas Torosian ,Nikos Papadakis
+#+LANGUAGE: en
 * The signal theory
 ** Discrete time signals
 
@@ -222,6 +225,7 @@ is called energy density spectrum, since it determines how the energy density is
 
 *** Sampling in Time and Frequency
 
+
 * Laboratory case study
 
 ** General idea and method
@@ -273,9 +277,11 @@ The post-process is implemented with basic DSP python libraries and there was al
 The data are collected with LabView as a recording program. Here need more info from Papadaki......
 
 Here the signal is transfered via Telecommunication cable for minimizing the system file.
+#+begin_src org :lang gr
+Εδώ η ιδέα είνε να εξηγηθεί λίγο η επεξεργασία που γίνεται από το λαμπβιου για λόγους αναφωράς.
+#+end_src
 
-Εδώ η ιδέα είναι να εξηγηθεί λίγο η επεξεργασία που γίνεται από το λαμπβιου για λόγους αναφοράς.
-
-
+#+RESULTS:
+: Εδώ η ιδέα είναι να εξηγηθεί λίγο η επεξεργασία που γίνεται από το λαμπβιου για λόγους αναφv
 
 ***** Other measuring devices
