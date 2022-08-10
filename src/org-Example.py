@@ -1,3 +1,5 @@
+print ("Hallo world!")
+
 from pathlib import Path
 from matplotlib import pyplot as plt
 import scipy.signal as signal
@@ -9,7 +11,8 @@ import nptdms
 
 
 import pros_noisefiltering as pnf
-from pros_noisefiltering.gen_functions import spect,plot_spect_comb2
+from pros_noisefiltering.gen_functions import (spect,plot_spect_comb2,plot_FFT,
+                                               Signals_for_fft_plot, Fft_Plot_info, Axis_titles)
 
 from pros_noisefiltering.WT_NoiProc import WT_NoiseChannelProc
 from pros_noisefiltering.Graph_data_container import Graph_data_container
@@ -159,15 +162,15 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(l_tdms_Inv[5][GROUP_NAME][CHAN_NAME]
 
 # here the plots are comparing the raw signals.
 # First plot is with the inverter state off and on and ws 0
-f, yin,yout = fft_sig([fft_calc_sig(dfi_i0_w0.data,
+f, yin,yout = pnf.gen_functions.fft_sig([pnf.gen_functions.fft_calc_sig(dfi_i0_w0.data,
                                             dfi_i1_w0.data, label="inv on")])
 
 # here the inverter is on and the ws is 5, 10 (1st and 2nd graph respectively)
-f1, yin1,yout1 = fft_sig([fft_calc_sig(dfi_i1_w5.data,
+f1, yin1,yout1 = pnf.gen_functions.fft_sig([pnf.gen_functions.fft_calc_sig(dfi_i1_w5.data,
                                             dfi_i1_w10.data, label="inv on")])
 
 # here the inverter is on and the ws is 15, 20 (1st and 2nd graph respectively)
-f2, yin2,yout2 = fft_sig([fft_calc_sig(dfi_i1_w15.data,
+f2, yin2,yout2 = pnf.gen_functions.fft_sig([pnf.gen_functions.fft_calc_sig(dfi_i1_w15.data,
                                             dfi_i1_w20.data, label="inv on")])
 
 
@@ -197,15 +200,13 @@ plt.show()
 
 
 
+from numpy.fft import fft, ifft
 Sr = len(dfi_i1_w0.data_as_Series.index)
 dt = 1 / int(Sr)
 print (f"The time interval of the measurement is:\n{dt}")
 
 time_s = np.arange(0,7,dt)
 print(f"The time array is: \n {time_s}")
-
-plt.rcParams ['figure.figsize'] =[16,12]
-plt.rcParams.update ({'font.size': 18})
 
 n= len(time_s)
 fhat = fft(dfi_i1_w0.data,n)                              # compute fft
@@ -214,6 +215,10 @@ freq = (1/(dt*n)) * np.arange(n)             # create x-axis (frequencies)
 L = np.arange(1,np.floor(n/2),dtype=int)     # plot only first half (possitive
 
 print(f"This is the length of the time array and should be = 2_650_000 >< no {n}")
+
+plt.rcParams ['figure.figsize'] =[16,12]
+plt.rcParams.update ({'font.size': 18})
+
 fig, axs = plt.subplots(2,1)
 
 plt.sca(axs[0])
@@ -227,3 +232,47 @@ plt.yscale('log')
 plt.xscale('log')
 plt.show()
 print (df_tdms_1_0.data_as_Series, df_tdms_1_0.data)
+
+
+
+from numpy.fft import fft, ifft
+#%%
+# TODO Make this in a class with functions so there is no problem with migrating
+# this fft algorithm to pypkg and remove duplicate code (redundancy)
+#
+class FFT_new:
+    def __init__(self, signal):
+        self.sr = signal.fs_Hz
+        self.sig = signal.data
+        self.ind = signal.data_as_Series.index
+        self.dt = 1/ int(self.sr)
+        self.time_sec = self.ind * self.dt
+
+
+    def fft_calc_and_plot(self):
+        n= len(self.time_sec)
+        fhat = fft(self.sig,n)                 # compute fft
+        PSD = fhat * np.conj(fhat) / n               # Power spectrum (power/freq)
+        freq = (1/(self.dt*n)) * np.arange(n)             # create x-axis (frequencies)
+        L = np.arange(1,np.floor(n/2),dtype=int)     # plot only first half (possitive)
+
+        fig, axs = plt.subplots(2,1)
+
+        plt.sca(axs[0])
+        plt.grid('both')
+        plt.title('Time domain of raw signal')
+        plt.xlabel('Time [s]')
+        plt.ylabel('Amplitute (Voltage)')
+        plt.plot(self.time_sec ,self.sig)
+        #plt.loglog(freq[L],(PSD[L]))
+
+        plt.sca(axs[1])
+        plt.loglog(freq[L],abs(PSD[L]))
+        plt.title('Frequency domain')
+        plt.xlabel('Frequencies [Hz]')
+        plt.ylabel('Power/Freq')
+        plt.grid('both')
+        plt.show()
+
+# Sample usage for plotting
+FFT_new(dfi_i0_w0).fft_calc_and_plot()

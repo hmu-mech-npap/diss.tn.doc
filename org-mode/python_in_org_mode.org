@@ -1,5 +1,5 @@
 #+TITLE: Example in org mode
-#+PROPERTY: header-args :tangle ~/Documents/org/org-Example.py
+#+PROPERTY: header-args :tangle ~/Documents/dissertation/org-docs/src/org-Example.py
 #+STARTUP: showeverything
 #+AUTHOR: Nikos Papadakis, Nikolas Torosian
 
@@ -7,7 +7,14 @@
 
 ** Importing custom functions from new package pros_noisefiltering
 
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes
+print ("Hallo world!")
+#+end_src
+
+#+RESULTS:
+: Hallo world!
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 
 from pathlib import Path
 from matplotlib import pyplot as plt
@@ -20,14 +27,16 @@ import nptdms
 
 
 import pros_noisefiltering as pnf
-from pros_noisefiltering.gen_functions import spect,plot_spect_comb2
+from pros_noisefiltering.gen_functions import (spect,plot_spect_comb2,plot_FFT,
+                                               Signals_for_fft_plot, Fft_Plot_info, Axis_titles)
 
 from pros_noisefiltering.WT_NoiProc import WT_NoiseChannelProc
 from pros_noisefiltering.Graph_data_container import Graph_data_container
 #+end_src
 
 #+RESULTS:
-: None
+:results:
+:end:
 
 
 * This file is for comparing the spectrum of a filtered time series
@@ -38,7 +47,7 @@ from pros_noisefiltering.Graph_data_container import Graph_data_container
 
 
 *** Extra functions
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 def apply_filter(ds:np.ndarray, fs_Hz:float, fc_Hz = 100, filt_order = 2 ):
                  # filter cutoff frequency
     sos = signal.butter(filt_order , fc_Hz, 'lp', fs=fs_Hz, output='sos')
@@ -49,12 +58,14 @@ def apply_filter(ds:np.ndarray, fs_Hz:float, fc_Hz = 100, filt_order = 2 ):
 #+end_src
 
 #+RESULTS:
+:results:
+:end:
 
 
 *** Compressed air measurements from june
 **** Constant directories and names for the .tdms file structure
 
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 FOLDER_FOR_DATA = Path('/mnt/data_folder')/'measurements_12_05_22/new_record_prop_channel/'
 if not FOLDER_FOR_DATA.exists():
     FOLDER_FOR_DATA = Path('D:/_data/WEL/WEL20220512/')
@@ -62,10 +73,15 @@ if not FOLDER_FOR_DATA.exists():
 TDMS_FNAME = 'Data.tdms'
 #+end_src
 
+#+RESULTS:
+:results:
+:end:
+
 
 **** Compressed air measurements folder names for the path
 ***** Here the folder path is adjusted to use the compressed air measurements.
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
+
 # Dir names for the Compressed air measurment
 comp_air_dir = 'compressed air'
 
@@ -86,8 +102,13 @@ raw_signal_CA = [data_CA_inv_0_WS_0, data_CA_inv_0_WS_5,
                 data_CA_inv_1_WS_5, data_CA_inv_1_WS_10 ]
 #+end_src
 
+#+RESULTS:
+:results:
+:end:
+
 ***** Initiate an object for the tdms files for the compressed air
-#+begin_src python
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 tdms_raw_CA = []
 
 for item in raw_signal_CA:
@@ -100,8 +121,12 @@ CHAN_NAME = 'Wind2'
 
 #+end_src
 
+#+RESULTS:
+:results:
+:end:
+
 ***** Objects with attributes from WT_NoiseChannelProc class
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 
 df_tdms_0_0 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[0][GROUP_NAME][CHAN_NAME]
                 , desc= 'Inverter off, WS=0')
@@ -118,6 +143,8 @@ df_tdms_1_10 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[5][GROUP_NAME][CHAN_NAM
 #+end_src
 
 #+RESULTS:
+:results:
+:end:
 
 
 **** Plots for comparison and future work for this file
@@ -130,7 +157,7 @@ df_tdms_1_10 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[5][GROUP_NAME][CHAN_NAM
 
 
 ***** Plot the power spectral density of the butterworth and the FIR combined with raw signal for comparison
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 fc_Hz=2000
 plot_spect_comb2([df_tdms_0_0.calc_spectrum(),
                 df_tdms_1_0.calc_spectrum(),
@@ -167,6 +194,11 @@ plt.show()
 #+end_src
 
 #+RESULTS:
+:results:
+[[file:./.ob-jupyter/022e0f1ff1fdfc3ce446c7715bd3e46a0cc93944.png]]
+[[file:./.ob-jupyter/531e29742f85e801fec9630298b4e537aafa1ac8.png]]
+[[file:./.ob-jupyter/64c16da2e8002b4bab418c9bd63fe9e0bab7e23b.png]]
+:end:
 
 
 
@@ -175,7 +207,7 @@ plt.show()
 
 **** folder structure for inverter measurements
 
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 #%% CONSTANTS
 FIGSIZE_STD = (6,6)
 #Constant directories and names for the .tdms file structure
@@ -219,9 +251,21 @@ for item in raw_signal_CA:
 
 #+end_src
 
+#+RESULTS:
+:results:
+: <TdmsChannel with path /'Wind Measurement'/'Torque'>
+: <TdmsChannel with path /'Wind Measurement'/'Drag'>
+: <TdmsChannel with path /'Wind Measurement'/'Wind1'>
+: <TdmsChannel with path /'Wind Measurement'/'Wind2'>
+|---|
+|---|
+|---|
+|---|
+:end:
+
 **** Construction of objecs for ease of analysis
 
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 
 dfi_i0_w0 = WT_NoiseChannelProc.from_tdms(l_tdms_Inv[0][GROUP_NAME][CHAN_NAME]
                 , desc= 'Inverter Off, WS=0, 100kHz')
@@ -238,6 +282,10 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(l_tdms_Inv[5][GROUP_NAME][CHAN_NAME]
 
 #+end_src
 
+#+RESULTS:
+:results:
+:end:
+
 **** Signal in frequency domain
 ***** My first fft approach
 - Here the algorithm used for calculating the freq bandwidth and plotting the signal in frequency domain is a black box and sould be replaced with something more reliable.
@@ -246,19 +294,19 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(l_tdms_Inv[5][GROUP_NAME][CHAN_NAME]
  
 ****** Calculation of fft for 2 signals with first approach
 
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 
 # here the plots are comparing the raw signals.
 # First plot is with the inverter state off and on and ws 0
-f, yin,yout = fft_sig([fft_calc_sig(dfi_i0_w0.data,
+f, yin,yout = pnf.gen_functions.fft_sig([pnf.gen_functions.fft_calc_sig(dfi_i0_w0.data,
                                             dfi_i1_w0.data, label="inv on")])
 
 # here the inverter is on and the ws is 5, 10 (1st and 2nd graph respectively)
-f1, yin1,yout1 = fft_sig([fft_calc_sig(dfi_i1_w5.data,
+f1, yin1,yout1 = pnf.gen_functions.fft_sig([pnf.gen_functions.fft_calc_sig(dfi_i1_w5.data,
                                             dfi_i1_w10.data, label="inv on")])
 
 # here the inverter is on and the ws is 15, 20 (1st and 2nd graph respectively)
-f2, yin2,yout2 = fft_sig([fft_calc_sig(dfi_i1_w15.data,
+f2, yin2,yout2 = pnf.gen_functions.fft_sig([pnf.gen_functions.fft_calc_sig(dfi_i1_w15.data,
                                             dfi_i1_w20.data, label="inv on")])
 
 
@@ -276,9 +324,13 @@ ws_list = ['ws-0','ws-5/10','ws-15/20']
 
 #+end_src
 
+#+RESULTS:
+:results:
+:end:
+
 ****** Plots of raw signals in frequency domain
 
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 
 for item,descr_sig in zip(data_list,ws_list):
     plot_FFT([Signals_for_fft_plot(freq=item[0], sig1=item[1], sig2= item[2]),],
@@ -296,9 +348,16 @@ plt.show()
 
 #+end_src
 
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/f0c44cb2dbe773f38ae3bf2b9fd37675a1c50544.png]]
+[[file:./.ob-jupyter/a1ab6b6e1fad10c1f77b3b508ca975d25fa40c0b.png]]
+[[file:./.ob-jupyter/f9621ad8fde4c5d7af8f00a30359d52258af11af.png]]
+:end:
+
 ****** TODO POWER SPECTRAL DENCITY
 
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 
 
 
@@ -312,7 +371,9 @@ reference : https://www.youtube.com/watch?v=s2K1JfNR7Sc
 
 ****** Time information (interval and array)
 
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
+
+from numpy.fft import fft, ifft
 Sr = len(dfi_i1_w0.data_as_Series.index)
 dt = 1 / int(Sr)
 print (f"The time interval of the measurement is:\n{dt}")
@@ -321,9 +382,18 @@ time_s = np.arange(0,7,dt)
 print(f"The time array is: \n {time_s}")
 #+end_src
 
+#+RESULTS:
+:results:
+: The time interval of the measurement is:
+: 1.8518518518518519e-06
+: The time array is:
+:  [0.00000000e+00 1.85185185e-06 3.70370370e-06 ... 6.99999444e+00
+:  6.99999630e+00 6.99999815e+00]
+:end:
+
 ****** FFT algorithm
 
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 
 n= len(time_s)
 fhat = fft(dfi_i1_w0.data,n)                              # compute fft
@@ -335,9 +405,14 @@ print(f"This is the length of the time array and should be = 2_650_000 >< no {n}
 
 #+end_src
 
-****** Plot of raw signal in frequency domain
+#+RESULTS:
+:results:
+: This is the length of the time array and should be = 2_650_000 >< no 3780000
+:end:
 
-#+begin_src python
+****** Plot with errors of raw signal in frequency domain
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 plt.rcParams ['figure.figsize'] =[16,12]
 plt.rcParams.update ({'font.size': 18})
 
@@ -357,11 +432,91 @@ print (df_tdms_1_0.data_as_Series, df_tdms_1_0.data)
 
 #+end_src
 
+#+RESULTS:
+:results:
+: /usr/lib/python3.10/site-packages/matplotlib/cbook/__init__.py:1298: ComplexWarning: Casting complex values to real discards the imaginary part
+:   return np.asarray(x, float)
+[[file:./.ob-jupyter/8aad75b1bb0eed54a45b5cdc279ebd7298af81f2.png]]
+#+begin_example
+0          1.620280
+1          1.618670
+2          1.616738
+3          1.616094
+4          1.619314
+             ...
+3099995    1.629619
+3099996    1.618992
+3099997    1.624788
+3099998    1.618348
+3099999    1.622534
+Name: Wind2:raw, Length: 3100000, dtype: float64 [1.62028023 1.61867018 1.61673812 ... 1.62478838 1.61834817 1.6225343 ]
+#+end_example
+:end:
+
 ****** TODO POWER SPECTRAL DENCITY
 
-#+begin_src python
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 
 
 
 
 #+end_src
+
+****** DONE Add proper implementation of new algorithm for our case
+CLOSED: [2022-08-10 Τετ 11:53]
+This is added because of /aliasing effect/ and some initial problems that occured during comparison between the wind tunnel measurements and the Compressed Air.
++ The class FFT_new is taking advantage of the constructed object here the "signal" with some information derived straight from the above process.
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer
+
+from numpy.fft import fft, ifft
+#%%
+# TODO Make this in a class with functions so there is no problem with migrating
+# this fft algorithm to pypkg and remove duplicate code (redundancy)
+#
+class FFT_new:
+    def __init__(self, signal):
+        self.sr = signal.fs_Hz
+        self.sig = signal.data
+        self.ind = signal.data_as_Series.index
+        self.dt = 1/ int(self.sr)
+        self.time_sec = self.ind * self.dt
+
+
+    def fft_calc_and_plot(self):
+        n= len(self.time_sec)
+        fhat = fft(self.sig,n)                 # compute fft
+        PSD = fhat * np.conj(fhat) / n               # Power spectrum (power/freq)
+        freq = (1/(self.dt*n)) * np.arange(n)             # create x-axis (frequencies)
+        L = np.arange(1,np.floor(n/2),dtype=int)     # plot only first half (possitive)
+
+        fig, axs = plt.subplots(2,1)
+
+        plt.sca(axs[0])
+        plt.grid('both')
+        plt.title('Time domain of raw signal')
+        plt.xlabel('Time [s]')
+        plt.ylabel('Amplitute (Voltage)')
+        plt.plot(self.time_sec ,self.sig)
+        #plt.loglog(freq[L],(PSD[L]))
+
+        plt.sca(axs[1])
+        plt.loglog(freq[L],abs(PSD[L]))
+        plt.title('Frequency domain')
+        plt.xlabel('Frequencies [Hz]')
+        plt.ylabel('Power/Freq')
+        plt.grid('both')
+        plt.show()
+
+# Sample usage for plotting
+FFT_new(dfi_i0_w0).fft_calc_and_plot()
+
+
+
+
+#+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/963e8d96925278d6d3da94b2954922684944c905.png]]
+:end:

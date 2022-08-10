@@ -87,7 +87,7 @@ They propose an FIR lp filter for cutting off the unwanted frequencies.
     in Figure 12-3a.
 >>
 
-[[~/Documents/org/dissertation document/aliasing_from_downsampling.png]]
+[[~/Documents/dissertation/org-docs/dissertation document/aliasing_from_downsampling.png]]
 
 
 *** [[file:~/Downloads/descrete domain signal book.pdf][Descrete fft]]
