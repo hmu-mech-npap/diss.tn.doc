@@ -1,4 +1,4 @@
-#+TITLE: Example in org mode
+#+TITLE: diss_summary
 #+PROPERTY: header-args :tangle ~/Documents/dissertation/org-docs/src/org-Example.py
 #+STARTUP: showeverything
 #+AUTHOR: Nikos Papadakis, Nikolas Torosian
