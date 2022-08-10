@@ -60,23 +60,23 @@ for item in raw_signal_CA:
 GROUP_NAME = 'Wind Measurement'
 CHAN_NAME = 'Wind2'
 
-df_tdms_0_0 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[0][GROUP_NAME][CHAN_NAME]
+df_tdms_i0_w0 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[0][GROUP_NAME][CHAN_NAME]
                 , desc= 'Inverter off, WS=0')
-df_tdms_0_5 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[1][GROUP_NAME][CHAN_NAME]
+df_tdms_i0_w5 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[1][GROUP_NAME][CHAN_NAME]
                 , desc= 'Inverter off, WS=5')
-df_tdms_0_10 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[2][GROUP_NAME][CHAN_NAME]
+df_tdms_i0_w10 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[2][GROUP_NAME][CHAN_NAME]
                 , desc= 'Inverter off, WS=11')
-df_tdms_1_0 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[3][GROUP_NAME][CHAN_NAME]
+df_tdms_i1_w0 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[3][GROUP_NAME][CHAN_NAME]
                 , desc= 'Inverter on, WS=0')
-df_tdms_1_5 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[4][GROUP_NAME][CHAN_NAME]
+df_tdms_i1_w5 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[4][GROUP_NAME][CHAN_NAME]
                 , desc= 'Inverter on, WS=5')
-df_tdms_1_10 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[5][GROUP_NAME][CHAN_NAME]
+df_tdms_i1_w10 = WT_NoiseChannelProc.from_tdms(tdms_raw_CA[5][GROUP_NAME][CHAN_NAME]
                 , desc= 'Inverter on, WS=10')
 
 fc_Hz=2000
-plot_spect_comb2([df_tdms_0_0.calc_spectrum(),
-                df_tdms_1_0.calc_spectrum(),
-                df_tdms_1_0.filter(fc_Hz=fc_Hz, filter_func=apply_filter).calc_spectrum(),],
+plot_spect_comb2([df_tdms_i0_w0.calc_spectrum(),
+                df_tdms_i1_w0.calc_spectrum(),
+                df_tdms_i1_w0.filter(fc_Hz=fc_Hz, filter_func=apply_filter).calc_spectrum(),],
                 title='Comparison between power spectra at WS=0 ',
                      xlim =[1e2,1e5], ylim= [1e-7,1e-2],
                 Kolmogorov_offset=1e3, to_disk=True)
@@ -87,9 +87,9 @@ plot_spect_comb2([df_tdms_0_0.calc_spectrum(),
 # Hotwire speed 5 m/s
 
 plot_spect_comb2([
-                df_tdms_0_5.calc_spectrum(),
-                df_tdms_1_5.calc_spectrum(),
-                df_tdms_1_5.filter(fc_Hz=fc_Hz, filter_func=apply_filter).calc_spectrum()],
+                df_tdms_i0_w5.calc_spectrum(),
+                df_tdms_i1_w5.calc_spectrum(),
+                df_tdms_i1_w5.filter(fc_Hz=fc_Hz, filter_func=apply_filter).calc_spectrum()],
                 title='Comparison between power spectra at WS=5 m/s ',
                 xlim =[1e1,1e5], ylim= [1e-7, 1e-2],
                 Kolmogorov_offset=1e2, to_disk=True)
@@ -98,9 +98,9 @@ plot_spect_comb2([
 
 # Hotwire speed 10/11 m/s
 
-plot_spect_comb2([df_tdms_0_10.calc_spectrum(),
-                df_tdms_1_10.calc_spectrum(),
-                df_tdms_1_10.filter(fc_Hz=fc_Hz, filter_func=apply_filter).calc_spectrum()],
+plot_spect_comb2([df_tdms_i0_w10.calc_spectrum(),
+                df_tdms_i1_w10.calc_spectrum(),
+                df_tdms_i1_w10.filter(fc_Hz=fc_Hz, filter_func=apply_filter).calc_spectrum()],
                 title='Comparison between power spectra at WS=10 m/s ',
                      xlim =[1e1,1e5],
                 Kolmogorov_offset=1e2, to_disk=True)
@@ -222,7 +222,7 @@ plt.rcParams.update ({'font.size': 18})
 fig, axs = plt.subplots(2,1)
 
 plt.sca(axs[0])
-#plt.plot(time_s,df_tdms_0_0.data)
+#plt.plot(time_s,df_tdms_i0_w0.data)
 plt.loglog(freq,np.sqrt(PSD))
 
 plt.sca(axs[1])
@@ -231,7 +231,7 @@ plt.plot(freq[L],abs(PSD[L]))
 plt.yscale('log')
 plt.xscale('log')
 plt.show()
-print (df_tdms_1_0.data_as_Series, df_tdms_1_0.data)
+print (df_tdms_i1_w0.data_as_Series, df_tdms_1_0.data)
 
 
 
