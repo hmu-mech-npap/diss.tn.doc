@@ -4,8 +4,7 @@
 #+AUTHOR: Nikos Papadakis, Nikolas Torosian
 
 * DONE Here is a test for my diss in org mode
-
-** Importing custom functions from new package pros_noisefiltering
+** Example for jupyter notebook
 
 #+begin_src jupyter-python :session py :async yes
 print ("Hallo world!")
@@ -14,6 +13,8 @@ print ("Hallo world!")
 #+RESULTS:
 : Hallo world!
 
+
+** Importing custom functions from new package pros_noisefiltering
 #+begin_src jupyter-python :session py :async yes :results raw drawer
 
 from pathlib import Path
@@ -62,7 +63,7 @@ def apply_filter(ds:np.ndarray, fs_Hz:float, fc_Hz = 100, filt_order = 2 ):
 :end:
 
 
-*** Compressed air measurements from june
+*** Compressed air measurements
 **** Constant directories and names for the .tdms file structure
 
 #+begin_src jupyter-python :session py :async yes :results raw drawer
@@ -196,15 +197,15 @@ plt.show()
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/022e0f1ff1fdfc3ce446c7715bd3e46a0cc93944.png]]
-[[file:./.ob-jupyter/531e29742f85e801fec9630298b4e537aafa1ac8.png]]
-[[file:./.ob-jupyter/64c16da2e8002b4bab418c9bd63fe9e0bab7e23b.png]]
+[[file:./.ob-jupyter/77ec48fe72dbcb7d531dc428537a8d79926fd55b.png]]
+[[file:./.ob-jupyter/6527bc87ae2da6f0ed6426dd21010696701650e4.png]]
+[[file:./.ob-jupyter/bbb6c7664a2c4da30d1d0fe7afe4fac94de929ef.png]]
 :end:
 
 
 
 
-*** Wind tunnel measurements
+*** Wind tunnel measurements from june
 
 **** folder structure for inverter measurements
 
@@ -264,7 +265,9 @@ for item in raw_signal_CA:
 |---|
 :end:
 
-**** Construction of objecs for ease of analysis
+
+**** Construction of objecs
++ Here we store some information with the help of object oriented programing to a variable for later use. This is making the overall process much faster in performance and reusage terms.
 
 #+begin_src jupyter-python :session py :async yes :results raw drawer
 
@@ -286,6 +289,7 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(l_tdms_Inv[5][GROUP_NAME][CHAN_NAME]
 #+RESULTS:
 :results:
 :end:
+
 
 **** Signal in frequency domain
 ***** My first fft approach
@@ -351,9 +355,9 @@ plt.show()
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/f0c44cb2dbe773f38ae3bf2b9fd37675a1c50544.png]]
-[[file:./.ob-jupyter/a1ab6b6e1fad10c1f77b3b508ca975d25fa40c0b.png]]
-[[file:./.ob-jupyter/f9621ad8fde4c5d7af8f00a30359d52258af11af.png]]
+[[file:./.ob-jupyter/0e14ebc6bae952d1af52337c2003a59f24ff40f1.png]]
+[[file:./.ob-jupyter/1f498f67e9d7c3ed25fc50750ab228b3b75a56fc.png]]
+[[file:./.ob-jupyter/1981ee15aee0dfe186afcb0be41a0eec44b12eed.png]]
 :end:
 
 ****** TODO POWER SPECTRAL DENCITY
@@ -392,7 +396,7 @@ print(f"The time array is: \n {time_s}")
 :  6.99999630e+00 6.99999815e+00]
 :end:
 
-****** FFT algorithm
+****** MODS FFT algorithm
 
 #+begin_src jupyter-python :session py :async yes :results raw drawer
 
@@ -411,7 +415,7 @@ print(f"This is the length of the time array and should be = 2_650_000 >< no {n}
 : This is the length of the time array and should be = 2_650_000 >< no 3780000
 :end:
 
-****** Plot with errors of raw signal in frequency domain
+****** MODS Plot with errors of raw signal in frequency domain
 
 #+begin_src jupyter-python :session py :async yes :results raw drawer
 plt.rcParams ['figure.figsize'] =[16,12]
