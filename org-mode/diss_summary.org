@@ -355,9 +355,9 @@ plt.show()
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/0e14ebc6bae952d1af52337c2003a59f24ff40f1.png]]
-[[file:./.ob-jupyter/1f498f67e9d7c3ed25fc50750ab228b3b75a56fc.png]]
-[[file:./.ob-jupyter/1981ee15aee0dfe186afcb0be41a0eec44b12eed.png]]
+[[file:./.ob-jupyter/f0c44cb2dbe773f38ae3bf2b9fd37675a1c50544.png]]
+[[file:./.ob-jupyter/a1ab6b6e1fad10c1f77b3b508ca975d25fa40c0b.png]]
+[[file:./.ob-jupyter/f9621ad8fde4c5d7af8f00a30359d52258af11af.png]]
 :end:
 
 ****** TODO POWER SPECTRAL DENCITY
@@ -433,14 +433,12 @@ plt.plot(freq[L],abs(PSD[L]))
 plt.yscale('log')
 plt.xscale('log')
 plt.show()
-print (df_tdms_i1_w0.data_as_Series, df_tdms_1_0.data)
+print (df_tdms_i1_w0.data_as_Series, df_tdms_i1_w0.data)
 
 #+end_src
 
 #+RESULTS:
 :results:
-: /usr/lib/python3.10/site-packages/matplotlib/cbook/__init__.py:1298: ComplexWarning: Casting complex values to real discards the imaginary part
-:   return np.asarray(x, float)
 [[file:./.ob-jupyter/8aad75b1bb0eed54a45b5cdc279ebd7298af81f2.png]]
 #+begin_example
 0          1.620280

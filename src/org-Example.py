@@ -231,7 +231,7 @@ plt.plot(freq[L],abs(PSD[L]))
 plt.yscale('log')
 plt.xscale('log')
 plt.show()
-print (df_tdms_i1_w0.data_as_Series, df_tdms_1_0.data)
+print (df_tdms_i1_w0.data_as_Series, df_tdms_i1_w0.data)
 
 
 
