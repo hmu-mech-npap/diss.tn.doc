@@ -1,0 +1,6 @@
+* Inbox
+** TODO add the right book page
++ This should be done and checked through ...
++ maybe will not work
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/main_doc.org::*using discrete time processing][using discrete time processing]]
