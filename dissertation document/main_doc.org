@@ -243,7 +243,7 @@ A [[file:~/Pictures/Wind_Tunnel_setup_lab.png][diagram]]
 
 ***** Wind sensor
 The measurements used in this case study were taken from a differential pressure transducer with the details bellow
-#+title: Device details
+#+properties: Device details
 :MODEL: Delta Ohm HD-408T
 :WORK_PRINCIPLE: Differential pressure transducer
 :RANGE: 0-10 m-bar
