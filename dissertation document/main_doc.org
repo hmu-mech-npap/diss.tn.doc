@@ -1,8 +1,49 @@
 #+TITLE: Filtering sensor signal from environmental EMI using Digital Signal Processing methods with a case study application.
 #+AUTHOR: Nickolas Torosian
 #+AUTHOR: Nikos Papadakis
-#+LANGUAGE: us
+#+LANGUAGE: gr
+#+latex_compiler: xelatex
+#+latex_header: \usepackage{unicode-math}
+#+latex_header: \setmainfont{Linux Libertine O}
+
 * The signal theory
+
+** Εισαγωγή
+
+Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
+τηλεπικοινωνίες μετά ή/και πριν την μετάδοση από τον πομπό προς τον
+δέκτη, και η εκλογή πληροφοριών από αυτό έθεσαν από νωρίς το πρόβλημα
+των παρεμβολών του περιβάλλοντος στις ηλεκτρονικές συσκευές και την
+ανάγκη απομόνωσης του φάσματος των συχνοτήτων που χρησιμοποιούνται για
+κάθε λειτουργία.
+
+Η απομόνωση αυτή μπορεί να επιτευχθεί είτε μέσω συμβατικών φιλτρών,
+δηλαδή αντιστάσεις και πυκνωτές κατάλληλα τοποθετημένους στο κύκλωμα που
+συλλέγει την τάση (ρεύμα μέτρησης), είτε με την χρήση μεθόδων ψηφιακής
+επεξεργασίας σημάτων (ΔΣΠ). Στις μέρες μας προτιμάται ο 2ος τρόπος λόγω
+της ραγδαίας εξέλιξης των Η/Υ με αποτέλεσμα να επιφέρει μεγαλύτερο
+κόστος η εγκατάσταση αναλογικών φίλτρων σε κάθε θέση που απαιτείται.
+
+Οι μέθοδοι αλλά και η πληθώρα συστημάτων λήψης και ανάλησης σημάτων τις
+τελευταίες δεκαετίες έχουν, αφενός εξελιχθεί ως προς την υπολογιστική
+ισχή με γρηγορότερους επεξεργαστές και αλγόριθμους, αφεταίρου δίνουν
+πλέον την δυνατότητα δαχείρισης των πληροφοριών απομακρισμένα με
+αποτέλεσμα την ευρύτερη εγκαθίδριση των ψηφιακών μέσων επεξεργασίας
+σημάτων. Στις μέρες μας η ανάγκη διαχείρησης ολοένα και μεγαλύτερα
+αρχεία δεδομένων με καλύτερη ακρίβεια οδήγησε την επιστημονική κοινότητα
+στην χρήση της μεθόδου *μετα-επεξεργασίας* (post-processing). Βασικό όφελος
+ήταν η δυνατότητα επαναλληψιμότητας του πειράματος και σύγκρισης των
+αποτελεσμάτων σε όλο τον κόσμο, ουσιαστική αρχή της πειραματικής
+διαδικασίας. Έτσι με την χρήση προγραμματισμού δίνεται πλέον η
+δυνατότητα στον ερευνητή, να δημιουργεί ενα περιβάλλον προσομοίωσης και
+να δοκιμάζει διάφορες λύσεις χωρίς να επισκευτεί την πειραματική διάταξη
+σε πολλές περιπτώσεις μετά την καταγραφή των μετρήσεων.
++ Here should be a general intro for the signal processing and some idea for the stuff that will follow. Also I should mention a broad field for the applications and the cost effect on projects that are already in use and how we could implement a vital solution without rebuilding.
+** Historical perspective (Istoriki anadromi)
+From the book *discrete_domain_signal.pdf*
+** Signal process (post-processing)
++ Here i will address the major procedures for the signal processing in order to make a vital and non destructive method to process and extract the needed results for the different problems. Could also refer some methods not only used by me.
+
 ** Discrete time signals
 
 ** Continuous time signals
@@ -13,7 +54,8 @@ The Sampling frequency should be at least 2.2 times the capturing frequency.
 reference : https://en.wikipedia.org/wiki/Nyquist_frequency
 
 
-*** Allan variance
+*** +Allan variance+
+- [X] This should not be added was for papadaki in the other project.
 It is a measure of frequency stability for oscillators and atomic clocks.
 reference : https://en.wikipedia.org/wiki/Allan_variance
 
@@ -36,8 +78,8 @@ Reference
 
 
 *** Multi rate Digital signal processing
-In many areas of digital signal processing (Digital Signal Processing) applications—such as communications, speech, and audio processing—rising or lowering of
-a sampling rate is required. The principle that deals with changing the sampling rate belongs essentially to multi-rate signal processing
+In many areas of digital signal processing (Digital Signal Processing) _applications—such as communications, speech, and audio processing—rising or lowering of a sampling rate is required_.
+/The principle that deals with changing the sampling rate belongs essentially to multi-rate signal processing/
 (Ifeachor and Jervis, 2002; Porat, 1997; Proakis and Manolakis, 1996; Sorensen and Chen, 1997).
 As an introduction, we will focus on sampling rate conversion; that is, sampling rate reduction or increase.
 
@@ -88,7 +130,7 @@ They propose an FIR low-pass filter for rejecting the unwanted frequencies.
     in Figure 12-3a.
 >>
 
-[[~/Documents/dissertation/org-docs/dissertation document/aliasing_from_down-sampling.png]]
+[[~/Documents/dissertation/org-docs/dissertation document/aliasing_from_downsampling.png]]
 
 
 *** [[file:~/Downloads/descrete domain signal book.pdf][Discrete fast Fourier transform ttransformransform]]
@@ -150,15 +192,15 @@ is called energy density spectrum, since it determines how the energy density is
 ** Filter design
 
 *** Intro
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::465
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::465
 ]]
 *** D.T. Infinite Impulse Response from C.T. filters
 
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::468]]
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::468]]
 
 *** FIR by WINDOWING
 
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::491]]
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::491]]
 
 **** Common windows used
 - Some basic properties for:
@@ -166,19 +208,19 @@ is called energy density spectrum, since it determines how the energy density is
   - Barlett
   - Hanning
   - Hamming
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::494
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::494
 ]]
 
 **** Kaiser window method
 
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::500]]
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::500]]
 
 
 **** Optimum approximations of FIR
 
 - Here is a deep analysis for the appropriate implementation of the FIR filters in respect to /M value???/
 
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::491]]
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::491]]
 
 
 **** F
@@ -202,7 +244,7 @@ is called energy density spectrum, since it determines how the energy density is
 
 *** Intro
 - The D.F.T. has important role in Discrete Time signal-processing. Also there are efficient algorithms for programming (python, C++..).  They are called FFT algorithms (Fast Fourier Transform) but they are calculating all /N values of the D.F.T./. If only a portion of the frequencies are needed (0 <= ω <= 2π) other algorithms could be more efficient.
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::602]]
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::602]]
 
 
 ** D.F.T. analysis of signals
@@ -212,17 +254,16 @@ is called energy density spectrum, since it determines how the energy density is
 ***** Example
 - In linear filtering or convolution implemented by multiplying D.F.T.s rather than discrete-time Fourier transforms,a circular convolution is implemented and special care **must** be taken to ensure that the results will be equivalent to a linear convolution.
 
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::719]]
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::719]]
 
 *** Windowing effect
 - The purpose of the window in the time-dependent Fourier transform is to limit the extend of the sequence to be transformed so the spectral characteristics are reasonably stationary over the duration of the window.
 
   /**The more rapidly the signal characteristics change, the shorter the window should be**/
 
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::743]]
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::743]]
 
 *** Sampling in Time and Frequency
-
 
 * Laboratory case study
 
@@ -275,11 +316,9 @@ The post-process is implemented with basic Digital Signal Processing python libr
 The data are collected with Lab View as a recording program. Here need more info from Papadaki......
 
 Here the signal is transferred via Telecommunication cable for minimizing the system file.
-#+begin_src org :lang el
-Εδώ η ιδέα είνε να εξηγηθεί λίγο η επεξεργασία που γίνεται από το λαμπβιου για λόγους αναφωράς.
-#+end_src
 
-#+RESULTS:
-: Εδώ η ιδέα είναι να εξηγηθεί λίγο η επεξεργασία που γίνεται από το λαμπβιου για λόγους αναφv
+#+begin_src org lang:gr :results: raw drawer
+Εδώ η ιδέα είναι να εξηγηθεί λίγο η επεξεργασία που γίνεται από το LabView για λόγους αναφοράς.
+#+end_src
 
 ***** Other measuring devices

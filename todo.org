@@ -5,6 +5,7 @@
 
 [[file:~/Documents/dissertation/org-docs/dissertation document/main_doc.org::*using discrete time processing][using discrete time processing]]
 
-** TODO write more in greek.[0%]
-+ [-] should find a dictionary for gr.
-+ [ ] aspell should do the job!!
+** DONE write more in greek.[100%]
+CLOSED: [2022-08-31 Τετ 13:39]
++ [X] should find a dictionary for gr.
++ [X] aspell should do the job!!
