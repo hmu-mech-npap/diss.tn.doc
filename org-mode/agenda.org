@@ -27,4 +27,3 @@ SCHEDULED: <2022-06-20 Δευ ++1d>
 3. [ ] tools and the room
 
 * github token for forge
-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
