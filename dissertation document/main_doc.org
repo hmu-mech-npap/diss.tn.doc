@@ -2,8 +2,6 @@
 #+AUTHOR: Nickolas Torosian
 #+AUTHOR: Nikos Papadakis
 #+LANGUAGE: gr
-#+startup: latexpreview
-#+PROPERTY: header-args:latex-as-png :results raw value replace
 
 :toc:
 
