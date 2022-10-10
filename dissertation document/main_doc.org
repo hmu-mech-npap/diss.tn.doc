@@ -5,9 +5,7 @@
 
 :toc:
 
-* The signal theory
-
-** Εισαγωγή
+* Εισαγωγή
 
 Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
 τηλεπικοινωνίες μετά ή/και πριν την μετάδοση από τον πομπό προς τον
@@ -55,8 +53,7 @@
 Νίκο Παπαδάκη για την καθοδήγησή του και την υπομονή που έδειξε για τις
 λιγοστές γνώσεις μου στον προγραμματισμό.
 
-
-** Ιστορική αναδρομή
+* Ιστορική αναδρομή
     Από την εποχή της ανακάλυψης του Απειροστικού λογισμού (calculus)
 τον 17ο αιώνα, οι επιστήμονες προσπαθούν να εξηγήσουν τα φυσικά
 φαινόμενα με μαθηματικά μοντέλα χρησιμοποιώντας εξισώσεις
@@ -156,27 +153,8 @@ Transform/). Ο F.F.T. ήταν αρκετά σημαντικός για πολ�
 αριθμών. Έτσι σήμερα η ανάλυση σημάτων, η καταγραφή όπως και η μετάδοσή τους
 γίνεται πολλές φορές εξ' ολοκλήρου από ψηφιακά συστήματα.
 
-** Σήματα συνεχούς χρόνου (Continuous time signals)
-*** Εισαγωγή
-*** Γενικός ορισμός
-    Σήμα συνεχούς χρόνου ονομάζεται ένα σήμα x(t), το οποίο ορίζεται για
-κάθε τιμή του t σε κάποιο διάστημα χρόνου [α,β]. Συνήθως τα συναντούμε
-στην μορφή συνεχούς ρεύματος σε μετρητικές και άλλες συσκευές σε εξόδους
-για την ένδειξη κάποιας τιμής ή απεικόνιση σε παλμογράφο. Τα σήματα
-συνεχούς χρόνου χωρίζονται σε αναλογικά και διακριτά σήματα συνεχούς
-χρόνου.
-*** Αναλογικό και διακριτό σήμα συνεχούς χρόνου
-    Αναλογικά σήματα ονομάζονται εκείνα που η ανεξάρτητη μεταβλητή του
-χρόνου (t) και η μεταβλητή του πλάτους (εξαρτημένη μεταβλητή ως προς τον
-χρόνο) λαμβάνουν συνεχής και πραγματικές τιμές, π.χ. y(t) = 12 * t.
-Διακριτά σήματα συνεχούς χρόνου ονομάζονται όσα ή εξαρτημένη τιμή
-(πλάτος) παίρνει διακριτές τιμές, π.χ. ψ(t) = Α * t, όπου Α = 0, … ,ν
-και t = [α,β] (συνεχές διάστημα χρόνου).
-
-
-
-** TODO Σήματα διακριτού χρόνου (discrete time signals and systems)
-*** Εισαγωγή
+* Σήματα συνεχούς χρόνου (Continuous time signals)
+** Εισαγωγή
 Ο όρος σήμα (signal) δίνεται σε κάτι που εμπεριέχει πληροφορία. Γενικά
 τα σήματα χρησιμοποιούνται στην κωδικοποίηση και εξαγωγή πληροφοριών για
 την κατάσταση ή/και την συμπεριφορά ενός φυσικού συστήματος. Συχνά
@@ -235,29 +213,47 @@ processing) επεξεργάζονται σήματα που εκφράζοντ�
 ανάλογο πλαίσιο επεξεργασίας. Εδώ ασχοληθήκαμε μόνο με ψηφιακά σήματα
 καθώς η καταγραφή των σημάτων έγινε με Η/Υ μέσω προγράμματος (LabView).
 
-*** Γενικός ορισμός
+** Γενικός ορισμός
+    Σήμα συνεχούς χρόνου ονομάζεται ένα σήμα x(t), το οποίο ορίζεται για
+κάθε τιμή του t σε κάποιο διάστημα χρόνου [α,β]. Συνήθως τα συναντούμε
+στην μορφή συνεχούς ρεύματος σε μετρητικές και άλλες συσκευές σε εξόδους
+για την ένδειξη κάποιας τιμής ή απεικόνιση σε παλμογράφο. Τα σήματα
+συνεχούς χρόνου χωρίζονται σε αναλογικά και διακριτά σήματα συνεχούς
+χρόνου.
+** Αναλογικό και διακριτό σήμα συνεχούς χρόνου
+    Αναλογικά σήματα ονομάζονται εκείνα που η ανεξάρτητη μεταβλητή του
+χρόνου (t) και η μεταβλητή του πλάτους (εξαρτημένη μεταβλητή ως προς τον
+χρόνο) λαμβάνουν συνεχής και πραγματικές τιμές, π.χ. y(t) = 12 * t.
+Διακριτά σήματα συνεχούς χρόνου ονομάζονται όσα ή εξαρτημένη τιμή
+(πλάτος) παίρνει διακριτές τιμές, π.χ. ψ(t) = Α * t, όπου Α = 0, … ,ν
+και t = [α,β] (συνεχές διάστημα χρόνου).
+
+
+
+* TODO Σήματα διακριτού χρόνου (discrete time signals and systems)
+** Γενικός ορισμός
     Σήμα διακριτού χρόνου ονομάζεται μια ακολουθία αριθμών καταγεγραμμένες
 ανά συγκεκριμένο χρονικό διάστημα, π.χ. κάθε 0,01 δευτερόλεπτο. Το
 διάστημα αυτό ορίζει την ταχύτητα καταγραφής του σήματος από την
 εκάστοτε συσκευή, όμως εμείς αναφερόμαστε σε αυτό το χρόνο μέσω της
-συχνότητας καταγραφής ή αλλιώς σαμπλινγ φρικ. Η συχνότητα αυτή ορίζεται
-ως το πηλίκο ενός δευτερολέπτου ως προς το χρονικό διάστημα καταγραφής,
-δηλαδή από το παραπάνω παράδειγμα θα είχαμε μια συχνότητα καταγραφής
-\\begin{equation} $fs = \frac{1}{0,01}$ \\end{equation} .
+συχνότητας καταγραφής ή αλλιώς sampling frequency. Η συχνότητα αυτή
+ορίζεται ως το πηλίκο ενός δευτερολέπτου ως προς το χρονικό διάστημα
+καταγραφής, δηλαδή από το παραπάνω παράδειγμα θα είχαμε μια συχνότητα
+καταγραφής \\begin{equation} $fs = \frac{1}{0,01}$ \\end{equation} .
 
     Σημαντικό είναι να αναφερθεί ότι υπάρχει ένα όριο το οποίο πρέπει να
 τηρείται ώστε η επαναδημιουργία του σήματος να απεικονίζει όσο το
 δυνατόν πιο πολύ στο συνεχές σήμα που καταγράφηκε στην αρχή. Θα
 αναφερθούμε αργότερα στο εν λόγω θεώρημα του φυσικού Νικουιστ?!
-*** Εφαρμογές
+** Εφαρμογές
     Στην κατηγορία αυτή κατατάσσονται τα περισσότερα σήματα που
 χρησιμοποιούνται σήμερα λόγω της χρήσης Η/Υ για την καταγραφή και
 παραγωγή ήχου και εικόνας. Η ένταξη των ψηφιακών σημάτων επιτάχυνε την
 επεξεργασία και μείωσε δραστικά τον χώρο αποθήκευσης στην μνήμη των
 υπολογιστών.
 
-** Θεωρία καταγραφής σημάτων (Sampling theory)
-*** Εισαγωγή
+* Θεωρία καταγραφής σημάτων (Sampling theory)
+** Εισαγωγή
     Σε αυτή την ενότητα θα περιγραφούν οι βασικές θεωρίες που χρησιμοποιούνται
 για την ψηφιακή καταγραφή και επεξεργασία σημάτων καθώς και κάποια προβλήματα
 που μπορεί να εμφανιστούν κατά τις διαδικασίες αυτές. Μια από τις σημαντικότερες
@@ -266,7 +262,7 @@ processing) επεξεργάζονται σήματα που εκφράζοντ�
 και καταστρεπτικές συμπεριφορές των συστημάτων κατά την μετατροπή τους από
 συνεχή σε διακριτά σήματα και σε τρόπους αναγνώρισης και αντιμετώπισης
 των προβλημάτων.
-*** Niquist frequency
+** Niquist frequency
     Στην επεξεργασία σημάτων η συχνότητα Niquist είναι ένα χαρακτηριστικό μέγεθος
 στις καταγραφικές συσκευές, όπου καταγράφουν σήματα συνεχούς χρόνου σε διακριτές
 ακολουθίες (ψηφιακά σήματα). Στην πράξη αν η υψηλότερη συχνότητα ενός σήματος
@@ -287,7 +283,7 @@ The Sampling frequency should be at least 2.2 times the capturing frequency.
 reference : https://en.wikipedia.org/wiki/Nyquist_frequency
 
 
-*** Μείωση αριθμού δειγμάτων (Decimation and down-sampling)
+** Μείωση αριθμού δειγμάτων (Decimation and down-sampling)
 Η τεχνική αυτή εφαρμόζεται σε ψηφιακά σήματα με πολλά δείγματα ανά
 χρονικό διάστημα που όμως η τυπική απόκληση προδίδει μια περιοδική
 κίνηση που σχετίζεται με ταλάντωση. Τότε είναι εύλογο να χωριστεί το
@@ -373,7 +369,7 @@ Reference
 
 
 
-*** Multi rate Digital signal processing
+** Multi rate Digital signal processing
 In many areas of digital signal processing (Digital Signal Processing) _applications—such as communications, speech, and audio processing—rising or lowering of a sampling rate is required_.
 /The principle that deals with changing the sampling rate belongs essentially to multi-rate signal processing/
 (Ifeachor and Jervis, 2002; Porat, 1997; Proakis and Manolakis, 1996; Sorensen and Chen, 1997).
@@ -388,7 +384,7 @@ As an introduction, we will focus on sampling rate conversion; that is, sampling
 This process is referred as *down-sampling of data sequence*. This produces an aliasing effect in the signal which should be avoided.
 
 
-*** Aliasing
+** Aliasing
 In signal processing and related disciplines, aliasing is an effect that causes different signals to become indistinguishable (or aliases of one another) when sampled.
 It also often refers to the distortion or artifact that results when a signal reconstructed from samples is different from the original continuous signal.
 
@@ -429,7 +425,7 @@ They propose an FIR low-pass filter for rejecting the unwanted frequencies.
 [[~/Documents/dissertation/org-docs/dissertation document/aliasing_from_downsampling.png]]
 
 
-*** [[file:~/Downloads/descrete domain signal book.pdf][Discrete fast Fourier transform ttransformransform]]
+** [[file:~/Downloads/descrete domain signal book.pdf][Discrete fast Fourier transform ttransformransform]]
 **** Parseval's theorem
 The function
 #+begin_latex
@@ -440,7 +436,7 @@ is called energy density spectrum, since it determines how the energy density is
 
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::86]]
 
-*** Discrete Time process of continuous time signal
+** Discrete Time process of continuous time signal
 
 **** Basics
 
@@ -465,7 +461,7 @@ is called energy density spectrum, since it determines how the energy density is
 
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::205]]
 
-*** Structures for discrete signals
+** Structures for discrete signals
 
 **** Intro
 
@@ -485,9 +481,9 @@ is called energy density spectrum, since it determines how the energy density is
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::392]]
 
 
-** Επεξεργασία σημάτων (Signal process (post-processing))
+* Επεξεργασία σημάτων (Signal process (post-processing))
 
-*** Ορισμός μετα-επεξεργασίας
+** Ορισμός μετα-επεξεργασίας
     Η επεξεργασία ενός σήματος θα πρέπει να γίνεται με προσοχή καθώς είναι
 εύκολο να καταστραφεί μέρος της πληροφορίας που περιέχεται ή ακόμα και
 να εκδοθούν λανθασμένα συμπεράσματα για την συμπεριφορά του συστήματος.
@@ -506,7 +502,7 @@ is called energy density spectrum, since it determines how the energy density is
 κωδικοποίησης-αποκωδικοποίησης γίνεται αφού καταγραφεί το σήμα σε κάποια
 προσωρινή ή μόνιμη μνήμη και έτσι εντάσσεται στην *μετα-επεξεργασία*.
 
-*** Εγκατάσταση εργαστηρίου
+** Εγκατάσταση εργαστηρίου
     Η εγκατάσταση που χρησιμοποιήθηκε για την συλλογή των δεδομένων
 αποτελείται από μία αεροσύραγγα την οποία τροφοδοτεί με σταθερή ταχύτητα
 αέρα ένας ηλεκτροκινητήρας προσδεδεμένος σε έναν έλικα. Στην μέση της
@@ -533,16 +529,16 @@ is called energy density spectrum, since it determines how the energy density is
 μέτρηση
 
 
-** Filter design
+* Filter design
 
-*** Intro
+** Intro
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::465
 ]]
-*** D.T. Infinite Impulse Response from C.T. filters
+** D.T. Infinite Impulse Response from C.T. filters
 
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::468]]
 
-*** FIR by WINDOWING
+** FIR by WINDOWING
 
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::491]]
 
@@ -570,16 +566,16 @@ is called energy density spectrum, since it determines how the energy density is
 **** F
 
 
-** Discrete Fourier Transform (D.F.T.)
-*** Intro
+* Discrete Fourier Transform (D.F.T.)
+** Intro
 
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::567]]
 
-*** PROJ [#A] Periodic convolution
+** PROJ [#A] Periodic convolution
 
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::574]]
 
-*** PROJ [#A] Linear convolution using D.F.T.
+** PROJ [#A] Linear convolution using D.F.T.
 
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::602]]
 
