@@ -2,6 +2,7 @@
 #+AUTHOR: Nickolas Torosian
 #+AUTHOR: Nikos Papadakis
 #+LANGUAGE: gr
+# #+STARTUP: latexpreview
 
 :toc:
 
@@ -214,8 +215,8 @@ processing) επεξεργάζονται σήματα που εκφράζοντ�
 καθώς η καταγραφή των σημάτων έγινε με Η/Υ μέσω προγράμματος (LabView).
 
 ** Γενικός ορισμός
-    Σήμα συνεχούς χρόνου ονομάζεται ένα σήμα x(t), το οποίο ορίζεται για
-κάθε τιμή του t σε κάποιο διάστημα χρόνου [α,β]. Συνήθως τα συναντούμε
+    Σήμα συνεχούς χρόνου ονομάζεται ένα σήμα \(y(t)\), το οποίο ορίζεται για
+κάθε τιμή του \(t\) σε κάποιο διάστημα χρόνου \([\alpha,\beta]\). Συνήθως τα συναντούμε
 στην μορφή συνεχούς ρεύματος σε μετρητικές και άλλες συσκευές σε εξόδους
 για την ένδειξη κάποιας τιμής ή απεικόνιση σε παλμογράφο. Τα σήματα
 συνεχούς χρόνου χωρίζονται σε αναλογικά και διακριτά σήματα συνεχούς
@@ -223,10 +224,13 @@ processing) επεξεργάζονται σήματα που εκφράζοντ�
 ** Αναλογικό και διακριτό σήμα συνεχούς χρόνου
     Αναλογικά σήματα ονομάζονται εκείνα που η ανεξάρτητη μεταβλητή του
 χρόνου (t) και η μεταβλητή του πλάτους (εξαρτημένη μεταβλητή ως προς τον
-χρόνο) λαμβάνουν συνεχής και πραγματικές τιμές, π.χ. y(t) = 12 * t.
+χρόνο) λαμβάνουν συνεχής και πραγματικές τιμές, π.χ. \(\psi(t) = 12 * t\).
 Διακριτά σήματα συνεχούς χρόνου ονομάζονται όσα ή εξαρτημένη τιμή
-(πλάτος) παίρνει διακριτές τιμές, π.χ. ψ(t) = Α * t, όπου Α = 0, … ,ν
-και t = [α,β] (συνεχές διάστημα χρόνου).
+(πλάτος) παίρνει διακριτές τιμές, π.χ.
+
+    \(\psi(t) =  A * t\), όπου
+
+    \(A = 0, … ,n\) και \(t \in [a,b]\) .
 
 
 
@@ -240,8 +244,11 @@ CLOSED: [2022-10-10 Δευ 13:24]
 συχνότητας καταγραφής ή αλλιώς sampling frequency. Η συχνότητα αυτή
 ορίζεται ως το πηλίκο ενός δευτερολέπτου ως προς το χρονικό διάστημα
 καταγραφής, δηλαδή από το παραπάνω παράδειγμα θα είχαμε μια συχνότητα
-καταγραφής 1/0.01 [Hz] \\begin{equation} $fs = \frac{1}{0,01}$ \\end{equation} .
+καταγραφής 1/0.01 [Hz]  .
 
+\begin{equation}
+fs = \frac{1}{0,01} [Hz]
+\end{equation}
     Σημαντικό είναι να αναφερθεί ότι υπάρχει ένα όριο το οποίο πρέπει να
 τηρείται ώστε η επαναδημιουργία του σήματος να απεικονίζει όσο το
 δυνατόν πιο πολύ στο συνεχές σήμα που καταγράφηκε στην αρχή. Θα
@@ -263,7 +270,8 @@ CLOSED: [2022-10-10 Δευ 13:24]
 και καταστρεπτικές συμπεριφορές των συστημάτων κατά την μετατροπή τους από
 συνεχή σε διακριτά σήματα και σε τρόπους αναγνώρισης και αντιμετώπισης
 των προβλημάτων.
-** Niquist frequency
+** DONE Niquist frequency
+CLOSED: [2022-11-04 Παρ 18:46]
     Στην επεξεργασία σημάτων η συχνότητα Niquist είναι ένα χαρακτηριστικό μέγεθος
 στις καταγραφικές συσκευές, όπου καταγράφουν σήματα συνεχούς χρόνου σε διακριτές
 ακολουθίες (ψηφιακά σήματα). Στην πράξη αν η υψηλότερη συχνότητα ενός σήματος
@@ -276,15 +284,68 @@ CLOSED: [2022-10-10 Δευ 13:24]
 συνχοτήτων πάνω από ένα όριο. Τέλος, ορίζεται η ταχύτητα δειγματοληψίας που
 παρέχει την λιγότερη δυνατή αλλοίωση, έχοντας υπ' όψη οτί η μεγαλύτερη
 συχνότητα που θα αναπαραχθεί αργότερα από το ψηφιακό αντίγραφο θα είναι
-ίση με την συχνότητα Νικουιστ.
+ίση με την συχνότητα Νικουιστ \(f_s_N = 0.6f\).
 
-*εδω πρεπει να μπει ο γενικος τυπος υπολογισμού του Νικουιστ*
+\begin{equation}
+f_s_N=0.5f
+\end{equation}
 
 The Sampling frequency should be at least 2.2 times the capturing frequency.
 reference : https://en.wikipedia.org/wiki/Nyquist_frequency
 
 
-** Μείωση αριθμού δειγμάτων (Decimation and down-sampling)
+** TODO Αλλοίωση (Aliasing)
+Ως αλλοίωση αναφερόμαστε εδώ στο αποτέλεσμα καταγραφής ενός σήματος,
+όπου η έξοδος αποτελείται από διαφορετικά σήματα και δεν είναι δυνατό να
+επαναδημιουργιθεί το αρχικό. Συνήθως η έξοδος είναι μετατοπισμένη ως
+προς το φάσμα των συχνοτήτων, όμως πολλές φορές επηρεάζεται και η ισχύ.
+Είναι λοιπόν σημαντικό να αποφευχθεί, όσο το δυνατόν περισσότερο, η
+αλλοίωση των σημάτων κατα την διαδικασία καταγραφής τους. Για τον λόγο
+αυτό συνήθως εφαρμόζεται ένα φίλτρο χαμηλών συχνοτήτων ή φίλτρο κατά της
+αλλοίωσης (anti-aliasing filters ([AAF])).
+
+
+[AAF] <https://en.wikipedia.org/wiki/Anti-aliasing_filter>
+
+
+Aliasing can occur in signals sampled in time, for instance [[https://en.wikipedia.org/wiki/Digital_audio][digital audio]], or the stroboscopic effect, and is referred to as temporal aliasing. It can also occur in spatially sampled signals
+(e.g. moiré patterns in digital images); this type of aliasing is called spatial aliasing.
+Aliasing is generally avoided by applying low-pass filters or anti-aliasing filters ([[https://en.wikipedia.org/wiki/Anti-aliasing_filter][AAF]]) to the input signal before sampling and when converting a signal from a higher to a lower sampling rate.
+Suitable [[https://en.wikipedia.org/wiki/Aliasing][reconstruction filtering]] should then be used when restoring the sampled signal to the continuous domain or converting a signal from a lower to a higher sampling rate.
+
+For [[https://en.wikipedia.org/wiki/Spatial_anti-aliasing][spatial-anti-aliasing]], the types of anti-aliasing include:
+ 1. [[https://en.wikipedia.org/wiki/Fast_approximate_anti-aliasing][fast sample anti-aliasing (FSAA)]],
+    - Description
+      Fast approximate anti-aliasing (FXAA) is a screen-space anti-aliasing algorithm created by Timothy Lottes at Nvidia.
+      FXAA 3 is released under a public domain license. A later version, FXAA 3.11, is released under a 3-clause BSD license.
+
+    - [[https://en.wikipedia.org/wiki/Fast_approximate_anti-aliasing][Algorithm description and more]]
+
+ 2. [[https://en.wikipedia.org/wiki/Multisample_anti-aliasing][multisample anti-aliasing]],
+    - Description
+ 3. [[https://en.wikipedia.org/wiki/Supersampling][supersampling]]
+
+
+**** The solution to the problem
+They propose an FIR low-pass filter for rejecting the unwanted frequencies.
+<<
+
+- To verify this principle, let us consider a signal x (n ) generated by the following:
+
+$$x (n ) = 5 sin\times \frac{2\pi \times 1000n }{8000} + cos \times (\frac{2\pi \times 2500n }{8000})$$, (12.8)
+
+  with a sampling rate of f s = 8,000 Hz, the spectrum of x (n ) is plotted in the first graph in Figure 12-3a, where we observe that the signal has components at frequencies of 1,000 and 2,500 Hz.
+
+    Now we down-sample x (n ) by a factor of 2, that is, M = 2. According to Equation (12.3), we know that the new folding frequency is 4000/2 = 2000 Hz.
+    Hence, without using the anti-aliasing low-pass filter, the spectrum would contain the aliasing frequency of 4 kHz – 2.5 kHz = 1.5 kHz introduced by 2.5 kHz, plotted in the second graph
+    in Figure 12-3a.
+>>
+
+[[~/Documents/dissertation/org-docs/dissertation document/aliasing_from_downsampling.png]]
+
+
+** DONE Μείωση αριθμού δειγμάτων (Decimation and down-sampling)
+CLOSED: [2022-10-28 Παρ 15:46]
 Η τεχνική αυτή εφαρμόζεται σε ψηφιακά σήματα με πολλά δείγματα ανά
 χρονικό διάστημα που όμως η τυπική απόκληση προδίδει μια περιοδική
 κίνηση που σχετίζεται με ταλάντωση. Τότε είναι εύλογο να χωριστεί το
@@ -312,31 +373,51 @@ reference : https://en.wikipedia.org/wiki/Nyquist_frequency
 καταγραφής 20 χερτζ ένας παράγοντας 101 προφανώς δεν θα άφηνε κανένα
 δείγμα στο νέο ψηφιακό σήμα. Επιπρόσθετα το όριο για να αποφύγουμε την
 αλλοίωση απαιτεί το τελικό αποτέλεσμα των διαδικασιών είναι τα 10
-δείγματα ανά δευτερόλεπτο (10 χερτζ). Επομένως θέτοντας τον παράγοντα
-αποδεκατισμού 51 θα παρείχε ένα σήμα που θα ήταν αλλοιωμένο.
+δείγματα ανά δευτερόλεπτο (10 Hz). Επομένως θέτοντας τον παράγοντα
+αποδεκατισμού 51 θα παρείχε ένα σήμα που θα ήταν αλλοιωμένο.Όταν η
+διαδικασία αυτή εφαρμόζεται σωστά σε μια αλληλουχία δειγμάτων ενός σήματος
+ή μιας συνεχής συνάρτησης, παράγεται μια προσομοίωσή του καταγεγραμμένο
+με μικρότερη συχνότητα.
+Όταν το φίλτρο κατά της αλλοίωσης είναι σχεδιασμένο με πρότυπο ΙΙΡ, τα
+οποία θα αναλυθούν παρακάτω, η διαδικασία βασίζεται στην ανάδραση της
+εξόδου στην είσοδο του φίλτρου πριν την έναρξη του δεύτερου στάδιου. Για
+το πρότυπο σχεδιασμού ΦΙΡ είναι εύκολο να υπολογιστεί για κάθε Μ εξόδου.
+Ο υπολογισμός που γίνεται από ένα τέτοιο φίλτρο αποδεκατισμού για κάθε
+νιοστή έξοδο δείγματος φαίνεται παρακάτω.
 
+\begin{equation}
+y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],}
+\end{equation}
 
-the process is performed on a sequence of samples of a signal or a
-continuous function, it produces an approximation of the sequence that
-would have been obtained by sampling the signal at a lower rate (or
-density, as in the case of a photograph).
-When the anti-aliasing filter is an IIR design, it relies on feedback
-from output to input, prior to the second step. With FIR filtering, it
-is an easy matter to compute only every Mth output. The calculation
-performed by a decimating FIR filter for the nth output sample is a dot
-product:[b]
-\begin{math}
-{\ y[n]=∑ _{k=0}^{K-1}x[nM-k]⋅ h[k],}y[n]=∑
-_{k=0}^{K-1}x[nM-k]⋅ h[k]
-\end{math}
-{\displaystyle y[n]=∑ _{k=0}^{K-1}x[nM-k]⋅ h[k],}y[n]=∑
-_{k=0}^{K-1}x[nM-k]⋅ h[k], where the h[•] sequence is the impulse
-response, and K is its length. x[•] represents the input sequence being
-downsampled. In a general purpose processor, after computing y[n], the
-easiest way to compute y[n+1] is to advance the starting index in the
-x[•] array by M, and recompute the dot product. In the case M=2, h[•]
-can be designed as a half-band filter, where almost half of the
-coefficients are zero and need not be included in the dot products.
+Όπου η ακολουθία h[•] είναι η απόκριση του κρουστικού παλμού (impulse
+response), και K είναι το μήκος. Η x[•] αντιπροσωπεύει το σήμα εισόδου
+εξαγόμενο από το φίλτρο με λιγότερα δείγματα.
+
+Σε επεξεργαστές γενικής χρήσης μετά τον υπολογισμό της παραπάνω εξίσωσης
+για κάποιον αριθμό n, ο ευκολότερος τρόπος να υπολογιστεί το y[n+1]
+είναι η καθυστέρηση της αρχής της ακολουθίας x[•] κατά Μ, και να λύθει
+το παραπάνω άθροισμα ξανά. Άν ο παράγοντας Μ=2, η συνάρτηση h[•] μπορεί
+να αντιπροσωπεύει ενα φίλτρο μισών συχνοτήτων, όπου σχεδόν το μισό πλήθος
+των δειγμάτων του αρχικού σήματος θα είναι μηδενικής ισχύος (amplitute)
+και δεν θα συμπεριληφθούν στο προϊόν πολλαπλασιασμού.
+
+===============================================================================
+
+Οι *τιμές* της απόκρισης του παλμού κατά διαστήματα Μ δημιουργούν
+υποαληλλουχίες, πλήθους Μ περιπλεγμένες μεταξύ τους.Το παράγογο του
+πολλαπλασιασμού είναι η πρόσθεση των προϊόντων από τον πολλαπλασιασμό
+κάθε υποαληλλουχίας με το καταγεγραμμένο σήμα x[•]. Επιπρόσθετα λόγω
+της μειώσης του πλήθους των δειγμάτων στο σήμα κατά Μ, κάθε σήμα που
+χρησιμοποιήθηκε στον προηγούμενο υπολογισμό κάποιου Μ προϊόντος δεν θα
+επαναλληφθεί σε επόμενο υπολογισμό. Αυτός είναι και ο λόγος που τα φίλτρα
+μικρής τάξης Μ ΦΙΡ φιλτράρουν μια από τις αλληλουχίες της εισόδου κάθε
+φορά και τα Μ προϊόντα προσθέτονται για να κατασκευαστεί το σήμα εξόδου.
+Αυτή η μέθοδος εφαρμόζεται σε συστήματα πολλαπλών επεξεργαστών, όπου ένα
+σήμα χωρίζεται σε φάσεις και φιλτράρεται ξεχωριστά από Μ αριθμό φίλτρων
+και τελικά προσθέτονται για την δημιουργία του σήματος εξόδου. Τα παραπάνω
+φίλτρα ονομάζονται και πολυφασικά.
+
+===============================================================================
 
 Impulse response coefficients taken at intervals of M form a
 subsequence, and there are M such subsequences (phases) multiplexed
@@ -352,6 +433,16 @@ input stream is demultiplexed and sent through a bank of M filters whose
 outputs are summed. When implemented that way, it is called a polyphase
 filter.
 
+===============================================================================
+
+Για εγκυκλοπεδικούς λόγους αξίζει να σημειωθεί πως είναι πιθανό σε κάθε
+φάση του υπολογισμού να αντικαθιστούμε τις τιμές της προηγούμενης φάσης
+με μηδενικές τιμές, σε ένα αντίγραφο της αλληλουχίας η[], επεξεργάζοντας
+το αρχικό σήμα στην συχνότητα εισόδου (πολλαπλασιάζοντας με 0) και
+αποδεκατίζοντας την έξοδο κατά έναν παράγοντα Μ. Η παραπάνω διαδικασία
+ονομάστηκε στα αγγλικά the first Noble identity και εφαρμόζεται σε
+διαφοροποιημένες πολυφασικές μεθόδους.
+===============================================================================
 For completeness, we now mention that a possible, but unlikely,
 implementation of each phase is to replace the coefficients of the other
 phases with zeros in a copy of the h[•] array, process the original x[•]
@@ -360,17 +451,19 @@ decimate the output by a factor of M. The equivalence of this
 inefficient method and the implementation described above is known as
 the first Noble identity.[6][c] It is sometimes used in derivations of
 the polyphase method.
+
 \begin{math}
 y[n]=\sum _{k=0}^{K-1}x[nM-k]\cdot h[k]
 \end{math}
 
+===============================================================================
 
 Reference
 - [[https://en.wikipedia.org/wiki/Downsampling_(signal_processing)][wikipedia]]
 
 
 
-** Multi rate Digital signal processing
+** TODO Multi rate Digital signal processing
 In many areas of digital signal processing (Digital Signal Processing) _applications—such as communications, speech, and audio processing—rising or lowering of a sampling rate is required_.
 /The principle that deals with changing the sampling rate belongs essentially to multi-rate signal processing/
 (Ifeachor and Jervis, 2002; Porat, 1997; Proakis and Manolakis, 1996; Sorensen and Chen, 1997).
@@ -385,53 +478,10 @@ As an introduction, we will focus on sampling rate conversion; that is, sampling
 This process is referred as *down-sampling of data sequence*. This produces an aliasing effect in the signal which should be avoided.
 
 
-** Aliasing
-In signal processing and related disciplines, aliasing is an effect that causes different signals to become indistinguishable (or aliases of one another) when sampled.
-It also often refers to the distortion or artifact that results when a signal reconstructed from samples is different from the original continuous signal.
-
-Aliasing can occur in signals sampled in time, for instance [[https://en.wikipedia.org/wiki/Digital_audio][digital audio]], or the stroboscopic effect, and is referred to as temporal aliasing. It can also occur in spatially sampled signals
-(e.g. moiré patterns in digital images); this type of aliasing is called spatial aliasing.
-
-Aliasing is generally avoided by applying low-pass filters or anti-aliasing filters ([[https://en.wikipedia.org/wiki/Anti-aliasing_filter][AAF]]) to the input signal before sampling and when converting a signal from a higher to a lower sampling rate.
-Suitable [[https://en.wikipedia.org/wiki/Aliasing][reconstruction filtering]] should then be used when restoring the sampled signal to the continuous domain or converting a signal from a lower to a higher sampling rate.
-
-For [[https://en.wikipedia.org/wiki/Spatial_anti-aliasing][spatial-anti-aliasing]], the types of anti-aliasing include:
- 1. [[https://en.wikipedia.org/wiki/Fast_approximate_anti-aliasing][fast sample anti-aliasing (FSAA)]],
-    - Description
-      Fast approximate anti-aliasing (FXAA) is a screen-space anti-aliasing algorithm created by Timothy Lottes at Nvidia.
-      FXAA 3 is released under a public domain license. A later version, FXAA 3.11, is released under a 3-clause BSD license.
-
-    - [[https://en.wikipedia.org/wiki/Fast_approximate_anti-aliasing][Algorithm description and more]]
-
- 2. [[https://en.wikipedia.org/wiki/Multisample_anti-aliasing][multisample anti-aliasing]],
-    - Description
- 3. [[https://en.wikipedia.org/wiki/Supersampling][supersampling]]
-
-
-**** The solution to the problem
-They propose an FIR low-pass filter for rejecting the unwanted frequencies.
-<<
-
-- To verify this principle, let us consider a signal x (n ) generated by the following:
-
-  $$x (n ) = 5 sin ((2π × 1000n )/8000) + cos ((2π × 2500n )/8000)$$, (12.8)
-
-  with a sampling rate of f s = 8,000 Hz, the spectrum of x (n ) is plotted in the first graph in Figure 12-3a, where we observe that the signal has components at frequencies of 1,000 and 2,500 Hz.
-
-    Now we down-sample x (n ) by a factor of 2, that is, M = 2. According to Equation (12.3), we know that the new folding frequency is 4000/2 = 2000 Hz.
-    Hence, without using the anti-aliasing low-pass filter, the spectrum would contain the aliasing frequency of 4 kHz – 2.5 kHz = 1.5 kHz introduced by 2.5 kHz, plotted in the second graph
-    in Figure 12-3a.
->>
-
-[[~/Documents/dissertation/org-docs/dissertation document/aliasing_from_downsampling.png]]
-
-
 ** [[file:~/Downloads/descrete domain signal book.pdf][Discrete fast Fourier transform ttransformransform]]
 **** Parseval's theorem
 The function
-#+begin_latex
-\|X(e^(jω))|^2
-#+end_latex
+\(|X(e^j^\omega)|^2\)
 
 is called energy density spectrum, since it determines how the energy density is distributed in the frequency domain.
 
