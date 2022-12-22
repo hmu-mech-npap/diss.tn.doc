@@ -603,6 +603,14 @@ plt.grid(which= 'both', axis= 'both')
 plt.savefig('Bessel Filter Freq Response.png')
 #+end_src
 
+#+RESULTS:
+:results:
+: Coefficients of b =  [0.38138399 1.52553597 2.28830395 1.52553597 0.38138399]
+: Coefficients of a =  [1.         2.22014688 1.96016768 0.79691897 0.12491033]
+[[file:./.ob-jupyter/e1bd9331cdcfacbb7f41f9d3f7f7369417191cb2.png]]
+:end:
+
+[[file:./Bessel Filter Freq Response.png]]
 **** Chebyshev
 
 #+begin_src jupyter-python :session py :async yes :results drawer
@@ -623,6 +631,14 @@ plt.grid(which= 'both', axis= 'both')
 plt.savefig('Chebyshev Filter Freq Response.png')
 #+end_src
 
+#+RESULTS:
+:results:
+: Coefficients of b =  [0.00621208 0.02484834 0.03727251 0.02484834 0.00621208]
+: Coefficients of a =  [ 1.         -2.55878623  3.06243151 -1.88984936  0.51133289]
+[[file:./.ob-jupyter/7a69c6d01e07b2b281b0b81bacec619b836e85be.png]]
+:end:
+
+[[file:./Chebyshev Filter Freq Response.png]]
 **** Elliptic
 
 #+begin_src jupyter-python :session py :async yes :results drawer
@@ -643,6 +659,14 @@ plt.grid(which= 'both', axis= 'both')
 plt.savefig('Elliptic Filter Freq Response.png')
 #+end_src
 
+#+RESULTS:
+:results:
+: Coefficients of b =  [0.46145672 0.25087717 0.92598814 0.25087717 0.46145672]
+: Coefficients of a =  [ 1.         -0.10662377  1.58392005 -0.10566643  0.58767062]
+[[file:./.ob-jupyter/31f8668d780753525719afbd56f7453fde8a0779.png]]
+:end:
+
+[[file:./Elliptic Filter Freq Response.png]]
 ** Φίλτρο μέσης τρέχουσας τιμής Finite Impulse Response (F.I.R.)
 Η κατηγορία αυτή εξειδικεύεται περαιτέρω, εφαρμόζοντας μια μέθοδο παραθύρων
 τα οποία προσφέρουν συγκεκριμένες αποκρίσεις στο πεδίο των συχνοτήτων. Μερικά
