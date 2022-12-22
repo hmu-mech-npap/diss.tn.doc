@@ -1,0 +1,7 @@
+* Physical books
+1. McClellan J. H. Schafer R. W. & Yoder M. A. (2003). Signal processing first. Pearson/Prentice Hall.
+2.
+
+* digital books
+1. Prentice Hall. (1999). Discrete time signal processing (2. ed.).
+2.

@@ -1,0 +1,22 @@
+* On the fly
+
+* 2022
+
+** 2022-12 Δεκεμβρίου
+
+*** 2022-12-07 Τετάρτη
+
+**** I21:14 μμ - [[file:~/Documents/dissertation/org-docs/dissertation document/main_doc.org::*The solution to the problem][The solution to the problem]] :Wflow:
+:LOGBOOK:
+CLOCK: [2022-12-07 Τετ 21:14]--[2022-12-07 Τετ 21:15] =>  0:01
+:END:
+
+***** TODO Translate region
+
+*** 2022-12-08 Πέμπτη
+
+**** I11:56 πμ - [[file:~/Documents/dissertation/org-docs/dissertation document/main_doc.org::*Σχεδιασμός Φίλτρων][Σχεδιασμός Φίλτρων]] :Wflow:
+
+***** TODO make fir sample code for pics
+***** TODO fill chapter
+

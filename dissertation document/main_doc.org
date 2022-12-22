@@ -2,9 +2,12 @@
 #+AUTHOR: Nickolas Torosian
 #+AUTHOR: Nikos Papadakis
 #+LANGUAGE: gr
-# #+STARTUP: latexpreview
-
-:toc:
+#+STARTUP: latexpreview
+#+OPTIONS: tags:t
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+EXCLUDE_TAGS: noexport
+#+TAGS:  noexport(n)
 
 * Εισαγωγή
 
@@ -30,7 +33,7 @@
 σημάτων. Στις μέρες μας η ανάγκη διαχείρισης ολοένα και μεγαλύτερα
 αρχεία δεδομένων με καλύτερη ακρίβεια οδήγησε την επιστημονική κοινότητα
 στην χρήση της μεθόδου *μετα-επεξεργασίας* (post-processing). Βασικό όφελος
-ήταν η δυνατότητα επαναλληψιμότητας του πειράματος και σύγκρισης των
+ήταν η δυνατότητα επαναληψιμότητας του πειράματος και σύγκρισης των
 αποτελεσμάτων σε όλο τον κόσμο, ουσιαστική αρχή της πειραματικής
 διαδικασίας. Έτσι με την χρήση προγραμματισμού δίνεται πλέον η
 δυνατότητα στον ερευνητή, να δημιουργεί ένα περιβάλλον προσομοίωσης και
@@ -233,7 +236,6 @@ processing) επεξεργάζονται σήματα που εκφράζοντ�
     \(A = 0, … ,n\) και \(t \in [a,b]\) .
 
 
-
 * DONE Σήματα διακριτού χρόνου (discrete time signals and systems)
 CLOSED: [2022-10-10 Δευ 13:24]
 ** Γενικός ορισμός
@@ -293,55 +295,61 @@ f_s_N=0.5f
 The Sampling frequency should be at least 2.2 times the capturing frequency.
 reference : https://en.wikipedia.org/wiki/Nyquist_frequency
 
-
-** TODO Αλλοίωση (Aliasing)
+** DONE Αλλοίωση (Aliasing)
+CLOSED: [2022-12-18 Κυρ 21:07]
 Ως αλλοίωση αναφερόμαστε εδώ στο αποτέλεσμα καταγραφής ενός σήματος,
 όπου η έξοδος αποτελείται από διαφορετικά σήματα και δεν είναι δυνατό να
 επαναδημιουργιθεί το αρχικό. Συνήθως η έξοδος είναι μετατοπισμένη ως
 προς το φάσμα των συχνοτήτων, όμως πολλές φορές επηρεάζεται και η ισχύ.
 Είναι λοιπόν σημαντικό να αποφευχθεί, όσο το δυνατόν περισσότερο, η
-αλλοίωση των σημάτων κατα την διαδικασία καταγραφής τους. Για τον λόγο
+αλλοίωση των σημάτων κατά την διαδικασία καταγραφής τους. Για τον λόγο
 αυτό συνήθως εφαρμόζεται ένα φίλτρο χαμηλών συχνοτήτων ή φίλτρο κατά της
 αλλοίωσης (anti-aliasing filters ([AAF])).
+Στην ελληνική βιβλιογραφία το φαινόμενο αυτό αναφέρεται ως *ψευδώνυμα συχνοτήτων*
+και ερευνήθηκε από τους Harry Niquist και Claude Shannon ερευνητές στα Bell Labs,
+οι οποίοι συνέβαλαν σημαντικά στον τομέα των τηλεπικοινωνιών και την καταγραφή
+σημάτων. Άλλωστε το θεωρητικό υπόβαθρο για την καταγραφή *ψηφιακών σημάτων* απαλλαγμένων
+από ψευδώνυμα αναπτύχθηκε από τους δύο κατά τις δεκαετίες 1920-1950.
+Στην εργαστηριακή εγκατάσταση που εξετάστηκε ήταν αδύνατο να αποφευχθεί η εμφάνισή
+τους, όμως χρησιμοποιήθηκε η μέθοδος της επεξεργασίας σημάτων πολλαπλών συχνοτήτων
+καταγραφής. Στην συγκεκριμένη μέθοδο θα αναφερθούμε επιγραμματικά στην συνέχεια,
+όμως αξίζει να αναφερθεί ότι δίνει την δυνατότητα εντοπισμού των αλλοιώσεων
+αποδεκατίζοντας το σήμα σύμφωνα με μία σταθερά και εξετάζοντας την γραφική του
+παράσταση σε σχέση με την αρχική καταγραφή. Όσο μειώνεται ο αριθμός των δειγμάτων
+το σήμα καταστρέφεται ηθελημένα, παράγοντας ψευδώνυμα συχνοτήτων τα οποία θα πρέπει
+να είναι όλα διαφορετικά. Όμως στην περίπτωση που εξετάστηκε φάνηκε να επαναδημιουργείται
+το αρχικό σήμα σε κάθε πέμπτης (5) τάξης αποδεκατισμού σήματος.
+Το συμπέρασμα αυτό προέκυψε χρησιμοποιώντας μια μέθοδο που εντάσσεται στην κατηγορία
+της επεξεργασίας σημάτων πολλαπλών συχνοτήτων, μεταβάλλοντας την συχνότητα καταγραφής
+αφαιρώντας πλήθος δειγμάτων, και συγκρίνοντας τις γραφικές παραστάσεις στα πεδία
+συχνοτήτων και χρόνου.
+Την απόρριψη του συγκεκριμένου τύπου "θορύβου" στις σύγχρονες συσκευές αναλαμβάνουν
+ειδικά φίλτρα που ονομάζονται φίλτρα που ονομάζονται F.I.R.. Περισσότερα θα αναφερθούν
+αργότερα
 
-
-[AAF] <https://en.wikipedia.org/wiki/Anti-aliasing_filter>
-
-
-Aliasing can occur in signals sampled in time, for instance [[https://en.wikipedia.org/wiki/Digital_audio][digital audio]], or the stroboscopic effect, and is referred to as temporal aliasing. It can also occur in spatially sampled signals
-(e.g. moiré patterns in digital images); this type of aliasing is called spatial aliasing.
-Aliasing is generally avoided by applying low-pass filters or anti-aliasing filters ([[https://en.wikipedia.org/wiki/Anti-aliasing_filter][AAF]]) to the input signal before sampling and when converting a signal from a higher to a lower sampling rate.
-Suitable [[https://en.wikipedia.org/wiki/Aliasing][reconstruction filtering]] should then be used when restoring the sampled signal to the continuous domain or converting a signal from a lower to a higher sampling rate.
-
-For [[https://en.wikipedia.org/wiki/Spatial_anti-aliasing][spatial-anti-aliasing]], the types of anti-aliasing include:
- 1. [[https://en.wikipedia.org/wiki/Fast_approximate_anti-aliasing][fast sample anti-aliasing (FSAA)]],
-    - Description
-      Fast approximate anti-aliasing (FXAA) is a screen-space anti-aliasing algorithm created by Timothy Lottes at Nvidia.
-      FXAA 3 is released under a public domain license. A later version, FXAA 3.11, is released under a 3-clause BSD license.
-
-    - [[https://en.wikipedia.org/wiki/Fast_approximate_anti-aliasing][Algorithm description and more]]
-
- 2. [[https://en.wikipedia.org/wiki/Multisample_anti-aliasing][multisample anti-aliasing]],
-    - Description
- 3. [[https://en.wikipedia.org/wiki/Supersampling][supersampling]]
-
-
-**** The solution to the problem
-They propose an FIR low-pass filter for rejecting the unwanted frequencies.
-<<
-
-- To verify this principle, let us consider a signal x (n ) generated by the following:
-
-$$x (n ) = 5 sin\times \frac{2\pi \times 1000n }{8000} + cos \times (\frac{2\pi \times 2500n }{8000})$$, (12.8)
-
-  with a sampling rate of f s = 8,000 Hz, the spectrum of x (n ) is plotted in the first graph in Figure 12-3a, where we observe that the signal has components at frequencies of 1,000 and 2,500 Hz.
-
-    Now we down-sample x (n ) by a factor of 2, that is, M = 2. According to Equation (12.3), we know that the new folding frequency is 4000/2 = 2000 Hz.
-    Hence, without using the anti-aliasing low-pass filter, the spectrum would contain the aliasing frequency of 4 kHz – 2.5 kHz = 1.5 kHz introduced by 2.5 kHz, plotted in the second graph
-    in Figure 12-3a.
->>
+-------
 
 [[~/Documents/dissertation/org-docs/dissertation document/aliasing_from_downsampling.png]]
+
+<https://en.wikipedia.org/wiki/Anti-aliasing_filter>
+
+# **** The solution to the problem
+# Η λύση στο πρόβλημα της αλλοίωσης δίνεται συνήθως από ένα φίλτρο διέλευσης
+# χαμηλών συχνοτήτων τύπου
+# They propose an FIR low-pass filter for rejecting the unwanted frequencies.
+# <<
+
+# - To verify this principle, let us consider a signal x (n ) generated by the following:
+
+# $$x (n ) = 5 sin \left(\frac{2\pi \times 1000n }{8000}\right) + cos \left(\frac{2\pi \times 2500n }{8000}\right)$$, (12.8)
+
+#   with a sampling rate of f s = 8,000 Hz, the spectrum of x (n ) is plotted in the first graph in Figure 12-3a, where we observe that the signal has components at frequencies of 1,000 and 2,500 Hz.
+
+#     Now we down-sample x (n ) by a factor of 2, that is, M = 2. According to Equation (12.3), we know that the new folding frequency is 4000/2 = 2000 Hz.
+#     Hence, without using the anti-aliasing low-pass filter, the spectrum would contain the aliasing frequency of 4 kHz – 2.5 kHz = 1.5 kHz introduced by 2.5 kHz, plotted in the second graph
+#     in Figure 12-3a.
+# >>
+
 
 
 ** DONE Μείωση αριθμού δειγμάτων (Decimation and down-sampling)
@@ -389,13 +397,14 @@ CLOSED: [2022-10-28 Παρ 15:46]
 y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],}
 \end{equation}
 
+
 Όπου η ακολουθία h[•] είναι η απόκριση του κρουστικού παλμού (impulse
 response), και K είναι το μήκος. Η x[•] αντιπροσωπεύει το σήμα εισόδου
 εξαγόμενο από το φίλτρο με λιγότερα δείγματα.
 
 Σε επεξεργαστές γενικής χρήσης μετά τον υπολογισμό της παραπάνω εξίσωσης
 για κάποιον αριθμό n, ο ευκολότερος τρόπος να υπολογιστεί το y[n+1]
-είναι η καθυστέρηση της αρχής της ακολουθίας x[•] κατά Μ, και να λύθει
+είναι η καθυστέρηση της αρχής της ακολουθίας x[•] κατά Μ, και να λυθεί
 το παραπάνω άθροισμα ξανά. Άν ο παράγοντας Μ=2, η συνάρτηση h[•] μπορεί
 να αντιπροσωπεύει ενα φίλτρο μισών συχνοτήτων, όπου σχεδόν το μισό πλήθος
 των δειγμάτων του αρχικού σήματος θα είναι μηδενικής ισχύος (amplitute)
@@ -460,78 +469,6 @@ y[n]=\sum _{k=0}^{K-1}x[nM-k]\cdot h[k]
 
 Reference
 - [[https://en.wikipedia.org/wiki/Downsampling_(signal_processing)][wikipedia]]
-
-
-
-** TODO Multi rate Digital signal processing
-In many areas of digital signal processing (Digital Signal Processing) _applications—such as communications, speech, and audio processing—rising or lowering of a sampling rate is required_.
-/The principle that deals with changing the sampling rate belongs essentially to multi-rate signal processing/
-(Ifeachor and Jervis, 2002; Porat, 1997; Proakis and Manolakis, 1996; Sorensen and Chen, 1997).
-As an introduction, we will focus on sampling rate conversion; that is, sampling rate reduction or increase.
-
-[[https://www.eetimes.com/multirate-dsp-part-1-upsampling-and-downsampling/][reference]]
-
-**** Sampling rate reduction by an integer factor
-:PROPERTIES:
-:TAGS_ALL: last doc
-:END:
-This process is referred as *down-sampling of data sequence*. This produces an aliasing effect in the signal which should be avoided.
-
-
-** [[file:~/Downloads/descrete domain signal book.pdf][Discrete fast Fourier transform ttransformransform]]
-**** Parseval's theorem
-The function
-\(|X(e^j^\omega)|^2\)
-
-is called energy density spectrum, since it determines how the energy density is distributed in the frequency domain.
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::86]]
-
-** Discrete Time process of continuous time signal
-
-**** Basics
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::189]]
-
-***** Changing the sampling rate
-****** using discrete time processing
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::193]]
-
-****** by an integer
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::193]]
-
-****** by a non integer
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::202]]
-
-***** Multi-rate signal processing
-
-****** Basics
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::205]]
-
-** Structures for discrete signals
-
-**** Intro
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::366]]
-
-**** basic structures for Infinite Impulse Response systems
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::380]]
-
-
-***** Feedback in Infinite Impulse Response
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::387]]
-
-**** Basic network structures for FIR systems.
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::392]]
-
-
 * Επεξεργασία σημάτων (Signal process (post-processing))
 
 ** Ορισμός μετα-επεξεργασίας
@@ -579,45 +516,185 @@ is called energy density spectrum, since it determines how the energy density is
 βαθμονόμιση του φίλτρου για να μην προστεθεί περαιτέρω σφάλμα στην
 μέτρηση
 
+* Σχεδιασμός Φίλτρων
 
-* Filter design
+** Κατηγορίες
+Λόγω των πολλών εφαρμογών που έχουν και την εκθετική αύξηση της χρήσης
+ηλεκτρονικών συσκευών στην καθημερινότητα, οι δυνατότητες επεξεργασίας
+ψηφιακών σημάτων αποτελεί πρακτικά απαραίτητη προϋπόθεση. Έτσι η ανάγκη
+για την ανάπτυξη διαφόρων τύπων φίλτρων π.χ. το φίλτρο μέσης τρέχουσας
+τιμής (FIR), το φίλτρο άπειρης κρουστικής απόκρισης (IIR) και το μεσιανό
+φίλτρο (median filters). Στην συνέχεια θα αναφερθούμε και στις τρείς αυτές
+κατηγορίες αναφέροντας παραδείγματα από τις μεθόδους που χρησιμοποιήθηκαν
+στην ανάλυση των δεδομένων από την *εργαστηριακή εγκατάσταση* ? ...
+Η γενική διαφοροποίηση που γίνεται αρχικά είναι ώς προς το εύρος
+συχνοτήτων που επηρεάζουν. Έτσι αν απορρίπτονται οι ύψηλες συχνότητες, το
+φίλτρο ονομάζεται διέλευσης χαμηλών συχνοτήτων (low-pass filter)
+ενώ το αντίστροφο ονομάζεται φίλτρο διέλευσης υψηλών συχνοτήτων (high-pass
+filter). Άν το φίλτρο επηρεάζειμία περιοχή ή *φάσμα* συχνοτήτων και
+απορρίπτει όσες βρίσκονται πρίν και μετα, ονομάζεται φίλτρο απόρριψης
+εύρους συχνοτήτων (band-stop filter).
 
-** Intro
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::465
-]]
-** D.T. Infinite Impulse Response from C.T. filters
+** Φίλτρο άπειρης κρουστικής απόκρισης Infinite Impulse Response (I.I.R.)
+Τα φίλτρα άπειρης κρουστικής απόκρισης στο πεδίο του χρόνου <216>....
+Γραμμικότητα και χρονική αμεταβλητότητα .... <219>.....
+κλπ .....
+....
+*** IIR
+**** Imports :noexport:
+#+begin_src jupyter-python :session py :async yes :results drawer
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+from scipy import signal
+#+end_src
 
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::468]]
+#+RESULTS:
+:results:
+:end:
 
-** FIR by WINDOWING
+**** Butterworth
 
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::491]]
+#+begin_src jupyter-python :session py :async yes :results drawer
+# 4TH ORDER BUTTERWORTH FILTER WITH A GAIN DROP OF 1/sqrt(2) AT 0.4 CYCLES/SAMPLE
+bb, ab  = signal.butter (4, 0.8, 'low', analog=False, output='ba')
+print ('Coefficients of b = ', bb)
+print ('Coefficients of a = ', ab)
+wb, hb = signal.freqz(bb, ab)
+wb = wb/(2*math.pi)
+plt.plot(wb, abs(np.array(hb)))
 
-**** Common windows used
+plt.title('Butterworth filter frequency response')
+plt.xlabel('Frequency [cycles/sample]')
+plt.ylabel('Amplitute [dB]')
+plt.margins(0, 0.1)
+plt.grid(which = 'both', axis='both')
+plt.savefig('Butterworth Filter Freq Response.png')
+#+end_src
+
+#+RESULTS:
+:results:
+: Coefficients of b =  [0.43284664 1.73138658 2.59707987 1.73138658 0.43284664]
+: Coefficients of a =  [1.         2.36951301 2.31398841 1.05466541 0.18737949]
+[[file:./.ob-jupyter/39b9cd03a30b43758fe2513c9e27ce539ea5e779.png]]
+:end:
+
+#+CAPTION:Butterworth filter frequency response
+
+[[file:./Butterworth Filter Freq Response.png]]
+
+**** Bessel
+
+#+begin_src jupyter-python :session py :async yes :results drawer
+# 4TH ORDER BESSEL FILTER WITH A GAIN DROP OF 1/sqrt(2) AT 0.4 CYCLES/SAMPLE
+
+bb, ab = signal.bessel (4, 0.8, 'low', analog=False, output='ba')
+print ('Coefficients of b = ', bb)
+print ('Coefficients of a = ', ab)
+wb, hb = signal.freqz(bb, ab)
+wb = wb/(2*math.pi)
+plt.plot(wb, abs(np.array(hb)))
+
+plt.title('Bessel filter frequency response')
+plt.xlabel('Frequency [cycles/sample]')
+plt.ylabel('Amplitute [dB]')
+plt.margins(0, 0.1)
+plt.grid(which= 'both', axis= 'both')
+plt.savefig('Bessel Filter Freq Response.png')
+#+end_src
+
+**** Chebyshev
+
+#+begin_src jupyter-python :session py :async yes :results drawer
+#4TH ORDER CHEBYSHEV FILTER TYPE 1 (ONLY IN PASSBAND RIPPLES) WITH MAX RIPPLES=2 AND THE GAIN DROP AT 1.5 CYCLES/SAMPLE
+
+bb, ab = signal.cheby1 (4, 2, 0.3, 'low', analog=False, output='ba')
+print ('Coefficients of b = ', bb)
+print ('Coefficients of a = ', ab)
+wb, hb = signal.freqz(bb, ab)
+wb = wb/(2*math.pi)
+plt.plot(wb, abs(np.array(hb)))
+
+plt.title('Chebyshev filter frequency response')
+plt.xlabel('Frequency [cycles/sample]')
+plt.ylabel('Amplitute [dB]')
+plt.margins(0, 0.1)
+plt.grid(which= 'both', axis= 'both')
+plt.savefig('Chebyshev Filter Freq Response.png')
+#+end_src
+
+**** Elliptic
+
+#+begin_src jupyter-python :session py :async yes :results drawer
+# 4TH ORDER ELLIPTIC FILTER WITH MAX RIPPLES =2dB IN PASSBAND, MIN ATTENUATION =8dB IN STOP BAND AT 0.25 CYCLES/SAMPLE
+
+bb, ab = signal.ellip (4, 2, 8, 0.5, 'low', analog=False, output='ba')
+print ('Coefficients of b = ', bb)
+print ('Coefficients of a = ', ab)
+wb, hb = signal.freqz(bb, ab)
+wb = wb/(2*math.pi)
+plt.plot(wb, abs(np.array(hb)))
+
+plt.title('Elliptic filter frequency response')
+plt.xlabel('Frequency [cycles/sample]')
+plt.ylabel('Amplitute [dB]')
+plt.margins(0, 0.1)
+plt.grid(which= 'both', axis= 'both')
+plt.savefig('Elliptic Filter Freq Response.png')
+#+end_src
+
+** Φίλτρο μέσης τρέχουσας τιμής Finite Impulse Response (F.I.R.)
+Η κατηγορία αυτή εξειδικεύεται περαιτέρω, εφαρμόζοντας μια μέθοδο παραθύρων
+τα οποία προσφέρουν συγκεκριμένες αποκρίσεις στο πεδίο των συχνοτήτων. Μερικά
+παραδείγματα θα παρουσιαστούν παρακάτω, καθώς ήταν μια από τις μεθόδους που
+εξετάστηκαν κατά την διάρκεια της ανάλυσης των δεδομένων. Παρείχε αποτελέσματα
+που ενέτασαν στην έξοδό του ενίσχυση του σήματος σε χαμηλές συχνότητες. Αύτο
+ήταν αποτέλεσμα του τρόπου με τον οποίο ορίζεται ο συγκεκριμένος τύπος, καθώς
+φαίνεται να μην συνιστάται όταν ο όγκος δεδομένων έχουν μεγάλο πλήθος. Ο λόγος
+είναι ότι πρέπει να οριστεί ένα πολυώνυμο με το οποίο κάθε συντελεστής ταυτίζεται
+με κάθε ένα από τα σημεία του δείγματος. Έτσι σε μεγάλα σετ δεδομένων απαιτείται
+πρακτικά μεγάλος όγκος αριθμητικών υπολογισμών που καθυστερεί την έκβαση των
+αποτελεσμάτων σε μη αποδεκτό βαθμό.
+*** Κατηγορίες παραθύρων φίλτρων FIR :noexport:
+
+**** Συχνοί τύποι παραθύρων
 - Some basic properties for:
   - Rectangle
+
+    #+begin_src jupyter-python :session python :async yes :results drawer
+
+    #+end_src
+
   - Barlett
+    #+begin_src jupyter-python :session python :async yes :results drawer
+
+    #+end_src
+
   - Hanning
+      #+begin_src jupyter-python :session python :async yes :results drawer
+
+      #+end_src
+
   - Hamming
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::494
-]]
+      #+begin_src jupyter-python :session python :async yes :results drawer
 
-**** Kaiser window method
+      #+end_src
 
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::500]]
+**** Μέθοδος Kaiser
 
+#+begin_src jupyter-python :session python :async yes :results drawer
+
+#+end_src
 
 **** Optimum approximations of FIR
 
 - Here is a deep analysis for the appropriate implementation of the FIR filters in respect to /M value???/
 
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::491]]
+** D.T. Infinite Impulse Response from C.T. filters :noexport:
 
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::468]]
 
-**** F
-
-
-* Discrete Fourier Transform (D.F.T.)
+* Discrete Fourier Transform (D.F.T.) :noexport:
 ** Intro
 
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::567]]
@@ -656,7 +733,7 @@ is called energy density spectrum, since it determines how the energy density is
 
 *** Sampling in Time and Frequency
 
-* Laboratory case study
+* Laboratory case study :noexport:
 
 ** General idea and method
 *** Intro
@@ -713,3 +790,164 @@ Here the signal is transferred via Telecommunication cable for minimizing the sy
 #+end_src
 
 ***** Other measuring devices
+
+#  LocalWords:  επαναδημιουργιθεί
+
+
+
+** TODO Multi rate Digital signal processing :noexport:
+In many areas of digital signal processing (Digital Signal Processing) _applications—such as communications, speech, and audio processing—rising or lowering of a sampling rate is required_.
+/The principle that deals with changing the sampling rate belongs essentially to multi-rate signal processing/
+(Ifeachor and Jervis, 2002; Porat, 1997; Proakis and Manolakis, 1996; Sorensen and Chen, 1997).
+As an introduction, we will focus on sampling rate conversion; that is, sampling rate reduction or increase.
+
+[[https://www.eetimes.com/multirate-dsp-part-1-upsampling-and-downsampling/][reference]]
+
+**** Sampling rate reduction by an integer factor
+:PROPERTIES:
+:TAGS_ALL: last doc
+:END:
+This process is referred as *down-sampling of data sequence*. This produces an aliasing effect in the signal which should be avoided.
+
+
+** [[file:~/Downloads/descrete domain signal book.pdf][Discrete fast Fourier transform ttransformransform ]] :noexport:
+**** Parseval's theorem
+The function
+\(|X(e^j^\omega)|^2\)
+
+is called energy density spectrum, since it determines how the energy density is distributed in the frequency domain.
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::86]]
+
+** Discrete Time process of continuous time signal :noexport:
+
+**** Basics
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::189]]
+
+***** Changing the sampling rate
+****** using discrete time processing
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::193]]
+
+****** by an integer
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::193]]
+
+****** by a non integer
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::202]]
+
+***** Multi-rate signal processing
+
+****** Basics
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::205]]
+
+** Structures for discrete signals :noexport:
+
+**** Intro
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::366]]
+
+**** basic structures for Infinite Impulse Response systems
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::380]]
+
+
+***** Feedback in Infinite Impulse Response
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::387]]
+
+**** Basic network structures for FIR systems.
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::392]]
+
+
+
+* Source blocks :noexport:
+** FFT
+
+#+begin_src jupyter-python :session py  :async yes :results drawer
+
+class FftNew:
+    """# Better approach to fft.
+
+    Here is an example of how the calculation of fft for a given
+    signal is implemented.
+
+    Main function
+    ----------
+    >>>def fft_calc_and_plot(self):
+    >>>    num_samp = len(self.time_sec)
+    >>>    # compute fft
+    >>>    fhat = fft(self.sig, num_samp)
+    >>>    # Power spectrum (power/freq)
+    >>>    psd = fhat * np.conj(fhat) / num_samp
+    >>>    # create x-axis (frequencies)
+    >>>    freq = (1/(self.time_interv * num_samp)) * np.arange(num_samp)
+    >>>    # plot only first half (possitive)
+    >>>    plt_pos = np.arange(1, np.floor(num_samp/2), dtype=int)
+
+    Usage
+    ----------
+    >>>FftNew(df_tdms_1_0.decimate(dec=5, offset=0),
+    >>>     title='Decimation number 5 CA INV ON').fft_calc_and_plot()
+
+    Reference
+    ----------
+    http://databookuw.com/
+    """
+
+    def __init__(self, sign, title):
+        """# Object initialize.
+
+        This function constructs an object for a given signal
+        which will be plotted in the frequency domain.
+        """
+        self.plt_title = title
+        self.samp_rate = sign.fs_Hz
+        self.sig = sign.data
+        self.ind = sign.data_as_Series.index
+        self.time_interv = 1 / int(self.samp_rate)
+        self.time_sec = self.ind * self.time_interv
+
+    def fft_calc_and_plot(self):
+        """# FFT calculation and plotting.
+
+        This function is used to calculate and plot a signal in the
+        frequency domain using the fft library from numpy.
+        """
+        num_samp = len(self.time_sec)
+        # compute fft
+        fhat = fft(self.sig, num_samp)
+        # Power spectrum (power/freq)
+        psd = fhat * np.conj(fhat) / num_samp
+        # create x-axis (frequencies)
+        freq = (1/(self.time_interv * num_samp)) * np.arange(num_samp)
+        # plot only first half (possitive)
+        plt_pos = np.arange(1, np.floor(num_samp/2), dtype=int)
+
+        fig, axs = plt.subplots(2, 1)
+
+        plt.sca(axs[0])
+        plt.grid(True, which='both')
+        plt.title(self.plt_title)
+        plt.xlabel('Time [s]')
+        plt.ylabel('Amplitute (Voltage)')
+        plt.plot(self.time_sec, self.sig)
+        # plt.loglog(freq[plt_pos],(PSD[plt_pos]))
+
+        plt.sca(axs[1])
+        plt.loglog(freq[plt_pos], abs(psd[plt_pos]))
+        plt.title('Frequency domain')
+        plt.xlabel('Frequencies [Hz]')
+        plt.ylabel('Power/Freq')
+        plt.grid(True, which='both')
+
+
+#+end_src
+
+#+RESULTS:
+:results:
+:end:
