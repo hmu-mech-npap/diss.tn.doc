@@ -3,30 +3,26 @@
 #+AUTHOR: Nikos Papadakis
 #+LANGUAGE: gr
 #+STARTUP: latexpreview
-#+OPTIONS: tags:t
+#+OPTIONS: tags:t toc:t
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+EXCLUDE_TAGS: noexport
 #+TAGS:  noexport(n)
-#+odt_preferred_output_format:
-#+odt_styles_file: /home/dtos_experiment/Templates/template-pretty-printed.ott
 
-# The default LaTeX class is article,
+# The default La-TeX class is article,
 #+LATEX_CLASS: report
 
 # Options to modify the class. E.g. font size.
-#+LATEX_CLASS_OPTIONS: [11pt,breaklines=true]
+#+LATEX_CLASS_OPTIONS: [breaklines=true]
 
-# Other LaTeX code that you'd need in the preamble, notably, using packages.
+# Other La-TeX code that you'd need in the preamble, notably, using packages.
 #+LATEX_HEADER: \usepackage[margin=2cm]{geometry}
 #+LATEX_HEADER: \usepackage{setspace}
 # Options don't need to be in capital letters
-#+latex_header: \setstretch{0.90}
+# #+latex_header: \setstretch{0.90}
 
 * Εισαγωγή
-:PROPERTIES:
-:ATTR_ODT: :page-break t
-:END:
+#+ODT: <text:p text:style-name="PageBreak"/>
 Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
 τηλεπικοινωνίες μετά ή/και πριν την μετάδοση από τον πομπό προς τον
 δέκτη, και η εκλογή πληροφοριών από αυτό έθεσαν από νωρίς το πρόβλημα
@@ -72,7 +68,7 @@
 αρχείων δεδομένων). Τέλος θα ήθελα να ευχαριστήσω τον καθηγητή μου κ.
 Νίκο Παπαδάκη για την καθοδήγησή του και την υπομονή που έδειξε για τις
 λιγοστές γνώσεις μου στον προγραμματισμό.
-
+-----
 * Ιστορική αναδρομή
 :PROPERTIES:
 :ATTR_ODT: :page-break t
@@ -175,7 +171,7 @@ Transform/). Ο F.F.T. ήταν αρκετά σημαντικός για πολ�
 ολοένα και ταχύτερων υπολογιστών για την διαχείριση ακέραιων και δεκαδικών
 αριθμών. Έτσι σήμερα η ανάλυση σημάτων, η καταγραφή όπως και η μετάδοσή τους
 γίνεται πολλές φορές εξ' ολοκλήρου από ψηφιακά συστήματα.
-
+-----
 * Σήματα συνεχούς χρόνου (Continuous time signals)
 ** Εισαγωγή
 Ο όρος σήμα (signal) δίνεται σε κάτι που εμπεριέχει πληροφορία. Γενικά
@@ -254,6 +250,7 @@ processing) επεξεργάζονται σήματα που εκφράζοντ�
 
     \(A = 0, … ,n\) και \(t \in [a,b]\) .
 
+-----
 * Σήματα διακριτού χρόνου (discrete time signals and systems)
 ** Γενικός ορισμός
     Σήμα διακριτού χρόνου ονομάζεται μια ακολουθία αριθμών καταγεγραμμένες
@@ -483,6 +480,9 @@ y[n]=\sum _{k=0}^{K-1}x[nM-k]\cdot h[k]
 
 Reference
 - [[https://en.wikipedia.org/wiki/Downsampling_(signal_processing)][wikipedia]]
+
+-----
+
 * Επεξεργασία σημάτων (Signal process (post-processing))
 
 ** Ορισμός μετα-επεξεργασίας
@@ -529,6 +529,7 @@ Reference
 Αυτό θα αύξανε πολύ το κόστος της κατασκευής και θα απαιτούσε
 βαθμονόμιση του φίλτρου για να μην προστεθεί περαιτέρω σφάλμα στην
 μέτρηση
+-----
 
 * Σχεδιασμός Φίλτρων
 
@@ -681,6 +682,8 @@ plt.savefig('Elliptic Filter Freq Response.png')
 :end:
 
 [[file:./Elliptic Filter Freq Response.png]]
+
+-------
 ** Φίλτρο μέσης τρέχουσας τιμής Finite Impulse Response (F.I.R.)
 Η κατηγορία αυτή εξειδικεύεται περαιτέρω, εφαρμόζοντας μια μέθοδο παραθύρων
 τα οποία προσφέρουν συγκεκριμένες αποκρίσεις στο πεδίο των συχνοτήτων. Μερικά
