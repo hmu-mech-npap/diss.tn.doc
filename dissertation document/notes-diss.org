@@ -20,3 +20,37 @@ CLOCK: [2022-12-07 Τετ 21:14]--[2022-12-07 Τετ 21:15] =>  0:01
 ***** TODO make fir sample code for pics
 ***** TODO fill chapter
 
+* 2023
+
+** 2023-02 Φεβρουαρίου
+
+*** 2023-02-11 Σάββατο
+
+**** I17:35 μμ - [[file:~/Documents/dissertation/org-docs/dissertation document/main_doc.org::+latex_header: \setstretch{0.90}]] :Wflow:
+
+***** This capture works perfect!!
+***** [#A] try to find some papers for
+- [ ] FIR
+- [ ] IIR
+
+
+* working latex config
+
+# The default La-TeX class is article,
+#+LATEX_CLASS: report
+
+# Options to modify the class. E.g. font size.
+#+LATEX_CLASS_OPTIONS: [breaklines=true]
+
+# Other La-TeX code that you'd need in the preamble, notably, using packages.
+#+LATEX_HEADER: \usepackage[margin=2cm]{geometry}
+#+LATEX_HEADER: \usepackage{setspace}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[LGR]{fontenc}
+#+LATEX_HEADER: \usepackage[greek,greek]{babel}
+
+# #+LANGUAGE: gr
+# #+LATEX_HEADER: \usepackage[english, AUTO]{polyglossia}
+
+# Options don't need to be in capital letters
+# #+latex_header: \setstretch{0.90}
