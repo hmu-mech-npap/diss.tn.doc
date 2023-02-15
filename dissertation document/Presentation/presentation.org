@@ -1,0 +1,65 @@
+:REVEAL_PROPERTIES:
+#+REVEAL_THEME: blood
+#+REVEAL_TITLE_SLIDE: <h2>%t</h2> <h3>%s</h3> <p>%a</p> <p>%d</<p>
+#+OPTIONS: num:nil timestamp:nil toc:nil
+:END:
+:ORG_PROPERTIES:
+
+#+STARTUP: latexpreview
+#+OPTIONS: tags:t
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+EXCLUDE_TAGS: noexport
+#+TAGS:  noexport(n)
+
+:END:
+:DOC_PROPERTIES:
+#+TITLE: Φιλτρα συχνοτητων
+#+SUBTITLE: Τ.Ε.Ι. Κρητης
+#+AUTHOR: Νικολας Τοροσιαν
+#+DATE:[2023-06-25 16:00]
+:END:
+
+#+begin_export html
+<style>
+.reveal  th1 {font-size: 40%;}
+</style>
+#+end_export
+
+* Φιλτρα συχνοτητων και απομοιωση θορυβου
+#+ATTR_REVEAL: :frag (grow)
+- Φοιτητής
+  - Τοροσιάν Νικόλας
+  - ΑΜ: ΤΜ6220
+- Επιβλέπον καθηγητής
+  - Παπαδάκης Νικόλας
+
+* Τι ειναι σημα
+#+ATTR_REVEAL: :frag (appear)
+- Διάφοροι τύποι κυματομορφών
+  + Παλμός
+  + ημιτονοειδές
+  + δυαδικό
+  + ....
+- Να εμπεριέχει πληροφορία
+  + Δηλαδή διακριτές διαφορές στην ισχύ ή/και την συχνότητα
+- Περιοδική συμπεριφορά
+  + Επανάληψη στο χρόνο
+* πως το χρησιμοποιουμε
+#+ATTR_REVEAL: :frag (fade-left)
++ Συνήθως για συμπίεση πληροφορίας
++ Επικοινωνία-Διαδίκτυο
++ Αλλά και ως μέτρο αναφοράς
+** καταγραφή και επεξεργασια
+Η καταγραφή καθώς και ο τρόπος αποθήκευσης καθορίζονται από τον όγκο τους σε mB. Ένας επίσης καθοριστικός παράγοντας είναι το όριο που μπορεί να μεταφερθεί μέσω διαδυκτίου καθώς πολλές φορές η ερευνητές βρίσκονται σε διαφορετικές ηπύρους
+*** επεξεργασια
+Συνήθως γίνεται σε μεταγενέστερο χρόνο και τις περισσότερες φορές απαιτεί μεγάλη υπολογιστική ισχύ σχετικά με τον όγκο τους. *βαλε παραδειγμα εδω*
+** IIR
+infinent impulse response
+** FIR
+finite impulse response
+* Εργαστηριακη εγκατασταση
+#+ATTR_REVEAL: height 85%
+#+ATTR_REVEAL: :frag (fade-in-then-semi-out)
+[[/home/dtos_experiment/Documents/dissertation/org-docs/dissertation document/Wind_Tunnel_setup_lab.png]]
+* /Ευχαριστω για τον χρονο σας/

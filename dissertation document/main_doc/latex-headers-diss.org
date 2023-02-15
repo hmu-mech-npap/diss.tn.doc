@@ -1,0 +1,27 @@
+# The default La-TeX class is article,
+#+LATEX_CLASS: report
+
+# Options to modify the class. E.g. font size.
+#+LATEX_CLASS_OPTIONS: [breaklines=true]
+
+# Other La-TeX code that you'd need in the preamble, notably, using packages.
+#+LATEX_HEADER: \usepackage[margin=2cm]{geometry}
+#+LATEX_HEADER: \usepackage{setspace}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[LGR]{fontenc}
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage[english,greek]{babel}
+#+LATEX_HEADER: \newcommand{\en}[1]{\foreignlanguage{english}{#1}}
+#+LATEX_HEADER: \usepackage{minted}
+#+LATEX_HEADER: \usepackage[hidelinks]{hyperref}
+# Options don't need to be in capital letters
+#+latex_header: \hypersetup{colorlinks=true, linkcolor=black}
+
+# Fancy headers
+#+latex_header: \usepackage{fancyhdr}
+#+latex_header: \usepackage{lipsum}% just to generate text for the example
+#+latex_header: \pagestyle{fancy}
+#+latex_header: \fancyhf{}
+#+latex_header: \fancyhead[L]{\rightmark}
+#+latex_header: \fancyhead[R]{\leftmark}
+#+latex_header: \renewcommand{\headrulewidth}{0.4pt}

@@ -1,3 +1,12 @@
+:REVEAL_PROPERTIES:
+#+REVEAL_HTML:  font-size: 60%
+#+REVEAL_THEME: blood
+#+OPTIONS: timestamp:nil toc:1
+:END:
+#+TITLE: Φίλτρα συχνοτήτων και Η/Μ θόρυβος
+#+AUTHOR: Νικόλας Τοροσιάν
+#+DATE:[2023-06-25]
+
 * On the fly
 
 * 2022
@@ -36,21 +45,12 @@ CLOCK: [2022-12-07 Τετ 21:14]--[2022-12-07 Τετ 21:15] =>  0:01
 
 * working latex config
 
-# The default La-TeX class is article,
-#+LATEX_CLASS: report
+#+ATTR_HTML: :width 45% :align right
+[[/home/dtos_experiment/Screenshots/latex-headers.png]]
 
-# Options to modify the class. E.g. font size.
-#+LATEX_CLASS_OPTIONS: [breaklines=true]
-
-# Other La-TeX code that you'd need in the preamble, notably, using packages.
-#+LATEX_HEADER: \usepackage[margin=2cm]{geometry}
-#+LATEX_HEADER: \usepackage{setspace}
-#+LATEX_HEADER: \usepackage[utf8]{inputenc}
-#+LATEX_HEADER: \usepackage[LGR]{fontenc}
-#+LATEX_HEADER: \usepackage[greek,greek]{babel}
-
-# #+LANGUAGE: gr
-# #+LATEX_HEADER: \usepackage[english, AUTO]{polyglossia}
-
-# Options don't need to be in capital letters
-# #+latex_header: \setstretch{0.90}
+* Reference protocol
+** give dataset
+** give protocol
+** give analysis plan
+** give analysis plan and raw data
+** open live streaming
