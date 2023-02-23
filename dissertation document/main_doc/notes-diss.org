@@ -8,6 +8,9 @@
 #+DATE:[2023-06-25]
 
 * On the fly
+**  SOS type filter output
+*** TODO [#A] send mail to papadaki for news
+SCHEDULED: <2023-02-17 Παρ 11:00>
 
 * 2022
 
@@ -26,7 +29,13 @@ CLOCK: [2022-12-07 Τετ 21:14]--[2022-12-07 Τετ 21:15] =>  0:01
 
 **** I11:56 πμ - [[file:~/Documents/dissertation/org-docs/dissertation document/main_doc.org::*Σχεδιασμός Φίλτρων][Σχεδιασμός Φίλτρων]] :Wflow:
 
-***** TODO make fir sample code for pics
+***** DONE make fir sample code for pics
+CLOSED: [2023-02-16 Πεμ 13:15]
+:LOGBOOK:
+- CLOSING NOTE [2023-02-16 Πεμ 13:15] \\
+  this is done and i have too much graphs in understanding folder
+:END:
+
 ***** TODO fill chapter
 
 * 2023
@@ -35,12 +44,13 @@ CLOCK: [2022-12-07 Τετ 21:14]--[2022-12-07 Τετ 21:15] =>  0:01
 
 *** 2023-02-11 Σάββατο
 
-**** I17:35 μμ - [[file:~/Documents/dissertation/org-docs/dissertation document/main_doc.org::+latex_header: \setstretch{0.90}]] :Wflow:
+**** I17:35 μμ - :Wflow:
+[[file:~/Documents/dissertation/org-docs/dissertation document/main_doc.org][diss doc]]
 
 ***** This capture works perfect!!
 ***** [#A] try to find some papers for
-- [ ] FIR
-- [ ] IIR
+- [-] FIR
+- [-] IIR
 
 
 * working latex config
@@ -54,3 +64,7 @@ CLOCK: [2022-12-07 Τετ 21:14]--[2022-12-07 Τετ 21:15] =>  0:01
 ** give analysis plan
 ** give analysis plan and raw data
 ** open live streaming
+* buttons
+# <(go to code)>
+# <(go to document)>
+# <(go to presentation)>

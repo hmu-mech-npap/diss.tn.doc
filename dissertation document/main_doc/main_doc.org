@@ -1,6 +1,7 @@
 #+TITLE: Φίλτρα συχνοτήτων και απομόνωση Η/Μ θορύβου
 #+AUTHOR: Νικόλας Τοροσιάν
 #+AUTHOR: Νίκος Παπαδάκης
+:ORG-PROPERTIES:
 #+LANGUAGE: gr
 #+STARTUP: latexpreview
 #+OPTIONS: tags:t toc:t
@@ -9,7 +10,7 @@
 #+EXCLUDE_TAGS: noexport
 #+TAGS:  noexport(n)
 #+INCLUDE: latex-headers-diss.org
-
+:END:
 * Εισαγωγή
 #+ODT: <text:p text:style-name="PageBreak"/>
 Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
@@ -846,7 +847,6 @@ is called energy density spectrum, since it determines how the energy density is
 [[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal::392]]
 
 
-
 * Source blocks :noexport:
 ** FFT
 
@@ -933,3 +933,10 @@ class FftNew:
 #+RESULTS:
 :results:
 :end:
+* GO BUTTONS :noexport:
+<[my-github]> https://github.com/goodvibrations32
+
+# <(code)>
+# <(diss-notes)>
+# <(edit latex headers file)>
+# <(apa citation file)>

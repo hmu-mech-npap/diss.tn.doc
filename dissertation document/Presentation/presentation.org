@@ -1,7 +1,16 @@
 :REVEAL_PROPERTIES:
 #+REVEAL_THEME: blood
+#+REVEAL_HLEVEL: 2
 #+REVEAL_TITLE_SLIDE: <h2>%t</h2> <h3>%s</h3> <p>%a</p> <p>%d</<p>
 #+OPTIONS: num:nil timestamp:nil toc:nil
+
+#+REVEAL_MARGIN: 0.3
+#+REVEAL_MIN_SCALE: 0.4
+#+REVEAL_MAX_SCALE: 1.8
+
+#+OPTIONS:  reveal_progress:t reveal_history:t reveal_control:t
+
+#+OPTIONS: reveal_width:1280 reveal_height:768
 :END:
 :ORG_PROPERTIES:
 
@@ -26,40 +35,100 @@
 </style>
 #+end_export
 
-* Φιλτρα συχνοτητων και απομοιωση θορυβου
-#+ATTR_REVEAL: :frag (grow)
-- Φοιτητής
-  - Τοροσιάν Νικόλας
-  - ΑΜ: ΤΜ6220
+* Καθηγητες
+
+#+ATTR_REVEAL: :frag (semi-fade-out )
 - Επιβλέπον καθηγητής
+#+ATTR_REVEAL: :frag (highlight-green)
   - Παπαδάκης Νικόλας
 
+#+ATTR_REVEAL: :frag (semi-fade-out )
+- Υπεύθυνος Εργαστηρίου Α.Π.Ε
+#+ATTR_REVEAL: :frag (highlight-red )
+  - Κονταξάκης Κωvσταντίνος
 * Τι ειναι σημα
+
 #+ATTR_REVEAL: :frag (appear)
 - Διάφοροι τύποι κυματομορφών
-  + Παλμός
-  + ημιτονοειδές
-  + δυαδικό
-  + ....
+#+ATTR_REVEAL: :frag (fade-left)
+   - Παλμός
+    #+ATTR_REVEAL: :frag (fade-in-then-out)
+     - Ηλεκτρικό ρεύμα
+     - χορδή μιας κιθάρας.
+
+    #+ATTR_REVEAL: :frag (fade-left)
+   - Ημιτονοειδές
+    #+ATTR_REVEAL: :frag (fade-in-then-out)
+     - από ηλεκτρονικό η αναλογικό σύστημα.
+     - Βάλε εδώ αν είναι ωραίο μια φωτό (μετεορολογικης μηχανης).
+   #+ATTR_REVEAL: :frag (appear)
+   - δυαδικό
+      #+ATTR_REVEAL: :frag (fade-in-then-out)
+     - π.χ. 'καλημέρα' == 11001110 10111010 11001110 10110001 11001110 10111011 11001110 10110111 11001110 10111100 11001110 10110101 11001111 10000001 11001110 10110001
+
+#+ATTR_REVEAL: :frag (appear)
 - Να εμπεριέχει πληροφορία
+    #+ATTR_REVEAL: :frag (fade-in-then-out)
   + Δηλαδή διακριτές διαφορές στην ισχύ ή/και την συχνότητα
+
+#+ATTR_REVEAL: :frag (appear)
 - Περιοδική συμπεριφορά
-  + Επανάληψη στο χρόνο
-* πως το χρησιμοποιουμε
+#+ATTR_REVEAL: :frag (fade-in-then-out)
+  + Η επανάληψη στο χρόνο είναι από τα σημαντικότερα χαρακτηριστικά των σημάτων.
+** πως χρησιμοποιειται
 #+ATTR_REVEAL: :frag (fade-left)
 + Συνήθως για συμπίεση πληροφορίας
 + Επικοινωνία-Διαδίκτυο
 + Αλλά και ως μέτρο αναφοράς
-** καταγραφή και επεξεργασια
-Η καταγραφή καθώς και ο τρόπος αποθήκευσης καθορίζονται από τον όγκο τους σε mB. Ένας επίσης καθοριστικός παράγοντας είναι το όριο που μπορεί να μεταφερθεί μέσω διαδυκτίου καθώς πολλές φορές η ερευνητές βρίσκονται σε διαφορετικές ηπύρους
+*** συμπιεση πληροφοριων
+Εδω καλο ειναι να πω για την δυνατοτητα αποθήκευσης μεγαλου ογκου πληροφοριων με λιγο αποθηκευτικο χωρο και να μπω λιγο στην εννοια της κωδικοποιησης-αποκωδικοποιησης σηματων βαζω ανετα αλλες 2 διαφανειες
+*** παγκοσμιος ιστοτοπος
+εδω μπορω να αναφερθω στην σημασία των σηματων σε  ιντερνετ και τηλεπικοινωνια.
+*** σημειο αναφορας
+μετρητικές συσκευες, διαπασον και αλλες ωραιες εικονες.
+** διαχειρηση δεδομενων
+Η καταγραφή καθώς και ο τρόπος αποθήκευσης καθορίζονται από τον όγκο τους σε mB. Ένας επίσης καθοριστικός παράγοντας είναι το όριο που μπορεί να μεταφερθεί μέσω διαδικτύου καθώς πολλές φορές οι ερευνητές βρίσκονται σε διαφορετικές ηπείρους. Έτσι είναι αναγκαίο να καθοριστεί ο απαραίτητος όγκος δεδομένων για την εξαγωγή συμπερασμάτων.
+*** καταγραφη
+Σήμερα με τον εκθετικό ρυθμό ανάπτυξης της τεχνολογίας συσκευές καταγραφής ηλεκτρικών σημάτων με πολλές δυνατότητες, όπως παλμογράφο σε σύνδεση με USB ή/και ανάλυση φάσματος, υπάρχουν σε προσιτές τιμές.
+
 *** επεξεργασια
 Συνήθως γίνεται σε μεταγενέστερο χρόνο και τις περισσότερες φορές απαιτεί μεγάλη υπολογιστική ισχύ σχετικά με τον όγκο τους. *βαλε παραδειγμα εδω*
-** IIR
-infinent impulse response
+* συγκρηση
+
+#+ATTR_REVEAL: :frag (roll-in)
+Φίλτρα διέλευσης χαμηλών συχνοτήτων
+
+#+ATTR_REVEAL: :frag (roll-in)
+#+ATTR_HTML: :align right
+άπειρης κρουστικής απόκρισης (IIR)
+
+#+ATTR_REVEAL: :frag (roll-in)
+#+ATTR_HTML: :align left
+διακριτής κρουστικής απόκρισης (FIR)
+
+#+ATTR_REVEAL: :frag (roll-in)
+#+ATTR_HTML: :align right
+[[file:./iir-filt-raw-lp.png]]
+
+
+#+ATTR_REVEAL: :frag (roll-in)
+#+ATTR_HTML: :align left
+[[file:./fir-filt-raw-huge-order.png]]
 ** FIR
-finite impulse response
+
+if i leave one empty
+
+#+ATTR_REVEAL: :text-align left
+finite impulse response lets say i have a lot of document here and i want it beside the fotograph below..... I should be able to do that easy.... Souldnt I?!?!?!?! make this biiiiiger to see what happents !!!!!! YOU KNOW WHAT WIILLLLL !!! IT WILL BRAKE AS USUALL.
+
+#+ATTR_HTML: :height 35%, :width 45%
+[[file:./fir-filt-raw-huge-order.png]]
 * Εργαστηριακη εγκατασταση
-#+ATTR_REVEAL: height 85%
+
+#+ATTR_REVEAL: :height 85%
 #+ATTR_REVEAL: :frag (fade-in-then-semi-out)
-[[/home/dtos_experiment/Documents/dissertation/org-docs/dissertation document/Wind_Tunnel_setup_lab.png]]
+[[file:./Wind_Tunnel_setup_lab.png]]
 * /Ευχαριστω για τον χρονο σας/
+
+* Buttons :noexport:
+# <(go to document)>
