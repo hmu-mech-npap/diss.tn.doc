@@ -132,3 +132,5 @@ finite impulse response lets say i have a lot of document here and i want it bes
 
 * Buttons :noexport:
 # <(go to document)>
+# <(org-code)>
+# <(diss-notes)>
