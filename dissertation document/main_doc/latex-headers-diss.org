@@ -13,9 +13,10 @@
 #+LATEX_HEADER: \usepackage[english,greek]{babel}
 #+LATEX_HEADER: \newcommand{\en}[1]{\foreignlanguage{english}{#1}}
 #+LATEX_HEADER: \usepackage{minted}
-#+LATEX_HEADER: \usepackage[hidelinks]{hyperref}
 # Options don't need to be in capital letters
 #+latex_header: \hypersetup{colorlinks=true, linkcolor=black}
+
+#+LATEX_HEADER: \usepackage{bookmark}
 
 # Fancy headers
 #+latex_header: \usepackage{fancyhdr}

@@ -5,3 +5,7 @@
 * digital books
 1. Prentice Hall. (1999). Discrete time signal processing (2. ed.).
 2.
+
+* buttons
+# <(go to code)>
+# <(go to document)>

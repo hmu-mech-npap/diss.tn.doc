@@ -1,4 +1,4 @@
-% Created 2023-02-14 Τρι 12:13
+% Created 2023-03-18 Σαβ 09:33
 % Intended LaTeX compiler: pdflatex
 \documentclass[breaklines=true]{report}
 \usepackage[utf8]{inputenc}
@@ -21,8 +21,8 @@
 \usepackage[english, greek, ]{babel}
 \newcommand{\en}[1]{\foreignlanguage{english}{#1}}
 \usepackage{minted}
-\usepackage[hidelinks]{hyperref}
 \hypersetup{colorlinks=true, linkcolor=black}
+\usepackage{bookmark}
 \usepackage{fancyhdr}
 \usepackage{lipsum}% just to generate text for the example
 \pagestyle{fancy}
@@ -38,16 +38,15 @@
  pdftitle={Φίλτρα συχνοτήτων και απομόνωση Η/Μ θορύβου},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.2 (Org mode 9.6)}, 
+ pdfcreator={Emacs 28.2 (Org mode 9.6.1)}, 
  pdflang={Gr}}
 \begin{document}
 
 \maketitle
 \tableofcontents
 
-
 \part{Εισαγωγή}
-\label{sec:org9ef0dc2}
+\label{sec:orgd0e74a2}
 Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
 τηλεπικοινωνίες μετά ή/και πριν την μετάδοση από τον πομπό προς τον
 δέκτη, και η εκλογή πληροφοριών από αυτό έθεσαν από νωρίς το πρόβλημα
@@ -97,7 +96,7 @@
 
 \noindent\rule{\textwidth}{0.5pt}
 \part{Ιστορική αναδρομή}
-\label{sec:org468e4d5}
+\label{sec:org7ad0a25}
 Από την εποχή της ανακάλυψης του Απειροστικού λογισμού \((\en{calculus})\)
 τον 17ο αιώνα, οι επιστήμονες προσπαθούν να εξηγήσουν τα φυσικά
 φαινόμενα με μαθηματικά μοντέλα χρησιμοποιώντας εξισώσεις
@@ -197,10 +196,10 @@
 γίνεται πολλές φορές εξ' ολοκλήρου από ψηφιακά συστήματα.
 
 \noindent\rule{\textwidth}{0.5pt}
-\part{Σήματα συνεχούς χρόνου \(Continuous\ time\ signals\)}
-\label{sec:org517db49}
+\part{Σήματα}
+\label{sec:org40d46bd}
 \chapter{Εισαγωγή}
-\label{sec:orgbc5ad9c}
+\label{sec:org851ee4d}
 Ο όρος σήμα \(\en{(signal)}\) δίνεται σε κάτι που εμπεριέχει πληροφορία. Γενικά
 τα σήματα χρησιμοποιούνται στην κωδικοποίηση και εξαγωγή πληροφοριών για
 την κατάσταση ή/και την συμπεριφορά ενός φυσικού συστήματος. Συχνά
@@ -230,8 +229,9 @@
 χρόνου ονομάζονται εκείνα που τα σήματα εισόδου και εξόδου είναι αναλογικά.
 Αντίστοιχα συστήματα διακριτού χρόνου ονομάζονται όσα δαχειρίζονται σήματα
 διακριτού χρόνου. Ψηφιακά συστήματα ονομάζονται όσα λαμβάνουν σε είσοδο και
-έξοδο ψηφιακά σήματα. Επομένως στην ψηφιακή ανάλυση σημάτων \(\en{(Digital\ signal\ processing)}\) επεξεργάζονται σήματα που εκφράζονται με ακολουθίες για
-τον χρόνο και την ισχύ τους.
+έξοδο ψηφιακά σήματα. Επομένως στην ψηφιακή ανάλυση σημάτων
+\(\en{(Digital\ signal\ processing)}\) επεξεργάζονται σήματα που εκφράζονται
+με ακολουθίες για τον χρόνο και την ισχύ τους.
 
 Σήματα διακριτού χρόνου προκύπτουν καταγράφοντας ένα συνεχές σήμα ή από
 διεργασίες που εκτελούνται σε διακριτές τιμές του χρόνου. Ανεξαρτήτου
@@ -258,31 +258,51 @@
 ανάλογο πλαίσιο επεξεργασίας. Εδώ ασχοληθήκαμε μόνο με ψηφιακά σήματα
 καθώς η καταγραφή των σημάτων έγινε με Η/Υ μέσω προγράμματος \(\en{(Lab-View)}\).
 
-\chapter{Γενικός ορισμός}
-\label{sec:orgb0f2fa0}
-Σήμα συνεχούς χρόνου ονομάζεται ένα σήμα \(y(t)\), το οποίο ορίζεται για
-κάθε τιμή του \(t\) σε κάποιο διάστημα χρόνου \([\alpha,\beta]\). Συνήθως τα συναντούμε
+\chapter{Συνεχούς χρόνου}
+\label{sec:org111dcec}
+Στην εισαγωγή αναφερθήκαμε στον γενικό ορισμό των σημάτων και τις διαφορές
+που τα κατηγοριοποιούν σε αρχικό βαθμό. Επειδή ο στόχος της παρούσας εργασίας
+ήταν η απόρριψη θορύβου δεν θα γίνει η πρέπουσα ανάλυση στην θεωρία των σημάτων,
+αντιθέτως θα παρατεθούν οι βασικές αρχές και έννοιες ώστε να υπάρχει το υπόβαθρο
+για τα επόμενα κεφάλαια. Σήμα συνεχούς χρόνου ορίζουμε ως την εξίσωση που
+περιγράφει την εξέλιξη μιας περιοδικής κυματομορφής στο χρόνο. Πιο συγκεκριμένα
+αν υποθέσουμε πως ο χρόνος διάρκειας του σήματος είναι \(t\) τότε η κυματομορφή στο
+πεδίο του χρόνου θα εκφράζεται ως συνάρτηση αυτού \(s(t)\).
+
+Μπορεί λοιπόν να παρασταθεί από μία ανεξάρτητη μεταβλητή και ορίζεται για κάθε
+τιμή της. Με παρόμοιο τρόπο ορίζονται και τα διακριτά σήματα συνεχούς χρόνου.
+Η διαφορά είναι πως αντί να μπορούμε να ταυτίσουμε κάθε χρονική στιγμή με το
+αντίστοιχο \(s(t)\). Σήμα συνεχούς χρόνου ονομάζεται ένα σήμα \(y(t)\), το οποίο ορίζεται
+για κάθε τιμή του \(t\) σε κάποιο διάστημα χρόνου \([\alpha,\beta]\). Συνήθως τα συναντούμε
 στην μορφή συνεχούς ρεύματος σε μετρητικές και άλλες συσκευές σε εξόδους
 για την ένδειξη κάποιας τιμής ή απεικόνιση σε παλμογράφο. Τα σήματα
 συνεχούς χρόνου χωρίζονται σε αναλογικά και διακριτά σήματα συνεχούς
 χρόνου.
-\chapter{Αναλογικό και διακριτό σήμα συνεχούς χρόνου}
-\label{sec:orgd84dfd5}
+
 Αναλογικά σήματα ονομάζονται εκείνα που η ανεξάρτητη μεταβλητή του
-χρόνου (t) και η μεταβλητή του πλάτους (εξαρτημένη μεταβλητή ως προς τον
-χρόνο) λαμβάνουν συνεχής και πραγματικές τιμές, π.χ. \(\psi(t) = 12 * t\).
+χρόνου \(t\) και η μεταβλητή του πλάτους (εξαρτημένη μεταβλητή ως προς τον
+χρόνο) λαμβάνουν συνεχής και πραγματικές τιμές, π.χ. \(s(t) = 12 * t\).
 Διακριτά σήματα συνεχούς χρόνου ονομάζονται όσα ή εξαρτημένη τιμή
 (πλάτος) παίρνει διακριτές τιμές, π.χ.
+\begin{equation}
+\begin{align}
+s(t) =  A * t \\
+A &= [0, … ,n],\ t \in [a,b] n \in \mathbb{Z} \\
+\end{align}
+\end{equation}
 
-\(\psi(t) =  A * t\), όπου
-
-\(A = 0, … ,n\) και \(t \in [a,b]\) .
+Στην πληθώρα των συσκευών επεξεργασίας και καταγραφής σημάτων η χρήση
+των αναλογικών σημάτων έχει σχεδόν εκλείψει. Σημαντικό μειονέκτημα
+ανάμεσα σε άλλα είναι και ο υπέρογκος χώρος αποθήκευσης που απαιτείται
+για την αποθήκευση του. Παρακάτω θα αναφερθούμε στα \textbf{ψηφιακά} σήματα που
+έλυσαν πολλά από τα προβλήματα των αναλογικών σημάτων, προσθέτοντας μια
+σειρά από "πονοκεφάλους" αρχικά στην επιστημονική κοινότητα. Τα
+πλεονεκτήματα ήταν πολλά και τελικά επικράτησαν. Παρακάτω θα παρατεθούν
+κάποιες βασικές έννοιες και αρχές που τα διέπουν.
 
 \noindent\rule{\textwidth}{0.5pt}
-\part{Σήματα διακριτού χρόνου}
-\label{sec:org103a144}
-\chapter{Γενικός ορισμός}
-\label{sec:orgcf6aee9}
+\chapter{Διακριτού χρόνου}
+\label{sec:org99602e3}
 Σήμα διακριτού χρόνου ονομάζεται μια ακολουθία αριθμών καταγεγραμμένες
 ανά συγκεκριμένο χρονικό διάστημα, π.χ. κάθε 0,01 δευτερόλεπτο. Το
 διάστημα αυτό ορίζει την ταχύτητα καταγραφής του σήματος από την
@@ -291,7 +311,6 @@
 ορίζεται ως το πηλίκο ενός δευτερολέπτου ως προς το χρονικό διάστημα
 καταγραφής, δηλαδή από το παραπάνω παράδειγμα θα είχαμε μια συχνότητα
 καταγραφής 1/0.01 \([Hz]\).
-
 \begin{equation}
 fs = \frac{1}{0,01} [Hz]
 \end{equation}
@@ -299,19 +318,69 @@ fs = \frac{1}{0,01} [Hz]
 τηρείται ώστε η επαναδημιουργία του σήματος να απεικονίζει όσο το
 δυνατόν πιο πολύ στο συνεχές σήμα που καταγράφηκε στην αρχή. Θα
 αναφερθούμε αργότερα στο εν λόγω θεώρημα του φυσικού \(\en{Niquist}\).
-\chapter{Εφαρμογές}
-\label{sec:org52364de}
-Στην κατηγορία αυτή κατατάσσονται τα περισσότερα σήματα που
-χρησιμοποιούνται σήμερα λόγω της χρήσης Η/Υ για την καταγραφή και
-παραγωγή ήχου και εικόνας. Η ένταξη των ψηφιακών σημάτων επιτάχυνε την
-επεξεργασία και μείωσε δραστικά τον χώρο αποθήκευσης στην μνήμη των
-υπολογιστών.
+\section{Μοναδιαίο διακριτό σήμα}
+\label{sec:org0da285f}
+Μοναδιαίο ονομάζεται το σήμα που αποτελείται από έναν κρουστικού
+χαρακτήρα παλμού και έχει μηδενική ισχύ πρίν και μετά την εμφάνισή
+του. Αν υποθέσουμε μια συνάρτηση \(y(t)\) ,
+\begin{equation}
+\begin{align}
+y(t) = [..., 0, 1, 0, ...]
+\end{align}
+\end{equation}
+θα είναι η έξοδος του σήματος αυτού.
+
+Μια άλλη βασική υποκατηγορία αποτελεί η μοναδιαία ακολουθία βήματος.
+Εδώ σε αντίθεση με παραπάνω, η τιμή της εξόδου αλλάζει από μηδέν σε ένα
+μόλις η εξαρτημένη μεταβλητή \en{t} λάβει κάποια οριακή τιμή.
+Χρησιμοποιώντας το ανωτέρω παράδειγμα θα έχουμε ότι:
+\begin{equation}
+\begin{align}
+y(t) = [..., 0, 1, 1, 1, ...]
+\end{align}
+\end{equation}
+\section{Τυχαίο σήμα}
+\label{sec:orgfb5f329}
+Τα τυχαία σήματα αποτελούν μία ειδική υποκατηγορία που χρησιμοποιείται
+ευρέως στην ανάλυση ψηφιακών σημάτων. Αναπτύχθηκαν για να καλύψουν την
+ανάγκη επιβεβαίωσης των συσκευών επεξεργασίας κυματομορφών. Με την
+πάροδο του χρόνου τις συναντάμε σε διάφορες συσκευές τηλεπικοινωνίας
+και σχεδόν σε όλες τις συσκευές παραγωγής ήχου (\en{synthesizers}).
+Αξίζει να σημειωθεί για λόγους πληρότητας ότι τα εν' λόγω σήματα
+βασίζονται σε στατιστικά μοντέλα που απορρέουν από στατιστικές κατανομές.
+Ο "λευκός" γκαουσιανός θόρυβος (\en{white gaussian noise}) ακολουθεί
+την λεγόμενη κανονική κατανομή πιθανοτήτων του \en{Gauss}. Στην παρούσα
+εργασία ένα αντίστοιχο σήμα χρησιμοποιήθηκε για την επιβεβαίωση των
+φίλτρων πριν την εφαρμογή στο σετ δεδομένων. Δεν θα γίνει περαιτέρω
+ανάλυση γιατί κρίθηκε πως οι παρεμβολές στον αισθητήρα της εγκατάστασης
+προερχόταν από εξωτερικά Η/Μ πεδία.
+\section{Διακριτά σήματα και ακολουθίες}
+\label{sec:org69f3af0}
+Για τον ορισμό του διακριτού σήματος αρκεί να υποθέσουμε μία μαθηματική
+ακολουθία αριθμών \(x\), όπου το νιοστό στοιχείο της θα γραφόταν ως \(x[n]\).
+Ορθότερα μπορούμε να γράψουμε την εξής έκφραση:
+\begin{equation}
+\begin{align}
+n \in \mathbb{Z} \\
+x &= {x[n]},\  -\infty < n < \infty \\
+\end{align}
+\end{equation}
+όπου Ζ είναι σαφώς το σύνολο των ακέραιων αριθμών και \(x[n]\) το κάθε στοιχείο
+της ακολουθίας. Ο συγκεκριμένος τύπος σήματος παράγεται συνήθως από την
+καταγραφή αναλογικού σήματος και επομένως η παραπάνω σχέση μετασχηματίζεται
+για αναλογικό σήμα της μορφής \(x_{a}(t)\) για χρονική στιγμή ίση με \(nT\) το νιοστό
+στοιχείο της ακολουθίας εξόδου από την καταγραφή θα είναι της μορφής:
+\begin{equation}
+\begin{align}
+x[n] = x_{a} nT,\ -\infty < n < \infty \\
+\end{align}
+\end{equation}
 
 \noindent\rule{\textwidth}{0.5pt}
 \part{Θεωρία καταγραφής σημάτων}
-\label{sec:orga643ff8}
+\label{sec:orgc40f2a4}
 \chapter{Εισαγωγή}
-\label{sec:org72a000d}
+\label{sec:orgc01a0e1}
     Σε αυτή την ενότητα θα περιγραφούν οι βασικές θεωρίες που χρησιμοποιούνται
 για την ψηφιακή καταγραφή και επεξεργασία σημάτων καθώς και κάποια προβλήματα
 που μπορεί να εμφανιστούν κατά τις διαδικασίες αυτές. Μια από τις σημαντικότερες
@@ -321,7 +390,7 @@ fs = \frac{1}{0,01} [Hz]
 συνεχή σε διακριτά σήματα και σε τρόπους αναγνώρισης και αντιμετώπισης
 των προβλημάτων.
 \chapter{Συχνότητα \(\en{Niquist}\)}
-\label{sec:orge5c06e5}
+\label{sec:orge5d82df}
     Στην επεξεργασία σημάτων η συχνότητα \(\en{Niquist}\) είναι ένα χαρακτηριστικό μέγεθος
 στις καταγραφικές συσκευές, όπου καταγράφουν σήματα συνεχούς χρόνου σε διακριτές
 ακολουθίες (ψηφιακά σήματα). Στην πράξη αν η υψηλότερη συχνότητα ενός σήματος
@@ -344,8 +413,8 @@ f_s_N=0.5f
 reference : \url{https://en.wikipedia.org/wiki/Nyquist_frequency}
 \selectlanguage{greek}
 
-\chapter{Αλλοίωση \(\en{Aliasing}\)}
-\label{sec:org2081282}
+\chapter{Αλλοίωση}
+\label{sec:org487c48f}
 Ως αλλοίωση αναφερόμαστε εδώ στο αποτέλεσμα καταγραφής ενός σήματος,
 όπου η έξοδος αποτελείται από διαφορετικά σήματα και δεν είναι δυνατό να
 επαναδημιουργιθεί το αρχικό. Συνήθως η έξοδος είναι μετατοπισμένη ως
@@ -390,8 +459,8 @@ reference : \url{https://en.wikipedia.org/wiki/Nyquist_frequency}
 \url{https://en.wikipedia.org/wiki/Anti-aliasing\_filter}
 \selectlanguage{greek}
 
-\chapter{Μείωση αριθμού δειγμάτων \(\en{Decimation\ and\ down-sampling}\)}
-\label{sec:orgca58852}
+\chapter{Μείωση αριθμού δειγμάτων}
+\label{sec:org57a7a02}
 Η τεχνική αυτή εφαρμόζεται σε ψηφιακά σήματα με πολλά δείγματα ανά
 χρονικό διάστημα που όμως η τυπική απόκληση προδίδει μια περιοδική
 κίνηση που σχετίζεται με ταλάντωση. Τότε είναι εύλογο να χωριστεί το
@@ -475,11 +544,11 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 
 \noindent\rule{\textwidth}{0.5pt}
 
-\part{Επεξεργασία σημάτων \(\en{Signal\ process\ (post-processing)}\)}
-\label{sec:org90e3284}
+\part{Επεξεργασία σημάτων}
+\label{sec:org3aefcf6}
 
 \chapter{Ορισμός μετα-επεξεργασίας}
-\label{sec:org6e3661b}
+\label{sec:org7493d4f}
     Η επεξεργασία ενός σήματος θα πρέπει να γίνεται με προσοχή καθώς είναι
 εύκολο να καταστραφεί μέρος της πληροφορίας που περιέχεται ή ακόμα και
 να εκδοθούν λανθασμένα συμπεράσματα για την συμπεριφορά του συστήματος.
@@ -499,7 +568,7 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 προσωρινή ή μόνιμη μνήμη και έτσι εντάσσεται στην \textbf{μετα-επεξεργασία}.
 
 \chapter{Εγκατάσταση εργαστηρίου}
-\label{sec:org1989499}
+\label{sec:orgb86df85}
     Η εγκατάσταση που χρησιμοποιήθηκε για την συλλογή των δεδομένων
 αποτελείται από μία αεροσύραγγα την οποία τροφοδοτεί με σταθερή ταχύτητα
 αέρα ένας ηλεκτροκινητήρας προσδεδεμένος σε έναν έλικα. Στην μέση της
@@ -533,10 +602,10 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 \noindent\rule{\textwidth}{0.5pt}
 
 \part{Σχεδιασμός Φίλτρων}
-\label{sec:orge817f55}
+\label{sec:orgaa13536}
 
 \chapter{Κατηγορίες}
-\label{sec:org21c2526}
+\label{sec:orgc6658ea}
 Λόγω των πολλών εφαρμογών που έχουν και την εκθετική αύξηση της χρήσης
 ηλεκτρονικών συσκευών στην καθημερινότητα, οι δυνατότητες επεξεργασίας
 ψηφιακών σημάτων αποτελεί πρακτικά απαραίτητη προϋπόθεση. Έτσι η ανάγκη
@@ -553,20 +622,21 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 απορρίπτει όσες βρίσκονται πριν και μετά, ονομάζεται φίλτρο απόρριψης
 εύρους συχνοτήτων (\(\en{band-stop\ filter}\)).
 
-\chapter{Φίλτρο άπειρης κρουστικής απόκρισης \(\en{Infinite\ Impulse\ Response\ (I.I.R.)}\)}
-\label{sec:org2e55bff}
+\chapter{Φίλτρο άπειρης κρουστικής απόκρισης}
+\label{sec:org2ec75d8}
 Τα φίλτρα άπειρης κρουστικής απόκρισης στο πεδίο του χρόνου <216>\ldots{}.
 Γραμμικότητα και χρονική αμεταβλητότητα \ldots{}. <219>\ldots{}..
 κλπ \ldots{}..
 \ldots{}.
 
-\section{\(\en{I.I.R.}\)}
-\label{sec:orgf6413a1}
-\begin{enumerate}
-\item \(\en{Butterworth}\)
-\label{sec:org75ee77a}
-
+\section{Παραδείγματα με κώδικα}
+\label{sec:org3242311}
+\textbf{Εδω να μπει μια επεξηγηση για την κατασκευη και εξαγωγή των παρακατω διαγραμμάτων.}
 \selectlanguage{english}
+\begin{enumerate}
+\item Butterworth
+\label{sec:org512b85f}
+
 
 \begin{minted}[]{python}
 # 4TH ORDER BUTTERWORTH FILTER WITH A GAIN DROP OF 1/sqrt(2) AT 0.4 CYCLES/SAMPLE
@@ -590,7 +660,7 @@ plt.savefig('Butterworth Filter Freq Response.png')
 \end{center}
 
 \item Bessel
-\label{sec:org42124d1}
+\label{sec:org0b48a1e}
 
 \begin{minted}[]{python}
 # 4TH ORDER BESSEL FILTER WITH A GAIN DROP OF 1/sqrt(2) AT 0.4 CYCLES/SAMPLE
@@ -614,7 +684,7 @@ plt.savefig('Bessel Filter Freq Response.png')
 \includegraphics[width=.9\linewidth]{./Bessel Filter Freq Response.png}
 \end{center}
 \item Chebyshev
-\label{sec:orgfd727f7}
+\label{sec:orga3d567f}
 
 \begin{minted}[]{python}
 #4TH ORDER CHEBYSHEV FILTER TYPE 1 (ONLY IN PASSBAND RIPPLES)
@@ -639,7 +709,7 @@ plt.savefig('Chebyshev Filter Freq Response.png')
 \includegraphics[width=.9\linewidth]{./Chebyshev Filter Freq Response.png}
 \end{center}
 \item Elliptic
-\label{sec:org760dba6}
+\label{sec:org89c3955}
 
 \begin{minted}[]{python}
 # 4TH ORDER ELLIPTIC FILTER WITH MAX RIPPLES =2dB IN PASSBAND,
@@ -664,11 +734,11 @@ plt.savefig('Elliptic Filter Freq Response.png')
 \includegraphics[width=.9\linewidth]{./Elliptic Filter Freq Response.png}
 \end{center}
 
+\end{enumerate}
 \selectlanguage{greek}
 \end{enumerate}
-
-\chapter{Φίλτρο μέσης τρέχουσας τιμής \(\en{Finite\ Impulse\ Response\ (F.I.R.)}\)}
-\label{sec:org64614ba}
+\chapter{Φίλτρο μέσης τρέχουσας τιμής}
+\label{sec:org927912c}
 Η κατηγορία αυτή εξειδικεύεται περαιτέρω, εφαρμόζοντας μια μέθοδο παραθύρων
 τα οποία προσφέρουν συγκεκριμένες αποκρίσεις στο πεδίο των συχνοτήτων. Μερικά
 παραδείγματα θα παρουσιαστούν παρακάτω, καθώς ήταν μια από τις μεθόδους που
@@ -680,12 +750,12 @@ plt.savefig('Elliptic Filter Freq Response.png')
 με κάθε ένα από τα σημεία του δείγματος. Έτσι σε μεγάλα σετ δεδομένων απαιτείται
 πρακτικά μεγάλος όγκος αριθμητικών υπολογισμών που καθυστερεί την έκβαση των
 αποτελεσμάτων σε μη αποδεκτό βαθμό.
-\section{Κατηγορίες παραθύρων φίλτρων \(\en{F.I.R.}\)}
-\label{sec:org6458bb0}
+\section{Κατηγορίες παραθύρων φίλτρων πεπερασμένης κρουστικής απόκρισης}
+\label{sec:org457f241}
 
 \begin{enumerate}
 \item Συχνοί τύποι παραθύρων
-\label{sec:orgc5e52e5}
+\label{sec:org9cbe479}
 \begin{itemize}
 \item Βασικές κατηγορίες φίλτων:
 \begin{itemize}
@@ -700,10 +770,10 @@ plt.savefig('Elliptic Filter Freq Response.png')
 \end{itemize}
 
 \item Μέθοδος \(\en{Kaiser}\)
-\label{sec:org51b57d7}
+\label{sec:orgd6c1210}
 
 \item Βέλτιστες προσομοιώσεις φίλτρων
-\label{sec:org25bb2b9}
+\label{sec:orgfbea89a}
 
 \selectlanguage{english}
 \begin{itemize}
@@ -713,4 +783,31 @@ plt.savefig('Elliptic Filter Freq Response.png')
 
 \noindent\rule{\textwidth}{0.5pt}
 \end{enumerate}
+\part{Βιβλιογραφία}
+\label{sec:orgf0d1f67}
+\selectlanguage{english}
+
+\noindent
+Edmund Lai (2003). \emph{6 - Finite impulse response filter design}, Newnes.
+
+\noindent
+Ibrahim Abdulhadi Sulaiman and Hussain Mohammad Hassan and Mohammad Danish and Munendra Singh and P.K. Singh and Manisha Rajoriya (2022). \emph{Design, comparison and analysis of low pass FIR filter using window techniques method}, Materials Today: Proceedings.
+
+\noindent
+Koichi Ichige and Naohisa Otsuka and Rokuya Ishii (1997). \emph{An automatic design procedure of IIR digital filters from an analog low-pass filter}, Signal Processing.
+
+\noindent
+McClellan, J.H. and Schafer, R.W. and Yoder, M.A. (2003). \emph{Signal Processing First}, Pearson/Prentice Hall.
+
+\noindent
+N. Agrawal and A. Kumar and Varun Bajaj and G.K. Singh (2021). \emph{Design of digital IIR filter: A research survey}, Applied Acoustics.
+
+\noindent
+Oppenheim, Alan V. and Schafer, Ronald W. and Buck, John R. (1999). \emph{Discrete-Time Signal Processing}, Prentice-hall Englewood Cliffs.
+
+\noindent
+Ryan B. Spelay and Kofi Freeman Adane and R. Sean Sanders and Robert J. Sumner and Randall G. Gillies (2015). \emph{The effect of low Reynolds number flows on pitot tube measurements}, Flow Measurement and Instrumentation.
+
+\noindent
+Yong Moon Choi and Yoshiya Terao and Noboru Kurihara and Aya Iwai and Tatsuya Funaki and Woong Kang and Doan Trang Nguyen (2021). \emph{Revisit the Pitot static tubes in the standards}, Flow Measurement and Instrumentation.
 \end{document}
