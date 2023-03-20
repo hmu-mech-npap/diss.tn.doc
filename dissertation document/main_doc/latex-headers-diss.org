@@ -3,6 +3,7 @@
 
 # Options to modify the class. E.g. font size.
 #+LATEX_CLASS_OPTIONS: [breaklines=true]
+#+LATEX_OPTIONS: twocolumn
 
 # Other La-TeX code that you'd need in the preamble, notably, using packages.
 #+LATEX_HEADER: \usepackage[margin=2cm]{geometry}
