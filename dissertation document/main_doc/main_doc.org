@@ -1,6 +1,9 @@
 #+TITLE: Φίλτρα συχνοτήτων και απομόνωση Η/Μ θορύβου
-#+AUTHOR: Νικόλας Τοροσιάν
-#+AUTHOR: Νίκος Παπαδάκης
+#+SUBTITLE: Απομοίωση θορύβου από ψηφιακό σήμα αιστητήρα σε εγκατάσταση του εργαστηρίου ΑΠΕ
+#+AUTHOR: Τοροσιάν Νικόλαος^1 AM: ΤΜ6220, Παπαδάκης Νίκος^2
+
+
+Φοιτητής: Νικόλας Τοροσιάν ΤΜ6220 \\ Επιβλέπων καθηγητής: Νίκος Παπαδάκης
 :ORG-PROPERTIES:
 #+LANGUAGE: gr
 #+STARTUP: latexpreview showeverything
@@ -608,28 +611,29 @@ f_{s} \geq 2A \\
 ως εξής:
 \begin{equation}
 \begin{align}
-x(t)&=\cos(2 \pi f_{z}t),\ t=cT,\ c \in [0, +\infty),\ c \in \mathbb{Z} \Rightarrow \\
-&x(cT) = \cos(2 \pi f_{z} cT) \\
+x(t)&=\cos(2 \pi f_{z}t + \phi),\ t=cT,\ c \in [0, +\infty),\ c \in \mathbb{Z} \Rightarrow \\
+&x(cT) = \cos(2 \pi f_{z} cT + \phi) \\
 \end{align}
 \end{equation}
 Ας δούμε τώρα τι συμβαίνει σε περίπτωση που υπολογίσουμε την τιμή
 του καταγεγραμμένου σήματος σε συχνότητα ίση με \(f_{tot} = f_{z}+f_{s}\):
 \begin{equation}
 \begin{align}
-x_{a}(cT) &= \cos(2 \pi cT \cdot (f_{z}+f_{s})) \Rightarrow \\
-&= \cos(2 \pi cf_{z}T + 2 \pi c) \Rightarrow \\
-&= \cos(2 \pi cf_{z}T)
+x_{a}(cT) &= \cos(2 \pi cT \cdot (f_{z}+f_{s})+ \phi) \Rightarrow \\
+&= \cos(2 \pi cf_{z}T + 2 \pi c + \phi) \Rightarrow \\
+&= \cos(2 \pi cf_{z}T + \phi) \Rightarrow \\
+&= x(cT)
 \end{align}
 \end{equation}
 Όπως φαίνεται για κάθε δείγμα εγγραμμένο με κάποια συχνότητα
 πολλαπλάσια από εκείνη της καταγραφής \(f_{s}\), το σήμα εμπεριέχει στοιχεία
 στο συγκεκριμένο φάσμα. Στην περίπτωση που δεν ικανοποιείται το θεώρημα
 της δειγματοληψίας προκύπτει η λεγόμενη αλλοίωση προσθέτοντας αναληθή
-δείγματα στο σήμα. Η καταστρεπτική αυτή συμπεριφορά θα αναλυθεί στην
-παρακάτω εννότητα ενώ αξίζει να σημειωθεί πως υπάρχει πιθανότητα να
-υποφέρουν και οι πειραματικές μετρήσεις του εργαστηρίου από το φαινόμενο
-αυτό καθώς η μέγιστη συχνότητα καταγραφής που επιτεύχθηκε ήταν στα 500
-\(kHz\).
+δείγματα στο σήμα ή αλλίως *ψευδόνυμα συχνοτήτων*. Η καταστρεπτική αυτή
+συμπεριφορά θα αναλυθεί στην παρακάτω εννότητα ενώ αξίζει να σημειωθεί
+πως υπάρχει πιθανότητα να υποφέρουν και οι πειραματικές μετρήσεις του
+εργαστηρίου από το φαινόμενο αυτό καθώς η μέγιστη συχνότητα καταγραφής
+που επιτεύχθηκε ήταν στα 500 \(kHz\).
 *** Αλλοίωση
 Ως αλλοίωση αναφερόμαστε εδώ στο αποτέλεσμα καταγραφής ενός σήματος,
 όπου η έξοδος αποτελείται από διαφορετικά σήματα και δεν είναι δυνατό να
@@ -653,9 +657,7 @@ $\en{Bell\ Labs}$,
 αποδεκατίζοντας το σήμα σύμφωνα με μία σταθερά και εξετάζοντας την γραφική του
 παράσταση σε σχέση με την αρχική καταγραφή. Όσο μειώνεται ο αριθμός των δειγμάτων
 το σήμα καταστρέφεται ηθελημένα, παράγοντας ψευδώνυμα συχνοτήτων τα οποία θα πρέπει
-να είναι όλα διαφορετικά. Όμως στην περίπτωση που εξετάστηκε φάνηκε να επαναδημιουργείται
-το αρχικό σήμα σε κάθε πέμπτης (5) τάξης αποδεκατισμού σήματος.
-
+να είναι όλα διαφορετικά.
 
 #+attr_latex:  :width 250px
 #+attr_latex:  :height 140px
@@ -670,6 +672,24 @@ $\en{Bell\ Labs}$,
 ειδικά φίλτρα που ονομάζονται  $\en{F.I.R.}$. Αντίστοιχα φίλτρα χρησιμοποιήθηκαν και στην
 επεξεργασία των δεδομένων και συγκρίθηκαν τα αποτελέσματα με άλλους τύπους όπως θα
 δούμε παρακάτω.
+
+Τα ψευδόνυμα αυτά εμφανίζονται σε υποδειγματοληπτημένα σήματα. Αν είναι επιθυμητό
+να εξεταστεί ενα σήμα που μπορεί να εμπεριέχει θόρυβο σε συχνότητες 2-3 \(kHz\), τότε για
+την αποφυγή της αλλοίωσης ή αναδίπλωσης του σήματος θα πρέπει η καταγραφική συσκευή
+να έχει την δυνατότητα καταγραφής τουλάχιστον 6 \(kHz\). Στο πλαίσιο της επεξεργασίας των
+μετρήσεων της αεροσύραγγας που η μέγιστη καταγραφή αγγίζει τα 500 \(kHz\), το μέγιστο
+φάσμα σήματος που μπορούσε να εξεταστεί είναι 250 \(kHz\). Έτσι υπήρχε ανάγκη για
+περαιτέρω εξέταση και την λύση παρέχει η μέθοδος του αποδεκατισμού. Εφαρμόζοντας την
+εξάγωντας κάθε φορά διαφορετικό αριθμό δειγμάτων από το αρχικό, μας δίνεται η
+δυνατότητα να συγκρίνουμε τα σήματα και να υποθέσουμε τυχών επηρροή που μπορεί να
+έχουν συχνότητες μεγαλύτερες από εκείνες της συχνότητας καταγραφής. Στο διαγραμμα
+που ακολουθεί φαίνεται ένα σήμα στο πεδίο της συχνότητας αποδεκατισμένο επιλέγοντας
+κάθε 5ο και 50ο στοιχείο της αρχικής ακολουθίας.
+
+#+attr_latex: :height 260px
+#+attr_latex: :width 500px
+#+ATTR_LATEX: :caption \caption{Αποδεκατισμένο σήμα ανά 5 και 50 δείγματα μαζί με το αρχικό.}
+[[file:./decim-big.png]]
 ** Μείωση αριθμού δειγμάτων
 Η τεχνική αυτή εφαρμόζεται σε ψηφιακά σήματα με πολλά δείγματα ανά
 χρονικό διάστημα που όμως η τυπική απόκληση προδίδει μια περιοδική
@@ -748,6 +768,316 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 αποδεκατίζοντας την έξοδο κατά έναν παράγοντα Μ. Η παραπάνω διαδικασία
 ονομάστηκε στα αγγλικά $\en{the\ first\ Noble\ identity}$ και εφαρμόζεται σε
 διαφοροποιημένες πολυφασικές μεθόδους.
+* Σχεδιασμός Φίλτρων
+** Κατηγορίες
+Λόγω των πολλών εφαρμογών που έχουν και την εκθετική αύξηση της χρήσης
+ηλεκτρονικών συσκευών στην καθημερινότητα, οι δυνατότητες επεξεργασίας
+ψηφιακών σημάτων αποτελεί πρακτικά απαραίτητη προϋπόθεση. Έτσι η ανάγκη
+για την ανάπτυξη διαφόρων τύπων φίλτρων π.χ. το φίλτρο μέσης τρέχουσας
+τιμής ($\en{F.I.R.}$), το φίλτρο άπειρης κρουστικής απόκρισης ($\en{I.I.R.}$) και το μεσιανό
+φίλτρο ($\en{median\ filters}$). Στην συνέχεια θα αναφερθούμε και στις τρείς αυτές
+κατηγορίες αναφέροντας παραδείγματα από τις μεθόδους που χρησιμοποιήθηκαν
+στην ανάλυση των δεδομένων από την *εργαστηριακή εγκατάσταση* ? ...
+Η γενική διαφοροποίηση που γίνεται αρχικά είναι ώς προς το εύρος
+συχνοτήτων που επηρεάζουν. Έτσι αν απορρίπτονται οι ύψηλες συχνότητες, το
+φίλτρο ονομάζεται διέλευσης χαμηλών συχνοτήτων ($\en{low-pass\ filter}$)
+ενώ το αντίστροφο ονομάζεται φίλτρο διέλευσης υψηλών συχνοτήτων ($\en{high-pass\ filter}$).
+Άν το φίλτρο επηρεάζει μία περιοχή ή *φάσμα* συχνοτήτων και
+απορρίπτει όσες βρίσκονται πριν και μετά, ονομάζεται φίλτρο απόρριψης
+εύρους συχνοτήτων ($\en{band-pass\ filter}$).
+** Φίλτρο μέσης τρέχουσας τιμής
+Στα προηγούμενα κεφάλαια επικεντρωθήκαμε περισσότερο στην μαθηματική αναπαράσταση
+των σημάτων με μια μικρή αναφορά στα γραμμικά συστήματα. Τα φίλτρα αποτελούν γραμμικά
+συστήματα και ως εκ τούτου αντιμετωπίζονται λαμβάνοντας υπόψη τις ανάλογες ιδιότητες
+και συμπεριφορές. Σκοπός σχεδιασμού αυτών των συστημάτων αποτελεί η αφαίρεση στοιχείων
+από κάποιο σήμα, ή η τροποποίηση προκαθορισμένων χαρακτηριστικών του. Εδώ θα αναφερθούμε
+στην κατηγορία των συστημάτων πεπερασμένης κρουστικής απόκρισης, ή όπως θα αποκαλούνται
+στην συνέχεια για συντομία \(F.I.R.\). Για αρχή μπορούμε να φανταστούμε πως η έξοδος του
+φίλτρου παράγεται αθροίζοντας ένα πεπερασμένο αριθμό δειγμάτων όπου εφαρμόζουμε κάποιο
+"βάρος στάθμισης". Στόχος των επόμενων ενοτήτων είναι ο προσδιορισμός των βασικών αρχών
+πού διέπουν τα διακριτά συστήματα και την εφαρμογή τους στον σχεδιασμό των \(F.I.R.\). Θα
+επανέλθουμε στον όρο της γραμμικότητας και θα αναφερθούμε και στην χρονική αμεταβλητότητα
+που συνδυασμένες καλύπτουν ένα ευρύ φάσμα της εν' λόγω κατηγορίας.
+*** Μέση τρέχουσα τιμή και σχεδιασμός φίλτρου
+Ένας από τους πιο διαδεδομένους τρόπους μετασχηματισμού σημάτων είναι ο υπολογισμός
+της μέσης τιμής για δύο ή παραπάνω δειγμάτων, με σκοπό την αφαίρεση έντονων στιγμιαίων
+διακυμάνσεων του σήματος γύρω από κάποια επιθυμητή τιμή. Λόγω της πλειθώρας αλγόριθμων
+για των υπολογισμό μέσης τιμής ακολουθιών είναι από τις πιο συχνά εφαρμοσμένες τεχνικές
+στον τομέα της οικονομικής επιστήμης και πιο συγκεκριμένα στην μακροχρόνια ανάλυση των
+τιμών μετοχής σε χρηματιστήριο. Με απλά λόγια αν κάποιος επιθυμεί να εξετάσει την
+ανοδική ή καθοδική πορεία μιας μετοχής δεν τον αφορά η αυξομείωση της τιμής ανά ημέρα,
+πόσο μάλλον ανά δευτερόλεπτο. Τα τελευταία δεκαδικά όμως αλλάζουν κάθε δευτερόλεπτο, σε
+πραγματικό χρόνο και επομένως εφαρμόζεται ένα φίλτρο μέσης τρέχουσας τιμής στις τιμές
+ώστε να είναι δυνατή η αξιοποίηση της πληροφορίας των μεταβολών με μικρότερη απόκλιση,
+από την μέση τιμή.
+
+Για να γίνει πιο κατανοητό ας υποθέσουμε πως ένα ψηφιακό σήμα μπορεί να αναπαρασταθεί
+ως \(in[z]\). Εφαρμόζεται ένα σύστημα φίλτρου όπως το παραπάνω υπολογίζοντας τον μέσο όρο από
+πέντε δείγματα την φορά. Τότε για κάθε δείγμα της ακολουθίας εξόδου του συστήματος θα
+ισχύει ότι:
+\begin{equation}
+\begin{align}
+out[n] = \frac{1}{k} \cdot \sum_{z}^{{k-1}}in[n+z], k=5 \\
+\end{align}
+\end{equation}
+Η σχέση (7.1) ονομάζεται και σχέση διαφορών και αποτελεί πλήρη περιγραφή ενός *συστήματος
+\(F.I.R\)*, δίνοντας την δυνατότητα στον χρήστη να εξάγει πληροφορία για κάθε τιμή του σήματος
+εισόδου \(in[n]\). Όσο για τον προσδιορισμό της αρχικής τιμής της μεταβλητής \(z\) τις περισσότερες
+φορές επιλέγεται η τιμή μηδέν με σκοπό να συμπεριλάβουμε το πρώτο δείγμα της εισόδου
+στο οποίο αναφερόμαστε εδώ και στην συνέχεια ώς \(in[0]\). Το δείγμα που λαμβάνεται σαν "αρχικό",
+για \(n = 1,\ 2,\ 3,\ ... \) μπορούμε να το χαρακτηρίσουμε και ως το παρόν του σήματος. Αντίστοιχα τα
+δείγματα που έπονται αυτού, και χρησιμοποιούνται στο παραπάνω σύστημα για τον υπολογισμό
+της εξόδου συνθηκολογόντας αναφέρονται στην βιβλιογραφία ως μέλλον του σήματος.
+*** Κατηγορίες παραθύρων
+
+**** Μέθοδος $\en{Kaiser}$
+
+#+begin_src jupyter-python :session python :async yes :results drawer
+
+#+end_src
+**** Συχνοί τύποι παραθύρων
+- Βασικές κατηγορίες φίλτων:
+  - $\en{Rectangle}$
+
+    #+begin_src jupyter-python :session python :async yes :results drawer
+
+    #+end_src
+
+  - $\en{Barlett}$
+    #+begin_src jupyter-python :session python :async yes :results drawer
+
+    #+end_src
+
+  - $\en{Hanning}$
+      #+begin_src jupyter-python :session python :async yes :results drawer
+
+      #+end_src
+
+  - $\en{Hamming}$
+      #+begin_src jupyter-python :session python :async yes :results drawer
+
+      #+end_src
+****  Βέλτιστες προσομοιώσεις φίλτρων
+
+\selectlanguage{english}
+- Here is a deep analysis for the appropriate implementation of the FIR filters in respect to /M value???/
+\selectlanguage{greek}
+
+-----
+*** maybe :noexport:
+\*
+Η κατηγορία αυτή εξειδικεύεται περαιτέρω, εφαρμόζοντας μια μέθοδο παραθύρων
+τα οποία προσφέρουν συγκεκριμένες αποκρίσεις στο πεδίο των συχνοτήτων. Μερικά
+παραδείγματα θα παρουσιαστούν παρακάτω, καθώς ήταν μια από τις μεθόδους που
+εξετάστηκαν κατά την διάρκεια της ανάλυσης των δεδομένων. Παρείχε αποτελέσματα
+που ενέτασαν στην έξοδό του ενίσχυση του σήματος σε χαμηλές συχνότητες. Αύτο
+ήταν αποτέλεσμα του τρόπου με τον οποίο ορίζεται ο συγκεκριμένος τύπος, καθώς
+φαίνεται να μην συνιστάται όταν ο όγκος δεδομένων έχουν μεγάλο πλήθος. Ο λόγος
+είναι ότι πρέπει να οριστεί ένα πολυώνυμο με το οποίο κάθε συντελεστής ταυτίζεται
+με κάθε ένα από τα σημεία του δείγματος. Έτσι σε μεγάλα σετ δεδομένων απαιτείται
+πρακτικά μεγάλος όγκος αριθμητικών υπολογισμών που καθυστερεί την έκβαση των
+αποτελεσμάτων σε μη αποδεκτό βαθμό.
+\*
+*** notes :noexport:
+convolution sum == αθροισμα συνέλιξης
+- να προστεθεί
+  [[file:../books/ScienceDirect_articles_18Feb2023_15-57-03.874/6---Finite-impulse-response-filter-des_2003_Practical-Digital-Signal-Process.pdf][fir intro]]
+- output sequence
+
+  \begin{equation}
+  \begin{align}
+  y(n)=\sum_{m=0}^{M}x(m)h(n-m)
+  \end{align}
+  \end{equation}
+** Φίλτρο άπειρης κρουστικής απόκρισης
+Τα φίλτρα άπειρης κρουστικής απόκρισης στο πεδίο του χρόνου <216>....
+Γραμμικότητα και χρονική αμεταβλητότητα .... <219>.....
+κλπ .....
+....
+
+*** notes :noexport:
+- να προστεθεί
+  [[file:../books/ScienceDirect_articles_18Feb2023_15-57-03.874/7---Infinite-impulse-response--IIR--filte_2003_Practical-Digital-Signal-Proc.pdf][iir intro]]
+*** Παραδείγματα με κώδικα
+*Εδω να μπει μια επεξηγηση για την κατασκευη και εξαγωγή των παρακατω διαγραμμάτων.*
+\selectlanguage{greek}
+\twocolumn
+**** Βασικά φίλτρα
+
+Εδώ φαίνονται μερικά από τα βασικότερα φίλτρα άπειρης κρουστικής απόκρισης, που
+από εδώ και πέρα θα αναφερόμαστε σε αυτά ως \(IIR\). Οι τύποι των παρακάτω φίλτρων
+αποτελούν τα πιο διαδεδομένα και εύχρηστα, για την προσομοίωση φυσικών εφαρμογών
+σε προγραμματιστικό περιβάλλον. Δεν είναι άλλωστε τυχαίο πως οι περισσότερες
+γλώσσες προγραμματισμού παρέχουν μια ή και περισσότερες βιβλιοθήκες για τον
+σχεδιασμό και τη χρήση τους.
+
+Το φίλτρο \(butterworth\) αποτελεί την καλύτερη δυνατή λύση για έξοδο με την μικρότερη
+ενίσχυση καθώς όπως φαίνεται και στο γράφημα δεν παρουσιάζει ταλαντωτικές
+συμπεριφορές στις συχνότητες διέλευσης και απόρριψης. Αυτό επιτυγχάνεται
+μειώνοντας την ταχύτητα μεταβολής της ισχύος του σήματος, αποκτώντας έτσι μια
+περιοχή μετάβασης όπου οι συχνότητες δεν απορρίπτονται όμως απομειώνονται σε
+σημαντικό βαθμό ώστε να μην αλλοιώνεται η έξοδος του.
+
+Το \(chebyshev\) ενώ εκ πρώτης όψης φαίνεται να επηρεάζει το σήμα σε μη
+αποδεκτό βαθμό, προνόμιό του αποτελεί η ταχύτητα που προσφέρει αποτελέσματα.
+Αυτό οφείλεται στην μέθοδο της αναδρομής που χρησιμοποιείται κατά την επεξεργασία
+με το συγκεκριμένο φίλτρο. Τα περισσότερα χρησιμοποιούν την μέθοδο της συνέλιξης.
+
+Παρακάτω φαίνεται η κατασκευή ενός πρότυπου φίλτρου τύπου \(butterworth\) με την χρήση
+της βιβλιοθήκης \(scipy\). Αντίστοιχα παραδείγματα θα προστεθούν για κάθε γράφημα
+πρότυπου φίλτρου.
+
+\selectlanguage{english}
+#+begin_src jupyter-python :session py :async yes :results drawer :exports code
+# 4TH ORDER BUTTERWORTH FILTER
+# WITH A GAIN DROP OF 1/sqrt(2)
+# AT 0.4 CYCLES/SAMPLE
+bb, ab  = signal.butter (4, 0.8, 'low',
+                         analog=False,
+                         output='ba')
+print ('Coefficients of b = ', bb)
+print ('Coefficients of a = ', ab)
+wb, hb = signal.freqz(bb, ab)
+wb = wb/(2*math.pi)
+plt.plot(wb, abs(np.array(hb)))
+
+plt.title('Butterworth filter \
+            frequency response')
+plt.xlabel('Frequency [cycles/sample]')
+plt.ylabel('Amplitute [dB]')
+plt.margins(0, 0.1)
+plt.grid(which = 'both', axis='both')
+plt.savefig('Butterworth Filter\
+                Freq Response.png')
+#+end_src
+
+#+CAPTION:Butterworth filter frequency response
+
+[[file:./Butterworth Filter Freq Response.png]]
+
+
+#+begin_src jupyter-python :session py :async yes :results drawer :exports code
+# 4TH ORDER BESSEL FILTER WITH
+# A GAIN DROP OF 1/sqrt(2)
+# AT 0.4 CYCLES/SAMPLE
+bb, ab = signal.bessel (4, 0.8, 'low',
+                        analog=False,
+                        output='ba')
+print ('Coefficients of b = ', bb)
+print ('Coefficients of a = ', ab)
+wb, hb = signal.freqz(bb, ab)
+wb = wb/(2*math.pi)
+plt.plot(wb, abs(np.array(hb)))
+
+plt.title('Bessel filter frequency \
+            response')
+plt.xlabel('Frequency [cycles/sample]')
+plt.ylabel('Amplitute [dB]')
+plt.margins(0, 0.1)
+plt.grid(which= 'both', axis= 'both')
+plt.savefig('Bessel Filter Freq \
+                Response.png')
+#+end_src
+
+#+RESULTS:
+:results:
+: Coefficients of b =  [0.38138399 1.52553597 2.28830395 1.52553597 0.38138399]
+: Coefficients of a =  [1.         2.22014688 1.96016768 0.79691897 0.12491033]
+[[file:./.ob-jupyter/e1bd9331cdcfacbb7f41f9d3f7f7369417191cb2.png]]
+:end:
+
+[[file:./Bessel Filter Freq Response.png]]
+
+#+begin_src jupyter-python :session py :async yes :results drawer :exports code
+#4TH ORDER CHEBYSHEV FILTER TYPE 1
+# (ONLY IN PASSBAND RIPPLES)
+# WITH MAX RIPPLES=2 AND THE GAIN
+# DROP AT 1.5 CYCLES/SAMPLE
+
+bb, ab = signal.cheby1 (4, 2, 0.3, 'low',
+                        analog=False,
+                        output='ba')
+print ('Coefficients of b = ', bb)
+print ('Coefficients of a = ', ab)
+wb, hb = signal.freqz(bb, ab)
+wb = wb/(2*math.pi)
+plt.plot(wb, abs(np.array(hb)))
+
+plt.title('Chebyshev filter frequency \
+            response')
+plt.xlabel('Frequency [cycles/sample]')
+plt.ylabel('Amplitute [dB]')
+plt.margins(0, 0.1)
+plt.grid(which= 'both', axis= 'both')
+plt.savefig('Chebyshev Filter Freq \
+                Response.png')
+#+end_src
+
+#+RESULTS:
+:results:
+: Coefficients of b =  [0.00621208 0.02484834 0.03727251 0.02484834 0.00621208]
+: Coefficients of a =  [ 1.         -2.55878623  3.06243151 -1.88984936  0.51133289]
+[[file:./.ob-jupyter/7a69c6d01e07b2b281b0b81bacec619b836e85be.png]]
+:end:
+
+[[file:./Chebyshev Filter Freq Response.png]]
+
+#+begin_src jupyter-python :session py :async yes :results drawer :exports code
+# 4TH ORDER ELLIPTIC FILTER WITH
+# MAX RIPPLES =2dB IN PASSBAND,
+# MIN ATTENUATION =8dB IN STOP
+# BAND AT 0.25 CYCLES/SAMPLE
+bb, ab = signal.ellip (4, 2, 8,
+                       0.5, 'low',
+                       analog=False,
+                       output='ba')
+print ('Coefficients of b = ', bb)
+print ('Coefficients of a = ', ab)
+wb, hb = signal.freqz(bb, ab)
+wb = wb/(2*math.pi)
+plt.plot(wb, abs(np.array(hb)))
+
+plt.title('Elliptic filter frequency \
+                response')
+plt.xlabel('Frequency [cycles/sample]')
+plt.ylabel('Amplitute [dB]')
+plt.margins(0, 0.1)
+plt.grid(which= 'both', axis= 'both')
+plt.savefig('Elliptic Filter Freq \
+                Response.png')
+#+end_src
+
+#+RESULTS:
+:results:
+: Coefficients of b =  [0.46145672 0.25087717 0.92598814 0.25087717 0.46145672]
+: Coefficients of a =  [ 1.         -0.10662377  1.58392005 -0.10566643  0.58767062]
+[[file:./.ob-jupyter/31f8668d780753525719afbd56f7453fde8a0779.png]]
+:end:
+
+[[file:./Elliptic Filter Freq Response.png]]
+
+\selectlanguage{greek}
+Παρατηρούμε πως όλα τα παραπάνω παραδείγματα εφαρμόζονται για το ίδιο φάσμα
+συχνοτήτων, όμως επηρεάζουν τις συχνότητες διέλευσης και κατά συνέπια το
+σήμα εξόδου με διαφορετικό τρόπο. Ανάλογα με τις εκάστοτε προϋποθέσεις και
+περιορισμούς του συστήματος επεξεργασίας που διαθέτουμε μπορεί να προτιμηθεί
+κάποια από τις περιπτώσεις που προαναφέρθηκαν εδώ. Η πολυπλοκότητα και το εύρος
+των σημάτων που διαχειριζόμαστε σε βιομηχανικές εγκαταστάσεις αλλά και στην
+καθημερινή αλληλεπίδραση με τα τεχνολογικά μέσα έχουν εξειδικεύσει αυτές τις
+κατηγορίες περεταίρω, με την χρήση αλγορίθμων βελτιστοποίησης, όμως στο πλαίσιο
+της παρούσας εργασίας δεν θα σχολιαστούν τέτοιες μέθοδοι.
+
+Αξίζει εδώ να σχολιαστεί ότι τα συγκεκριμένα πρότυπα φίλτρων τυποποιήθηκαν
+από το λογισμικό υπολογισμών και προγραμματισμού \(Matlab\) και στην συνέχεια
+πολλές γλώσσες προγραμματισμού τα συμπεριέλαβαν σε βιβλιοθήκες για επεξεργασία
+σημάτων. Η \(python\) θεωρείται από τις γλώσσες με τις αναλυτικότερες βιβλιοθήκες
+για την κατασκευή φίλτρων, λόγω των πολλών επιλογών σε τύπους αλλά ειδικά στην
+πλειθώρα χαρακτηριστικών που μπορεί ο χρήστης να καθορίσει για τη συμπεριφορά
+και απόκριση των φίλτρων.
+\onecolumn
+** D.T. Infinite Impulse Response from C.T. filters :noexport:
+
+[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::468]]
 * Επεξεργασία σημάτων
 ** Ορισμός μετα-επεξεργασίας
     Η επεξεργασία ενός σήματος θα πρέπει να γίνεται με προσοχή καθώς είναι
@@ -798,237 +1128,9 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 Αυτό θα αύξανε πολύ το κόστος της κατασκευής και θα απαιτούσε
 βαθμονόμιση του φίλτρου για να μην προστεθεί περαιτέρω σφάλμα στην
 μέτρηση
------
-
-* Σχεδιασμός Φίλτρων
-** Κατηγορίες
-Λόγω των πολλών εφαρμογών που έχουν και την εκθετική αύξηση της χρήσης
-ηλεκτρονικών συσκευών στην καθημερινότητα, οι δυνατότητες επεξεργασίας
-ψηφιακών σημάτων αποτελεί πρακτικά απαραίτητη προϋπόθεση. Έτσι η ανάγκη
-για την ανάπτυξη διαφόρων τύπων φίλτρων π.χ. το φίλτρο μέσης τρέχουσας
-τιμής ($\en{F.I.R.}$), το φίλτρο άπειρης κρουστικής απόκρισης ($\en{I.I.R.}$) και το μεσιανό
-φίλτρο ($\en{median\ filters}$). Στην συνέχεια θα αναφερθούμε και στις τρείς αυτές
-κατηγορίες αναφέροντας παραδείγματα από τις μεθόδους που χρησιμοποιήθηκαν
-στην ανάλυση των δεδομένων από την *εργαστηριακή εγκατάσταση* ? ...
-Η γενική διαφοροποίηση που γίνεται αρχικά είναι ώς προς το εύρος
-συχνοτήτων που επηρεάζουν. Έτσι αν απορρίπτονται οι ύψηλες συχνότητες, το
-φίλτρο ονομάζεται διέλευσης χαμηλών συχνοτήτων ($\en{low-pass\ filter}$)
-ενώ το αντίστροφο ονομάζεται φίλτρο διέλευσης υψηλών συχνοτήτων ($\en{high-pass\ filter}$).
-Άν το φίλτρο επηρεάζειμία περιοχή ή *φάσμα* συχνοτήτων και
-απορρίπτει όσες βρίσκονται πριν και μετά, ονομάζεται φίλτρο απόρριψης
-εύρους συχνοτήτων ($\en{band-stop\ filter}$).
-
-** Φίλτρο άπειρης κρουστικής απόκρισης
-Τα φίλτρα άπειρης κρουστικής απόκρισης στο πεδίο του χρόνου <216>....
-Γραμμικότητα και χρονική αμεταβλητότητα .... <219>.....
-κλπ .....
-....
-
-*** notes :noexport:
-- να προστεθεί
-  [[file:../books/ScienceDirect_articles_18Feb2023_15-57-03.874/7---Infinite-impulse-response--IIR--filte_2003_Practical-Digital-Signal-Proc.pdf][iir intro]]
-*** Παραδείγματα με κώδικα
-*Εδω να μπει μια επεξηγηση για την κατασκευη και εξαγωγή των παρακατω διαγραμμάτων.*
-\selectlanguage{greek}
-\twocolumn
-**** Βασικά φίλτρα
-
-Εδώ φαίνονται μερικά από τα βασικότερα φίλτρα άπειρης κρουστικής απόκρισης, που
-από εδώ και πέρα θα αναφερόμαστε σε αυτά ως \(IIR\). Οι τύποι των παρακάτω φίλτρων
-αποτελούν τα πιο διαδεδομένα και εύχρηστα, για την προσομοίωση φυσικών εφαρμογών
-σε προγραμματιστικό περιβάλλον. Δεν είναι άλλωστε τυχαίο πως οι περισσότερες
-γλώσσες προγραμματισμού παρέχουν μια ή και περισσότερες βιβλιοθήκες για τον
-σχεδιασμό και τη χρήση τους.
-
-Το φίλτρο \(butterworth\) αποτελεί την καλύτερη δυνατή λύση για έξοδο με την μικρότερη
-ενίσχυση καθώς όπως φαίνεται και στο γράφημα δεν παρουσιάζει ταλαντωτικές
-συμπεριφορές στις συχνότητες διέλευσης και απόρριψης. Αυτό επιτυγχάνεται
-μειώνοντας την ταχύτητα μεταβολής της ισχύος του σήματος, αποκτώντας έτσι μια
-περιοχή μετάβασης όπου οι συχνότητες δεν απορρίπτονται όμως απομειώνονται σε
-σημαντικό βαθμό ώστε να μην αλλοιώνεται η έξοδος του.
-
-Το \(chebyshev\) ενώ εκ πρώτης όψης φαίνεται να επηρεάζει το σήμα σε μη
-αποδεκτό βαθμό, προνόμιό του αποτελεί η ταχύτητα που προσφέρει αποτελέσματα.
-Αυτό οφείλεται στην μέθοδο της αναδρομής που χρησιμοποιείται κατά την επεξεργασία
-με το συγκεκριμένο φίλτρο. Τα περισσότερα χρησιμοποιούν την μέθοδο της συνέλιξης.
-\selectlanguage{english}
-
-
-#+begin_src jupyter-python :session py :async yes :results drawer :exports none
-# 4TH ORDER BUTTERWORTH FILTER WITH A GAIN DROP OF 1/sqrt(2) AT 0.4 CYCLES/SAMPLE
-bb, ab  = signal.butter (4, 0.8, 'low', analog=False, output='ba')
-print ('Coefficients of b = ', bb)
-print ('Coefficients of a = ', ab)
-wb, hb = signal.freqz(bb, ab)
-wb = wb/(2*math.pi)
-plt.plot(wb, abs(np.array(hb)))
-
-plt.title('Butterworth filter frequency response')
-plt.xlabel('Frequency [cycles/sample]')
-plt.ylabel('Amplitute [dB]')
-plt.margins(0, 0.1)
-plt.grid(which = 'both', axis='both')
-plt.savefig('Butterworth Filter Freq Response.png')
-#+end_src
-
-#+CAPTION:Butterworth filter frequency response
-
-[[file:./Butterworth Filter Freq Response.png]]
-
-
-#+begin_src jupyter-python :session py :async yes :results drawer :exports none
-# 4TH ORDER BESSEL FILTER WITH A GAIN DROP OF 1/sqrt(2) AT 0.4 CYCLES/SAMPLE
-
-bb, ab = signal.bessel (4, 0.8, 'low', analog=False, output='ba')
-print ('Coefficients of b = ', bb)
-print ('Coefficients of a = ', ab)
-wb, hb = signal.freqz(bb, ab)
-wb = wb/(2*math.pi)
-plt.plot(wb, abs(np.array(hb)))
-
-plt.title('Bessel filter frequency response')
-plt.xlabel('Frequency [cycles/sample]')
-plt.ylabel('Amplitute [dB]')
-plt.margins(0, 0.1)
-plt.grid(which= 'both', axis= 'both')
-plt.savefig('Bessel Filter Freq Response.png')
-#+end_src
-
-#+RESULTS:
-:results:
-: Coefficients of b =  [0.38138399 1.52553597 2.28830395 1.52553597 0.38138399]
-: Coefficients of a =  [1.         2.22014688 1.96016768 0.79691897 0.12491033]
-[[file:./.ob-jupyter/e1bd9331cdcfacbb7f41f9d3f7f7369417191cb2.png]]
-:end:
-
-[[file:./Bessel Filter Freq Response.png]]
-
-#+begin_src jupyter-python :session py :async yes :results drawer :exports none
-#4TH ORDER CHEBYSHEV FILTER TYPE 1 (ONLY IN PASSBAND RIPPLES)
-#WITH MAX RIPPLES=2 AND THE GAIN DROP AT 1.5 CYCLES/SAMPLE
-
-bb, ab = signal.cheby1 (4, 2, 0.3, 'low', analog=False, output='ba')
-print ('Coefficients of b = ', bb)
-print ('Coefficients of a = ', ab)
-wb, hb = signal.freqz(bb, ab)
-wb = wb/(2*math.pi)
-plt.plot(wb, abs(np.array(hb)))
-
-plt.title('Chebyshev filter frequency response')
-plt.xlabel('Frequency [cycles/sample]')
-plt.ylabel('Amplitute [dB]')
-plt.margins(0, 0.1)
-plt.grid(which= 'both', axis= 'both')
-plt.savefig('Chebyshev Filter Freq Response.png')
-#+end_src
-
-#+RESULTS:
-:results:
-: Coefficients of b =  [0.00621208 0.02484834 0.03727251 0.02484834 0.00621208]
-: Coefficients of a =  [ 1.         -2.55878623  3.06243151 -1.88984936  0.51133289]
-[[file:./.ob-jupyter/7a69c6d01e07b2b281b0b81bacec619b836e85be.png]]
-:end:
-
-[[file:./Chebyshev Filter Freq Response.png]]
-
-#+begin_src jupyter-python :session py :async yes :results drawer :exports none
-# 4TH ORDER ELLIPTIC FILTER WITH MAX RIPPLES =2dB IN PASSBAND,
-# MIN ATTENUATION =8dB IN STOP BAND AT 0.25 CYCLES/SAMPLE
-
-bb, ab = signal.ellip (4, 2, 8, 0.5, 'low', analog=False, output='ba')
-print ('Coefficients of b = ', bb)
-print ('Coefficients of a = ', ab)
-wb, hb = signal.freqz(bb, ab)
-wb = wb/(2*math.pi)
-plt.plot(wb, abs(np.array(hb)))
-
-plt.title('Elliptic filter frequency response')
-plt.xlabel('Frequency [cycles/sample]')
-plt.ylabel('Amplitute [dB]')
-plt.margins(0, 0.1)
-plt.grid(which= 'both', axis= 'both')
-plt.savefig('Elliptic Filter Freq Response.png')
-#+end_src
-
-#+RESULTS:
-:results:
-: Coefficients of b =  [0.46145672 0.25087717 0.92598814 0.25087717 0.46145672]
-: Coefficients of a =  [ 1.         -0.10662377  1.58392005 -0.10566643  0.58767062]
-[[file:./.ob-jupyter/31f8668d780753525719afbd56f7453fde8a0779.png]]
-:end:
-
-[[file:./Elliptic Filter Freq Response.png]]
-
-\end{enumerate}
-\selectlanguage{greek}
-\onecolumn
-** Φίλτρο μέσης τρέχουσας τιμής
-Η κατηγορία αυτή εξειδικεύεται περαιτέρω, εφαρμόζοντας μια μέθοδο παραθύρων
-τα οποία προσφέρουν συγκεκριμένες αποκρίσεις στο πεδίο των συχνοτήτων. Μερικά
-παραδείγματα θα παρουσιαστούν παρακάτω, καθώς ήταν μια από τις μεθόδους που
-εξετάστηκαν κατά την διάρκεια της ανάλυσης των δεδομένων. Παρείχε αποτελέσματα
-που ενέτασαν στην έξοδό του ενίσχυση του σήματος σε χαμηλές συχνότητες. Αύτο
-ήταν αποτέλεσμα του τρόπου με τον οποίο ορίζεται ο συγκεκριμένος τύπος, καθώς
-φαίνεται να μην συνιστάται όταν ο όγκος δεδομένων έχουν μεγάλο πλήθος. Ο λόγος
-είναι ότι πρέπει να οριστεί ένα πολυώνυμο με το οποίο κάθε συντελεστής ταυτίζεται
-με κάθε ένα από τα σημεία του δείγματος. Έτσι σε μεγάλα σετ δεδομένων απαιτείται
-πρακτικά μεγάλος όγκος αριθμητικών υπολογισμών που καθυστερεί την έκβαση των
-αποτελεσμάτων σε μη αποδεκτό βαθμό.
-*** notes :noexport:
-convolution sum == αθροισμα συνέλιξης
-- να προστεθεί
-  [[file:../books/ScienceDirect_articles_18Feb2023_15-57-03.874/6---Finite-impulse-response-filter-des_2003_Practical-Digital-Signal-Process.pdf][fir intro]]
-- output sequence
-
-  \begin{equation}
-  \begin{align}
-  y(n)=\sum_{m=0}^{M}x(m)h(n-m)
-  \end{align}
-  \end{equation}
-*** Κατηγορίες παραθύρων φίλτρων πεπερασμένης κρουστικής απόκρισης
-
-**** Συχνοί τύποι παραθύρων
-- Βασικές κατηγορίες φίλτων:
-  - $\en{Rectangle}$
-
-    #+begin_src jupyter-python :session python :async yes :results drawer
-
-    #+end_src
-
-  - $\en{Barlett}$
-    #+begin_src jupyter-python :session python :async yes :results drawer
-
-    #+end_src
-
-  - $\en{Hanning}$
-      #+begin_src jupyter-python :session python :async yes :results drawer
-
-      #+end_src
-
-  - $\en{Hamming}$
-      #+begin_src jupyter-python :session python :async yes :results drawer
-
-      #+end_src
-
-**** Μέθοδος $\en{Kaiser}$
-
-#+begin_src jupyter-python :session python :async yes :results drawer
-
-#+end_src
-
-****  Βέλτιστες προσομοιώσεις φίλτρων
-
-\selectlanguage{english}
-- Here is a deep analysis for the appropriate implementation of the FIR filters in respect to /M value???/
-\selectlanguage{greek}
-
------
-** D.T. Infinite Impulse Response from C.T. filters :noexport:
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/books/discrete_domain_signal.pdf::468]]
 * Βιβλιογραφία
 \selectlanguage{english}
-#+bibliographystyle:abbrvnat
+
 #+bibliography: ./diss_bibliography.bib
 #+bibliography: ../books/filters-and-techs.bib
 #+bibliography: ../books//edmund-lai-book/book-by-chapt-sig.bib
