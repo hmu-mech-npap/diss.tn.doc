@@ -29,11 +29,6 @@
 #+DATE:[2023-06-25 16:00]
 :END:
 
-#+begin_export html
-<style>
-.reveal  th1 {font-size: 40%;}
-</style>
-#+end_export
 
 * Καθηγητες
 

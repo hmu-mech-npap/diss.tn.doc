@@ -2,7 +2,7 @@
 #+LATEX_CLASS: report
 
 # Options to modify the class. E.g. font size.
-#+LATEX_CLASS_OPTIONS: [breaklines=true]
+#+LATEX_CLASS_OPTIONS: [breaklines=true, 12pt]
 #+LATEX_OPTIONS: twocolumn
 
 # Other La-TeX code that you'd need in the preamble, notably, using packages.
@@ -18,6 +18,9 @@
 #+latex_header: \hypersetup{colorlinks=true, linkcolor=black}
 
 #+LATEX_HEADER: \usepackage{bookmark}
+#+LATEX_HEADER: \usepackage{setspace}
+
+
 
 # Fancy headers
 #+latex_header: \usepackage{fancyhdr}
