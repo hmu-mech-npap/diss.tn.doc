@@ -1,7 +1,7 @@
 _temp_fig
 org-mode/.ob-jupyter
-dissertation document/main_doc/*.odt
-dissertation document/books/
+diss-docs/main_doc/*.odt
+diss-docs/books/
 
 # file types that should be ignored
 *.png
@@ -14,7 +14,8 @@ dissertation document/books/
 *.out
 *.hypb
 .auctex-auto
-!flowcharts/*.png
+!flowcharts/proc-meth.png
+!flowcharts/test-first.png
 # this is for the prefixes emacs and latex uses in generating THE DOC
 pdfs*
 _minted*
