@@ -46,7 +46,7 @@ digraph processing {
     aliasing ->
     decimop -> {apply avrged} ->
     welch ->
-    graphs[color=forestgreen, style=bold]
+    graphs[color=blueviolet , style=bold]
 
     // aliasing path
     timedom ->
@@ -55,5 +55,5 @@ digraph processing {
     welch ->
     graphs [color=magenta]
 
-    graphs -> results
+    graphs -> results [color=forestgreen, style=bold]
 }
