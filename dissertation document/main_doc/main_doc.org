@@ -1,17 +1,16 @@
-#+TITLE: Φίλτρα συχνοτήτων και απομόνωση Η/Μ θορύβου
-#+SUBTITLE: Απομοίωση θορύβου από ψηφιακό σήμα αιστητήρα σε εγκατάσταση του εργαστηρίου ΑΠΕ
-#+AUTHOR: Τοροσιάν Νικόλαος^1 AM: ΤΜ6220, Παπαδάκης Νίκος^2
 :ORG-PROPERTIES:
 #+LANGUAGE: gr
 #+STARTUP: latexpreview showeverything
-#+OPTIONS: tags:t toc:t
+#+OPTIONS: tags:t toc:nil
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+EXCLUDE_TAGS: noexport
 #+TAGS:  noexport(n)
 #+INCLUDE: latex-headers-diss.org
 :END:
-\onehalfspacing
+
+\clearpage \tableofcontents \clearpage
+
 * Imports :noexport:
 #+begin_src jupyter-python :session py :async yes :results drawer
 import numpy as np
@@ -232,7 +231,7 @@ $\en{(Digital\ signal\ processing)}$ επεξεργάζονται σήματα �
 ανάλογο πλαίσιο επεξεργασίας. Εδώ ασχοληθήκαμε μόνο με ψηφιακά σήματα
 καθώς η καταγραφή των σημάτων έγινε με Η/Υ μέσω προγράμματος $\en{(Lab-View)}$.
 
-** Συνεχούς χρόνου
+** Σήματα συνεχούς χρόνου
 Στην εισαγωγή αναφερθήκαμε στον γενικό ορισμό των σημάτων και τις διαφορές
 που τα κατηγοριοποιούν σε αρχικό βαθμό. Επειδή ο στόχος της παρούσας εργασίας
 ήταν η απόρριψη θορύβου δεν θα γίνει η πρέπουσα ανάλυση στην θεωρία των σημάτων,
@@ -273,7 +272,7 @@ A &= [0, … ,n],\ t \in [a,b] n \in \mathbb{Z} \\
 πλεονεκτήματα ήταν πολλά και τελικά επικράτησαν. Παρακάτω θα παρατεθούν
 κάποιες βασικές έννοιες και αρχές που τα διέπουν.
 -----
-** Διακριτού χρόνου
+** Σήματα διακριτού χρόνου
 Σήμα διακριτού χρόνου ονομάζεται μια ακολουθία αριθμών καταγεγραμμένες
 ανά συγκεκριμένο χρονικό διάστημα, π.χ. κάθε 0,01 δευτερόλεπτο. Το
 διάστημα αυτό ορίζει την ταχύτητα καταγραφής του σήματος από την
@@ -929,7 +928,6 @@ convolution sum == αθροισμα συνέλιξης
 *** Παραδείγματα με κώδικα
 *Εδω να μπει μια επεξηγηση για την κατασκευη και εξαγωγή των παρακατω διαγραμμάτων.*
 \selectlanguage{greek}
-\twocolumn
 **** Βασικά φίλτρα
 
 Εδώ φαίνονται μερικά από τα βασικότερα φίλτρα άπειρης κρουστικής απόκρισης, που
@@ -957,26 +955,18 @@ convolution sum == αθροισμα συνέλιξης
 
 \selectlanguage{english}
 #+begin_src jupyter-python :session py :async yes :results drawer :exports code
-# 4TH ORDER BUTTERWORTH FILTER
-# WITH A GAIN DROP OF 1/sqrt(2)
+# 4TH ORDER BUTTERWORTH FILTER WITH A GAIN DROP OF 1/sqrt(2)
 # AT 0.4 CYCLES/SAMPLE
-bb, ab  = signal.butter (4, 0.8, 'low',
-                         analog=False,
-                         output='ba')
-print ('Coefficients of b = ', bb)
-print ('Coefficients of a = ', ab)
+bb, ab  = signal.butter (4, 0.8, 'low', analog=False,output='ba')
 wb, hb = signal.freqz(bb, ab)
 wb = wb/(2*math.pi)
-plt.plot(wb, abs(np.array(hb)))
 
-plt.title('Butterworth filter \
-            frequency response')
+plt.plot(wb, abs(np.array(hb)))
+plt.title('Butterworth filter frequency response')
 plt.xlabel('Frequency [cycles/sample]')
 plt.ylabel('Amplitute [dB]')
 plt.margins(0, 0.1)
 plt.grid(which = 'both', axis='both')
-plt.savefig('Butterworth Filter\
-                Freq Response.png')
 #+end_src
 
 #+CAPTION:Butterworth filter frequency response
@@ -985,26 +975,18 @@ plt.savefig('Butterworth Filter\
 
 
 #+begin_src jupyter-python :session py :async yes :results drawer :exports code
-# 4TH ORDER BESSEL FILTER WITH
-# A GAIN DROP OF 1/sqrt(2)
+# 4TH ORDER BESSEL FILTER WITH A GAIN DROP OF 1/sqrt(2)
 # AT 0.4 CYCLES/SAMPLE
-bb, ab = signal.bessel (4, 0.8, 'low',
-                        analog=False,
-                        output='ba')
-print ('Coefficients of b = ', bb)
-print ('Coefficients of a = ', ab)
+bb, ab = signal.bessel (4, 0.8, 'low', analog=False, output='ba')
 wb, hb = signal.freqz(bb, ab)
 wb = wb/(2*math.pi)
-plt.plot(wb, abs(np.array(hb)))
 
-plt.title('Bessel filter frequency \
-            response')
+plt.plot(wb, abs(np.array(hb)))
+plt.title('Bessel filter frequency response')
 plt.xlabel('Frequency [cycles/sample]')
 plt.ylabel('Amplitute [dB]')
 plt.margins(0, 0.1)
 plt.grid(which= 'both', axis= 'both')
-plt.savefig('Bessel Filter Freq \
-                Response.png')
 #+end_src
 
 #+RESULTS:
@@ -1017,28 +999,18 @@ plt.savefig('Bessel Filter Freq \
 [[file:./Bessel Filter Freq Response.png]]
 
 #+begin_src jupyter-python :session py :async yes :results drawer :exports code
-#4TH ORDER CHEBYSHEV FILTER TYPE 1
-# (ONLY IN PASSBAND RIPPLES)
-# WITH MAX RIPPLES=2 AND THE GAIN
-# DROP AT 1.5 CYCLES/SAMPLE
-
-bb, ab = signal.cheby1 (4, 2, 0.3, 'low',
-                        analog=False,
-                        output='ba')
-print ('Coefficients of b = ', bb)
-print ('Coefficients of a = ', ab)
+#4TH ORDER CHEBYSHEV FILTER TYPE 1 (ONLY IN PASSBAND RIPPLES)
+# WITH MAX RIPPLES=2 AND THE GAIN DROP AT 1.5 CYCLES/SAMPLE
+bb, ab = signal.cheby1 (4, 2, 0.3, 'low', analog=False, output='ba')
 wb, hb = signal.freqz(bb, ab)
 wb = wb/(2*math.pi)
-plt.plot(wb, abs(np.array(hb)))
 
-plt.title('Chebyshev filter frequency \
-            response')
+plt.plot(wb, abs(np.array(hb)))
+plt.title('Chebyshev filter frequency response')
 plt.xlabel('Frequency [cycles/sample]')
 plt.ylabel('Amplitute [dB]')
 plt.margins(0, 0.1)
 plt.grid(which= 'both', axis= 'both')
-plt.savefig('Chebyshev Filter Freq \
-                Response.png')
 #+end_src
 
 #+RESULTS:
@@ -1051,36 +1023,19 @@ plt.savefig('Chebyshev Filter Freq \
 [[file:./Chebyshev Filter Freq Response.png]]
 
 #+begin_src jupyter-python :session py :async yes :results drawer :exports code
-# 4TH ORDER ELLIPTIC FILTER WITH
-# MAX RIPPLES =2dB IN PASSBAND,
-# MIN ATTENUATION =8dB IN STOP
-# BAND AT 0.25 CYCLES/SAMPLE
-bb, ab = signal.ellip (4, 2, 8,
-                       0.5, 'low',
-                       analog=False,
-                       output='ba')
-print ('Coefficients of b = ', bb)
-print ('Coefficients of a = ', ab)
+# 4TH ORDER ELLIPTIC FILTER WITH MAX RIPPLES =2dB IN PASSBAND,
+# MIN ATTENUATION =8dB IN STOP BAND AT 0.25 CYCLES/SAMPLE
+bb, ab = signal.ellip (4, 2, 8, 0.5, 'low', analog=False, output='ba')
 wb, hb = signal.freqz(bb, ab)
 wb = wb/(2*math.pi)
-plt.plot(wb, abs(np.array(hb)))
 
-plt.title('Elliptic filter frequency \
-                response')
+plt.plot(wb, abs(np.array(hb)))
+plt.title('Elliptic filter frequency response')
 plt.xlabel('Frequency [cycles/sample]')
 plt.ylabel('Amplitute [dB]')
 plt.margins(0, 0.1)
 plt.grid(which= 'both', axis= 'both')
-plt.savefig('Elliptic Filter Freq \
-                Response.png')
 #+end_src
-
-#+RESULTS:
-:results:
-: Coefficients of b =  [0.46145672 0.25087717 0.92598814 0.25087717 0.46145672]
-: Coefficients of a =  [ 1.         -0.10662377  1.58392005 -0.10566643  0.58767062]
-[[file:./.ob-jupyter/31f8668d780753525719afbd56f7453fde8a0779.png]]
-:end:
 
 [[file:./Elliptic Filter Freq Response.png]]
 
@@ -1102,27 +1057,7 @@ plt.savefig('Elliptic Filter Freq \
 για την κατασκευή φίλτρων, λόγω των πολλών επιλογών σε τύπους αλλά ειδικά στην
 πλειθώρα χαρακτηριστικών που μπορεί ο χρήστης να καθορίσει για τη συμπεριφορά
 και απόκριση των φίλτρων.
-\onecolumn
-* Επεξεργασία σημάτων
-** Ορισμός μετα-επεξεργασίας
-    Η επεξεργασία ενός σήματος θα πρέπει να γίνεται με προσοχή καθώς είναι
-εύκολο να καταστραφεί μέρος της πληροφορίας που περιέχεται ή ακόμα και
-να εκδοθούν λανθασμένα συμπεράσματα για την συμπεριφορά του συστήματος.
-Εδώ χρησιμοποιήθηκε η *μετα-επεξεργασία* , δηλαδή τα δεδομένα
-καταγράφηκαν με σταθερή συχνότητα δειγματοληψίας σε μορφή αρχείου
-δεδομένων ($\en{datasets}$) .$\en{tdms}$ μέσω του προγράμματος $\en{LabView}$.
-
-    Η μέθοδος αυτή δίνει την δυνατότητα στον αναλυτή να επεξεργαστεί τα
-δεδομένα στον προσωπικό του υπολογιστή ακόμα και να συνδεθεί σε κάποιον
-ισχυρότερο υπολογιστή και να τα διαχειριστεί εξ’ αποστάσεως. Μπορεί όμως
-να γίνεται και στην εγκατάσταση αυτοματοποιώντας την διαδικασία
-καταγραφής των δεδομένων. Τα συστήματα τηλεπικοινωνιών βασίζονται στην
-σωστή κωδικοποίηση από τον πομπό και αποκωδικοποίηση στον δέκτη, οι
-διαδικασίες αυτές λαμβάνουν χώρα στις συσκευές που καταγράφουν και
-μεταδίδουν το σήμα, όμως επειδή η επεξεργασία της
-κωδικοποίησης-αποκωδικοποίησης γίνεται αφού καταγραφεί το σήμα σε κάποια
-προσωρινή ή μόνιμη μνήμη και έτσι εντάσσεται στην *μετα-επεξεργασία*.
-
+* Δεδομένα και επεξεργασία
 ** Εγκατάσταση εργαστηρίου
     Η εγκατάσταση που χρησιμοποιήθηκε για την συλλογή των δεδομένων
 αποτελείται από μία αεροσύραγγα την οποία τροφοδοτεί με σταθερή ταχύτητα
@@ -1153,6 +1088,9 @@ plt.savefig('Elliptic Filter Freq \
 Αυτό θα αύξανε πολύ το κόστος της κατασκευής και θα απαιτούσε
 βαθμονόμιση του φίλτρου για να μην προστεθεί περαιτέρω σφάλμα στην
 μέτρηση
+
+
+\clearpage
 * Βιβλιογραφία
 \selectlanguage{english}
 
@@ -1172,30 +1110,6 @@ plt.savefig('Elliptic Filter Freq \
 [cite/n:@sig-proc-first]
 [cite/n:@oppenheim99]
 #+print_bibliography:
-* junk :noexport:
-niquist
-    Στην επεξεργασία σημάτων η συχνότητα $\en{Niquist}$ είναι ένα χαρακτηριστικό μέγεθος
-στις καταγραφικές συσκευές, όπου καταγράφουν σήματα συνεχούς χρόνου σε διακριτές
-ακολουθίες (ψηφιακά σήματα). Στην πράξη αν η υψηλότερη συχνότητα ενός σήματος
-είναι μικρότερη από την συχνότητα $\en{Niquist}$ της συσκευής, το καταγεγραμμένο σήμα
-δεν επηρεάζεται από αλλοίωση ($\en{aliasing}$) λόγω της διαδικασίας.
-
-Ορίζεται ώς η μισή της συχνότητας καταγραφής και μετριέται σε κύκλους ανά δευτερόλεπτο
-($\en{Hz}$). Σε κλασικές εφαρμογές ψηφιακής καταγραφής, μετά την συσκευή τοποθετείται
-ένα φίλτρο $\en{anti-aliasing}$ που αποτρέπει την αλλοίωση μειώνοντας την ισχύ των
-συνχοτήτων πάνω από ένα όριο. Τέλος, ορίζεται η ταχύτητα δειγματοληψίας που
-παρέχει την λιγότερη δυνατή αλλοίωση, έχοντας υπ' όψη οτί η μεγαλύτερη
-συχνότητα που θα αναπαραχθεί αργότερα από το ψηφιακό αντίγραφο θα είναι
-ίση με την συχνότητα Νικουιστ \(f_s_N = 0.6f\).
-
-\begin{equation}
-f_s_N=0.5f
-\end{equation}
-
-\selectlanguage{english}
-reference : \url{https://en.wikipedia.org/wiki/Nyquist_frequency}
-\selectlanguage{greek}
-
 * Source blocks :noexport:
 ** FFT
 
@@ -1278,13 +1192,9 @@ class FftNew:
 
 
 #+end_src
-
-#+RESULTS:
-:results:
-:end:
 * GO BUTTONS :noexport:
 <[my-github]> https://github.com/goodvibrations32
-
+# <(agenda)> file:~/org/agenda.org
 # <(code)>
 # <(diss-notes)>
 # <(edit latex headers file)>
