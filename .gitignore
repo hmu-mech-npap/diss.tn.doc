@@ -14,8 +14,8 @@ diss-docs/books/
 *.out
 *.hypb
 .auctex-auto
-!flowcharts/proc-meth.png
-!flowcharts/test-first.png
+!proc-meth.png
+!test-first.png
 # this is for the prefixes emacs and latex uses in generating THE DOC
 pdfs*
 _minted*
