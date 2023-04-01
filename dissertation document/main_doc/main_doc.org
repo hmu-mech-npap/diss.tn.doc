@@ -869,42 +869,6 @@ out[x] &= \sum_{z=0}^{4}a_{z}in[x-z] \\
 το πλαίσιο της παρούσας εργασίας, όμως ας συνδέσουμε το μήκος με την ταχύτητα υπολογισμού
 του φίλτρου ενώ την τάξη με την μεταβολή της ταχύτητας κατακρημνισμού της εξίσωσης του
 φίλτρου ή όπως ονομάζεται στα περισσότερα όργανα ηλεκτρονικής μουσικής \(release\ value\).
-*** Κατηγορίες παραθύρων
-
-**** Μέθοδος $\en{Kaiser}$
-
-#+begin_src jupyter-python :session python :async yes :results drawer
-
-#+end_src
-**** Συχνοί τύποι παραθύρων
-- Βασικές κατηγορίες φίλτων:
-  - $\en{Rectangle}$
-
-    #+begin_src jupyter-python :session python :async yes :results drawer
-
-    #+end_src
-
-  - $\en{Barlett}$
-    #+begin_src jupyter-python :session python :async yes :results drawer
-
-    #+end_src
-
-  - $\en{Hanning}$
-      #+begin_src jupyter-python :session python :async yes :results drawer
-
-      #+end_src
-
-  - $\en{Hamming}$
-      #+begin_src jupyter-python :session python :async yes :results drawer
-
-      #+end_src
-****  Βέλτιστες προσομοιώσεις φίλτρων
-
-\selectlanguage{english}
-- Here is a deep analysis for the appropriate implementation of the FIR filters in respect to /M value???/
-\selectlanguage{greek}
-
------
 *** notes :noexport:
 convolution sum == αθροισμα συνέλιξης
 - να προστεθεί
@@ -1089,7 +1053,7 @@ plt.grid(which= 'both', axis= 'both')
 μέτρηση. Παρακάτω φαίνεται ένα διάγραμμα της συνδεσμολογίας και του τρόπου
 καταγραφής του σήματος.
 
-#+begin_src dot :file test-first.png :results file :exports none :session dot
+#+begin_src dot :file ./flowcharts/test-first.png :results file :exports results :session dot
 digraph regexp  {
     // size= "4,6!"
     "Pitot-tube" ->
@@ -1116,15 +1080,93 @@ digraph regexp  {
 #+attr_latex:  :width 420px
 #+attr_latex:  :height 550px
 #+attr_latex:  :center t
-[[file:./test-first.png]]
+#+RESULTS:
+[[file:./flowcharts/test-first.png]]
 
 Για την επεξεργασία των δεδομένων έπρεπε αρχικά να σιγουρευτούμε πως οι
 μετρήσεις δεν υπέφεραν από το φαινόμενο της αλλοίωσης. Έτσι καθίσταται
 αναγκαία η εφαρμογή της μεθόδου μείωσης αριθμού δειγμάτων, ώστε να εξεταστεί
 το μέγεθος αλλοίωσης του σήματος. Στην συνέχεια έπρεπε να γίνει η μετατροπή
 του σήματος στο πεδίο των συχνοτήτων για να αναγνωριστεί το φάσμα συχνοτήτων
-που εμπεριέχουν τον θόρυβο και να σχεδιαστεί το κατάληλο φίλτρο. Για τον σκοπό
-αυτό εφαρμόστηκε ο ταχύς μετασχηματισμός \(Fourier\) από την βιβλιοθήκη \(numpy\)
+που εμπεριέχουν τον θόρυβο και να σχεδιαστεί το κατάλληλο φίλτρο. Για τον σκοπό
+αυτό εφαρμόστηκε ο ταχύς μετασχηματισμός \(Fourier\) από την βιβλιοθήκη \(numpy\) και
+φάνηκε ξεκάθαρα μια περιοχή συχνοτήτων στα σήματα από τα 2000 \(Hz\) όπως θα
+δούμε στην συνέχεια.
+
+*Εδώ να ρωτήσω γιατί κάνουμε average() στο σήμα...*
+
+
+#+begin_src dot :file ./flowcharts/proc-meth.png :results file :exports results :session dot
+
+digraph processing {
+    // root of operations
+    root [label="Επεξεργασία σήματος με θόρυβο" ]
+    filt [label="Απομείωση θορυβου"]
+    aliasing [label="Έλεγχος \n αλλοίωσης"]
+    averg [label="Υπολογισμός \n μέσης τιμής \n σήματος"]
+
+    // filter related
+    fir [label="FIR"]
+    iir [label="IIR"]
+    apply [label="Εφαρμογή φίλτρων"]
+    filterconst [label="Κατασκευή \n φίλτρων"]
+    filt_type [label="Διέλευσης χαμηλών \n συχνοτήτων \n (low-pass)"]
+
+    // aliasing
+    decimop [label="Αποδεκατισμός \n ανά 5 και 50 δείγματα \n (decimation)"]
+    timedom [label="Επεξεργασία στο πεδίο \n του χρόνου"]
+
+    //general bubbles
+    graphs [label="Γραφήματα"]
+    fftmethod [label= "Πεδίο συνχότητας \n (fft algorithm)" ]
+    choosfilt [label="Επιλογή επιθυμητών \n συχνοτήτων \n(cutoff frequency)"]
+    results [label="Σύγκριση αποτελεσμάτων"]
+    avrged [label="average(signal, fs) \n \n Ανάλογα με την \n συχνότητα \n καταγραφής, fs"]
+    welch [label="Μέθοδος Welch \n (Spectral density)"]
+
+    {rank=same; apply filt_type }
+    {rank=same; filt timedom }
+    {rank=same; fftmethod aliasing averg}
+    {rank=same; decimop filterconst avrged}
+
+    // start the graph at last 🫠
+    root -> {filt timedom}
+
+    // filtering path
+    filt ->
+    fftmethod ->
+    choosfilt ->
+    filterconst -> {fir iir} ->
+    filt_type ->
+    apply ->
+    welch ->
+    graphs [style=bold, color=red]
+
+    // aliasing path
+    timedom ->
+    aliasing ->
+    decimop -> {apply avrged} ->
+    welch ->
+    graphs[color=blueviolet , style=bold]
+
+    // aliasing path
+    timedom ->
+    averg ->
+    avrged -> {decimop apply} ->
+    welch ->
+    graphs [color=magenta]
+
+    graphs -> results [color=forestgreen, style=bold]
+}
+#+end_src
+
+#+attr_latex:  :width 420px
+#+attr_latex:  :height 699px
+#+attr_latex:  :center t
+#+RESULTS:
+[[file:./flowcharts/proc-meth.png]]
+
+
 \clearpage
 * Βιβλιογραφία
 \selectlanguage{english}
