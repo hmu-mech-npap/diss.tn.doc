@@ -2,5 +2,4 @@
 
 * Dissertation document in filtering
 
-This is a repository containing my thesis for the Bachelor degree in
-Mechanical Engineering at the Technological Institute of Crete in Heraklion, Crete.
+This is a repository containing my thesis for the Bachelor degree in Mechanical Engineering at the Technological Institute of Crete in Heraklion.
