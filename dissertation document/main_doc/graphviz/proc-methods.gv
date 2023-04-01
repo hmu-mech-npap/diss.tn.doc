@@ -24,6 +24,7 @@ digraph processing {
     avrged [label="average(signal, fs) \n \n Ανάλογα με την \n συχνότητα \n καταγραφής, fs"]
     welch [label="Μέθοδος Welch \n (Spectral density)"]
 
+    {rank=same; apply filt_type }
     {rank=same; filt timedom }
     {rank=same; fftmethod aliasing averg}
     {rank=same; decimop filterconst avrged}

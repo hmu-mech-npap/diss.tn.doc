@@ -7,6 +7,9 @@
 # Other La-TeX code that you'd need in the preamble, notably, using packages.
 #+LATEX_HEADER: \usepackage[margin=2cm]{geometry}
 #+LATEX_HEADER: \usepackage{setspace}
+#+LATEX_HEADER: \usepackage{caption}
+#+LATEX_HEADER: \usepackage{subcaption}
+#+LATEX_HEADER: \usepackage[demo]{graphicx}
 #+LATEX_HEADER: \usepackage[utf8]{inputenc}
 #+LATEX_HEADER: \usepackage[LGR]{fontenc}
 #+LATEX_HEADER: \usepackage[T1]{fontenc}
