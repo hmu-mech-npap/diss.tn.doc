@@ -1091,7 +1091,7 @@ digraph regexp  {
 
     "Συμπιεσμένος αέρας" -> "5, 10 m/s" [color=forestgreen]
 
-    "Αεροσύραγκα" -> "5, 10, 15, 20 m/s" [color=forestgreen]
+    "Αεροσύραγκα" -> "5, 10, 15, 20 m/s" [color=magenta]
 
     {"5, 10, 15, 20 m/s" "5, 10 m/s" }
     -> {"Ανοιχτός Inverter" "Κλειστός Inverter"}[color = blueviolet,
