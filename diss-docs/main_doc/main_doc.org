@@ -1228,6 +1228,105 @@ digraph processing {
 
 
 \clearpage
+** Σύγκριση αποτελεσμάτων φίλτρων
+Για να συγκρίνουμε τις δυο διαφορετικές διαδικασίες είναι προφανές ότι δεν
+οφελεί να επικεντροθούμε στην ταχύτητα έκδοσης αποτελεσμάτων. Θα πρέπει λοιπόν
+να εξετάσουμε τις διαστρευλώσεις σε χαμηλές συχνότητες που εντάσει η κάθε
+κατηγορία αλλά και η διαφορά φάσης της εξόδου κάθε διαδικασίας. Εύλογα έχουν
+γίνει προσπάθιες για την εξάλειψη της καθυστέρησης που προκύπτει και οι
+περισσότερες βιβλιοθήκες με σκοπό την επεξεργασία σημάτων έχουν λύσει σε
+τέτοιο βαθμό το πρόβλημα που σχεδόν δεν απασχολεί τον ερευνητή πέρα από την
+επιλογή κατάλληλης συνάρτησης. Για την επεξεργασία των δεδομένων έχουν ληφθεί
+δύο μέτρα προς την κατεύθυνση αυτή. Το πρώτο αφορά την αποφυγή της συνάρτησης
+\(lfilter\) που όπως μπορούμε εύκολα να δείξουμε εντάσει μεγάλη διαφορά φάσης μεταξύ
+της εξόδου και της εισόδου του συστήματος.
+
+#+CAPTION: Σύγκριση συναρτήσεων εφαρμογής του ίδιου φίλτρου της βιβλιοθήκης \(signal\).
+[[file:./.ob-jupyter/de30286eca09801df0f7706ea755eda07a1ed450.png]]
+
+Ο έλεγχος των αποτελεσμάτων γίνεται με την χρήση της τυπικής απόκλησης. Κατά
+την εφαρμογή οποιουδήποτε φίλτρου θα πρέπει η τυπική απόκληση του σήματος να
+μειώνεται, λογικό παράγογο της διαδικασίας καθαρισμού σημάτων από θόρυβο, αφού
+η απομάκρυνση από την μέση τιμή θα πρέπει να μειώνεται. Αν η τυπική απόκληση
+αυξάνεται, το σύστημα επηρεάζεται καταστρεπτικά από την διεργασία που
+εφαρμόζεται σε αυτό. Παρατηρήθηκε αντοίστοιχη συμπεριφορά αυξάνοντας την τάξη
+του φίλτρου πέραν του αναγκαίου κατα πολλές τάξεις μεγέθους.
+*** TODO put an example from the org literate code for std's :noexport:
+*** the phase problem with python :noexport:
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+import numpy as np
+import scipy.signal
+
+np.random.seed(42)  # for reproducibility
+fs = 30  # sampling rate, Hz
+ts = np.arange(0, 5, 1.0 / fs)  # time vector - 5 seconds
+ys = np.sin(2*np.pi * 1.0 * ts)  # signal @ 1.0 Hz, without noise
+yerr = 0.5 * np.random.normal(size=len(ts))  # Gaussian noise
+yraw = ys + yerr
+
+b, a = scipy.signal.iirfilter(4, Wn=2.5, fs=fs, btype="low", ftype="butter")
+print(b, a, sep="\n")
+y_lfilter = scipy.signal.lfilter(b, a, yraw)
+
+#+end_src
+
+#+RESULTS:
+:results:
+: [0.00257643 0.01030574 0.01545861 0.01030574 0.00257643]
+: [ 1.         -2.63862774  2.76930979 -1.33928076  0.24982167]
+:end:
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=[6.4, 2.4])
+
+plt.plot(ts, yraw, label="Raw signal")
+plt.plot(ts, y_lfilter, alpha=0.8, lw=3, label="SciPy lfilter")
+
+plt.xlabel("Time / s")
+plt.ylabel("Amplitude")
+plt.legend(loc="lower center", bbox_to_anchor=[0.5, 1],
+           ncol=2, fontsize="smaller")
+
+
+#+end_src
+
+#+RESULTS:
+:results:
+: <matplotlib.legend.Legend at 0x7f7b75449f30>
+[[file:./.ob-jupyter/9d3181159e5e511550db0d8cae6ed7c8e5a47bb8.png]]
+:end:
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+plt.tight_layout()
+# plt.savefig("simple-lowpass-lfilter.png", dpi=100)
+
+# apply filter forward and backward using filtfilt
+y_filtfilt = scipy.signal.filtfilt(b, a, yraw)
+
+plt.figure(figsize=[6.4, 2.4])
+plt.plot(ts, yraw, label="Raw signal")
+plt.plot(ts, y_lfilter, alpha=0.5, lw=3, label="SciPy lfilter")
+plt.plot(ts, y_filtfilt, alpha=0.8, lw=3, label="SciPy filtfilt")
+plt.legend(loc="lower center", bbox_to_anchor=[0.5, 1], ncol=3,
+           fontsize="smaller")
+plt.xlabel("Time / s")
+plt.ylabel("Amplitude")
+
+plt.tight_layout()
+# plt.savefig("lowpass-filtfilt.png", dpi=100)
+plt.show()
+
+#+end_src
+
+#+RESULTS:
+:results:
+: <Figure size 432x288 with 0 Axes>
+[[file:./.ob-jupyter/de30286eca09801df0f7706ea755eda07a1ed450.png]]
+:end:
+
+[[https://www.samproell.io/posts/yarppg/digital-filters-python/][reference]]
 * Βιβλιογραφία
 \selectlanguage{english}
 
