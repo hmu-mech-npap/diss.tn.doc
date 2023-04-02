@@ -1,7 +1,7 @@
 _temp_fig
 org-mode/.ob-jupyter
 diss-docs/main_doc/*.odt
-diss-docs/books/
+diss-docs/books/edmund-lai-book/*
 
 # file types that should be ignored
 *.png
