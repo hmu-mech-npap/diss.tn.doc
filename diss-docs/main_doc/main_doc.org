@@ -18,6 +18,163 @@ import math
 import matplotlib.pyplot as plt
 from scipy import signal
 #+end_src
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer
+
+from pathlib import Path
+from matplotlib import pyplot as plt
+import scipy.signal as signal
+import numpy as np
+
+from nptdms import TdmsFile
+
+from pros_noisefiltering.WT_NoiProc import WT_NoiseChannelProc
+
+#+end_src
+
+#+RESULTS:
+:results:
+:end:
+
+** Basic folders and data
+#+begin_src jupyter-python :session py :async yes :results raw drawer
+FOLDER_FOR_DATA = Path(
+    '/mnt/data_folder/measurements_12_05_22/new_record_prop_channel/')
+if not FOLDER_FOR_DATA.exists():
+    FOLDER_FOR_DATA = Path('D:/_data/WEL/WEL20220512/')
+
+# %% CONSTANTS
+FIGSIZE_STD = (6, 6)
+# Constant directories and names for the .tdms file structure
+# Dir name
+TDMS_FNAME = 'Data.tdms'
+GROUP_NAME = 'Wind Measurement'
+CHAN_NAME = 'Wind2'
+
+# %%
+# Dir names for the Compressed air measurment
+#
+# =================================================
+#
+# Here the Compressed air measurements are imported
+#
+# =================================================
+#
+comp_air_dir = 'compressed air'
+
+# %% preparing tdms files
+# New renamed folders for rec version information
+data_CA_inv_0_WS_0 = 'ca0_0.1'
+data_CA_inv_0_WS_5 = 'ca0_5.1'
+data_CA_inv_0_WS_11 = 'ca0_10.1'
+data_CA_inv_1_WS_0 = 'ca1_0.1'
+data_CA_inv_1_WS_5 = 'ca1_5.1'
+data_CA_inv_1_WS_10 = 'ca1_10.1'
+
+path_comp = FOLDER_FOR_DATA / comp_air_dir
+
+# CA stands for compressed air
+
+raw_signal_CA = [data_CA_inv_0_WS_0, data_CA_inv_0_WS_5,
+                 data_CA_inv_0_WS_11, data_CA_inv_1_WS_0,
+                 data_CA_inv_1_WS_5, data_CA_inv_1_WS_10]
+
+l_tdms_CA = []
+
+for item in raw_signal_CA:
+    x = TdmsFile(Path(f'{path_comp}/{item}', TDMS_FNAME))
+    l_tdms_CA.append(x)
+
+# %%
+# [print(x) for x in l_tdms_CA[0][GROUP_NAME].channels()]
+# %%
+GROUP_NAME = 'Wind Measurement'
+CHAN_NAME = 'Wind2'
+
+
+df_tdms_0_0 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_CA[0][GROUP_NAME][CHAN_NAME],
+    desc='Inverter off, WS=0')
+df_tdms_0_5 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_CA[1][GROUP_NAME][CHAN_NAME],
+    desc='Inverter off, WS=5')
+df_tdms_0_10 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_CA[2][GROUP_NAME][CHAN_NAME],
+    desc='Inverter off, WS=11')
+df_tdms_1_0 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_CA[3][GROUP_NAME][CHAN_NAME],
+    desc='Inverter on, WS=0')
+df_tdms_1_5 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_CA[4][GROUP_NAME][CHAN_NAME],
+    desc='Inverter on, WS=5')
+df_tdms_1_10 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_CA[5][GROUP_NAME][CHAN_NAME],
+    desc='Inverter on, WS=10')
+
+#
+# =================================================
+#
+# Here the Inverter measurements are imported
+#
+# =================================================
+#
+# %%
+inv_meas_dir = 'inverter'
+# Inverter measurements of interest
+data_inv_inv_0_WS_0 = 'in0_0.1'
+data_inv_inv_1_WS_0 = 'in1_0.1'
+data_inv_inv_1_WS_5 = 'in1_5.1'
+data_inv_inv_1_WS10 = 'in1_10.1'
+data_inv_inv_1_WS15 = 'in1_15.1'
+data_inv_inv_1_WS_20 = 'in1_20.1'
+
+
+path_comp = FOLDER_FOR_DATA / inv_meas_dir
+
+# suffixes:
+# - CA : compressed air
+# - Inv : Inverter
+# - DEC : decimation
+
+raw_signal_CA = [data_inv_inv_0_WS_0, data_inv_inv_1_WS_0,
+                 data_inv_inv_1_WS_5,
+                 data_inv_inv_1_WS10, data_inv_inv_1_WS15,
+                 data_inv_inv_1_WS_20]
+
+l_tdms_Inv = []
+
+for item in raw_signal_CA:
+    x = TdmsFile(Path(f'{path_comp}/{item}', TDMS_FNAME))
+    l_tdms_Inv.append(x)
+
+# %%
+# [print(x) for x in l_tdms_Inv[0][GROUP_NAME].channels()]
+# %%
+dfi_i0_w0 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_Inv[0][GROUP_NAME][CHAN_NAME],
+    desc='Inverter Off, WS=0, 100kHz')
+dfi_i1_w0 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_Inv[1][GROUP_NAME][CHAN_NAME],
+    desc='Inverter On, WS=0, 100kHz')
+dfi_i1_w5 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_Inv[2][GROUP_NAME][CHAN_NAME],
+    desc='Inverter On, WS=5, 100kHz')
+dfi_i1_w10 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_Inv[3][GROUP_NAME][CHAN_NAME],
+    desc='Inverter On, WS=10, 100kHz')
+dfi_i1_w15 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_Inv[4][GROUP_NAME][CHAN_NAME],
+    desc='Inverter On, WS=15, 100kHz')
+dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
+    l_tdms_Inv[5][GROUP_NAME][CHAN_NAME],
+    desc='Inverter On, WS=20, 100kHz')
+
+#+end_src
+
+#+RESULTS:
+:results:
+:end:
+
 * Εισαγωγή
 #+ODT: <text:p text:style-name="PageBreak"/>
 Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
@@ -1062,7 +1219,7 @@ plt.grid(which= 'both', axis= 'both')
 #+attr_latex:  :center t
 #+ATTR_LATEX: :caption \caption{Θάλαμος ομοιόμορφης παροχής ανέμου στο αισθητήριο όργανο όπου τοποθετείται στο σημείο \textbf{Α}. Στο σημείο  \textbf{\(A_{s}\)}, βρίσκεται ένα πλέγμα διάσπασης της ροής που μας επιτρέπει την ομαλή ταχύτητα στο σημείο εξόδου \textbf{A}.}
 [[file:./Wind_Tunnel_setup_lab.png]]
-** Mεθοδολογία επεξεργασίας
+** Μεθοδολογία επεξεργασίας
     Ένας λόγος που δεν χρησιμοποιήθηκε επεξεργασία σε πραγματικό χρόνο είναι
 ότι η εγκατάσταση "που χρησιμοποιήθηκε για την συλλογή των δεδομένων"
 κατασκευάστηκε με σκοπό την σύνδεσή του σε κεντρική μονάδα επικοινωνίας
@@ -1327,9 +1484,66 @@ plt.show()
 :end:
 
 [[https://www.samproell.io/posts/yarppg/digital-filters-python/][reference]]
+** Επεξεργασία δεδομένων ανέμου
+Όπως φαίνεται και στο παραπάνω διάγραμμα ροής για την ικανοποιητική σύγκριση
+της επιρροής του φίλτρου στο σήμα που καταγράφηκε από τον αισθητήρα μέτρησης
+της ταχύτητας ανέμου, προέχει ο έλεγχος της αλλοίωσης λόγω ανεπαρκούς
+συχνότητας της κάρτας ΝΙ (\(Native\ Instruments\)) καταγραφής. Ο τρόπος που επιλέχθηκε
+εδώ ήταν η χρήση της τυπικής απόκλησης της κυματομορφής και να ελεγχθεί η
+τυχών αύξησή της μετά την επεξεργασία. Από την αρχή μπορούμε να
+παρατηρήσουμε πως όταν ο μετασχηματιστής που ευθύνεται για τις παρεμβολές,
+είναι εμφανής η αύξηση της τυπικής απόκλησης κατά 2 τάξεις μεγέθους. Επίσης
+κατά την διαδικασία βελτιστοποίησης της τάξης του φίλτρου, λόγω βασικών
+διαφορών στα \(FIR\) και \(IIR\) συστήματα, χρησιμοποιήθηκε ώστε να αποφευχθεί η
+κατασκευή διαγραμμάτων κάθε φορά που πειραματιζόμασταν με διάφορα
+χαρακτηριστικά του εκάστοτε φίλτρου.
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
+from tabulate import tabulate
+table = [[f'{dfi_i0_w0.description.replace("Inverter Off", "Μετ. κλειστός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
+          "{:.4f}".format(np.std(df_tdms_0_0.data)),
+          "{:.4f}".format(np.std(dfi_i0_w0.data))],
+
+         [f'{dfi_i1_w0.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
+          "{:.4f}".format(np.std(df_tdms_1_0.data)),
+          "{:.4f}".format(np.std(dfi_i1_w0.data))],
+         [f'{dfi_i1_w5.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
+          "{:.4f}".format(np.std(df_tdms_1_5.data)),
+          "{:.4f}".format(np.std(dfi_i1_w5.data))],
+         [f'{dfi_i1_w10.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
+          "{:.4f}".format(np.std(df_tdms_1_10.data)),
+          "{:.4f}".format(np.std(dfi_i1_w10.data))],
+
+         [f'{dfi_i1_w15.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
+          "{:.4f}".format(0),
+          "{:.4f}".format(np.std(dfi_i1_w15.data))],
+         [f'{dfi_i1_w20.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
+          "{:.4f}".format(0),
+          "{:.4f}".format(np.std(dfi_i1_w20.data))],
+         ]
+
+print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασχηματιστής",
+                               "Συμπιεσμένος αέρας",
+                               "Αεροσύραγγα"]))
+
+#+end_src
+
+#+RESULTS:
+:results:
+: Ταχύτητα ανέμου και μετασχηματιστής      Συμπιεσμένος αέρας    Αεροσύραγγα
+: -------------------------------------  --------------------  -------------
+: Μετ. κλειστός, Ταχ. αν.=0,                           0.0062         0.0076
+: Μετ. ανοιχτός, Ταχ. αν.=0,                           0.0364         0.0392
+: Μετ. ανοιχτός, Ταχ. αν.=5,                           0.0434         0.0385
+: Μετ. ανοιχτός, Ταχ. αν.=10,                          0.0841         0.04
+: Μετ. ανοιχτός, Ταχ. αν.=15,                          0              0.0421
+: Μετ. ανοιχτός, Ταχ. αν.=20,                          0              0.0566
+:end:
+Πίνακας τυπικής απόκλησης αρχικών σημάτων.
+
+\clearpage
 * Βιβλιογραφία
 \selectlanguage{english}
-
 #+bibliography: ./diss_bibliography.bib
 [cite/n:@SULAIMAN20223117]
 [cite/n:@auto-fir-from-analog]
