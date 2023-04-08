@@ -16,6 +16,11 @@ import math
 import matplotlib.pyplot as plt
 from scipy import signal
 #+end_src
+
+#+RESULTS:
+:results:
+:end:
+
 #+begin_src jupyter-python :session py :async yes :results raw drawer
 
 from pathlib import Path
@@ -26,6 +31,7 @@ import numpy as np
 from nptdms import TdmsFile
 
 from pros_noisefiltering.WT_NoiProc import WT_NoiseChannelProc
+from pros_noisefiltering.gen_functions import plot_spect_comb2
 
 #+end_src
 #+RESULTS:
@@ -167,36 +173,6 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
 #+end_src
 #+RESULTS:
 :results:
-# [goto error]
-#+begin_example
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
-Input [0;32mIn [25][0m, in [0;36m<cell line: 44>[0;34m()[0m
-[1;32m     42[0m l_tdms_CA [38;5;241m=[39m []
-[1;32m     44[0m [38;5;28;01mfor[39;00m item [38;5;129;01min[39;00m raw_signal_CA:
-[0;32m---> 45[0m     x [38;5;241m=[39m [43mTdmsFile[49m[43m([49m[43mPath[49m[43m([49m[38;5;124;43mf[39;49m[38;5;124;43m'[39;49m[38;5;132;43;01m{[39;49;00m[43mpath_comp[49m[38;5;132;43;01m}[39;49;00m[38;5;124;43m/[39;49m[38;5;132;43;01m{[39;49;00m[43mitem[49m[38;5;132;43;01m}[39;49;00m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mTDMS_FNAME[49m[43m)[49m[43m)[49m
-[1;32m     46[0m     l_tdms_CA[38;5;241m.[39mappend(x)
-[1;32m     48[0m [38;5;66;03m# %%[39;00m
-[1;32m     49[0m [38;5;66;03m# [print(x) for x in l_tdms_CA[0][GROUP_NAME].channels()][39;00m
-[1;32m     50[0m [38;5;66;03m# %%[39;00m
-
-File [0;32m/usr/lib/python3.10/site-packages/nptdms/tdms.py:128[0m, in [0;36mTdmsFile.__init__[0;34m(self, file, raw_timestamps, memmap_dir, read_metadata_only, keep_open)[0m
-[1;32m    125[0m [38;5;28mself[39m[38;5;241m.[39m_channel_data [38;5;241m=[39m {}
-[1;32m    126[0m [38;5;28mself[39m[38;5;241m.[39mdata_read [38;5;241m=[39m [38;5;28;01mFalse[39;00m
-[0;32m--> 128[0m [38;5;28mself[39m[38;5;241m.[39m_reader [38;5;241m=[39m [43mTdmsReader[49m[43m([49m[43mfile[49m[43m)[49m
-[1;32m    129[0m [38;5;28;01mtry[39;00m:
-[1;32m    130[0m     [38;5;28mself[39m[38;5;241m.[39m_read_file([38;5;28mself[39m[38;5;241m.[39m_reader, read_metadata_only, keep_open)
-
-File [0;32m/usr/lib/python3.10/site-packages/nptdms/reader.py:46[0m, in [0;36mTdmsReader.__init__[0;34m(self, tdms_file)[0m
-[1;32m     43[0m [38;5;28;01melse[39;00m:
-[1;32m     44[0m     [38;5;66;03m# Is path to a file[39;00m
-[1;32m     45[0m     [38;5;28mself[39m[38;5;241m.[39m_file_path [38;5;241m=[39m [38;5;28mstr[39m(tdms_file)
-[0;32m---> 46[0m     [38;5;28mself[39m[38;5;241m.[39m_file [38;5;241m=[39m [38;5;28;43mopen[39;49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_file_path[49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mrb[39;49m[38;5;124;43m'[39;49m[43m)[49m
-[1;32m     47[0m     index_file_path [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_file_path [38;5;241m+[39m [38;5;124m'[39m[38;5;124m_index[39m[38;5;124m'[39m
-[1;32m     48[0m     [38;5;28;01mif[39;00m os[38;5;241m.[39mpath[38;5;241m.[39misfile(index_file_path):
-
-[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'D:/_data/WEL/WEL20220512/compressed air/ca0_0.1/Data.tdms'
-#+end_example
 :end:
 * Εισαγωγή
 #+ODT: <text:p text:style-name="PageBreak"/>
@@ -1139,6 +1115,11 @@ plt.margins(0, 0.1)
 plt.grid(which = 'both', axis='both')
 #+end_src
 
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/5bb4def52422622a5ab7040b172016614c6a9241.png]]
+:end:
+
 #+CAPTION:Butterworth filter frequency response
 
 [[file:./Butterworth Filter Freq Response.png]]
@@ -1161,9 +1142,7 @@ plt.grid(which= 'both', axis= 'both')
 
 #+RESULTS:
 :results:
-: Coefficients of b =  [0.38138399 1.52553597 2.28830395 1.52553597 0.38138399]
-: Coefficients of a =  [1.         2.22014688 1.96016768 0.79691897 0.12491033]
-[[file:./.ob-jupyter/e1bd9331cdcfacbb7f41f9d3f7f7369417191cb2.png]]
+[[file:./.ob-jupyter/e1f64950fceed31362ef11f5bdc7ac10d4585ced.png]]
 :end:
 
 [[file:./Bessel Filter Freq Response.png]]
@@ -1185,9 +1164,7 @@ plt.grid(which= 'both', axis= 'both')
 
 #+RESULTS:
 :results:
-: Coefficients of b =  [0.00621208 0.02484834 0.03727251 0.02484834 0.00621208]
-: Coefficients of a =  [ 1.         -2.55878623  3.06243151 -1.88984936  0.51133289]
-[[file:./.ob-jupyter/7a69c6d01e07b2b281b0b81bacec619b836e85be.png]]
+[[file:./.ob-jupyter/2e07bf529bdce8d69449f8042475c67d2e54b5a8.png]]
 :end:
 
 [[file:./Chebyshev Filter Freq Response.png]]
@@ -1206,6 +1183,11 @@ plt.ylabel('Amplitute [dB]')
 plt.margins(0, 0.1)
 plt.grid(which= 'both', axis= 'both')
 #+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/f9b1e796b52b2de02812320798379a2f75a0e03d.png]]
+:end:
 
 [[file:./Elliptic Filter Freq Response.png]]
 
@@ -1335,6 +1317,27 @@ digraph regexp  {
 \label{fig:test}
 \end{figure}
 #+end_src
+
+#+RESULTS:
+#+begin_export latex
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+\centering
+\includegraphics[width=.8 \linewidth]{./fir-200.png}
+\caption{\(F.I.R.\) φίλτρο}
+\label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+\centering
+\includegraphics[width=.8 \linewidth]{./iir-butter-200.png}
+\caption{\(I.I.R.\) φίλτρο}
+\label{fig:sub2}
+\end{subfigure}
+\caption{Διαφορετικά φίλτρα διέλευσης χαμηλών συχνοτήτων}
+\label{fig:test}
+\end{figure}
+#+end_export
 
 #+begin_src dot :file ./flowcharts/proc-meth.png :results file :exports results :session dot
 
@@ -1535,39 +1538,14 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 
 #+RESULTS:
 :results:
-# [goto error]
-#+begin_example
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Input [0;32mIn [12][0m, in [0;36m<cell line: 2>[0;34m()[0m
-[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtabulate[39;00m [38;5;28;01mimport[39;00m tabulate
-[0;32m----> 2[0m table [38;5;241m=[39m [[[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00mdfi_i0_w0[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter Off[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΜετ. κλειστός[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΤαχ. αν.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m,
-[1;32m      3[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(df_tdms_0_0[38;5;241m.[39mdata)),
-[1;32m      4[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i0_w0[38;5;241m.[39mdata))],
-[1;32m      5[0m
-[1;32m      6[0m          [[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00mdfi_i1_w0[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter On[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΜετ. ανοιχτός[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΤαχ. αν.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m,
-[1;32m      7[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(df_tdms_1_0[38;5;241m.[39mdata)),
-[1;32m      8[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i1_w0[38;5;241m.[39mdata))],
-[1;32m      9[0m          [[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00mdfi_i1_w5[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter On[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΜετ. ανοιχτός[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΤαχ. αν.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m,
-[1;32m     10[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(df_tdms_1_5[38;5;241m.[39mdata)),
-[1;32m     11[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i1_w5[38;5;241m.[39mdata))],
-[1;32m     12[0m          [[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00mdfi_i1_w10[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter On[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΜετ. ανοιχτός[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΤαχ. αν.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m,
-[1;32m     13[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(df_tdms_1_10[38;5;241m.[39mdata)),
-[1;32m     14[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i1_w10[38;5;241m.[39mdata))],
-[1;32m     15[0m
-[1;32m     16[0m          [[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00mdfi_i1_w15[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter On[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΜετ. ανοιχτός[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΤαχ. αν.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m,
-[1;32m     17[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat([38;5;241m0[39m),
-[1;32m     18[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i1_w15[38;5;241m.[39mdata))],
-[1;32m     19[0m          [[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00mdfi_i1_w20[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter On[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΜετ. ανοιχτός[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mΤαχ. αν.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m,
-[1;32m     20[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat([38;5;241m0[39m),
-[1;32m     21[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i1_w20[38;5;241m.[39mdata))],
-[1;32m     22[0m          ]
-[1;32m     24[0m [38;5;28mprint[39m(tabulate(table, headers[38;5;241m=[39m[[38;5;124m"[39m[38;5;124mΤαχύτητα ανέμου και μετασχηματιστής[39m[38;5;124m"[39m,
-[1;32m     25[0m                                [38;5;124m"[39m[38;5;124mΣυμπιεσμένος αέρας[39m[38;5;124m"[39m,
-[1;32m     26[0m                                [38;5;124m"[39m[38;5;124mΑεροσύραγγα[39m[38;5;124m"[39m]))
-
-[0;31mNameError[0m: name 'dfi_i0_w0' is not defined
-#+end_example
+: Ταχύτητα ανέμου και μετασχηματιστής      Συμπιεσμένος αέρας    Αεροσύραγγα
+: -------------------------------------  --------------------  -------------
+: Μετ. κλειστός, Ταχ. αν.=0,                           0.0062         0.0076
+: Μετ. ανοιχτός, Ταχ. αν.=0,                           0.0364         0.0392
+: Μετ. ανοιχτός, Ταχ. αν.=5,                           0.0434         0.0385
+: Μετ. ανοιχτός, Ταχ. αν.=10,                          0.0841         0.04
+: Μετ. ανοιχτός, Ταχ. αν.=15,                          0              0.0421
+: Μετ. ανοιχτός, Ταχ. αν.=20,                          0              0.0566
 :end:
 Πίνακας τυπικής απόκλησης αρχικών σημάτων.
 
@@ -1606,7 +1584,138 @@ Input [0;32mIn [12][0m, in [0;36m<cell line: 2>[0;34m()[0m
 ** Αποτελέσματα επεξεργασίας
 Για κάθε σήμα που καταγράφηκε εφαρμόστηκαν και οι δύο μέθοδοι και φάνηκε πως
 ενώ για τα φίλτρα \(IIR\) είχαμε αποδεκτό βαθμό αλλοίωσης, ελέγχοντας την
-τυπική απόκληση του σήματος εξόδου με εκείνη της εισόδου.
+τυπική απόκληση του σήματος εξόδου με εκείνη της εισόδου, τα \(FIR\)
+φίλτρα παρέχουν καλύτερα αποτελέσματα. Ο τύπος του θορύβου που επηρεάζει το
+σήμα του αισθητήρα εμφανίζεται κυρίως σε συχνότητες που καταλαμβάνουν
+ηλεκτρομαγνητικά κύματα ξεκινώντας από την περιοχή των 10-100 \(kHz\).
+Καταγράφηκαν και σήματα με συχνότητα δειγματοληψίας 500 \(kHz\) και ο θόρυβος
+παραμένει, επομένως κρίθηκε πως πρόκειται για σήμα μεγαλύτερης συχνότητας
+από τις δυνατότητες καταγραφής του συστήματος που διαθέτουμε.
+*** Αποδεκατισμός σήματος
+
+- [ ] *Εδώ πρεπει να μπουν διαγράμματα απο decimation*
+- [X] Έχω ήδη κάποια από τα αρχεία για το paper
+- [ ] Να τσεκαριστούν για να είμαι σίγουρος
+*** TODO decimation for noise code :noexport:
+**** Directories
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+
+ca_meas_dir = FOLDER_FOR_DATA / 'compressed air'
+
+data_CA_inv_1_WS_0 = 'ca1_0.1'
+# contains the following channels
+# [<TdmsChannel with path /'Wind Measurement'/'Torque'>,
+#  <TdmsChannel with path /'Wind Measurement'/'Drag'>,
+#  <TdmsChannel with path /'Wind Measurement'/'Wind1'>,
+#  <TdmsChannel with path /'Wind Measurement'/'Wind2'>]
+
+path_ca_meas = ca_meas_dir / f'{data_CA_inv_1_WS_0}' / TDMS_FNAME
+
+tdms_raw_WT =TdmsFile(path_ca_meas)
+
+ca1_0 = WT_NoiseChannelProc.from_tdms(tdms_raw_WT[GROUP_NAME][CHAN_NAME]
+                , desc= 'Inverter On, WS=0, 500kHz')
+#%%
+
+
+# Decimation folder measurments
+dec_meas_dir = FOLDER_FOR_DATA / 'Decimation'
+dec_at_50_kHz = 'de50.1'
+dec_at_5_kHz = 'de5.1'
+path_dec_meas_50_kHz = dec_meas_dir / f'{dec_at_50_kHz}' / TDMS_FNAME
+
+path_dec_meas_5_kHz = FOLDER_FOR_DATA / dec_meas_dir / f'{dec_at_5_kHz}' / TDMS_FNAME
+
+tdms_raw_WT_50kHz =TdmsFile(path_dec_meas_50_kHz)
+tdms_raw_WT_5kHz =TdmsFile(path_dec_meas_5_kHz)
+
+
+dec_50kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_50kHz[GROUP_NAME][CHAN_NAME]
+                , desc= 'Inverter On, WS=0, 50kHz')
+dec_5kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_5kHz[GROUP_NAME][CHAN_NAME]
+                , desc= 'Inverter On, WS=0, 5kHz')
+
+
+#+end_src
+
+#+RESULTS:
+:results:
+:end:
+**** plots for different sampling rates
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+# %%
+#TODO should create testing for class
+# print(in1_0.fs_hz)
+# print(in1_0.data)
+# print(in1_0.data_as_Series)
+# print(in1_0._filter(fc_hz=100))
+# print(in1_0.get_spectrum_filt(fc_hz=100)) # graph obj
+# print(in1_0.get_spectrum_raw_dec(dec=1)) # graph obj
+
+print(ca1_0.decimate(1).operations)
+# print(in1_0.get_averaged(fr_Hz=100))   #-> Obj
+# %% [markdown]
+# This takes
+#%%
+NPERSEG=1024<<6
+FIGSIZE = (15,10)
+plot_spect_comb2([ca1_0.decimate(dec=1,offset=0).set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
+                  ca1_0.decimate(dec=10,offset=0).set_desc('50 kHz (dec=10)').calc_spectrum( nperseg=NPERSEG/10),
+                  ca1_0.decimate(dec=100,offset=0).set_desc('5 kHz (dec=100)').calc_spectrum( nperseg=NPERSEG/100)
+                  ],
+                title='Comparison of decimated signal 500kHz by two orders of magnitude',
+                xlim=[1e1,2.5e5], ylim = [1e-5,0.5e-2],
+                figsize = FIGSIZE,
+                draw_lines=True
+                )
+#+end_src
+
+#+RESULTS:
+:results:
+: ['Loaded from tdms file Wind Measurement/                   Wind2, 500000.0000000014', 'Decimation factor:1, Offset:0,        new fs_hz:500000.0000000014']
+[[file:./.ob-jupyter/1d9bf32eef8788f1f65dfc3cb851d69064b0e84d.png]]
+:end:
+**** plots for decimated signals from same origin
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+
+
+#%% [markdown]
+# ## Comparing compressed air with other measurements with less sampling frequency
+# comparing the signal
+# when different filters are applied and averaging occurs
+#
+
+plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
+                  dec_50kHz.set_desc('50 kHz').calc_spectrum( nperseg=NPERSEG/10),
+                  dec_5kHz.set_desc('5 kHz').calc_spectrum( nperseg=NPERSEG/100)
+                  ],
+                title='Comparison of signals with different sampling rates',
+                xlim=[1e1,2.5e5], ylim = [1e-5,0.5e-2],
+                figsize = FIGSIZE
+                , draw_lines=True
+                )
+
+
+#+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/9a155e0b01d643dd26037e911f51dea7d30ac4fb.png]]
+:end:
+**** time histories
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+in1_0_av100 = ca1_0.average(100)
+print(ca1_0.operations)
+print(in1_0_av100.operations)
+print(ca1_0.decimate(1).operations)
+print(ca1_0.decimate(1).average(100).operations)
+print(ca1_0.filter(fc_hz=100).average(100).operations)
+#+end_src
+*** Απομείωση θορύβου
+- [ ] *Εδώ πρεπει να μπουν διαγράμματα απο filters and welch*
+- [ ] *Να φέρω τα αναγκαία εδώ σε code blocks*
+- [X] Τα έχω ήδη από τα τους φακέλους με τα φίλτρα
+- [X] Να τσεκαριστούν για να είμαι σίγουρος
 * Συμπεράσματα
 \clearpage
 * Βιβλιογραφία
@@ -1708,7 +1817,6 @@ class FftNew:
 
 #+end_src
 * GO BUTTONS :noexport:
-<[my-github]> https://github.com/goodvibrations32
 # <(agenda)> file:~/org/agenda.org
 # <(code)>
 # <(diss-notes)>
