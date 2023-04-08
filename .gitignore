@@ -13,6 +13,7 @@ diss-docs/books/edmund-lai-book/*
 *.tex.tex
 *.out
 *.hypb
+*.bib
 .auctex-auto
 !proc-meth.png
 !test-first.png
