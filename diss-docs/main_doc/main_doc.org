@@ -15,6 +15,7 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 from scipy import signal
+from tabulate import tabulate
 #+end_src
 
 #+RESULTS:
@@ -30,7 +31,7 @@ import numpy as np
 
 from nptdms import TdmsFile
 
-from pros_noisefiltering.WT_NoiProc import WT_NoiseChannelProc
+from pros_noisefiltering.WT_NoiProc import WT_NoiseChannelProc, Graph_data_container
 from pros_noisefiltering.gen_functions import plot_spect_comb2
 
 #+end_src
@@ -1611,7 +1612,7 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 - [ ] *Εδώ πρεπει να μπουν διαγράμματα απο decimation*
 - [-] Να πω και μερικά πραγματα μαζι με τα αποτελέσματα.
 - [X] Έχω ήδη κάποια από τα αρχεία για το paper
-- [ ] Να τσεκαριστούν για να είμαι σίγουρος
+- [X] Να τσεκαριστούν για να είμαι σίγουρος
 *** TODO decimation for noise code :noexport:
 **** Directories
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
@@ -1659,37 +1660,174 @@ dec_5kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_5kHz[GROUP_NAME][CHAN_NAME]
 :end:
 **** plots for different sampling rates
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
-# %%
-#TODO should create testing for class
-# print(in1_0.fs_hz)
-# print(in1_0.data)
-# print(in1_0.data_as_Series)
-# print(in1_0._filter(fc_hz=100))
-# print(in1_0.get_spectrum_filt(fc_hz=100)) # graph obj
-# print(in1_0.get_spectrum_raw_dec(dec=1)) # graph obj
 
-print(ca1_0.decimate(1).operations)
-# print(in1_0.get_averaged(fr_Hz=100))   #-> Obj
-# %% [markdown]
-# This takes
-#%%
 NPERSEG=1024<<6
 FIGSIZE = (15,10)
-plot_spect_comb2([ca1_0.decimate(dec=1,offset=0).set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
-                  ca1_0.decimate(dec=10,offset=0).set_desc('50 kHz (dec=10)').calc_spectrum( nperseg=NPERSEG/10),
-                  ca1_0.decimate(dec=100,offset=0).set_desc('5 kHz (dec=100)').calc_spectrum( nperseg=NPERSEG/100)
-                  ],
-                title='Comparison of decimated signal 500kHz by two orders of magnitude',
-                xlim=[1e1,2.5e5], ylim = [1e-5,0.5e-2],
-                figsize = FIGSIZE,
-                draw_lines=True
-                )
+medec = 100
+
+print(len(ca1_0.decimate(dec=medec, offset=0).data))
+y = signal.decimate(ca1_0.data, medec, ftype='fir')
+z, f = signal.welch(y,
+                    fs=ca1_0.fs_hz/medec,
+                    window='flattop',
+                    nperseg=NPERSEG/medec,
+                    scaling='density')
+print(len(y))
+sign = Graph_data_container(_x=z,
+                            _y=f,
+                            label="dec factor 100")
+
+plot_spect_comb2([
+    ca1_0.decimate(dec=1,offset=0).set_desc('500 kHz origin').calc_spectrum( nperseg=NPERSEG, scaling='density'),
+    ca1_0.decimate(dec=medec,offset=0).set_desc('5 kHz (dec=10)').calc_spectrum( nperseg=NPERSEG/medec, scaling='density'),
+    dec_5kHz.set_desc('5 kHz origin').calc_spectrum(nperseg=NPERSEG/100, scaling='density')
+],
+                 title=' ',
+                 xlim=[1e0,1e6], ylim = [1e-5,0.5e-2],
+                 figsize = FIGSIZE,
+                 draw_lines=True
+                 )
+plot_spect_comb2([
+    ca1_0.decimate(dec=1,offset=0).set_desc('500 kHz origin').calc_spectrum( nperseg=NPERSEG/1, scaling='density'),
+    sign,
+    dec_5kHz.set_desc('5 kHz origin').calc_spectrum(nperseg=NPERSEG/100, scaling='density')
+],
+                 title=' ',
+                 xlim=[1e0,1e6], ylim = [1e-5,0.5e-2],
+                 figsize = FIGSIZE,
+                 draw_lines=True
+                 )
 #+end_src
 
 #+RESULTS:
 :results:
-: ['Loaded from tdms file Wind Measurement/                   Wind2, 500000.0000000014', 'Decimation factor:1, Offset:0,        new fs_hz:500000.0000000014']
-[[file:./.ob-jupyter/1d9bf32eef8788f1f65dfc3cb851d69064b0e84d.png]]
+: 31000
+: 31000
+[[file:./.ob-jupyter/b7e7bc3c92301c99bba971812536a17dfd807591.png]]
+[[file:./.ob-jupyter/c139dc0ffb84f34c2af20c9fa5fd7ab4d8d3a371.png]]
+:end:
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+tablexydec=[["X axis length",
+             len(ca1_0.decimate(dec=1, offset=0).calc_spectrum( nperseg=NPERSEG).x),
+             len(ca1_0.decimate(dec=10, offset=0).calc_spectrum( nperseg=NPERSEG/10).x),
+             len(ca1_0.decimate(dec=100, offset=0).calc_spectrum( nperseg=NPERSEG/100).x)
+             ],
+            ["Y axis length",
+             len(ca1_0.decimate(dec=1, offset=0).calc_spectrum( nperseg=NPERSEG).y),
+             len(ca1_0.decimate(dec=10, offset=0).calc_spectrum( nperseg=NPERSEG/10).y),
+             len(ca1_0.decimate(dec=100, offset=0).calc_spectrum( nperseg=NPERSEG/100).y)
+             ]]
+
+tablexyrec=[["X axis length",
+             0,
+             len(dec_50kHz.calc_spectrum(nperseg=NPERSEG/10).x),
+             len(dec_5kHz.calc_spectrum(nperseg=NPERSEG/100).x),
+             ],
+            ["Y axis length",
+             0,
+             len(dec_50kHz.calc_spectrum(nperseg=NPERSEG/10).y),
+             len(dec_5kHz.calc_spectrum(nperseg=NPERSEG/100).y),
+             ]]
+print(tabulate(tablexydec, headers=["custom decimation", "no dec", "50kHz", "5kHz"]))
+print(tabulate(tablexyrec, headers=["record decimation", "no dec", "50kHz", "5kHz"]))
+#+end_src
+
+#+RESULTS:
+:results:
+: custom decimation      no dec    50kHz    5kHz
+: -------------------  --------  -------  ------
+: X axis length           32769     3277     328
+: Y axis length           32769     3277     328
+: record decimation      no dec    50kHz    5kHz
+: -------------------  --------  -------  ------
+: X axis length               0     3277     328
+: Y axis length               0     3277     328
+:end:
+**** [#A] WHAT IS LOADED TO JUPYTER KERNEL :noexport:
+#+begin_src jupyter-python :session py :async yes :results raw drawer
+%whos
+#+end_src
+
+#+RESULTS:
+:results:
+#+begin_example
+Variable               Type                   Data/Info
+-------------------------------------------------------
+Axis_titles            type                   <class 'pros_noisefilteri<...>n_functions.Axis_titles'>
+CHAN_NAME              str                    Wind2
+FIGSIZE                tuple                  n=2
+FIGSIZE_STD            tuple                  n=2
+FOLDER_FOR_DATA        PosixPath              /mnt/data_folder/measurem<...>2/new_record_prop_channel
+Fft_Plot_info          type                   <class 'pros_noisefilteri<...>functions.Fft_Plot_info'>
+GROUP_NAME             str                    Wind Measurement
+Graph_data_container   type                   <class 'pros_noisefilteri<...>er.Graph_data_container'>
+NPERSEG                int                    65536
+Path                   type                   <class 'pathlib.Path'>
+Signals_for_fft_plot   type                   <class 'pros_noisefilteri<...>ns.Signals_for_fft_plot'>
+TDMS_FNAME             str                    Data.tdms
+TdmsFile               type                   <class 'nptdms.tdms.TdmsFile'>
+WT_NoiseChannelProc    type                   <class 'pros_noisefilteri<...>roc.WT_NoiseChannelProc'>
+ca1_0                  WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a778b0>
+ca_meas_dir            PosixPath              /mnt/data_folder/measurem<...>op_channel/compressed air
+comp_air_dir           str                    compressed air
+data_CA_inv_0_WS_0     str                    ca0_0.1
+data_CA_inv_0_WS_11    str                    ca0_10.1
+data_CA_inv_0_WS_5     str                    ca0_5.1
+data_CA_inv_1_WS_0     str                    ca1_0.1
+data_CA_inv_1_WS_10    str                    ca1_10.1
+data_CA_inv_1_WS_5     str                    ca1_5.1
+data_inv_inv_0_WS_0    str                    in0_0.1
+data_inv_inv_1_WS10    str                    in1_10.1
+data_inv_inv_1_WS15    str                    in1_15.1
+data_inv_inv_1_WS_0    str                    in1_0.1
+data_inv_inv_1_WS_20   str                    in1_20.1
+data_inv_inv_1_WS_5    str                    in1_5.1
+dec_50kHz              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8779409210>
+dec_5kHz               WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8779409420>
+dec_at_50_kHz          str                    de50.1
+dec_at_5_kHz           str                    de5.1
+dec_meas_dir           PosixPath              /mnt/data_folder/measurem<...>d_prop_channel/Decimation
+df_tdms_0_0            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a770d0>
+df_tdms_0_10           WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a77100>
+df_tdms_0_5            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a8d480>
+df_tdms_1_0            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a77160>
+df_tdms_1_10           WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a5d870>
+df_tdms_1_5            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a5f310>
+dfi_i0_w0              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f87aa7b3520>
+dfi_i1_w0              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a8d360>
+dfi_i1_w10             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a5db70>
+dfi_i1_w15             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772970dc0>
+dfi_i1_w20             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f87729714e0>
+dfi_i1_w5              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a5de10>
+fft                    function               <function fft at 0x7f879807d900>
+fft_calc_sig           type                   <class 'pros_noisefilteri<...>_functions.fft_calc_sig'>
+fft_sig                function               <function fft_sig at 0x7f8772a37250>
+ifft                   function               <function ifft at 0x7f879807da20>
+inv_meas_dir           str                    inverter
+item                   str                    in1_20.1
+l_tdms_CA              list                   n=6
+l_tdms_Inv             list                   n=6
+math                   module                 <module 'math' from '/usr<...>310-x86_64-linux-gnu.so'>
+np                     module                 <module 'numpy' from '/us<...>kages/numpy/__init__.py'>
+nptdms                 module                 <module 'nptdms' from '/u<...>ages/nptdms/__init__.py'>
+path_ca_meas           PosixPath              /mnt/data_folder/measurem<...>sed air/ca1_0.1/Data.tdms
+path_comp              PosixPath              /mnt/data_folder/measurem<...>ord_prop_channel/inverter
+path_dec_meas_50_kHz   PosixPath              /mnt/data_folder/measurem<...>cimation/de50.1/Data.tdms
+path_dec_meas_5_kHz    PosixPath              /mnt/data_folder/measurem<...>ecimation/de5.1/Data.tdms
+pd                     module                 <module 'pandas' from '/u<...>ages/pandas/__init__.py'>
+plot_FFT               function               <function plot_FFT at 0x7f8772a37400>
+plot_spect_comb2       function               <function plot_spect_comb2 at 0x7f8772a36dd0>
+plt                    module                 <module 'matplotlib.pyplo<...>es/matplotlib/pyplot.py'>
+pnf                    module                 <module 'pros_noisefilter<...>sefiltering/__init__.py'>
+raw_signal_CA          list                   n=6
+signal                 module                 <module 'scipy.signal' fr<...>cipy/signal/__init__.py'>
+spect                  function               <function spect at 0x7f8772a36cb0>
+tdms_raw_WT            TdmsFile               <nptdms.tdms.TdmsFile object at 0x7f8772a777c0>
+tdms_raw_WT_50kHz      TdmsFile               <nptdms.tdms.TdmsFile object at 0x7f8772a77850>
+tdms_raw_WT_5kHz       TdmsFile               <nptdms.tdms.TdmsFile object at 0x7f87726d3b20>
+x                      TdmsFile               <nptdms.tdms.TdmsFile object at 0x7f8772970460>
+#+end_example
 :end:
 **** plots for decimated signals from same origin
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
