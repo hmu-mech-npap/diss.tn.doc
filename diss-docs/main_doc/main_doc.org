@@ -1395,15 +1395,15 @@ digraph processing {
     // aliasing path
     timedom ->
     aliasing ->
-    decimop -> {apply avrged} ->
-    welch ->
+    decimop ->
+    apply ->
     graphs[color=blueviolet , style=bold]
 
     // aliasing path
     timedom ->
     averg ->
-    avrged -> {decimop apply} ->
-    welch ->
+    avrged ->
+    apply ->
     graphs [color=magenta]
 
     graphs -> results [color=forestgreen, style=bold]
