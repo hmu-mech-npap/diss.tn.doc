@@ -1,20 +1,20 @@
 digraph regexp  {
+    // size= "4,6!"
     "Pitot-tube" ->
     "H/Y" ->
     "Αρχείο δεδομένων" ->
+    "Αρχικό σήμα πρoς επεξεργασία" ->
     "Περιπτώσεις πειράματος" ->
     {"Συμπιεσμένος αέρας"  "Αεροσύραγκα" } [color=red]
 
     "Συμπιεσμένος αέρας" -> "5, 10 m/s" [color=forestgreen]
 
-    "Αεροσύραγκα" -> "5, 10, 15, 20 m/s" [color=forestgreen]
+    "Αεροσύραγκα" -> "5, 10, 15, 20 m/s" [color=magenta]
 
     {"5, 10, 15, 20 m/s" "5, 10 m/s" }
     -> {"Ανοιχτός Inverter" "Κλειστός Inverter"}[color = blueviolet,
                                                  arrowhead = diamond,
                                                  arrowsize = 1.4 ]
-
-    {"Ανοιχτός Inverter" "Κλειστός Inverter"} -> "Αρχικό σήμα πρoς επεξεργασία"
 
     "Pitot-tube" -> "Αρχικό σήμα πρoς επεξεργασία"
 }

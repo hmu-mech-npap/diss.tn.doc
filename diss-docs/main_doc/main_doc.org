@@ -1248,7 +1248,7 @@ plt.grid(which= 'both', axis= 'both')
 μέτρηση. Παρακάτω φαίνεται ένα διάγραμμα της συνδεσμολογίας και του τρόπου
 καταγραφής του σήματος.
 
-#+begin_src dot :file ./flowcharts/test-first.png :results file :exports results :session dot
+#+begin_src dot :file ./flowcharts/test-first.png :results file :exports results :session dot :tangle ./graphviz/lab-struct.gv
 digraph regexp  {
     // size= "4,6!"
     "Pitot-tube" ->
@@ -1346,7 +1346,7 @@ digraph regexp  {
 \end{figure}
 #+end_export
 
-#+begin_src dot :file ./flowcharts/proc-meth.png :results file :exports results :session dot
+#+begin_src dot :file ./flowcharts/proc-meth.png :results file :exports results :session dot :tangle ./graphviz/proc-methods.gv
 
 digraph processing {
     // root of operations
