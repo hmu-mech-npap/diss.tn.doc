@@ -843,10 +843,10 @@ $\en{Bell\ Labs}$,
 που ακολουθεί φαίνεται ένα σήμα στο πεδίο της συχνότητας αποδεκατισμένο επιλέγοντας
 κάθε 5ο και 50ο στοιχείο της αρχικής ακολουθίας.
 
-#+attr_latex: :height 260px
+#+attr_latex: :height 280px
 #+attr_latex: :width 500px
-#+ATTR_LATEX: :caption \caption{Αποδεκατισμένο σήμα ανά 5 και 50 δείγματα μαζί με το αρχικό.}
-[[file:./decim-big.png]]
+#+ATTR_LATEX: :caption \caption{Αποδεκατισμένο σήμα ανά 100 δείγματα (5 \(kHz\)) μαζί με το αρχικά καταγεγραμμένο σε μικρότερη συχνότητα 5 \(kHz\) σε σύγκριση με εκείνο στα 500 \(kHz\).}
+[[file:./decimation/with_aliasing.png]]
 ** Μείωση αριθμού δειγμάτων
 Η τεχνική αυτή εφαρμόζεται σε ψηφιακά σήματα με πολλά δείγματα ανά
 χρονικό διάστημα που όμως η τυπική απόκλιση προδίδει μια περιοδική
@@ -1613,7 +1613,6 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 - [-] Να πω και μερικά πραγματα μαζι με τα αποτελέσματα.
 - [X] Έχω ήδη κάποια από τα αρχεία για το paper
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
-*** decimation for noise code
 **** Directories :noexport:
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports code
 
@@ -1658,21 +1657,21 @@ dec_5kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_5kHz[GROUP_NAME][CHAN_NAME]
 #+RESULTS:
 :results:
 :end:
-**** plots for different sampling rates
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports both
+**** Διαγράμματα αποδεκατισμού με και χωρίς αλλοίωση
 
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
 NPERSEG=1024<<6
 FIGSIZE = (15,10)
 medec = 100
 
-print(len(ca1_0.decimate(dec=medec, offset=0).data))
+# print(len(ca1_0.decimate(dec=medec, offset=0).data))
 y = signal.decimate(ca1_0.data, medec, ftype='fir')
 z, f = signal.welch(y,
                     fs=ca1_0.fs_Hz/medec,
                     window='flattop',
                     nperseg=NPERSEG/medec,
                     scaling='density')
-print(len(y))
+# print(len(y))
 sign = Graph_data_container(x=z,
                             y=f,
                             label="dec factor 100")
@@ -1682,7 +1681,7 @@ plot_spect_comb2([
     ca1_0.decimate(dec=medec,offset=0).set_desc('5 kHz (dec=10)').calc_spectrum( nperseg=NPERSEG/medec, scaling='density'),
     dec_5kHz.set_desc('5 kHz origin').calc_spectrum(nperseg=NPERSEG/100, scaling='density')
 ],
-                 title='Decimation without antialiasing filter',
+                 title='Αποδεκατισμός σήματος χωρίς επεξεργασία κατά της αλλοίωσης',
                  xlim=[1e0,1e6], ylim = [1e-5,0.5e-2],
                  figsize = FIGSIZE,
                  draw_lines=True
@@ -1693,7 +1692,7 @@ plot_spect_comb2([
     sign,
     dec_5kHz.set_desc('5 kHz origin').calc_spectrum(nperseg=NPERSEG/100, scaling='density')
 ],
-                 title='Decimation with antialiasing FIR filter',
+                 title='Αποδεκατισμός σήματος με φίλτρο κατά της αλλοίωσης',
                  xlim=[1e0,1e6], ylim = [1e-5,0.5e-2],
                  figsize = FIGSIZE,
                  draw_lines=True
@@ -1709,44 +1708,67 @@ plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent
 [[file:./.ob-jupyter/9500a1fe15f65520b7d4998b7da115abaeb418cb.png]]
 :end:
 
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports both
-tablexydec=[["X axis length",
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
+tablexydec=[["Αριθμός δειγμάτων \n\
+συχνοτήτων (χ άξονας)",
              len(ca1_0.decimate(dec=1, offset=0).calc_spectrum( nperseg=NPERSEG).x),
              len(ca1_0.decimate(dec=10, offset=0).calc_spectrum( nperseg=NPERSEG/10).x),
              len(ca1_0.decimate(dec=100, offset=0).calc_spectrum( nperseg=NPERSEG/100).x)
              ],
-            ["Y axis length",
+            ["Αριθμός δειγμάτων \n\
+ισχύος του σήματος (ψ άξονας)",
              len(ca1_0.decimate(dec=1, offset=0).calc_spectrum( nperseg=NPERSEG).y),
              len(ca1_0.decimate(dec=10, offset=0).calc_spectrum( nperseg=NPERSEG/10).y),
              len(ca1_0.decimate(dec=100, offset=0).calc_spectrum( nperseg=NPERSEG/100).y)
              ]]
 
-tablexyrec=[["X axis length",
+tablexyrec=[["Αριθμός δειγμάτων \n\
+συχνοτήτων (χ άξονας)",
              0,
              len(dec_50kHz.calc_spectrum(nperseg=NPERSEG/10).x),
              len(dec_5kHz.calc_spectrum(nperseg=NPERSEG/100).x),
              ],
-            ["Y axis length",
+            ["Αριθμός δειγμάτων \n\
+ισχύος του σήματος (ψ άξονας)",
              0,
              len(dec_50kHz.calc_spectrum(nperseg=NPERSEG/10).y),
              len(dec_5kHz.calc_spectrum(nperseg=NPERSEG/100).y),
              ]]
-print(tabulate(tablexydec, headers=["custom decimation", "no dec", "50kHz", "5kHz"]))
-print(tabulate(tablexyrec, headers=["record decimation", "no dec", "50kHz", "5kHz"]))
+print(tabulate(tablexydec, headers=["αποδεκατισμένο σήμα",
+                                    "χωρίς αποδεκατισμό",
+                                    "ανά 10 ",
+                                    "ανά 100 "]))
+print("\n")
+print(tabulate(tablexyrec, headers=["καταγεγραμμένο σε \n\
+μικρότερη συχνότητα",
+                                    "χωρίς αποδεκατισμό",
+                                    "50.000 \n\
+Χέρτζ",
+                                    "5.000 \n\
+Χέρτζ"]))
 #+end_src
 
 #+RESULTS:
 :results:
-: custom decimation      no dec    50kHz    5kHz
-: -------------------  --------  -------  ------
-: X axis length           32769     3277     328
-: Y axis length           32769     3277     328
-: record decimation      no dec    50kHz    5kHz
-: -------------------  --------  -------  ------
-: X axis length               0     3277     328
-: Y axis length               0     3277     328
+#+begin_example
+αποδεκατισμένο σήμα              χωρίς αποδεκατισμό    ανά 10     ανά 100
+-----------------------------  --------------------  ---------  ----------
+Αριθμός δειγμάτων                             32769       3277         328
+συχνοτήτων (χ άξονας)
+Αριθμός δειγμάτων                             32769       3277         328
+ισχύος του σήματος (ψ άξονας)
+
+
+καταγεγραμμένο σε                χωρίς αποδεκατισμό    50.000     5.000
+μικρότερη συχνότητα                                      Χέρτζ     Χέρτζ
+-----------------------------  --------------------  ---------  --------
+Αριθμός δειγμάτων                                 0       3277       328
+συχνοτήτων (χ άξονας)
+Αριθμός δειγμάτων                                 0       3277       328
+ισχύος του σήματος (ψ άξονας)
+#+end_example
 :end:
-**** plots for decimated signals from same origin
+**** plots for decimated signals from same origin :noexport:
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
 
 
@@ -1773,14 +1795,14 @@ plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
 :results:
 [[file:./.ob-jupyter/9a155e0b01d643dd26037e911f51dea7d30ac4fb.png]]
 :end:
-**** time histories
+**** time histories :noexport:
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports code
 in1_0_av100 = ca1_0.average(100)
 print(ca1_0.operations)
 print(in1_0_av100.operations)
 print(ca1_0.decimate(1).operations)
 print(ca1_0.decimate(1).average(100).operations)
-print(ca1_0.filter(fc_hz=100).average(100).operations)
+print(ca1_0.filter(fc_Hz=100).average(100).operations)
 #+end_src
 
 #+RESULTS:
@@ -1804,7 +1826,11 @@ print(ca1_0.filter(fc_hz=100).average(100).operations)
 - [ ] *Να φέρω τα αναγκαία εδώ σε code blocks*
 - [X] Τα έχω ήδη από τα τους φακέλους με τα φίλτρα
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
+
+\selectlanguage{english}
 *** TODO code
+
+\selectlanguage{greek}
 * Συμπεράσματα
 \clearpage
 * Βιβλιογραφία
