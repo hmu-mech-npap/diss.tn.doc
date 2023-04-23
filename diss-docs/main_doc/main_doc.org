@@ -1659,7 +1659,7 @@ dec_5kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_5kHz[GROUP_NAME][CHAN_NAME]
 :results:
 :end:
 **** plots for different sampling rates
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports both
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports code
 
 NPERSEG=1024<<6
 FIGSIZE = (15,10)
