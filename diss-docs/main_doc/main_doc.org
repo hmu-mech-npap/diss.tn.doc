@@ -1614,7 +1614,7 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 - [X] Έχω ήδη κάποια από τα αρχεία για το paper
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
 *** decimation for noise code
-**** Directories
+**** Directories :noexport:
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports code
 
 ca_meas_dir = FOLDER_FOR_DATA / 'compressed air'
@@ -1659,7 +1659,7 @@ dec_5kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_5kHz[GROUP_NAME][CHAN_NAME]
 :results:
 :end:
 **** plots for different sampling rates
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports code
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports both
 
 NPERSEG=1024<<6
 FIGSIZE = (15,10)
@@ -1804,7 +1804,7 @@ print(ca1_0.filter(fc_hz=100).average(100).operations)
 - [ ] *Να φέρω τα αναγκαία εδώ σε code blocks*
 - [X] Τα έχω ήδη από τα τους φακέλους με τα φίλτρα
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
-*** TODO code :noexport:
+*** TODO code
 * Συμπεράσματα
 \clearpage
 * Βιβλιογραφία
