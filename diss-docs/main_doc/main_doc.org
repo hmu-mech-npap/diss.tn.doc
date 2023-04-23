@@ -1668,13 +1668,13 @@ medec = 100
 print(len(ca1_0.decimate(dec=medec, offset=0).data))
 y = signal.decimate(ca1_0.data, medec, ftype='fir')
 z, f = signal.welch(y,
-                    fs=ca1_0.fs_hz/medec,
+                    fs=ca1_0.fs_Hz/medec,
                     window='flattop',
                     nperseg=NPERSEG/medec,
                     scaling='density')
 print(len(y))
-sign = Graph_data_container(_x=z,
-                            _y=f,
+sign = Graph_data_container(x=z,
+                            y=f,
                             label="dec factor 100")
 
 plot_spect_comb2([
@@ -1682,29 +1682,31 @@ plot_spect_comb2([
     ca1_0.decimate(dec=medec,offset=0).set_desc('5 kHz (dec=10)').calc_spectrum( nperseg=NPERSEG/medec, scaling='density'),
     dec_5kHz.set_desc('5 kHz origin').calc_spectrum(nperseg=NPERSEG/100, scaling='density')
 ],
-                 title=' ',
+                 title='Decimation without antialiasing filter',
                  xlim=[1e0,1e6], ylim = [1e-5,0.5e-2],
                  figsize = FIGSIZE,
                  draw_lines=True
                  )
+plt.savefig(f'./decimation/with_aliasing.png',facecolor='white', transparent=False)
 plot_spect_comb2([
     ca1_0.decimate(dec=1,offset=0).set_desc('500 kHz origin').calc_spectrum( nperseg=NPERSEG/1, scaling='density'),
     sign,
     dec_5kHz.set_desc('5 kHz origin').calc_spectrum(nperseg=NPERSEG/100, scaling='density')
 ],
-                 title=' ',
+                 title='Decimation with antialiasing FIR filter',
                  xlim=[1e0,1e6], ylim = [1e-5,0.5e-2],
                  figsize = FIGSIZE,
                  draw_lines=True
                  )
+plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent=False)
 #+end_src
 
 #+RESULTS:
 :results:
 : 31000
 : 31000
-[[file:./.ob-jupyter/b7e7bc3c92301c99bba971812536a17dfd807591.png]]
-[[file:./.ob-jupyter/c139dc0ffb84f34c2af20c9fa5fd7ab4d8d3a371.png]]
+[[file:./.ob-jupyter/a3d20fded563310c6e4dc7f72d8fcfe3bb569e41.png]]
+[[file:./.ob-jupyter/9500a1fe15f65520b7d4998b7da115abaeb418cb.png]]
 :end:
 
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
