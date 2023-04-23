@@ -1615,7 +1615,7 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
 *** decimation for noise code
 **** Directories
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports code
 
 ca_meas_dir = FOLDER_FOR_DATA / 'compressed air'
 
@@ -1746,7 +1746,85 @@ print(tabulate(tablexyrec, headers=["record decimation", "no dec", "50kHz", "5kH
 : X axis length               0     3277     328
 : Y axis length               0     3277     328
 :end:
-**** [#A] WHAT IS LOADED TO JUPYTER KERNEL :noexport:
+**** plots for decimated signals from same origin
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+
+
+#%% [markdown]
+# ## Comparing compressed air with other measurements with less sampling frequency
+# comparing the signal
+# when different filters are applied and averaging occurs
+#
+
+plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
+                  dec_50kHz.set_desc('50 kHz').calc_spectrum( nperseg=NPERSEG/10),
+                  dec_5kHz.set_desc('5 kHz').calc_spectrum( nperseg=NPERSEG/100)
+                  ],
+                title='Comparison of signals with different sampling rates',
+                xlim=[1e1,2.5e5], ylim = [1e-5,0.5e-2],
+                figsize = FIGSIZE
+                , draw_lines=True
+                )
+
+
+#+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/9a155e0b01d643dd26037e911f51dea7d30ac4fb.png]]
+:end:
+**** time histories
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports code
+in1_0_av100 = ca1_0.average(100)
+print(ca1_0.operations)
+print(in1_0_av100.operations)
+print(ca1_0.decimate(1).operations)
+print(ca1_0.decimate(1).average(100).operations)
+print(ca1_0.filter(fc_hz=100).average(100).operations)
+#+end_src
+
+#+RESULTS:
+:results:
+: ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014']
+: ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'Apply Averaging :100']
+: ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'Decimation factor:1, Offset:0, new fs_Hz:500000.0000000014']
+: ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'Decimation factor:1, Offset:0, new fs_Hz:500000.0000000014', 'Apply Averaging :100']
+# [goto error]
+: [0;31m---------------------------------------------------------------------------[0m
+: [0;31mTypeError[0m                                 Traceback (most recent call last)
+: Input [0;32mIn [13][0m, in [0;36m<cell line: 6>[0;34m()[0m
+: [1;32m      4[0m [38;5;28mprint[39m(ca1_0[38;5;241m.[39mdecimate([38;5;241m1[39m)[38;5;241m.[39moperations)
+: [1;32m      5[0m [38;5;28mprint[39m(ca1_0[38;5;241m.[39mdecimate([38;5;241m1[39m)[38;5;241m.[39maverage([38;5;241m100[39m)[38;5;241m.[39moperations)
+: [0;32m----> 6[0m [38;5;28mprint[39m([43mca1_0[49m[38;5;241;43m.[39;49m[43mfilter[49m[43m([49m[43mfc_hz[49m[38;5;241;43m=[39;49m[38;5;241;43m100[39;49m[43m)[49m[38;5;241m.[39maverage([38;5;241m100[39m)[38;5;241m.[39moperations)
+:
+: [0;31mTypeError[0m: WT_NoiseChannelProc.filter() got an unexpected keyword argument 'fc_hz'
+:end:
+*** Απομείωση θορύβου
+- [ ] *Εδώ πρεπει να μπουν διαγράμματα απο filters and welch*
+- [ ] *Να φέρω τα αναγκαία εδώ σε code blocks*
+- [X] Τα έχω ήδη από τα τους φακέλους με τα φίλτρα
+- [X] Να τσεκαριστούν για να είμαι σίγουρος
+*** TODO code :noexport:
+* Συμπεράσματα
+\clearpage
+* Βιβλιογραφία
+\selectlanguage{english}
+#+bibliography: ./diss_bibliography.bib
+[cite/n:@SULAIMAN20223117]
+[cite/n:@auto-fir-from-analog]
+[cite/n:@iir-survey]
+[cite/n:@SMITH2003333]
+[cite/n:@pitot-standards]
+[cite/n:@LAI200314]
+[cite/n:@LAI200350]
+[cite/n:@LAI200361]
+[cite/n:@LAI200398]
+[cite/n:@Re-on-pitot]
+[cite/n:@sig-proc-first]
+[cite/n:@oppenheim99]
+#+print_bibliography:
+* Source blocks :noexport: :noexport:
+** [#A] WHAT IS LOADED TO JUPYTER KERNEL
 #+begin_src jupyter-python :session py :async yes :results raw drawer
 %whos
 #+end_src
@@ -1831,67 +1909,6 @@ tdms_raw_WT_5kHz       TdmsFile               <nptdms.tdms.TdmsFile object at 0x
 x                      TdmsFile               <nptdms.tdms.TdmsFile object at 0x7f8772970460>
 #+end_example
 :end:
-**** plots for decimated signals from same origin
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
-
-
-#%% [markdown]
-# ## Comparing compressed air with other measurements with less sampling frequency
-# comparing the signal
-# when different filters are applied and averaging occurs
-#
-
-plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
-                  dec_50kHz.set_desc('50 kHz').calc_spectrum( nperseg=NPERSEG/10),
-                  dec_5kHz.set_desc('5 kHz').calc_spectrum( nperseg=NPERSEG/100)
-                  ],
-                title='Comparison of signals with different sampling rates',
-                xlim=[1e1,2.5e5], ylim = [1e-5,0.5e-2],
-                figsize = FIGSIZE
-                , draw_lines=True
-                )
-
-
-#+end_src
-
-#+RESULTS:
-:results:
-[[file:./.ob-jupyter/9a155e0b01d643dd26037e911f51dea7d30ac4fb.png]]
-:end:
-**** time histories
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
-in1_0_av100 = ca1_0.average(100)
-print(ca1_0.operations)
-print(in1_0_av100.operations)
-print(ca1_0.decimate(1).operations)
-print(ca1_0.decimate(1).average(100).operations)
-print(ca1_0.filter(fc_hz=100).average(100).operations)
-#+end_src
-*** Απομείωση θορύβου
-- [ ] *Εδώ πρεπει να μπουν διαγράμματα απο filters and welch*
-- [ ] *Να φέρω τα αναγκαία εδώ σε code blocks*
-- [X] Τα έχω ήδη από τα τους φακέλους με τα φίλτρα
-- [X] Να τσεκαριστούν για να είμαι σίγουρος
-*** TODO code :noexport:
-* Συμπεράσματα
-\clearpage
-* Βιβλιογραφία
-\selectlanguage{english}
-#+bibliography: ./diss_bibliography.bib
-[cite/n:@SULAIMAN20223117]
-[cite/n:@auto-fir-from-analog]
-[cite/n:@iir-survey]
-[cite/n:@SMITH2003333]
-[cite/n:@pitot-standards]
-[cite/n:@LAI200314]
-[cite/n:@LAI200350]
-[cite/n:@LAI200361]
-[cite/n:@LAI200398]
-[cite/n:@Re-on-pitot]
-[cite/n:@sig-proc-first]
-[cite/n:@oppenheim99]
-#+print_bibliography:
-* Source blocks :noexport:
 ** FFT
 
 #+begin_src jupyter-python :session none  :async yes :results drawer
