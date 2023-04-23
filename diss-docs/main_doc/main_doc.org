@@ -1613,7 +1613,7 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 - [-] Να πω και μερικά πραγματα μαζι με τα αποτελέσματα.
 - [X] Έχω ήδη κάποια από τα αρχεία για το paper
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
-*** TODO decimation for noise code :noexport:
+*** TODO decimation for noise code
 **** Directories
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
 
@@ -1659,7 +1659,7 @@ dec_5kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_5kHz[GROUP_NAME][CHAN_NAME]
 :results:
 :end:
 **** plots for different sampling rates
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports both
 
 NPERSEG=1024<<6
 FIGSIZE = (15,10)
