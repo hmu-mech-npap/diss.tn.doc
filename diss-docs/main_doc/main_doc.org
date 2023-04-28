@@ -172,9 +172,6 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
     desc='Inverter On, WS=20, 100kHz')
 
 #+end_src
-#+RESULTS:
-:results:
-:end:
 * Εισαγωγή
 #+ODT: <text:p text:style-name="PageBreak"/>
 Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
@@ -841,7 +838,7 @@ $\en{Bell\ Labs}$,
 δυνατότητα να συγκρίνουμε τα σήματα και να υποθέσουμε τυχών επηρροή που μπορεί να
 έχουν συχνότητες μεγαλύτερες από εκείνες της συχνότητας καταγραφής. Στο διαγραμμα
 που ακολουθεί φαίνεται ένα σήμα στο πεδίο της συχνότητας αποδεκατισμένο επιλέγοντας
-κάθε 5ο και 50ο στοιχείο της αρχικής ακολουθίας.
+κάθε 100ο στοιχείο της αρχικής ακολουθίας.
 
 #+attr_latex: :height 280px
 #+attr_latex: :width 500px
@@ -1609,7 +1606,7 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 χρειαζόμασταν πολύ χρόνο. Στα παρακάτω διαγράμματα αποτυπώνεται ο τρόπος
 που επηρεάζει το σήμα η διαδικασία αυτή.
 
-- [ ] *Εδώ πρεπει να μπουν διαγράμματα απο decimation*
+- [X] *Εδώ πρεπει να μπουν διαγράμματα απο \(decimation\)*
 - [-] Να πω και μερικά πραγματα μαζι με τα αποτελέσματα.
 - [X] Έχω ήδη κάποια από τα αρχεία για το paper
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
@@ -1659,7 +1656,7 @@ dec_5kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_5kHz[GROUP_NAME][CHAN_NAME]
 :end:
 **** Διαγράμματα αποδεκατισμού με και χωρίς αλλοίωση
 
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
 NPERSEG=1024<<6
 FIGSIZE = (15,10)
 medec = 100
@@ -1708,6 +1705,20 @@ plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent
 [[file:./.ob-jupyter/9500a1fe15f65520b7d4998b7da115abaeb418cb.png]]
 :end:
 
+#+attr_latex: :width 500px :height 280px
+#+CAPTION: Αποδεκατισμός σήματος χωρίς επεξεργασία κατά της αλλοίωσης.
+file:./decimation/with_aliasing.png
+
+#+attr_latex: :width 500px :height 280px
+#+CAPTION: Αποδεκατισμός σήματος με φίλτρο \(FIR\) κατά της αλλοίωσης.
+file:./decimation/anti_aliasing_fir.png
+
+Όπως φαίνεται και παρακάτω η διαδικασία της μείωσης του αριθμού των
+δειγμάτων μπορεί να εντάξει αλλοίωση σε αρχικά "καθαρό" σήμα. Για να
+μπορέσουμε να εφαρμόσουμε σωστά την συγκεκριμένη τεχνική, χρησιμοποιόντας
+και κάποιο φίλτρο για την διόρθωση της αλλοίωσης, υπάρχουν πολλές μέθοδοι,
+ήδη στις βιβλιοθήκες που χρησιμοποιήθηκαν για την ανάλυση των σημάτων.
+\clearpage
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
 tablexydec=[["Αριθμός δειγμάτων \n\
 συχνοτήτων (χ άξονας)",
@@ -1734,6 +1745,16 @@ tablexyrec=[["Αριθμός δειγμάτων \n\
              len(dec_50kHz.calc_spectrum(nperseg=NPERSEG/10).y),
              len(dec_5kHz.calc_spectrum(nperseg=NPERSEG/100).y),
              ]]
+
+tablexysign=[["Αριθμός δειγμάτων \n\
+συχνοτήτων (χ άξονας)",
+             len(sign.x),
+             ],
+            ["Αριθμός δειγμάτων \n\
+ισχύος του σήματος (ψ άξονας)",
+             len(sign.y),
+             ]]
+
 print(tabulate(tablexydec, headers=["αποδεκατισμένο σήμα",
                                     "χωρίς αποδεκατισμό",
                                     "ανά 10 ",
@@ -1746,6 +1767,13 @@ print(tabulate(tablexyrec, headers=["καταγεγραμμένο σε \n\
 Χέρτζ",
                                     "5.000 \n\
 Χέρτζ"]))
+print("\n")
+
+print(tabulate(tablexysign, headers=["σήμα με φίλτρο \n\
+κατά της αλλοίωσης",
+                                    "5.000 \n\
+Χέρτζ"]))
+
 #+end_src
 
 #+RESULTS:
@@ -1766,8 +1794,31 @@ print(tabulate(tablexyrec, headers=["καταγεγραμμένο σε \n\
 συχνοτήτων (χ άξονας)
 Αριθμός δειγμάτων                                 0       3277       328
 ισχύος του σήματος (ψ άξονας)
+
+
+σήμα με φίλτρο                   5.000
+κατά της αλλοίωσης                Χέρτζ
+-----------------------------  --------
+Αριθμός δειγμάτων                   328
+συχνοτήτων (χ άξονας)
+Αριθμός δειγμάτων                   328
+ισχύος του σήματος (ψ άξονας)
 #+end_example
 :end:
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
+anti_aliased = signal.decimate(ca1_0.data, medec, ftype='fir')
+table_std = [["τυπική απόκλιση", np.std(anti_aliased), np.std(dec_5kHz.data)]]
+print(tabulate(table_std, headers=["anti-aliased", "recorded"]))
+#+end_src
+
+#+RESULTS:
+:results:
+:                    anti-aliased    recorded
+: ---------------  --------------  ----------
+: τυπική απόκλιση       0.0058217   0.0350237
+:end:
+
 **** plots for decimated signals from same origin :noexport:
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
 
@@ -2016,6 +2067,27 @@ class FftNew:
 
 
 #+end_src
+** LaTeX blocks
+*** 2 image side by side
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+\centering
+\includegraphics[width=.8 \linewidth]{./decimation/with_aliasing.png}
+\caption{Αποδεκατισμός σήματος στα 5 \(kHz\)}
+\label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+\centering
+\includegraphics[width=.8 \linewidth]{./decimation/anti_aliasing_fir.png}
+\caption{Αποδεκατισμός με φίλτρο κατά της αλλοίωσης}
+\label{fig:sub2}
+\end{subfigure}
+\caption{Αποδεκατισμός σήματος με και χωρίς επεξεργασία κατά της αλλοίωσης.}
+\label{fig:test}
+\end{figure}
 * GO BUTTONS :noexport:
 # <(agenda)> file:~/org/agenda.org
 # <(code)>
