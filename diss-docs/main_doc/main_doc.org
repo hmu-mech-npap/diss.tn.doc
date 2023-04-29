@@ -10,28 +10,28 @@
 :END:
 \clearpage \tableofcontents \clearpage
 * Imports :noexport:
-#+begin_src jupyter-python :session py :async yes :results drawer
+#+begin_src jupyter-python :session py :async yes :results drawer :tangle ./src/tables_data_process_blocks.py
+#%%
 import numpy as np
-import math
 import matplotlib.pyplot as plt
 from scipy import signal
 from tabulate import tabulate
+from tabulate import SEPARATING_LINE
+from pros_noisefiltering.WT_NoiProc import fir_factory_constructor
 #+end_src
 
 #+RESULTS:
 :results:
 :end:
 
-#+begin_src jupyter-python :session py :async yes :results raw drawer
+#+begin_src jupyter-python :session py :async yes :results raw drawer :tangle ./src/tables_data_process_blocks.py
 
+#%%
 from pathlib import Path
-from matplotlib import pyplot as plt
-import scipy.signal as signal
-import numpy as np
-
 from nptdms import TdmsFile
-
-from pros_noisefiltering.WT_NoiProc import WT_NoiseChannelProc, Graph_data_container
+from pros_noisefiltering.WT_NoiProc import (WT_NoiseChannelProc,
+                                            Graph_data_container,
+                                            )
 from pros_noisefiltering.gen_functions import plot_spect_comb2
 
 #+end_src
@@ -39,7 +39,8 @@ from pros_noisefiltering.gen_functions import plot_spect_comb2
 :results:
 :end:
 ** Basic folders and data
-#+begin_src jupyter-python :session py :async yes :results raw drawer
+#+begin_src jupyter-python :session py :async yes :results raw drawer :tangle ./src/tables_data_process_blocks.py
+#%%
 FOLDER_FOR_DATA = Path(
     '/mnt/data_folder/measurements_12_05_22/new_record_prop_channel/')
 if not FOLDER_FOR_DATA.exists():
@@ -172,6 +173,11 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
     desc='Inverter On, WS=20, 100kHz')
 
 #+end_src
+
+#+RESULTS:
+:results:
+:end:
+
 * Εισαγωγή
 #+ODT: <text:p text:style-name="PageBreak"/>
 Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
@@ -1510,8 +1516,8 @@ plt.show()
 κατασκευή διαγραμμάτων κάθε φορά που πειραματιζόμασταν με διάφορα
 χαρακτηριστικά του εκάστοτε φίλτρου.
 
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
-from tabulate import tabulate
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#%%
 table = [[f'{dfi_i0_w0.description.replace("Inverter Off", "Μετ. κλειστός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
           "{:.4f}".format(np.std(df_tdms_0_0.data)),
           "{:.4f}".format(np.std(dfi_i0_w0.data))],
@@ -1588,7 +1594,7 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 ** Αποτελέσματα επεξεργασίας
 Για κάθε σήμα που καταγράφηκε εφαρμόστηκαν και οι δύο μέθοδοι και φάνηκε πως
 ενώ για τα φίλτρα \(IIR\) είχαμε αποδεκτό βαθμό αλλοίωσης, ελέγχοντας την
-τυπική απόκληση του σήματος εξόδου με εκείνη της εισόδου, τα \(FIR\)
+τυπική απόκλιση του σήματος εξόδου με εκείνη της εισόδου, τα \(FIR\)
 φίλτρα παρέχουν καλύτερα αποτελέσματα. Ο τύπος του θορύβου που επηρεάζει το
 σήμα του αισθητήρα εμφανίζεται κυρίως σε συχνότητες που καταλαμβάνουν
 ηλεκτρομαγνητικά κύματα ξεκινώντας από την περιοχή των 10-100 \(kHz\).
@@ -1611,7 +1617,8 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 - [X] Έχω ήδη κάποια από τα αρχεία για το paper
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
 **** Directories :noexport:
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports code
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports code :tangle ./src/tables_data_process_blocks.py
+#%%
 
 ca_meas_dir = FOLDER_FOR_DATA / 'compressed air'
 
@@ -1697,10 +1704,8 @@ plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent
 #+end_src
 #+RESULTS:
 :results:
-: 31000
-: 31000
-[[file:./.ob-jupyter/a3d20fded563310c6e4dc7f72d8fcfe3bb569e41.png]]
-[[file:./.ob-jupyter/9500a1fe15f65520b7d4998b7da115abaeb418cb.png]]
+[[file:./.ob-jupyter/17f05b744771d0e7c330cf1773fc9a5ffade45d1.png]]
+[[file:./.ob-jupyter/9bab3244a3494989585e86dd0bb6b4d298bee398.png]]
 :end:
 
 #+attr_latex: :width 500px :height 280px
@@ -1717,69 +1722,98 @@ file:./decimation/anti_aliasing_fir.png
 και κάποιο φίλτρο για την διόρθωση της αλλοίωσης, υπάρχουν πολλές μέθοδοι,
 ήδη στις βιβλιοθήκες που χρησιμοποιήθηκαν για την ανάλυση των σημάτων.
 \clearpage
-#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
-tablexydec=[["Αριθμός δειγμάτων \n\
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#%%
+NPERSEG=1024<<6
+FIGSIZE = (15,10)
+medec = 100
+
+# print(len(ca1_0.decimate(dec=medec, offset=0).data))
+y = signal.decimate(ca1_0.data, medec, ftype='fir')
+z, f = signal.welch(y,
+                    fs=ca1_0.fs_Hz/medec,
+                    window='flattop',
+                    nperseg=NPERSEG/medec,
+                    scaling='density')
+# print(len(y))
+sign = Graph_data_container(x=z,
+                            y=f,
+                            label="dec factor 100")
+
+tablexydec=[["Αριθμός δειγμάτων\n\
 συχνοτήτων (χ άξονας)",
              len(ca1_0.decimate(dec=1, offset=0).calc_spectrum( nperseg=NPERSEG).x),
              len(ca1_0.decimate(dec=10, offset=0).calc_spectrum( nperseg=NPERSEG/10).x),
              len(ca1_0.decimate(dec=100, offset=0).calc_spectrum( nperseg=NPERSEG/100).x)
              ],
-            ["Αριθμός δειγμάτων \n\
-ισχύος του σήματος (ψ άξονας)",
+            SEPARATING_LINE,
+            ["Αριθμός δειγμάτων\n\
+ισχύος του σήματος\n\
+(ψ άξονας)",
              len(ca1_0.decimate(dec=1, offset=0).calc_spectrum( nperseg=NPERSEG).y),
              len(ca1_0.decimate(dec=10, offset=0).calc_spectrum( nperseg=NPERSEG/10).y),
              len(ca1_0.decimate(dec=100, offset=0).calc_spectrum( nperseg=NPERSEG/100).y)
              ]]
 
-tablexyrec=[["Αριθμός δειγμάτων \n\
+tablexyrec=[["Αριθμός δειγμάτων\n\
 συχνοτήτων (χ άξονας)",
              0,
              len(dec_50kHz.calc_spectrum(nperseg=NPERSEG/10).x),
              len(dec_5kHz.calc_spectrum(nperseg=NPERSEG/100).x),
              ],
-            ["Αριθμός δειγμάτων \n\
-ισχύος του σήματος (ψ άξονας)",
+            SEPARATING_LINE,
+            ["Αριθμός δειγμάτων\n\
+ισχύος του σήματος\n\
+(ψ άξονας)",
              0,
              len(dec_50kHz.calc_spectrum(nperseg=NPERSEG/10).y),
              len(dec_5kHz.calc_spectrum(nperseg=NPERSEG/100).y),
              ]]
 
-tablexysign=[["Αριθμός δειγμάτων \n\
+tablexysign=[["Αριθμός δειγμάτων\n\
 συχνοτήτων (χ άξονας)",
              len(sign.x),
              ],
-            ["Αριθμός δειγμάτων \n\
-ισχύος του σήματος (ψ άξονας)",
+             SEPARATING_LINE,
+            ["Αριθμός δειγμάτων\n\
+ισχύος του σήματος\n\
+(ψ άξονας)",
              len(sign.y),
              ]]
 #+end_src
+
+#+RESULTS:
+:results:
+:end:
 **** *Πίνακες επαλήθευσης μεθόδων στο πεδίο των συχνοτήτων*
 
 Όπως φαίνεται στον επόμενο πίνακα ο αριθμός των δειγμάτων καθώς
 εφαρμόζουμε την μέθοδο του αποδεκατισμού παραμένει σταθερός, γεγονός που
 καθορίζει την ορθότητα της εφαρμογής.
 #+NAME: :table:dec_table
-#+begin_src jupyter-python :session py :async yes :exports results
+#+begin_src jupyter-python :session py :async yes :exports results :tangle ./src/tables_data_process_blocks.py
+#%%
 print(tabulate(tablexydec, headers=["αποδεκατισμένο σήμα",
                                     "χωρίς αποδεκατισμό",
                                     "ανά 10 ",
                                     "ανά 100 "],
-               tablefmt="double_grid"))
+               tablefmt="simple"))
 #+end_src
 
 - Πίνακας αριθμού δειγμάτων για αποδεκατισμένο σήμα χωρίς φίλτρο
+  #+ATTR_LATEX: :placement [t] :center t :booktabs t :environment tabular :width \textwidth :align X[1lm]X[2lm]
   #+RESULTS: :table:dec_table
-  : ╔═══════════════════════════════╦══════════════════════╦═══════════╦════════════╗
-  : ║ αποδεκατισμένο σήμα           ║   χωρίς αποδεκατισμό ║   ανά 10  ║   ανά 100  ║
-  : ╠═══════════════════════════════╬══════════════════════╬═══════════╬════════════╣
-  : ║ Αριθμός δειγμάτων             ║                32769 ║      3277 ║        328 ║
-  : ║ συχνοτήτων (χ άξονας)         ║                      ║           ║            ║
-  : ╠═══════════════════════════════╬══════════════════════╬═══════════╬════════════╣
-  : ║ Αριθμός δειγμάτων             ║                32769 ║      3277 ║        328 ║
-  : ║ ισχύος του σήματος (ψ άξονας) ║                      ║           ║            ║
-  : ╚═══════════════════════════════╩══════════════════════╩═══════════╩════════════╝
+  : αποδεκατισμένο σήμα      χωρίς αποδεκατισμό    ανά 10     ανά 100
+  : ---------------------  --------------------  ---------  ----------
+  : Αριθμός δειγμάτων                     32769       3277         328
+  : συχνοτήτων (χ άξονας)
+  : ---------------------  --------------------  ---------  ----------
+  : Αριθμός δειγμάτων                     32769       3277         328
+  : ισχύος του σήματος
+  : (ψ άξονας)
 - Πίνακας αριθμού δειγμάτων καταγεγραμμένο σε μικρότερη συχνότητα
-  #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
+  #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#%%
 print(tabulate(tablexyrec, headers=["καταγεγραμμένο σε \n\
 μικρότερη συχνότητα",
                                     "χωρίς αποδεκατισμό",
@@ -1787,64 +1821,118 @@ print(tabulate(tablexyrec, headers=["καταγεγραμμένο σε \n\
 Χέρτζ",
                                     "5.000 \n\
 Χέρτζ"],
-               tablefmt="double_grid"))
+               tablefmt="simple"))
   #+end_src
   #+RESULTS:
   :results:
-  : ╔═══════════════════════════════╦══════════════════════╦═══════════╦══════════╗
-  : ║ καταγεγραμμένο σε             ║   χωρίς αποδεκατισμό ║   50.000  ║   5.000  ║
-  : ║ μικρότερη συχνότητα           ║                      ║     Χέρτζ ║    Χέρτζ ║
-  : ╠═══════════════════════════════╬══════════════════════╬═══════════╬══════════╣
-  : ║ Αριθμός δειγμάτων             ║                    0 ║      3277 ║      328 ║
-  : ║ συχνοτήτων (χ άξονας)         ║                      ║           ║          ║
-  : ╠═══════════════════════════════╬══════════════════════╬═══════════╬══════════╣
-  : ║ Αριθμός δειγμάτων             ║                    0 ║      3277 ║      328 ║
-  : ║ ισχύος του σήματος (ψ άξονας) ║                      ║           ║          ║
-  : ╚═══════════════════════════════╩══════════════════════╩═══════════╩══════════╝
+  : καταγεγραμμένο σε        χωρίς αποδεκατισμό    50.000     5.000
+  : μικρότερη συχνότητα                              Χέρτζ     Χέρτζ
+  : ---------------------  --------------------  ---------  --------
+  : Αριθμός δειγμάτων                         0       3277       328
+  : συχνοτήτων (χ άξονας)
+  : ---------------------  --------------------  ---------  --------
+  : Αριθμός δειγμάτων                         0       3277       328
+  : ισχύος του σήματος
+  : (ψ άξονας)
   :end:
 - Πίνακας αριθμού δειγμάτων με φίλτρο
-  #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
-print(tabulate(tablexysign, headers=["σήμα με φίλτρο \n\
+  #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#%%
+print(tabulate(tablexysign,
+               headers=["σήμα με φίλτρο \n\
 κατά της αλλοίωσης",
-                                   "5.000\n\
+                        "5.000\n\
 Χέρτζ"],
-             tablefmt="double_grid"))
+               tablefmt="simple"))
   #+end_src
   #+RESULTS:
   :results:
-  : ╔═══════════════════════════════╦═════════╗
-  : ║ σήμα με φίλτρο                ║   5.000 ║
-  : ║ κατά της αλλοίωσης            ║   Χέρτζ ║
-  : ╠═══════════════════════════════╬═════════╣
-  : ║ Αριθμός δειγμάτων             ║     328 ║
-  : ║ συχνοτήτων (χ άξονας)         ║         ║
-  : ╠═══════════════════════════════╬═════════╣
-  : ║ Αριθμός δειγμάτων             ║     328 ║
-  : ║ ισχύος του σήματος (ψ άξονας) ║         ║
-  : ╚═══════════════════════════════╩═════════╝
+  : σήμα με φίλτρο           5.000
+  : κατά της αλλοίωσης       Χέρτζ
+  : ---------------------  -------
+  : Αριθμός δειγμάτων          328
+  : συχνοτήτων (χ άξονας)
+  : ---------------------  -------
+  : Αριθμός δειγμάτων          328
+  : ισχύος του σήματος
+  : (ψ άξονας)
   :end:
 - Πίνακας τυπικών αποκλίσεων σε σχέση με την μέθοδο επεξεργασίας.
-  #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results
-print(tabulate(table_std, headers=["επεξεργασία αποδεκατισμού",
-                                 "με φίλτρο",
-                                 "χωρίς φίλτρο αλλοίωσης"],
-             tablefmt="rst",
-             floatfmt=".4f"))
-  #+end_src
-  #+RESULTS:
-  :results:
-  : ===========================  ===========  ========================
-  : επεξεργασία αποδεκατισμού      με φίλτρο    χωρίς φίλτρο αλλοίωσης
-  : ===========================  ===========  ========================
-  : τυπική απόκλιση                   0.0058                    0.0350
-  : 5.000 Χέρτζ
-  : τυπική απόκλιση                   0.0105                    0.0366
-  : 50.000 Χέρτζ
-  : τυπική απόκλιση                                             0.0364
-  : 500.000 Χέρτζ
-  : ===========================  ===========  ========================
-  :end:
+  - Αποδεκατισμός
+    \selectlanguage{english}
+    #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#%%
 
+
+anti_aliased = signal.decimate(ca1_0.data, 100, ftype='fir')
+anti_aliased_50 = signal.decimate(ca1_0.data, 10, ftype='fir')
+
+table_std = [["5 kHz", np.std(anti_aliased), np.std(dec_5kHz.data)],
+             ["50 kHz", np.std(anti_aliased_50), np.std(dec_50kHz.data)],
+             SEPARATING_LINE,
+             ["origin (500 kHz)", None, np.std(ca1_0.data)]]
+
+
+print(tabulate(table_std,
+               headers=["decimation",
+                        "with anti-aliasing",
+                        "without anti-aliasing"],
+               tablefmt="rst",
+               floatfmt=".4f"))
+
+  #+end_src
+
+    #+RESULTS:
+    :results:
+    : ================  ====================  =======================
+    : decimation          with anti-aliasing    without anti-aliasing
+    : ================  ====================  =======================
+    : 5 kHz                           0.0058                   0.0350
+    : 50 kHz                          0.0105                   0.0366
+    : ================  ====================  =======================
+    : origin (500 kHz)                                         0.0364
+    : ================  ====================  =======================
+    :end:
+
+  \selectlanguage{greek}
+  - Εφαρμογή φίλτρων
+     \selectlanguage{english}
+     #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#%%
+butter_2000 = ca1_0.filter(fc_Hz=2000).data
+butter_200 = ca1_0.filter(fc_Hz=200).data
+
+# construct the fir filters with 2000 and 200 Hz cutoff
+fir_2000 = fir_factory_constructor(fir_order=60, fc_Hz=2000)
+fir_200 = fir_factory_constructor(fir_order=60, fc_Hz=200)
+
+# apply fir filters
+fir_filt_2000 = ca1_0.filter(fc_Hz=2_000, filter_func=fir_2000).data
+fir_filt_200 = ca1_0.filter(fc_Hz=2_00, filter_func=fir_200).data
+
+table_filts = [["butterworth IIR", np.std(butter_2000), np.std(butter_200)],
+               ["simple FIR", np.std(fir_filt_2000), np.std(fir_filt_200)],
+               ]
+
+# filtering table
+print(tabulate(table_filts,
+               headers=["low-pass filter",
+                        "2 kHz cutoff" ,
+                        "200 Hz cutoff"],
+               tablefmt="rst",
+               floatfmt=".4f"))
+
+    #+end_src
+     #+RESULTS:
+     :results:
+     : =================  ==============  ===============
+     : low-pass filter      2 kHz cutoff    200 Hz cutoff
+     : =================  ==============  ===============
+     : butterworth IIR            0.0035           0.0029
+     : simple FIR                 0.0054           0.0054
+     : =================  ==============  ===============
+     :end:
+  \selectlanguage{greek}
 **** plots for decimated signals from same origin :noexport:
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
 
@@ -1860,7 +1948,7 @@ plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
                   dec_5kHz.set_desc('5 kHz').calc_spectrum( nperseg=NPERSEG/100)
                   ],
                  title='Comparison of signals with different sampling rates',
-                 xlim=[1e1,2.5e5], ylim = [1e-5,0.5e-2],
+                 xlim=[1e1,3.5e5], ylim = [1e-5,0.5e-2],
                  figsize = FIGSIZE
                  , draw_lines=True
                  )
@@ -1870,7 +1958,7 @@ plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/9a155e0b01d643dd26037e911f51dea7d30ac4fb.png]]
+[[file:./.ob-jupyter/3370e11819710e2d50d18698dc1a81972efdf4b4.png]]
 :end:
 **** time histories :noexport:
 #+begin_src jupyter-python :session py :async yes :results raw drawer :exports code
@@ -1891,10 +1979,19 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 : ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'pass filter 100', 'Apply Averaging :100']
 :end:
 *** Απομείωση θορύβου
-- [ ] *Εδώ πρεπει να μπουν διαγράμματα απο \(filters\ and\ welch\)*
+- [ ] *Εδώ πρέπει να μπουν διαγράμματα από \(filters\ and\ welch\)*
 - [ ] *Να φέρω τα αναγκαία εδώ σε \(code\ blocks\)*
 - [X] Τα έχω ήδη από τα τους φακέλους με τα φίλτρα
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
+
+Για την επιλογή του κατάλληλου φίλτρου εξετάστηκαν οι δύο βασικές
+κατηγορίες, συγκρίνοντας την τιμή της τυπικής απόκλισης του σήματος πριν
+και μετά την εφαρμογή. Αξίζει να σημειωθεί ότι, για να αποκτήσει κανείς
+πλήρη εικόνα για την βέλτιστη επιλογή θα πρέπει να συμπεριληφθεί και ο
+χρόνος εκτέλεσης της επεξεργασίας. Από τους σημαντικότερους παράγοντες
+που επηρεάζουν τον χρόνο υπολογισμού στα φίλτρα είναι η τάξη τους, δηλαδή
+το πλήθος των συντελεστών του πολυωνύμου που θα κατασκευαστεί από τον
+εκάστοτε αλγόριθμο.
 
 \selectlanguage{english}
 *** TODO code
