@@ -18,6 +18,7 @@ diss-docs/books/edmund-lai-book/*
 !proc-meth.png
 !test-first.png
 !diss-docs/main_doc/decimation/*.png
+!diss-docs/main_doc/sig_proc_plots/*.png
 # this is for the prefixes emacs and latex uses in generating THE DOC
 pdfs*
 _minted*
