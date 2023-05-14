@@ -10,13 +10,13 @@
 :END:
 \clearpage \tableofcontents \clearpage
 * Imports :noexport:
-#+begin_src jupyter-python :session python3thon3 :async yes :results drawer :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session py :async yes :results drawer :tangle ./src/tables_data_process_blocks.py
 #%%
 import numpy as np
-import math
 import matplotlib.pyplot as plt
 from scipy import signal
 from tabulate import tabulate
+from tabulate import SEPARATING_LINE
 from pros_noisefiltering.WT_NoiProc import fir_factory_constructor
 #+end_src
 
@@ -24,7 +24,7 @@ from pros_noisefiltering.WT_NoiProc import fir_factory_constructor
 :results:
 :end:
 
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session py :async yes :results raw drawer :tangle ./src/tables_data_process_blocks.py
 
 #%%
 from pathlib import Path
@@ -39,7 +39,7 @@ from pros_noisefiltering.gen_functions import plot_spect_comb2
 :results:
 :end:
 ** Basic folders and data
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session py :async yes :results raw drawer :tangle ./src/tables_data_process_blocks.py
 #%%
 FOLDER_FOR_DATA = Path(
     '/mnt/data_folder/measurements_12_05_22/new_record_prop_channel/')
@@ -1110,7 +1110,7 @@ out[z] = - \sum_{f=1}^{T}c(f)out(z-f) + \sum_{f=0}^{I}d(f)in(z-f) \\
 πρότυπου φίλτρου.
 
 \selectlanguage{english}
-#+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
+#+begin_src jupyter-python :session py :async yes :results drawer :exports code
 # 4TH ORDER BUTTERWORTH FILTER WITH A GAIN DROP OF 1/sqrt(2)
 # AT 0.4 CYCLES/SAMPLE
 bb, ab  = signal.butter (4, 0.8, 'low', analog=False,output='ba')
@@ -1127,17 +1127,7 @@ plt.grid(which = 'both', axis='both')
 
 #+RESULTS:
 :results:
-# [goto error]
-: [0;31m---------------------------------------------------------------------------[0m
-: [0;31mNameError[0m                                 Traceback (most recent call last)
-: Cell [0;32mIn[25], line 3[0m
-: [1;32m      1[0m [38;5;66;03m# 4TH ORDER BUTTERWORTH FILTER WITH A GAIN DROP OF 1/sqrt(2)[39;00m
-: [1;32m      2[0m [38;5;66;03m# AT 0.4 CYCLES/SAMPLE[39;00m
-: [0;32m----> 3[0m bb, ab  [38;5;241m=[39m [43msignal[49m[38;5;241m.[39mbutter ([38;5;241m4[39m, [38;5;241m0.8[39m, [38;5;124m'[39m[38;5;124mlow[39m[38;5;124m'[39m, analog[38;5;241m=[39m[38;5;28;01mFalse[39;00m,output[38;5;241m=[39m[38;5;124m'[39m[38;5;124mba[39m[38;5;124m'[39m)
-: [1;32m      4[0m wb, hb [38;5;241m=[39m signal[38;5;241m.[39mfreqz(bb, ab)
-: [1;32m      5[0m wb [38;5;241m=[39m wb[38;5;241m/[39m([38;5;241m2[39m[38;5;241m*[39mmath[38;5;241m.[39mpi)
-: 
-: [0;31mNameError[0m: name 'signal' is not defined
+[[file:./.ob-jupyter/5bb4def52422622a5ab7040b172016614c6a9241.png]]
 :end:
 
 #+CAPTION:Butterworth filter frequency response
@@ -1145,7 +1135,7 @@ plt.grid(which = 'both', axis='both')
 [[file:./Butterworth Filter Freq Response.png]]
 
 
-#+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
+#+begin_src jupyter-python :session py :async yes :results drawer :exports code
 # 4TH ORDER BESSEL FILTER WITH A GAIN DROP OF 1/sqrt(2)
 # AT 0.4 CYCLES/SAMPLE
 bb, ab = signal.bessel (4, 0.8, 'low', analog=False, output='ba')
@@ -1167,7 +1157,7 @@ plt.grid(which= 'both', axis= 'both')
 
 [[file:./Bessel Filter Freq Response.png]]
 
-#+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
+#+begin_src jupyter-python :session py :async yes :results drawer :exports code
 #4TH ORDER CHEBYSHEV FILTER TYPE 1 (ONLY IN PASSBAND RIPPLES)
 # WITH MAX RIPPLES=2 AND THE GAIN DROP AT 1.5 CYCLES/SAMPLE
 bb, ab = signal.cheby1 (4, 2, 0.3, 'low', analog=False, output='ba')
@@ -1189,7 +1179,7 @@ plt.grid(which= 'both', axis= 'both')
 
 [[file:./Chebyshev Filter Freq Response.png]]
 
-#+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
+#+begin_src jupyter-python :session py :async yes :results drawer :exports code
 # 4TH ORDER ELLIPTIC FILTER WITH MAX RIPPLES =2dB IN PASSBAND,
 # MIN ATTENUATION =8dB IN STOP BAND AT 0.25 CYCLES/SAMPLE
 bb, ab = signal.ellip (4, 2, 8, 0.5, 'low', analog=False, output='ba')
@@ -1429,7 +1419,30 @@ digraph processing {
 #+RESULTS:
 [[file:./flowcharts/proc-meth.png]]
 \clearpage
-** DONE Phase delay problem :noexport:
+** Σύγκριση αποτελεσμάτων φίλτρων
+Για να συγκρίνουμε τις δυο διαφορετικές διαδικασίες είναι προφανές ότι δεν
+ωφελεί να επικεντρωθούμε στην ταχύτητα έκδοσης αποτελεσμάτων. Θα πρέπει λοιπόν
+να εξετάσουμε τις διαστρεβλώσεις σε χαμηλές συχνότητες που εντάσσει η κάθε
+κατηγορία αλλά και η διαφορά φάσης της εξόδου κάθε διαδικασίας. Εύλογα έχουν
+γίνει προσπάθειες για την εξάλειψη της καθυστέρησης που προκύπτει και οι
+περισσότερες βιβλιοθήκες με σκοπό την επεξεργασία σημάτων έχουν λύσει σε
+τέτοιο βαθμό το πρόβλημα που σχεδόν δεν απασχολεί τον ερευνητή πέρα από την
+επιλογή κατάλληλης συνάρτησης. Για την επεξεργασία των δεδομένων έχουν ληφθεί
+δύο μέτρα προς την κατεύθυνση αυτή. Το πρώτο αφορά την αποφυγή της συνάρτησης
+\(lfilter\) που όπως μπορούμε εύκολα να δείξουμε εντάσσει μεγάλη διαφορά φάσης μεταξύ
+της εξόδου και της εισόδου του συστήματος.
+
+#+CAPTION: Σύγκριση συναρτήσεων εφαρμογής του ίδιου φίλτρου της βιβλιοθήκης \(signal\).
+[[file:./.ob-jupyter/de30286eca09801df0f7706ea755eda07a1ed450.png]]
+
+Ο έλεγχος των αποτελεσμάτων γίνεται με την χρήση της τυπικής απόκλησης. Κατά
+την εφαρμογή οποιουδήποτε φίλτρου θα πρέπει η τυπική απόκληση του σήματος να
+μειώνεται, λογικό παράγογο της διαδικασίας καθαρισμού σημάτων από θόρυβο, αφού
+η απομάκρυνση από την μέση τιμή θα πρέπει να μειώνεται. Αν η τυπική απόκληση
+αυξάνεται, το σύστημα επηρεάζεται καταστρεπτικά από την διεργασία που
+εφαρμόζεται σε αυτό. Παρατηρήθηκε αντοίστοιχη συμπεριφορά αυξάνοντας την τάξη
+του φίλτρου πέραν του αναγκαίου κατα πολλές τάξεις μεγέθους.
+*** DONE Phase delay problem :noexport:
 CLOSED: [2023-04-07 Παρ 20:09]
 :LOGBOOK:
 - CLOSING NOTE [2023-04-07 Παρ 20:09] \\
@@ -1437,7 +1450,7 @@ CLOSED: [2023-04-07 Παρ 20:09]
 :END:
 
 **** the phase problem with python
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports none
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
 import numpy as np
 import scipy.signal
 
@@ -1452,7 +1465,15 @@ b, a = scipy.signal.iirfilter(4, Wn=2.5, fs=fs, btype="low", ftype="butter")
 print(b, a, sep="\n")
 y_lfilter = scipy.signal.lfilter(b, a, yraw)
 
+#+end_src
 
+#+RESULTS:
+:results:
+: [0.00257643 0.01030574 0.01545861 0.01030574 0.00257643]
+: [ 1.         -2.63862774  2.76930979 -1.33928076  0.24982167]
+:end:
+
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
 plt.tight_layout()
 # plt.savefig("simple-lowpass-lfilter.png", dpi=100)
 
@@ -1469,44 +1490,18 @@ plt.xlabel("Time / s")
 plt.ylabel("Amplitude")
 
 plt.tight_layout()
-plt.savefig("./bucket/filters/lowpass-filtfilt.png", dpi=100)
+# plt.savefig("lowpass-filtfilt.png", dpi=100)
 plt.show()
 
 #+end_src
 
 #+RESULTS:
 :results:
-: [0.00257643 0.01030574 0.01545861 0.01030574 0.00257643]
-: [ 1.         -2.63862774  2.76930979 -1.33928076  0.24982167]
-: <Figure size 640x480 with 0 Axes>
-[[file:./.ob-jupyter/2f1babdc5ac66d0b7b59b52516af8ca4df808b25.png]]
+: <Figure size 432x288 with 0 Axes>
+[[file:./.ob-jupyter/de30286eca09801df0f7706ea755eda07a1ed450.png]]
 :end:
 
 [[https://www.samproell.io/posts/yarppg/digital-filters-python/][reference]]
-** Σύγκριση αποτελεσμάτων φίλτρων
-Για να συγκρίνουμε τις δυο διαφορετικές διαδικασίες είναι προφανές ότι δεν
-ωφελεί να επικεντρωθούμε στην ταχύτητα έκδοσης αποτελεσμάτων. Θα πρέπει λοιπόν
-να εξετάσουμε τις διαστρεβλώσεις σε χαμηλές συχνότητες που εντάσσει η κάθε
-κατηγορία αλλά και η διαφορά φάσης της εξόδου κάθε διαδικασίας. Εύλογα έχουν
-γίνει προσπάθειες για την εξάλειψη της καθυστέρησης που προκύπτει και οι
-περισσότερες βιβλιοθήκες με σκοπό την επεξεργασία σημάτων έχουν λύσει σε
-τέτοιο βαθμό το πρόβλημα που σχεδόν δεν απασχολεί τον ερευνητή πέρα από την
-επιλογή κατάλληλης συνάρτησης. Για την επεξεργασία των δεδομένων έχουν ληφθεί
-δύο μέτρα προς την κατεύθυνση αυτή. Το πρώτο αφορά την αποφυγή της συνάρτησης
-\(lfilter\) που όπως μπορούμε εύκολα να δείξουμε εντάσσει μεγάλη διαφορά φάσης μεταξύ
-της εξόδου και της εισόδου του συστήματος.
-
-#+CAPTION: Σύγκριση συναρτήσεων εφαρμογής του ίδιου φίλτρου της βιβλιοθήκης \(signal\).
-[[file:./bucket/filters/lowpass-filtfilt.png]]
-
-Ο έλεγχος των αποτελεσμάτων γίνεται με την χρήση της τυπικής απόκλησης. Κατά
-την εφαρμογή οποιουδήποτε φίλτρου θα πρέπει η τυπική απόκληση του σήματος να
-μειώνεται, λογικό παράγογο της διαδικασίας καθαρισμού σημάτων από θόρυβο, αφού
-η απομάκρυνση από την μέση τιμή θα πρέπει να μειώνεται. Αν η τυπική απόκληση
-αυξάνεται, το σύστημα επηρεάζεται καταστρεπτικά από την διεργασία που
-εφαρμόζεται σε αυτό. Παρατηρήθηκε αντοίστοιχη συμπεριφορά αυξάνοντας την τάξη
-του φίλτρου πέραν του αναγκαίου κατα πολλές τάξεις μεγέθους.
-
 ** Επεξεργασία δεδομένων ανέμου
 Όπως φαίνεται και στο παραπάνω διάγραμμα ροής για την ικανοποιητική σύγκριση
 της επιρροής του φίλτρου στο σήμα που καταγράφηκε από τον αισθητήρα μέτρησης
@@ -1521,7 +1516,7 @@ plt.show()
 κατασκευή διαγραμμάτων κάθε φορά που πειραματιζόμασταν με διάφορα
 χαρακτηριστικά του εκάστοτε φίλτρου.
 
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
 #%%
 table = [[f'{dfi_i0_w0.description.replace("Inverter Off", "Μετ. κλειστός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
           "{:.4f}".format(np.std(df_tdms_0_0.data)),
@@ -1622,7 +1617,7 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 - [X] Έχω ήδη κάποια από τα αρχεία για το paper
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
 **** Directories :noexport:
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports code :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports code :tangle ./src/tables_data_process_blocks.py
 #%%
 
 ca_meas_dir = FOLDER_FOR_DATA / 'compressed air'
@@ -1667,9 +1662,7 @@ dec_5kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_5kHz[GROUP_NAME][CHAN_NAME]
 :results:
 :end:
 **** *Διαγράμματα αποδεκατισμού με και χωρίς αλλοίωση στο πεδίο των συχνοτήτων*
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports none
-from scipy import signal
-import matplotlib.pyplot as plt
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
 NPERSEG=1024<<6
 FIGSIZE = (15,10)
 medec = 100
@@ -1711,16 +1704,17 @@ plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent
 #+end_src
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/8027c0b392685323a7c98def9626636667d1e0a6.png]]
+[[file:./.ob-jupyter/17f05b744771d0e7c330cf1773fc9a5ffade45d1.png]]
+[[file:./.ob-jupyter/9bab3244a3494989585e86dd0bb6b4d298bee398.png]]
 :end:
 
 #+attr_latex: :width 500px :height 280px
 #+CAPTION: Αποδεκατισμός σήματος χωρίς επεξεργασία κατά της αλλοίωσης.
-[[file:./decimation/with_aliasing.png]]
+file:./decimation/with_aliasing.png
 
 #+attr_latex: :width 500px :height 280px
 #+CAPTION: Αποδεκατισμός σήματος με φίλτρο \(FIR\) κατά της αλλοίωσης.
-[[file:./decimation/anti_aliasing_fir.png]]
+file:./decimation/anti_aliasing_fir.png
 
 Όπως φαίνεται και παρακάτω η διαδικασία της μείωσης του αριθμού των
 δειγμάτων μπορεί να εντάξει αλλοίωση σε αρχικά "καθαρό" σήμα. Για να
@@ -1728,9 +1722,8 @@ plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent
 και κάποιο φίλτρο για την διόρθωση της αλλοίωσης, υπάρχουν πολλές μέθοδοι,
 ήδη στις βιβλιοθήκες που χρησιμοποιήθηκαν για την ανάλυση των σημάτων.
 \clearpage
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
 #%%
-from tabulate import SEPARATING_LINE
 NPERSEG=1024<<6
 FIGSIZE = (15,10)
 medec = 100
@@ -1798,9 +1791,8 @@ tablexysign=[["Αριθμός δειγμάτων\n\
 εφαρμόζουμε την μέθοδο του αποδεκατισμού παραμένει σταθερός, γεγονός που
 καθορίζει την ορθότητα της εφαρμογής.
 #+NAME: :table:dec_table
-#+begin_src jupyter-python :session python3 :async yes :exports results :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session py :async yes :exports results :tangle ./src/tables_data_process_blocks.py
 #%%
-from tabulate import tabulate
 print(tabulate(tablexydec, headers=["αποδεκατισμένο σήμα",
                                     "χωρίς αποδεκατισμό",
                                     "ανά 10 ",
@@ -1820,9 +1812,8 @@ print(tabulate(tablexydec, headers=["αποδεκατισμένο σήμα",
   : ισχύος του σήματος
   : (ψ άξονας)
 - Πίνακας αριθμού δειγμάτων καταγεγραμμένου σήματος σε μικρότερη συχνότητα
-  #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+  #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
 #%%
-from tabulate import tabulate
 print(tabulate(tablexyrec, headers=["καταγεγραμμένο σε \n\
 μικρότερη συχνότητα",
                                     "χωρίς αποδεκατισμό",
@@ -1845,7 +1836,7 @@ print(tabulate(tablexyrec, headers=["καταγεγραμμένο σε \n\
   : (ψ άξονας)
   :end:
 - Πίνακας αριθμού δειγμάτων με φίλτρο
-  #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+  #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
 #%%
 print(tabulate(tablexysign,
                headers=["σήμα με φίλτρο \n\
@@ -1869,9 +1860,9 @@ print(tabulate(tablexysign,
 - Πίνακας τυπικών αποκλίσεων σε σχέση με την μέθοδο επεξεργασίας.
   - Αποδεκατισμός
     \selectlanguage{english}
-    #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+    #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
 #%%
-from pros_noisefiltering.WT_NoiProc import fir_factory_constructor
+
 
 anti_aliased = signal.decimate(ca1_0.data, 100, ftype='fir')
 anti_aliased_50 = signal.decimate(ca1_0.data, 10, ftype='fir')
@@ -1904,9 +1895,8 @@ print(tabulate(table_std,
   \selectlanguage{greek}
   - Εφαρμογή φίλτρων
      \selectlanguage{english}
-     #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+     #+begin_src jupyter-python :session py :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
 #%%
-
 butter_2000 = ca1_0.filter(fc_Hz=2000).data
 butter_200 = ca1_0.filter(fc_Hz=200).data
 
@@ -1931,9 +1921,18 @@ print(tabulate(table_filts,
                floatfmt=".4f"))
 
     #+end_src
+     #+RESULTS:
+     :results:
+     : =================  ==============  ===============
+     : low-pass filter      2 kHz cutoff    200 Hz cutoff
+     : =================  ==============  ===============
+     : butterworth IIR            0.0035           0.0029
+     : simple FIR                 0.0054           0.0054
+     : =================  ==============  ===============
+     :end:
   \selectlanguage{greek}
 **** plots for decimated signals from same origin :noexport:
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports none
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports none
 
 
 #%% [markdown]
@@ -1957,10 +1956,10 @@ plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/6068645eb6533d71c74f84931e8fa9a7eedcd204.png]]
+[[file:./.ob-jupyter/3370e11819710e2d50d18698dc1a81972efdf4b4.png]]
 :end:
 **** time histories :noexport:
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports code
+#+begin_src jupyter-python :session py :async yes :results raw drawer :exports code
 in1_0_av100 = ca1_0.average(100)
 print(ca1_0.operations)
 print(in1_0_av100.operations)
@@ -2001,8 +2000,7 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 ανέμου από το καλώδιο πεπιεσμένου αέρα καταγράφηκε με συχνότητα 500 \(kHz\),
 ενώ του *\(ventilator\)* στα 100 \(kHz\).
 
-#+CAPTION: Διάγραμμα απεικόνισης σήματος στα πεδία χρόνου και συχνότητας εφαρμόζοντας ένα απλό \(butterworth\) φίλτρο διέλευσης χαμηλών συχνοτήτων.
-#+attr_latex: :width 450px :height 480px
+#+attr_latex: :width 450px :height 380px
 [[file:./src/sig_proc_plots/test.jpg]]
 * Συμπεράσματα
 \clearpage
@@ -2024,7 +2022,7 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 #+print_bibliography:
 * Source blocks :noexport: :noexport:
 ** [#A] WHAT IS LOADED TO JUPYTER KERNEL
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer
+#+begin_src jupyter-python :session py :async yes :results raw drawer
 %whos
 #+end_src
 
@@ -2033,22 +2031,21 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 #+begin_example
 Variable               Type                   Data/Info
 -------------------------------------------------------
+Axis_titles            type                   <class 'pros_noisefilteri<...>n_functions.Axis_titles'>
 CHAN_NAME              str                    Wind2
 FIGSIZE                tuple                  n=2
 FIGSIZE_STD            tuple                  n=2
 FOLDER_FOR_DATA        PosixPath              /mnt/data_folder/measurem<...>2/new_record_prop_channel
+Fft_Plot_info          type                   <class 'pros_noisefilteri<...>functions.Fft_Plot_info'>
 GROUP_NAME             str                    Wind Measurement
 Graph_data_container   type                   <class 'pros_noisefilteri<...>er.Graph_data_container'>
 NPERSEG                int                    65536
 Path                   type                   <class 'pathlib.Path'>
+Signals_for_fft_plot   type                   <class 'pros_noisefilteri<...>ns.Signals_for_fft_plot'>
 TDMS_FNAME             str                    Data.tdms
 TdmsFile               type                   <class 'nptdms.tdms.TdmsFile'>
 WT_NoiseChannelProc    type                   <class 'pros_noisefilteri<...>roc.WT_NoiseChannelProc'>
-a                      ndarray                5: 5 elems, type `float64`, 40 bytes
-b                      ndarray                5: 5 elems, type `float64`, 40 bytes
-butter_200             ndarray                3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
-butter_2000            ndarray                3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
-ca1_0                  WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1bd608190>
+ca1_0                  WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a778b0>
 ca_meas_dir            PosixPath              /mnt/data_folder/measurem<...>op_channel/compressed air
 comp_air_dir           str                    compressed air
 data_CA_inv_0_WS_0     str                    ca0_0.1
@@ -2063,48 +2060,50 @@ data_inv_inv_1_WS15    str                    in1_15.1
 data_inv_inv_1_WS_0    str                    in1_0.1
 data_inv_inv_1_WS_20   str                    in1_20.1
 data_inv_inv_1_WS_5    str                    in1_5.1
-dec_50kHz              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1abe6c350>
-dec_5kHz               WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1abeb4950>
+dec_50kHz              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8779409210>
+dec_5kHz               WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8779409420>
 dec_at_50_kHz          str                    de50.1
 dec_at_5_kHz           str                    de5.1
 dec_meas_dir           PosixPath              /mnt/data_folder/measurem<...>d_prop_channel/Decimation
-df_tdms_0_0            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d811ad50>
-df_tdms_0_10           WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d811a810>
-df_tdms_0_5            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1c9924a90>
-df_tdms_1_0            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d811a350>
-df_tdms_1_10           WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d811b110>
-df_tdms_1_5            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d811b1d0>
-dfi_i0_w0              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d8139390>
-dfi_i1_w0              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d813b1d0>
-dfi_i1_w10             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d813bbd0>
-dfi_i1_w15             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d813bb90>
-dfi_i1_w20             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d813bc10>
-dfi_i1_w5              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d813aa90>
-fs                     int                    30
-in1_0_av100            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1abd6ad10>
+df_tdms_0_0            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a770d0>
+df_tdms_0_10           WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a77100>
+df_tdms_0_5            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a8d480>
+df_tdms_1_0            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a77160>
+df_tdms_1_10           WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a5d870>
+df_tdms_1_5            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a5f310>
+dfi_i0_w0              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f87aa7b3520>
+dfi_i1_w0              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a8d360>
+dfi_i1_w10             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a5db70>
+dfi_i1_w15             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772970dc0>
+dfi_i1_w20             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f87729714e0>
+dfi_i1_w5              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7f8772a5de10>
+fft                    function               <function fft at 0x7f879807d900>
+fft_calc_sig           type                   <class 'pros_noisefilteri<...>_functions.fft_calc_sig'>
+fft_sig                function               <function fft_sig at 0x7f8772a37250>
+ifft                   function               <function ifft at 0x7f879807da20>
 inv_meas_dir           str                    inverter
 item                   str                    in1_20.1
 l_tdms_CA              list                   n=6
 l_tdms_Inv             list                   n=6
-medec                  int                    100
+math                   module                 <module 'math' from '/usr<...>310-x86_64-linux-gnu.so'>
 np                     module                 <module 'numpy' from '/us<...>kages/numpy/__init__.py'>
+nptdms                 module                 <module 'nptdms' from '/u<...>ages/nptdms/__init__.py'>
 path_ca_meas           PosixPath              /mnt/data_folder/measurem<...>sed air/ca1_0.1/Data.tdms
 path_comp              PosixPath              /mnt/data_folder/measurem<...>ord_prop_channel/inverter
 path_dec_meas_50_kHz   PosixPath              /mnt/data_folder/measurem<...>cimation/de50.1/Data.tdms
 path_dec_meas_5_kHz    PosixPath              /mnt/data_folder/measurem<...>ecimation/de5.1/Data.tdms
-plot_spect_comb2       function               <function plot_spect_comb2 at 0x7fc1bc6bbb00>
+pd                     module                 <module 'pandas' from '/u<...>ages/pandas/__init__.py'>
+plot_FFT               function               <function plot_FFT at 0x7f8772a37400>
+plot_spect_comb2       function               <function plot_spect_comb2 at 0x7f8772a36dd0>
+plt                    module                 <module 'matplotlib.pyplo<...>es/matplotlib/pyplot.py'>
+pnf                    module                 <module 'pros_noisefilter<...>sefiltering/__init__.py'>
 raw_signal_CA          list                   n=6
-scipy                  module                 <module 'scipy' from '/us<...>kages/scipy/__init__.py'>
-table                  list                   n=6
-tdms_raw_WT            TdmsFile               <nptdms.tdms.TdmsFile object at 0x7fc1abebd110>
-tdms_raw_WT_50kHz      TdmsFile               <nptdms.tdms.TdmsFile object at 0x7fc1abf07550>
-tdms_raw_WT_5kHz       TdmsFile               <nptdms.tdms.TdmsFile object at 0x7fc1c8ac8fd0>
-ts                     ndarray                150: 150 elems, type `float64`, 1200 bytes
-x                      TdmsFile               <nptdms.tdms.TdmsFile object at 0x7fc1d81243d0>
-y_lfilter              ndarray                150: 150 elems, type `float64`, 1200 bytes
-yerr                   ndarray                150: 150 elems, type `float64`, 1200 bytes
-yraw                   ndarray                150: 150 elems, type `float64`, 1200 bytes
-ys                     ndarray                150: 150 elems, type `float64`, 1200 bytes
+signal                 module                 <module 'scipy.signal' fr<...>cipy/signal/__init__.py'>
+spect                  function               <function spect at 0x7f8772a36cb0>
+tdms_raw_WT            TdmsFile               <nptdms.tdms.TdmsFile object at 0x7f8772a777c0>
+tdms_raw_WT_50kHz      TdmsFile               <nptdms.tdms.TdmsFile object at 0x7f8772a77850>
+tdms_raw_WT_5kHz       TdmsFile               <nptdms.tdms.TdmsFile object at 0x7f87726d3b20>
+x                      TdmsFile               <nptdms.tdms.TdmsFile object at 0x7f8772970460>
 #+end_example
 :end:
 ** FFT
@@ -2188,14 +2187,6 @@ class FftNew:
 
 
 #+end_src
-
-#+RESULTS:
-: 79f950729e3c1baa1f0d390325623460
-
-#+begin_src jupyter-python :session none  :async yes :results drawer
-
-#+end_src
-
 ** LaTeX blocks
 *** 2 image side by side
 
