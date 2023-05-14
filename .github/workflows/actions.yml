@@ -26,4 +26,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: output
-          path: diss-docs/main_doc/main_doc.pdf
+          path: output/main_doc.pdf
