@@ -1113,7 +1113,10 @@ out[z] = - \sum_{f=1}^{T}c(f)out(z-f) + \sum_{f=0}^{I}d(f)in(z-f) \\
 #+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
 # 4TH ORDER BUTTERWORTH FILTER WITH A GAIN DROP OF 1/sqrt(2)
 # AT 0.4 CYCLES/SAMPLE
+from scipy import signal
+import matplotlib.pyplot as plt
 import math
+import numpy as np
 bb, ab  = signal.butter (4, 0.8, 'low', analog=False,output='ba')
 wb, hb = signal.freqz(bb, ab)
 wb = wb/(2*math.pi)
@@ -1152,6 +1155,9 @@ plt.grid(which= 'both', axis= 'both')
 #+end_src
 
 #+RESULTS:
+:results:
+[[file:./.ob-jupyter/47597dd876fd4b667b7dacefadc37d6179395293.png]]
+:end:
 :results:
 [[file:./.ob-jupyter/47597dd876fd4b667b7dacefadc37d6179395293.png]]
 :end:
@@ -1196,6 +1202,9 @@ plt.grid(which= 'both', axis= 'both')
 #+end_src
 
 #+RESULTS:
+:results:
+[[file:./.ob-jupyter/16e7ff124636d39cb84dec0dbd1c5a76d6f82f05.png]]
+:end:
 :results:
 [[file:./.ob-jupyter/16e7ff124636d39cb84dec0dbd1c5a76d6f82f05.png]]
 :end:
@@ -1330,7 +1339,7 @@ digraph regexp  {
 #+end_src
 
 #+RESULTS:
-#+begin_export latex
+#+begin_example
 \begin{figure}
 \centering
 \begin{subfigure}{.5\textwidth}
@@ -1348,7 +1357,7 @@ digraph regexp  {
 \caption{Διαφορετικά φίλτρα διέλευσης χαμηλών συχνοτήτων}
 \label{fig:test}
 \end{figure}
-#+end_export
+#+end_example
 
 #+begin_src dot :file ./flowcharts/proc-meth.png :results file :exports results :session dot :tangle ./graphviz/proc-methods.gv
 
@@ -1923,6 +1932,17 @@ print(tabulate(table_filts,
                floatfmt=".4f"))
 
     #+end_src
+
+    #+RESULTS:
+    :results:
+    : =================  ==============  ===============
+    : low-pass filter      2 kHz cutoff    200 Hz cutoff
+    : =================  ==============  ===============
+    : butterworth IIR            0.0035           0.0029
+    : simple FIR                 0.0054           0.0054
+    : =================  ==============  ===============
+    :end:
+
   \selectlanguage{greek}
 **** plots for decimated signals from same origin :noexport:
 #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports none
@@ -2053,6 +2073,12 @@ plot_comparative_response(ca1_10,
 
                           #+end_src
 
+                          #+RESULTS:
+                          :results:
+                          [[file:./.ob-jupyter/c469ed3fa3a6519d08d5db5af8e8102d4ae24c1c.png]]
+                          [[file:./.ob-jupyter/626aba17ce5e7b93d79643fefdf4073ca486b9a8.png]]
+                          :end:
+
    \clearpage  
    - \(IIR\) φίλτρο τύπου \(butterworth\) με τάξη ίση με 2
     #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
@@ -2071,6 +2097,13 @@ plot_comparative_response(ca1_10,
 
 
                        #+end_src
+
+                       #+RESULTS:
+                       :results:
+                       [[file:./.ob-jupyter/0ca1155c1309d384c49d587ebe2854960ee9de1a.png]]
+                       [[file:./.ob-jupyter/113953e9338dc3c032044042256d6a8d091cef30.png]]
+                       :end:
+
 \clearpage
 - Διαγράμματα ισχύος με την μέθοδο \(Welch\) για παροχή ανέμου από την αεροσύραγγα
 
@@ -2114,6 +2147,14 @@ plot_comparative_response(dfi_i1_w20,
 
                           #+end_src
 
+                          #+RESULTS:
+                          :results:
+                          [[file:./.ob-jupyter/14263a900760581982f9a87f593f8894a7a6c24e.png]]
+                          [[file:./.ob-jupyter/328c1bf5701027dc0a2c71f2d361c8a21878b1d8.png]]
+                          [[file:./.ob-jupyter/0bee83ba9176ddfd1d086b65d8e8c09fe4ee5773.png]]
+                          [[file:./.ob-jupyter/48908e838951101d1cd115e595e1e3fe5767c1f8.png]]
+                          :end:
+
    \clearpage
    - \(IIR\) φίλτρο τύπου \(butterworth\) με τάξη ίση με 2
     #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
@@ -2137,18 +2178,153 @@ plot_comparative_response(dfi_i1_w15,
                           nperseg=NPERSEG,
                           figsize=(8, 4))
 plot_comparative_response(dfi_i1_w20,
-                          filter_func=butter_filter_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-    
-                          #+end_src
+                         filter_func=butter_filter_2000,
+                         response_offset=2e-4,
+                         Kolmogorov_offset=4e0,
+                         nperseg=NPERSEG,
+                         figsize=(8, 4))
+
+                         #+end_src
+
+                         #+RESULTS:
+                         :results:
+                         [[file:./.ob-jupyter/5c357c6e7c3b087f1dffc7b15311fe1c7c978308.png]]
+                         [[file:./.ob-jupyter/2406695beec08654bec870291d14bb908408e5b3.png]]
+                         [[file:./.ob-jupyter/1f8daa26a48447a7a2d83fcfdd89f6b52ec7fce1.png]]
+                         [[file:./.ob-jupyter/ec7b1604fde14b50450f0eca88e54b9b1980342e.png]]
+                         :end:
+
+- Πίνακας τυπικής απόκλισης εισόδου και εξόδου φίλτρων για πεπιεσμένο αέρα
+
+  Στους παρακάτω πίνακες παραθέτονται οι τυπικές αποκλίσεις των σημάτων
+  που χρησιμοποιήθηκαν για την εξαγωγή των ανωτέρω διαγραμμάτων. Σε κάθε
+  πίνακα καταγράφονται οι τυπικές αποκλίσεις για το καταγεγραμμένο σήμα,
+  όπως επίσης και για τις δύο κατηγορίες φίλτρων.
+
+  \selectlanguage{english}
+  #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
+from pros_noisefiltering.WT_NoiProc import filt_butter_factory
+butter_iir_2000 = filt_butter_factory(fc_Hz=2000, filt_order=4)
+
+fir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
+                              filter_func=fir_2000)
+iir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
+                              filter_func=butter_iir_2000)
+ca_data_to_filter = [ca1_5, ca1_10]
+iir_data_out = []
+fir_data_out = []
+# filter with fir all data and make a list for the output
+for each in ca_data_to_filter:
+    fir_data_out.append(each.filter(fc_Hz=2000,
+                                    filter_func=fir_2000))
+
+# filter with iir all data and make a list for the output
+for each in ca_data_to_filter:
+    iir_data_out.append(each.filter(fc_Hz=2000,
+                                    filter_func=butter_iir_2000))
+
+
+table_std_filtering = [[f"{ca_data_to_filter[0].description}",
+                        np.std(ca_data_to_filter[0].data),
+                        np.std(fir_data_out[0].data),
+                        np.std(iir_data_out[0].data)],
+
+                       [f"{ca_data_to_filter[1].description}",
+                        np.std(ca_data_to_filter[1].data),
+                        np.std(fir_data_out[1].data),
+                        np.std(iir_data_out[1].data)]]
+print(tabulate(table_std_filtering,
+               headers=["Record description",
+                        "std raw signal",
+                        "FIR",
+                        "IIR"],
+               floatfmt=".4f" ))
+# print(np.std(fir_out_1_5_ca.data), np.std(ca1_5.data))
+# print(np.std(iir_out_1_5_ca.data), np.std(ca1_5.data))
+# butter_iir_200 = filt_butter_factory(fc_Hz=200, filt_order=4)
+
+  #+end_src
+  #+RESULTS:
+  :results:
+  : Record description      std raw signal     FIR     IIR
+  : --------------------  ----------------  ------  ------
+  : Inverter on, WS=5               0.0434  0.0245  0.0241
+  : Inverter on, WS=10              0.0841  0.0760  0.0759
+  :end:
+
+\selectlanguage{greek}
+- Πίνακας τυπικής απόκλισης εισόδου και εξόδου φίλτρων για αεροσύραγγα
+  \selectlanguage{english}
+  #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
+from pros_noisefiltering.WT_NoiProc import filt_butter_factory
+butter_iir_2000 = filt_butter_factory(fc_Hz=2000, filt_order=4)
+
+fir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
+                              filter_func=fir_2000)
+iir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
+                              filter_func=butter_iir_2000)
+wt_data_to_filter = [dfi_i1_w5, dfi_i1_w10,
+                     dfi_i1_w15, dfi_i1_w20]
+iir_data_out = []
+fir_data_out = []
+# filter with fir all data and make a list for the output
+for each in wt_data_to_filter:
+    fir_data_out.append(each.filter(fc_Hz=2000,
+                                    filter_func=fir_2000))
+
+# filter with iir all data and make a list for the output
+for each in wt_data_to_filter:
+    iir_data_out.append(each.filter(fc_Hz=2000,
+                                    filter_func=butter_iir_2000))
+
+
+table_std_filtering = [[f"{wt_data_to_filter[0].description}",
+                        np.std(wt_data_to_filter[0].data),
+                        np.std(fir_data_out[0].data),
+                        np.std(iir_data_out[0].data)],
+
+                       [f"{wt_data_to_filter[1].description}",
+                        np.std(wt_data_to_filter[1].data),
+                        np.std(fir_data_out[1].data),
+                        np.std(iir_data_out[1].data)],
+
+                       [f"{wt_data_to_filter[2].description}",
+                        np.std(wt_data_to_filter[2].data),
+                        np.std(fir_data_out[2].data),
+                        np.std(iir_data_out[2].data)],
+                       [f"{wt_data_to_filter[3].description}",
+                        np.std(wt_data_to_filter[3].data),
+                        np.std(fir_data_out[3].data),
+                        np.std(iir_data_out[3].data)],
+                       ]
+print(tabulate(table_std_filtering,
+               headers=["Record description",
+                        "std raw signal",
+                        "FIR",
+                        "IIR"],
+               floatfmt=".4f" ))
+# print(np.std(fir_out_1_5_ca.data), np.std(ca1_5.data))
+# print(np.std(iir_out_1_5_ca.data), np.std(ca1_5.data))
+# butter_iir_200 = filt_butter_factory(fc_Hz=200, filt_order=4)
+
+  #+end_src
+
+  #+RESULTS:
+  :results:
+  : Record description            std raw signal     FIR     IIR
+  : --------------------------  ----------------  ------  ------
+  : Inverter On, WS=5, 100kHz             0.0385  0.0074  0.0083
+  : Inverter On, WS=10, 100kHz            0.0400  0.0124  0.0130
+  : Inverter On, WS=15, 100kHz            0.0421  0.0279  0.0281
+  : Inverter On, WS=20, 100kHz            0.0566  0.0483  0.0484
+  :end:
+
+\selectlanguage{greek}
      
-- \(Welch\ method\ filtered-raw\ signal\) [66%]
+- \(Welch\ method\ filtered-raw\ signal\) [100%]
   - [X] Διαγράμματα για κομπρεσέρ
   - [X] Διαγράμματα για αεροσύραγγα
-  - [ ] τυπικές αποκλείσεις
+  - [X] τυπικές αποκλείσεις
 * Συμπεράσματα
 \clearpage
 * Βιβλιογραφία
