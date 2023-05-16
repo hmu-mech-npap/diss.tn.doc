@@ -6,7 +6,7 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+EXCLUDE_TAGS: noexport
 #+TAGS:  noexport(n)
-#+INCLUDE: latex-headers-diss.org
+#+INCLUDE: title_page_latex.org
 :END:
 \clearpage \tableofcontents \clearpage
 * Imports :noexport:
@@ -1158,9 +1158,6 @@ plt.grid(which= 'both', axis= 'both')
 :results:
 [[file:./.ob-jupyter/47597dd876fd4b667b7dacefadc37d6179395293.png]]
 :end:
-:results:
-[[file:./.ob-jupyter/47597dd876fd4b667b7dacefadc37d6179395293.png]]
-:end:
 
 [[file:./Bessel Filter Freq Response.png]]
 
@@ -1202,9 +1199,6 @@ plt.grid(which= 'both', axis= 'both')
 #+end_src
 
 #+RESULTS:
-:results:
-[[file:./.ob-jupyter/16e7ff124636d39cb84dec0dbd1c5a76d6f82f05.png]]
-:end:
 :results:
 [[file:./.ob-jupyter/16e7ff124636d39cb84dec0dbd1c5a76d6f82f05.png]]
 :end:
@@ -1617,12 +1611,11 @@ print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασ�
 διάρκειας σήματος, για την ολοκλήρωση των διαδικασιών που εφαρμόζονται, θα
 χρειαζόμασταν πολύ χρόνο. Στα παρακάτω διαγράμματα αποτυπώνεται ο τρόπος
 που επηρεάζει το σήμα η διαδικασία αυτή.
-
+**** Directories :noexport:
 - [X] *Εδώ πρεπει να μπουν διαγράμματα απο \(decimation\)*
 - [X] Να πω και μερικά πραγματα μαζι με τα αποτελέσματα.
 - [X] Έχω ήδη κάποια από τα αρχεία για το paper
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
-**** Directories :noexport:
 #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports code :tangle ./src/tables_data_process_blocks.py
 #%%
 
@@ -1867,6 +1860,7 @@ print(tabulate(tablexysign,
   : ισχύος του σήματος
   : (ψ άξονας)
   :end:
+\clearpage
 - Πίνακας τυπικών αποκλίσεων σε σχέση με την μέθοδο επεξεργασίας.
   - Αποδεκατισμός
     \selectlanguage{english}
@@ -1990,11 +1984,6 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 : ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'pass filter 100', 'Apply Averaging :100']
 :end:
 *** Απομείωση θορύβου
-- [X] *Εδώ πρέπει να μπουν διαγράμματα από \(filters\ and\ welch\)*
-- [X] *Να φέρω τα αναγκαία εδώ σε \(code\ blocks\)*
-- [X] Τα έχω ήδη από τα τους φακέλους με τα φίλτρα
-- [X] Να τσεκαριστούν για να είμαι σίγουρος
-
 Για την επιλογή του κατάλληλου φίλτρου εξετάστηκαν οι δύο βασικές
 κατηγορίες, συγκρίνοντας την τιμή της τυπικής απόκλισης του σήματος πριν
 και μετά την εφαρμογή. Αξίζει να σημειωθεί ότι, για να αποκτήσει κανείς
@@ -2023,7 +2012,12 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 σωστά. Τέλος, θα δειχθεί πως και οι δύο μέθοδοι είναι αποδεκτοί για την
 συγκεκριμένη εφαρμογή, υπό προϋποθέσεις που θα συζητηθούν στα συμπεράσματα.
 
-*** Διαγράμματα πυκνότητας ισχύος σημάτων με διαφορετικές ταχύτητες ανέμου
+*** notes :noexport:
+- [X] *Εδώ πρέπει να μπουν διαγράμματα από \(filters\ and\ welch\)*
+- [X] *Να φέρω τα αναγκαία εδώ σε \(code\ blocks\)*
+- [X] Τα έχω ήδη από τα τους φακέλους με τα φίλτρα
+- [X] Να τσεκαριστούν για να είμαι σίγουρος
+*** Διαγράμματα πυκνότητας ισχύος εισόδου και εξόδου φίλτρων
 Η βασική ανάλυση των σημάτων γίνεται στο πεδίο των συχνοτήτων και κυρίως
 μέσω της πολυαναφερόμενης μέχρι στιγμής μεθόδου \(Welch\). Αυτό συμβαίνει
 καθώς απεικονίζοντας το σήμα στο πεδίο του χρόνου, εκτός της μεταβολής της
@@ -2047,9 +2041,9 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 των δύο μεθόδων θα διαπιστώσουμε πως τα αποτελέσματα αποκλίνουν σε πολύ
 μικρό βαθμό συγκρίνοντας τις τυπικές αποκλίσεις των εξόδων σχετικά με την
 είσοδο των φίλτρων.
-\clearpage
+
 - Διαγράμματα ισχύος με την μέθοδο \(Welch\) για πεπιεσμένο αέρα
-   - \(FIR\) φίλτρο απλού παραθύρου με τάξη ίση με 60 (αριθμός συντελεστών πολυωνύμου)
+  - \(FIR\) φίλτρο απλού παραθύρου με τάξη ίση με 60 (αριθμός συντελεστών πολυωνύμου)
     #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
 from pros_noisefiltering.WT_NoiProc import (plot_comparative_response,
                                             filt_butter_factory)
@@ -2065,22 +2059,20 @@ plot_comparative_response(ca1_5,
                           nperseg=NPERSEG,
                           figsize=(8, 4))
 plot_comparative_response(ca1_10,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
+                         filter_func=fir_2000,
+                         response_offset=2e-4,
+                         Kolmogorov_offset=4e0,
+                         nperseg=NPERSEG,
+                         figsize=(8, 4))
 
-                          #+end_src
+                         #+end_src
 
-                          #+RESULTS:
-                          :results:
-                          [[file:./.ob-jupyter/c469ed3fa3a6519d08d5db5af8e8102d4ae24c1c.png]]
-                          [[file:./.ob-jupyter/626aba17ce5e7b93d79643fefdf4073ca486b9a8.png]]
-                          :end:
-
-   \clearpage  
-   - \(IIR\) φίλτρο τύπου \(butterworth\) με τάξη ίση με 2
+    #+RESULTS:
+    :results:
+    [[file:./.ob-jupyter/c469ed3fa3a6519d08d5db5af8e8102d4ae24c1c.png]]
+    [[file:./.ob-jupyter/626aba17ce5e7b93d79643fefdf4073ca486b9a8.png]]
+    :end:
+  -  \(IIR\) φίλτρο τύπου \(butterworth\) με τάξη ίση με 2
     #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
 plot_comparative_response(ca1_5,
                           filter_func=butter_filter_2000,
@@ -2089,22 +2081,21 @@ plot_comparative_response(ca1_5,
                           nperseg=NPERSEG,
                           figsize=(8, 4))
 plot_comparative_response(ca1_10,
-                       filter_func=butter_filter_2000,
-                       response_offset=2e-4,
-                       Kolmogorov_offset=4e0,
-                       nperseg=NPERSEG,
-                       figsize=(8, 4))
+                      filter_func=butter_filter_2000,
+                      response_offset=2e-4,
+                      Kolmogorov_offset=4e0,
+                      nperseg=NPERSEG,
+                      figsize=(8, 4))
 
 
-                       #+end_src
+                      #+end_src
 
-                       #+RESULTS:
-                       :results:
-                       [[file:./.ob-jupyter/0ca1155c1309d384c49d587ebe2854960ee9de1a.png]]
-                       [[file:./.ob-jupyter/113953e9338dc3c032044042256d6a8d091cef30.png]]
-                       :end:
+   #+RESULTS:
+   :results:
+   [[file:./.ob-jupyter/0ca1155c1309d384c49d587ebe2854960ee9de1a.png]]
+   [[file:./.ob-jupyter/113953e9338dc3c032044042256d6a8d091cef30.png]]
+   :end:
 
-\clearpage
 - Διαγράμματα ισχύος με την μέθοδο \(Welch\) για παροχή ανέμου από την αεροσύραγγα
 
   Εδώ θα παρατηρήσει κανείς πως ο θόρυβος είναι λιγότερο εμφανής από τα
@@ -2147,13 +2138,13 @@ plot_comparative_response(dfi_i1_w20,
 
                           #+end_src
 
-                          #+RESULTS:
-                          :results:
-                          [[file:./.ob-jupyter/14263a900760581982f9a87f593f8894a7a6c24e.png]]
-                          [[file:./.ob-jupyter/328c1bf5701027dc0a2c71f2d361c8a21878b1d8.png]]
-                          [[file:./.ob-jupyter/0bee83ba9176ddfd1d086b65d8e8c09fe4ee5773.png]]
-                          [[file:./.ob-jupyter/48908e838951101d1cd115e595e1e3fe5767c1f8.png]]
-                          :end:
+    #+RESULTS:
+    :results:
+    [[file:./.ob-jupyter/14263a900760581982f9a87f593f8894a7a6c24e.png]]
+    [[file:./.ob-jupyter/328c1bf5701027dc0a2c71f2d361c8a21878b1d8.png]]
+    [[file:./.ob-jupyter/0bee83ba9176ddfd1d086b65d8e8c09fe4ee5773.png]]
+    [[file:./.ob-jupyter/48908e838951101d1cd115e595e1e3fe5767c1f8.png]]
+    :end:
 
    \clearpage
    - \(IIR\) φίλτρο τύπου \(butterworth\) με τάξη ίση με 2
@@ -2186,13 +2177,14 @@ plot_comparative_response(dfi_i1_w20,
 
                          #+end_src
 
-                         #+RESULTS:
-                         :results:
-                         [[file:./.ob-jupyter/5c357c6e7c3b087f1dffc7b15311fe1c7c978308.png]]
-                         [[file:./.ob-jupyter/2406695beec08654bec870291d14bb908408e5b3.png]]
-                         [[file:./.ob-jupyter/1f8daa26a48447a7a2d83fcfdd89f6b52ec7fce1.png]]
-                         [[file:./.ob-jupyter/ec7b1604fde14b50450f0eca88e54b9b1980342e.png]]
-                         :end:
+    #+RESULTS:
+    :results:
+    [[file:./.ob-jupyter/5c357c6e7c3b087f1dffc7b15311fe1c7c978308.png]]
+    [[file:./.ob-jupyter/2406695beec08654bec870291d14bb908408e5b3.png]]
+    [[file:./.ob-jupyter/1f8daa26a48447a7a2d83fcfdd89f6b52ec7fce1.png]]
+    [[file:./.ob-jupyter/ec7b1604fde14b50450f0eca88e54b9b1980342e.png]]
+    :end:
+
 
 - Πίνακας τυπικής απόκλισης εισόδου και εξόδου φίλτρων για πεπιεσμένο αέρα
 
@@ -2253,6 +2245,7 @@ print(tabulate(table_std_filtering,
   :end:
 
 \selectlanguage{greek}
+\clearpage
 - Πίνακας τυπικής απόκλισης εισόδου και εξόδου φίλτρων για αεροσύραγγα
   \selectlanguage{english}
   #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
