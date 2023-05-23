@@ -37,7 +37,7 @@
 
 # THE best front matter EVER
 #+latex_header: \newcommand{\MeTitle}{{Φίλτρα συχνοτήτων}}
-#+latex_header: \newcommand{\MeSubTitle}{{Απομοίωση Η/Μ θορύβου από ψηφιακό σήμα αισθητήρα σε αεροσύραγγα στο εργαστήριο ΑΠΕ}}
+#+latex_header: \newcommand{\MeSubTitle}{{Φίλτρα συχνοτήτων και απομόνωση Η/Μ θορύβου σε περιβάλλον αεροσήραγγας.}}
 #+latex_header: \newcommand{\AuthorShort}{\mbox{Τοροσιάν Νικόλας}}
 #+latex_header: \newcommand{\AuthorFull}{\mbox{Τοροσιάν Νικόλας ΤΜ6220}}
 #+latex_header: \newcommand{\Supervisor}{\mbox{Καθ. Παπαδάκης Νίκος}}
