@@ -3,14 +3,7 @@
 #+REVEAL_HLEVEL: 2
 #+REVEAL_TITLE_SLIDE: <h2>%t</h2> <h3>%s</h3> <p>%a</p> <p>%d</<p>
 #+OPTIONS: num:nil timestamp:nil toc:nil
-
-#+REVEAL_MARGIN: 0.3
-#+REVEAL_MIN_SCALE: 0.4
-#+REVEAL_MAX_SCALE: 1.8
-
-#+OPTIONS:  reveal_progress:t reveal_history:t reveal_control:t
-
-#+OPTIONS: reveal_width:1280 reveal_height:768
+#+REVEAL_INIT_OPTIONS: width:1280, height:768, controlsLayout: 'edges'
 :END:
 :ORG_PROPERTIES:
 

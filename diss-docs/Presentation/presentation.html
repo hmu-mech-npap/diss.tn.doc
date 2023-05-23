@@ -1,328 +1,242 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="generator" content="pandoc">
-  <meta name="author" content="Νικολας Τοροσιαν">
-  <title>Φιλτρα συχνοτητων</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="https://revealjs.com/dist/reset.css">
-  <link rel="stylesheet" href="https://revealjs.com/dist/reveal.css">
-  <style>
-    .reveal .sourceCode {  /* see #7635 */
-      overflow: visible;
+<meta charset="utf-8"/>
+<title>Φιλτρα συχνοτητων</title>
+<meta name="author" content="Νικολας Τοροσιαν"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="/home/dtos_experiment/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="/home/dtos_experiment/reveal.js/dist/theme/blood.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/home/dtos_experiment/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
-  </style>
-  <link rel="stylesheet" href="https://revealjs.com/dist/theme/black.css" id="theme">
+</script>
 </head>
 <body>
-  <div class="reveal">
-    <div class="slides">
-
-<section id="title-slide">
-  <h1 class="title">Φιλτρα συχνοτητων</h1>
-  <p class="subtitle">Τ.Ε.Ι. Κρητης</p>
-  <p class="author">Νικολας Τοροσιαν</p>
-  <p class="date">[2023-06-25 Κυρ 16:00]</p>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Φιλτρα συχνοτητων</h2> <h3>Τ.Ε.Ι. Κρητης</h3> <p>Νικολας Τοροσιαν</p> <p>2023-06-25 Κυρ 16:00</<p>
 </section>
+<p>
 
-<section class="slide level1">
+</p>
 
-<div class="REVEAL_PROPERTIES drawer">
 
-</div>
-<div class="ORG_PROPERTIES drawer">
-
-</div>
-<div class="DOC_PROPERTIES drawer">
-
-</div>
-</section>
-<section id="καθηγητες" class="slide level1">
-<h1>Καθηγητες</h1>
+<section>
+<section id="slide-orgfd3b153">
+<h2 id="orgfd3b153">Καθηγητες</h2>
 <ul>
-<li><p>Επιβλέπον καθηγητής</p></li>
-<li><p>Παπαδάκης Νικόλας</p></li>
-<li><p>Υπεύθυνος Εργαστηρίου Α.Π.Ε</p></li>
-<li><p>Κονταξάκης Κωvσταντίνος</p></li>
+<li class="fragment semi-fade-out">Επιβλέπον καθηγητής</li>
+
+</ul>
+<ul>
+<li class="fragment highlight-green">Παπαδάκης Νικόλας</li>
+
+</ul>
+
+<ul>
+<li class="fragment semi-fade-out">Υπεύθυνος Εργαστηρίου Α.Π.Ε</li>
+
+</ul>
+<ul>
+<li class="fragment highlight-red">Κονταξάκης Κωvσταντίνος</li>
+
 </ul>
 </section>
-<section id="τι-ειναι-σημα" class="slide level1">
-<h1>Τι ειναι σημα</h1>
+</section>
+<section>
+<section id="slide-orge3d5ac4">
+<h2 id="orge3d5ac4">Τι ειναι σημα</h2>
 <ul>
-<li>Διάφοροι τύποι κυματομορφών</li>
-<li>Παλμός
-<ul>
-<li>Ηλεκτρικό ρεύμα</li>
-<li>χορδή μιας κιθάρας.</li>
-</ul></li>
-<li>Ημιτονοειδές
-<ul>
-<li>από ηλεκτρονικό η αναλογικό σύστημα.</li>
-<li>Βάλε εδώ αν είναι ωραίο μια φωτό (μετεορολογικης μηχανης).</li>
-</ul></li>
-<li>δυαδικό
-<ul>
-<li>π.χ. 'καλημέρα' == 11001110 10111010 11001110 10110001 11001110
-10111011 11001110 10110111 11001110 10111100 11001110 10110101 11001111
-10000001 11001110 10110001</li>
-</ul></li>
-<li>Να εμπεριέχει πληροφορία
-<ul>
-<li>Δηλαδή διακριτές διαφορές στην ισχύ ή/και την συχνότητα</li>
-</ul></li>
-<li>Περιοδική συμπεριφορά</li>
-<li>Η επανάληψη στο χρόνο είναι από τα σημαντικότερα χαρακτηριστικά των
-σημάτων.</li>
+<li class="fragment appear">Διάφοροι τύποι κυματομορφών</li>
+
 </ul>
-<h2 id="πως-χρησιμοποιειται">πως χρησιμοποιειται</h2>
 <ul>
-<li>Συνήθως για συμπίεση πληροφορίας</li>
-<li>Επικοινωνία-Διαδίκτυο</li>
-<li>Αλλά και ως μέτρο αναφοράς</li>
+<li class="fragment fade-left"><p>
+Παλμός
+</p>
+<ul>
+<li class="fragment fade-in-then-out">Ηλεκτρικό ρεύμα</li>
+<li class="fragment fade-in-then-out">χορδή μιας κιθάρας.</li>
+
+</ul></li>
+<li class="fragment fade-left">Ημιτονοειδές
+<ul>
+<li class="fragment fade-in-then-out">από ηλεκτρονικό η αναλογικό σύστημα.</li>
+<li class="fragment fade-in-then-out">Βάλε εδώ αν είναι ωραίο μια φωτό (μετεορολογικης μηχανης).</li>
+
+</ul></li>
+
 </ul>
-<h3 id="συμπιεση-πληροφοριων">συμπιεση πληροφοριων</h3>
-<p>Εδω καλο ειναι να πω για την δυνατοτητα αποθήκευσης μεγαλου ογκου
-πληροφοριων με λιγο αποθηκευτικο χωρο και να μπω λιγο στην εννοια της
-κωδικοποιησης-αποκωδικοποιησης σηματων βαζω ανετα αλλες 2 διαφανειες</p>
-<h3 id="παγκοσμιος-ιστοτοπος">παγκοσμιος ιστοτοπος</h3>
-<p>εδω μπορω να αναφερθω στην σημασία των σηματων σε ιντερνετ και
-τηλεπικοινωνια.</p>
-<h3 id="σημειο-αναφορας">σημειο αναφορας</h3>
-<p>μετρητικές συσκευες, διαπασον και αλλες ωραιες εικονες.</p>
-<h2 id="διαχειρηση-δεδομενων">διαχειρηση δεδομενων</h2>
-<p>Η καταγραφή καθώς και ο τρόπος αποθήκευσης καθορίζονται από τον όγκο
-τους σε mB. Ένας επίσης καθοριστικός παράγοντας είναι το όριο που μπορεί
-να μεταφερθεί μέσω διαδικτύου καθώς πολλές φορές οι ερευνητές βρίσκονται
-σε διαφορετικές ηπείρους. Έτσι είναι αναγκαίο να καθοριστεί ο
-απαραίτητος όγκος δεδομένων για την εξαγωγή συμπερασμάτων.</p>
-<h3 id="καταγραφη">καταγραφη</h3>
-<p>Σήμερα με τον εκθετικό ρυθμό ανάπτυξης της τεχνολογίας συσκευές
-καταγραφής ηλεκτρικών σημάτων με πολλές δυνατότητες, όπως παλμογράφο σε
-σύνδεση με USB ή/και ανάλυση φάσματος, υπάρχουν σε προσιτές τιμές.</p>
-<h3 id="επεξεργασια">επεξεργασια</h3>
-<p>Συνήθως γίνεται σε μεταγενέστερο χρόνο και τις περισσότερες φορές
-απαιτεί μεγάλη υπολογιστική ισχύ σχετικά με τον όγκο τους. <strong>βαλε
-παραδειγμα εδω</strong></p>
+<ul>
+<li class="fragment appear">δυαδικό
+<ul>
+<li class="fragment fade-in-then-out">π.χ. &rsquo;καλημέρα&rsquo; == 11001110 10111010 11001110 10110001 11001110 10111011 11001110 10110111 11001110 10111100 11001110 10110101 11001111 10000001 11001110 10110001</li>
+
+</ul></li>
+
+</ul>
+
+<ul>
+<li class="fragment appear">Να εμπεριέχει πληροφορία
+<ul>
+<li class="fragment fade-in-then-out">Δηλαδή διακριτές διαφορές στην ισχύ ή/και την συχνότητα</li>
+
+</ul></li>
+
+</ul>
+
+<ul>
+<li class="fragment appear">Περιοδική συμπεριφορά</li>
+
+</ul>
+<ul>
+<li class="fragment fade-in-then-out">Η επανάληψη στο χρόνο είναι από τα σημαντικότερα χαρακτηριστικά των σημάτων.</li>
+
+</ul>
 </section>
-<section id="συγκρηση" class="slide level1">
-<h1>συγκρηση</h1>
-<p>Φίλτρα διέλευσης χαμηλών συχνοτήτων</p>
-<p>άπειρης κρουστικής απόκρισης (IIR)</p>
-<p>διακριτής κρουστικής απόκρισης (FIR)</p>
-<p><img data-src="./iir-filt-raw-lp.png" data-align="right" /></p>
-<p><img data-src="./fir-filt-raw-huge-order.png"
-data-align="left" /></p>
-<h2 id="fir">FIR</h2>
-<p>if i leave one empty</p>
-<p>finite impulse response lets say i have a lot of document here and i
-want it beside the fotograph below….. I should be able to do that easy….
-Souldnt I?!?!?!?! make this biiiiiger to see what happents !!!!!! YOU
-KNOW WHAT WIILLLLL !!! IT WILL BRAKE AS USUALL.</p>
-<p><img data-src="./fir-filt-raw-huge-order.png"
-style="width:45.0%" /></p>
 </section>
-<section id="εργαστηριακη-εγκατασταση" class="slide level1">
-<h1>Εργαστηριακη εγκατασταση</h1>
-<p><img data-src="./Wind_Tunnel_setup_lab.png" /></p>
+<section>
+<section id="slide-org9d154ea">
+<h3 id="org9d154ea">πως χρησιμοποιειται</h3>
+<ul>
+<li class="fragment fade-left">Συνήθως για συμπίεση πληροφορίας</li>
+<li class="fragment fade-left">Επικοινωνία-Διαδίκτυο</li>
+<li class="fragment fade-left">Αλλά και ως μέτρο αναφοράς</li>
+
+</ul>
 </section>
-<section id="ευχαριστω-για-τον-χρονο-σας" class="slide level1">
-<h1><em>Ευχαριστω για τον χρονο σας</em></h1>
+<section id="slide-orgc7311a3">
+<h4 id="orgc7311a3">συμπιεση πληροφοριων</h4>
+<p>
+Εδω καλο ειναι να πω για την δυνατοτητα αποθήκευσης μεγαλου ογκου πληροφοριων με λιγο αποθηκευτικο χωρο και να μπω λιγο στην εννοια της κωδικοποιησης-αποκωδικοποιησης σηματων βαζω ανετα αλλες 2 διαφανειες
+</p>
 </section>
-    </div>
-  </div>
+<section id="slide-org764a102">
+<h4 id="org764a102">παγκοσμιος ιστοτοπος</h4>
+<p>
+εδω μπορω να αναφερθω στην σημασία των σηματων σε  ιντερνετ και τηλεπικοινωνια.
+</p>
+</section>
+<section id="slide-org081be2c">
+<h4 id="org081be2c">σημειο αναφορας</h4>
+<p>
+μετρητικές συσκευες, διαπασον και αλλες ωραιες εικονες.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgc9642ee">
+<h3 id="orgc9642ee">διαχειρηση δεδομενων</h3>
+<p>
+Η καταγραφή καθώς και ο τρόπος αποθήκευσης καθορίζονται από τον όγκο τους σε mB. Ένας επίσης καθοριστικός παράγοντας είναι το όριο που μπορεί να μεταφερθεί μέσω διαδικτύου καθώς πολλές φορές οι ερευνητές βρίσκονται σε διαφορετικές ηπείρους. Έτσι είναι αναγκαίο να καθοριστεί ο απαραίτητος όγκος δεδομένων για την εξαγωγή συμπερασμάτων.
+</p>
+</section>
+<section id="slide-orgbee927e">
+<h4 id="orgbee927e">καταγραφη</h4>
+<p>
+Σήμερα με τον εκθετικό ρυθμό ανάπτυξης της τεχνολογίας συσκευές καταγραφής ηλεκτρικών σημάτων με πολλές δυνατότητες, όπως παλμογράφο σε σύνδεση με USB ή/και ανάλυση φάσματος, υπάρχουν σε προσιτές τιμές.
+</p>
 
-  <script src="https://revealjs.com/dist/reveal.js"></script>
+</section>
+<section id="slide-org984c7d1">
+<h4 id="org984c7d1">επεξεργασια</h4>
+<p>
+Συνήθως γίνεται σε μεταγενέστερο χρόνο και τις περισσότερες φορές απαιτεί μεγάλη υπολογιστική ισχύ σχετικά με τον όγκο τους. <b>βαλε παραδειγμα εδω</b>
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org2b2b09c">
+<h2 id="org2b2b09c">συγκρηση</h2>
+<p class="fragment (roll-in)">
+Φίλτρα διέλευσης χαμηλών συχνοτήτων
+</p>
 
-  <!-- reveal.js plugins -->
-  <script src="https://revealjs.com/plugin/notes/notes.js"></script>
-  <script src="https://revealjs.com/plugin/search/search.js"></script>
-  <script src="https://revealjs.com/plugin/zoom/zoom.js"></script>
-  <script src="https://revealjs.com/plugin/math/math.js"></script>
+<p class="fragment (roll-in)" align="right">
+άπειρης κρουστικής απόκρισης (IIR)
+</p>
 
-  <script>
+<p class="fragment (roll-in)" align="left">
+διακριτής κρουστικής απόκρισης (FIR)
+</p>
 
-      // Full list of configuration options available at:
-      // https://revealjs.com/config/
-      Reveal.initialize({
-        // Display controls in the bottom right corner
-        controls: true,
 
-        // Help the user learn the controls by providing hints, for example by
-        // bouncing the down arrow when they first encounter a vertical slide
-        controlsTutorial: true,
+<div id="orga45794e" class="figure">
+<p><img src="./iir-filt-raw-lp.png" alt="iir-filt-raw-lp.png" class="fragment (roll-in)" align="right" />
+</p>
+</div>
 
-        // Determines where controls appear, "edges" or "bottom-right"
-        controlsLayout: 'bottom-right',
 
-        // Visibility rule for backwards navigation arrows; "faded", "hidden"
-        // or "visible"
-        controlsBackArrows: 'faded',
 
-        // Display a presentation progress bar
-        progress: true,
+<div id="org8022b0a" class="figure">
+<p><img src="./fir-filt-raw-huge-order.png" alt="fir-filt-raw-huge-order.png" class="fragment (roll-in)" align="left" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orga5f7a19">
+<h3 id="orga5f7a19">FIR</h3>
+<p>
+if i leave one empty
+</p>
 
-        // Display the page number of the current slide
-        slideNumber: false,
+<p>
+finite impulse response lets say i have a lot of document here and i want it beside the fotograph below&#x2026;.. I should be able to do that easy&#x2026;. Souldnt I?!?!?!?! make this biiiiiger to see what happents !!!!!! YOU KNOW WHAT WIILLLLL !!! IT WILL BRAKE AS USUALL.
+</p>
 
-        // 'all', 'print', or 'speaker'
-        showSlideNumber: 'all',
 
-        // Add the current slide number to the URL hash so that reloading the
-        // page/copying the URL will return you to the same slide
-        hash: true,
+<div id="orged93e4d" class="figure">
+<p><img src="./fir-filt-raw-huge-order.png" alt="fir-filt-raw-huge-order.png" height="35%," width="45%" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org0f51172">
+<h2 id="org0f51172">Εργαστηριακη εγκατασταση</h2>
 
-        // Start with 1 for the hash rather than 0
-        hashOneBasedIndex: false,
+<div id="orgb696b3f" class="figure">
+<p><img src="./Wind_Tunnel_setup_lab.png" alt="Wind_Tunnel_setup_lab.png" class="fragment (fade-in-then-semi-out)" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org828a476">
+<h2 id="org828a476"><i>Ευχαριστω για τον χρονο σας</i></h2>
+</section>
+</section>
+</div>
+</div>
+<script src="/home/dtos_experiment/reveal.js/dist/reveal.js"></script>
+<script src="/home/dtos_experiment/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="/home/dtos_experiment/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="/home/dtos_experiment/reveal.js/plugin/notes/notes.js"></script>
 
-        // Flags if we should monitor the hash and change slides accordingly
-        respondToHashChanges: true,
 
-        // Push each slide change to the browser history
-        history: false,
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+width:1280, height:768, controlsLayout: 'edges'
+});
 
-        // Enable keyboard shortcuts for navigation
-        keyboard: true,
-
-        // Enable the slide overview mode
-        overview: true,
-
-        // Disables the default reveal.js slide layout (scaling and centering)
-        // so that you can use custom CSS layout
-        disableLayout: false,
-
-        // Vertical centering of slides
-        center: true,
-
-        // Enables touch navigation on devices with touch input
-        touch: true,
-
-        // Loop the presentation
-        loop: false,
-
-        // Change the presentation direction to be RTL
-        rtl: false,
-
-        // see https://revealjs.com/vertical-slides/#navigation-mode
-        navigationMode: 'default',
-
-        // Randomizes the order of slides each time the presentation loads
-        shuffle: false,
-
-        // Turns fragments on and off globally
-        fragments: true,
-
-        // Flags whether to include the current fragment in the URL,
-        // so that reloading brings you to the same fragment position
-        fragmentInURL: true,
-
-        // Flags if the presentation is running in an embedded mode,
-        // i.e. contained within a limited portion of the screen
-        embedded: false,
-
-        // Flags if we should show a help overlay when the questionmark
-        // key is pressed
-        help: true,
-
-        // Flags if it should be possible to pause the presentation (blackout)
-        pause: true,
-
-        // Flags if speaker notes should be visible to all viewers
-        showNotes: false,
-
-        // Global override for autoplaying embedded media (null/true/false)
-        autoPlayMedia: null,
-
-        // Global override for preloading lazy-loaded iframes (null/true/false)
-        preloadIframes: null,
-
-        // Number of milliseconds between automatically proceeding to the
-        // next slide, disabled when set to 0, this value can be overwritten
-        // by using a data-autoslide attribute on your slides
-        autoSlide: 0,
-
-        // Stop auto-sliding after user input
-        autoSlideStoppable: true,
-
-        // Use this method for navigation when auto-sliding
-        autoSlideMethod: null,
-
-        // Specify the average time in seconds that you think you will spend
-        // presenting each slide. This is used to show a pacing timer in the
-        // speaker view
-        defaultTiming: null,
-
-        // Enable slide navigation via mouse wheel
-        mouseWheel: false,
-
-        // The display mode that will be used to show slides
-        display: 'block',
-
-        // Hide cursor if inactive
-        hideInactiveCursor: true,
-
-        // Time before the cursor is hidden (in ms)
-        hideCursorTime: 5000,
-
-        // Opens links in an iframe preview overlay
-        previewLinks: false,
-
-        // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'slide',
-
-        // Transition speed (default/fast/slow)
-        transitionSpeed: 'default',
-
-        // Transition style for full page slide backgrounds
-        // (none/fade/slide/convex/concave/zoom)
-        backgroundTransition: 'fade',
-
-        // Number of slides away from the current that are visible
-        viewDistance: 3,
-
-        // Number of slides away from the current that are visible on mobile
-        // devices. It is advisable to set this to a lower number than
-        // viewDistance in order to save resources.
-        mobileViewDistance: 2,
-
-        math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
-          config: 'TeX-AMS_HTML-full',
-          tex2jax: {
-            inlineMath: [['\\(','\\)']],
-            displayMath: [['\\[','\\]']],
-            balanceBraces: true,
-            processEscapes: false,
-            processRefs: true,
-            processEnvironments: true,
-            preview: 'TeX',
-            skipTags: ['script','noscript','style','textarea','pre','code'],
-            ignoreClass: 'tex2jax_ignore',
-            processClass: 'tex2jax_process'
-          },
-        },
-
-        // reveal.js plugins
-        plugins: [
-          RevealMath,
-          RevealNotes,
-          RevealSearch,
-          RevealZoom
-        ]
-      });
-    </script>
-    </body>
+</script>
+</body>
 </html>
