@@ -2395,6 +2395,15 @@ print(tabulate(table_std_filtering,
 [cite/n:@Re-on-pitot]
 [cite/n:@sig-proc-first]
 [cite/n:@oppenheim99]
+[cite/n:@SMITH200387]
+[cite/n:@SMITH2003169]
+[cite/n:@SMITH2003185]
+[cite/n:@SMITH2003225]
+[cite/n:@SMITH2003243]
+[cite/n:@SMITH2003261]
+[cite/n:@SMITH2003277]
+[cite/n:@SMITH2003285]
+[cite/n:@SMITH2003319]
 #+print_bibliography:
 * Source blocks :noexport: :noexport:
 ** [#A] WHAT IS LOADED TO JUPYTER KERNEL
