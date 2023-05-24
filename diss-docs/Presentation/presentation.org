@@ -3,7 +3,7 @@
 #+REVEAL_HLEVEL: 2
 #+REVEAL_TITLE_SLIDE: <h2>%t</h2> <h3>%s</h3> <p>%a</p> <p>%d</<p>
 #+OPTIONS: num:nil timestamp:nil toc:nil
-#+REVEAL_INIT_OPTIONS: width:1280, height:768, controlsLayout: 'edges'
+#+REVEAL_INIT_OPTIONS: width:1920, height:1080, controlsLayout: 'edges'
 :END:
 :ORG_PROPERTIES:
 
@@ -21,38 +21,24 @@
 #+AUTHOR: Νικολας Τοροσιαν
 #+DATE:[2023-06-25 16:00]
 :END:
-
-
 * Καθηγητες
-
-#+ATTR_REVEAL: :frag (semi-fade-out )
+#+REVEAL_HTML: <div style="align-items:center;width:100%;">
 - Επιβλέπον καθηγητής
-#+ATTR_REVEAL: :frag (highlight-green)
+  #+ATTR_REVEAL: :frag (highlight-green)
   - Παπαδάκης Νικόλας
-
-#+ATTR_REVEAL: :frag (semi-fade-out )
-- Υπεύθυνος Εργαστηρίου Α.Π.Ε
-#+ATTR_REVEAL: :frag (highlight-red )
-  - Κονταξάκης Κωvσταντίνος
+- Υπ. Εργαστηρίου Α.Π.Ε
+  #+ATTR_REVEAL: :frag (highlight-red)
+  - Κονταξάκης Κωv/νος
 * Τι ειναι σημα
+#+ATTR_REVEAL: :frag (fade-left)
+- Συνεχές / Διακριτό
+    #+ATTR_REVEAL: :frag (fade-in-then-out)
+  - Ημιτονοειδές / Παλμικό
 
 #+ATTR_REVEAL: :frag (appear)
-- Διάφοροι τύποι κυματομορφών
-#+ATTR_REVEAL: :frag (fade-left)
-   - Παλμός
-    #+ATTR_REVEAL: :frag (fade-in-then-out)
-     - Ηλεκτρικό ρεύμα
-     - χορδή μιας κιθάρας.
-
-    #+ATTR_REVEAL: :frag (fade-left)
-   - Ημιτονοειδές
-    #+ATTR_REVEAL: :frag (fade-in-then-out)
-     - από ηλεκτρονικό η αναλογικό σύστημα.
-     - Βάλε εδώ αν είναι ωραίο μια φωτό (μετεορολογικης μηχανης).
-   #+ATTR_REVEAL: :frag (appear)
-   - δυαδικό
-      #+ATTR_REVEAL: :frag (fade-in-then-out)
-     - π.χ. 'καλημέρα' == 11001110 10111010 11001110 10110001 11001110 10111011 11001110 10110111 11001110 10111100 11001110 10110101 11001111 10000001 11001110 10110001
+- δυαδικό
+   #+ATTR_REVEAL: :frag (fade-in-then-out)
+  - π.χ. 'καλημέρα' == 11001110 10111010 11001110 10110001 11001110 10111011 11001110 10110111 11001110 10111100 11001110 10110101 11001111 10000001 11001110 10110001
 
 #+ATTR_REVEAL: :frag (appear)
 - Να εμπεριέχει πληροφορία
@@ -81,35 +67,45 @@
 
 *** επεξεργασια
 Συνήθως γίνεται σε μεταγενέστερο χρόνο και τις περισσότερες φορές απαιτεί μεγάλη υπολογιστική ισχύ σχετικά με τον όγκο τους. *βαλε παραδειγμα εδω*
-* συγκρηση
+* συγκριση
 
 #+ATTR_REVEAL: :frag (roll-in)
 Φίλτρα διέλευσης χαμηλών συχνοτήτων
 
-#+ATTR_REVEAL: :frag (roll-in)
-#+ATTR_HTML: :align right
-άπειρης κρουστικής απόκρισης (IIR)
+#+REVEAL_HTML: <div style="display:flex;align-items:center;width:240%;">
+    #+ATTR_REVEAL: :frag (roll-in)
+    #+ATTR_HTML: :align left
+    - IIR ☟
+      #+ATTR_REVEAL: :frag (fade-in)
+      #+ATTR_HTML: :align left
+      [[file:./iir-filt-raw-lp.png]]
+    #+ATTR_REVEAL: :frag (roll-in)
+    #+ATTR_HTML: :align right
+    - FIR ☟
+      #+ATTR_REVEAL: :frag (fade-in)
+      #+ATTR_HTML: :align right
+      file:./fir-filt-raw-huge-order.png
+    #+ATTR_REVEAL: :frag (roll-in)
+    #+ATTR_HTML: :align right
+    - με διάφορες αποκρίσεις ☟
+      #+ATTR_REVEAL: :frag (fade-in)
+      #+ATTR_HTML: :align right
+      #+REVEAL_HTML: <div style="display:flex;align-items:center;width:100%;">
+      - [[file:./Bessel Filter Freq Response.png]]
+      - [[file:./Chebyshev Filter Freq Response.png]]
+** IIR
+Φίλτρα άπειρης κρουστικής απόκρισης
+#+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;width:70%;">
+Σε αντίθεση με τα FIR έχουν την δυνατότητα μεγάλης μείωσης της ισχύος των συχνοτήτων μετά την συχνότητα κατακρημνισμού (cut-off frequency), με ελάχιστη επιρροή των συχνοτήτων στο φάσμα διέλευσης. Η ακρίβειά τους οφείλεται στην μέθοδο της ανάδρασης, χρησιμοποιώντας την έξοδο του φίλτρου κατά την διαδικασία για την βελτιστοποίηση των χαρακτηριστικών του πριν την επόμενη εφαρμογή.
 
-#+ATTR_REVEAL: :frag (roll-in)
-#+ATTR_HTML: :align left
-διακριτής κρουστικής απόκρισης (FIR)
-
-#+ATTR_REVEAL: :frag (roll-in)
-#+ATTR_HTML: :align right
+#+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:240%;">
 [[file:./iir-filt-raw-lp.png]]
-
-
-#+ATTR_REVEAL: :frag (roll-in)
-#+ATTR_HTML: :align left
-[[file:./fir-filt-raw-huge-order.png]]
 ** FIR
+Φίλτρα πεπερασμένης κρουστικής απόκρισης
+#+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;width:70%;">
+Έχουν την δυνατότητα απόρριψης συχνοτήτων που απέχουν κατά ένα ποσό από την συχνότητα αποκοπής του φίλτρου. Όπως θα παρατηρήσουμε και στο διάγραμμα δεξιά υπάρχει σημαντική καθυστέρηση από την επιλεγμένη συχνότητα και την απομείωση του φάσματος από αυτήν και μετά. Αυτό είναι χαρακτηριστικό των συστημάτων FIR καθώς δεν εφαρμόζουν την τεχνική της ανάδρασης.
 
-if i leave one empty
-
-#+ATTR_REVEAL: :text-align left
-finite impulse response lets say i have a lot of document here and i want it beside the fotograph below..... I should be able to do that easy.... Souldnt I?!?!?!?! make this biiiiiger to see what happents !!!!!! YOU KNOW WHAT WIILLLLL !!! IT WILL BRAKE AS USUALL.
-
-#+ATTR_HTML: :height 35%, :width 45%
+#+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:240%;">
 [[file:./fir-filt-raw-huge-order.png]]
 * Εργαστηριακη εγκατασταση
 
@@ -120,5 +116,4 @@ finite impulse response lets say i have a lot of document here and i want it bes
 
 * Buttons :noexport:
 # <(go to document)>
-# <(org-code)>
 # <(diss-notes)>
