@@ -1428,8 +1428,7 @@ CLOSED: [2023-04-07 Παρ 20:09]
 - CLOSING NOTE [2023-04-07 Παρ 20:09] \\
   done and demonstrated bellow
 :END:
-
-**** the phase problem with python
+*** the phase problem with python
 #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports none
 import numpy as np
 import scipy.signal
@@ -1454,8 +1453,8 @@ y_filtfilt = scipy.signal.filtfilt(b, a, yraw)
 
 plt.figure(figsize=[6.4, 2.4])
 plt.plot(ts, yraw, label="Raw signal")
-plt.plot(ts, y_lfilter, alpha=0.5, lw=3, label="SciPy lfilter")
-plt.plot(ts, y_filtfilt, alpha=0.8, lw=3, label="SciPy filtfilt")
+plt.plot(ts, y_lfilter, alpha=0.5, lw=3, label="with delay")
+plt.plot(ts, y_filtfilt, alpha=0.8, lw=4, label="without delay")
 plt.legend(loc="lower center", bbox_to_anchor=[0.5, 1], ncol=3,
            fontsize="smaller")
 plt.xlabel("Time / s")
@@ -1472,7 +1471,7 @@ plt.show()
 : [0.00257643 0.01030574 0.01545861 0.01030574 0.00257643]
 : [ 1.         -2.63862774  2.76930979 -1.33928076  0.24982167]
 : <Figure size 640x480 with 0 Axes>
-[[file:./.ob-jupyter/2f1babdc5ac66d0b7b59b52516af8ca4df808b25.png]]
+[[file:./.ob-jupyter/c0bb46f715a888827cb46ad3996973fce886bdf6.png]]
 :end:
 
 [[https://www.samproell.io/posts/yarppg/digital-filters-python/][reference]]
@@ -1706,6 +1705,7 @@ plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent
 #+RESULTS:
 :results:
 [[file:./.ob-jupyter/8027c0b392685323a7c98def9626636667d1e0a6.png]]
+[[file:./.ob-jupyter/edbe4f41909919700fee15b1f35b2b2952f34d49.png]]
 :end:
 
 #+attr_latex: :width 500px :height 280px
@@ -2314,6 +2314,7 @@ print(tabulate(table_std_filtering,
 
 \selectlanguage{greek}
      
+*** notes :noexport:
 - \(Welch\ method\ filtered-raw\ signal\) [100%]
   - [X] Διαγράμματα για κομπρεσέρ
   - [X] Διαγράμματα για αεροσήραγγα
@@ -2414,80 +2415,120 @@ print(tabulate(table_std_filtering,
 #+RESULTS:
 :results:
 #+begin_example
-Variable               Type                   Data/Info
--------------------------------------------------------
-CHAN_NAME              str                    Wind2
-FIGSIZE                tuple                  n=2
-FIGSIZE_STD            tuple                  n=2
-FOLDER_FOR_DATA        PosixPath              /mnt/data_folder/measurem<...>2/new_record_prop_channel
-GROUP_NAME             str                    Wind Measurement
-Graph_data_container   type                   <class 'pros_noisefilteri<...>er.Graph_data_container'>
-NPERSEG                int                    65536
-Path                   type                   <class 'pathlib.Path'>
-TDMS_FNAME             str                    Data.tdms
-TdmsFile               type                   <class 'nptdms.tdms.TdmsFile'>
-WT_NoiseChannelProc    type                   <class 'pros_noisefilteri<...>roc.WT_NoiseChannelProc'>
-a                      ndarray                5: 5 elems, type `float64`, 40 bytes
-b                      ndarray                5: 5 elems, type `float64`, 40 bytes
-butter_200             ndarray                3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
-butter_2000            ndarray                3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
-ca1_0                  WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1bd608190>
-ca_meas_dir            PosixPath              /mnt/data_folder/measurem<...>op_channel/compressed air
-comp_air_dir           str                    compressed air
-data_CA_inv_0_WS_0     str                    ca0_0.1
-data_CA_inv_0_WS_11    str                    ca0_10.1
-data_CA_inv_0_WS_5     str                    ca0_5.1
-data_CA_inv_1_WS_0     str                    ca1_0.1
-data_CA_inv_1_WS_10    str                    ca1_10.1
-data_CA_inv_1_WS_5     str                    ca1_5.1
-data_inv_inv_0_WS_0    str                    in0_0.1
-data_inv_inv_1_WS10    str                    in1_10.1
-data_inv_inv_1_WS15    str                    in1_15.1
-data_inv_inv_1_WS_0    str                    in1_0.1
-data_inv_inv_1_WS_20   str                    in1_20.1
-data_inv_inv_1_WS_5    str                    in1_5.1
-dec_50kHz              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1abe6c350>
-dec_5kHz               WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1abeb4950>
-dec_at_50_kHz          str                    de50.1
-dec_at_5_kHz           str                    de5.1
-dec_meas_dir           PosixPath              /mnt/data_folder/measurem<...>d_prop_channel/Decimation
-df_tdms_0_0            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d811ad50>
-df_tdms_0_10           WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d811a810>
-df_tdms_0_5            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1c9924a90>
-df_tdms_1_0            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d811a350>
-df_tdms_1_10           WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d811b110>
-df_tdms_1_5            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d811b1d0>
-dfi_i0_w0              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d8139390>
-dfi_i1_w0              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d813b1d0>
-dfi_i1_w10             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d813bbd0>
-dfi_i1_w15             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d813bb90>
-dfi_i1_w20             WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d813bc10>
-dfi_i1_w5              WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1d813aa90>
-fs                     int                    30
-in1_0_av100            WT_NoiseChannelProc    <pros_noisefiltering.WT_N<...>object at 0x7fc1abd6ad10>
-inv_meas_dir           str                    inverter
-item                   str                    in1_20.1
-l_tdms_CA              list                   n=6
-l_tdms_Inv             list                   n=6
-medec                  int                    100
-np                     module                 <module 'numpy' from '/us<...>kages/numpy/__init__.py'>
-path_ca_meas           PosixPath              /mnt/data_folder/measurem<...>sed air/ca1_0.1/Data.tdms
-path_comp              PosixPath              /mnt/data_folder/measurem<...>ord_prop_channel/inverter
-path_dec_meas_50_kHz   PosixPath              /mnt/data_folder/measurem<...>cimation/de50.1/Data.tdms
-path_dec_meas_5_kHz    PosixPath              /mnt/data_folder/measurem<...>ecimation/de5.1/Data.tdms
-plot_spect_comb2       function               <function plot_spect_comb2 at 0x7fc1bc6bbb00>
-raw_signal_CA          list                   n=6
-scipy                  module                 <module 'scipy' from '/us<...>kages/scipy/__init__.py'>
-table                  list                   n=6
-tdms_raw_WT            TdmsFile               <nptdms.tdms.TdmsFile object at 0x7fc1abebd110>
-tdms_raw_WT_50kHz      TdmsFile               <nptdms.tdms.TdmsFile object at 0x7fc1abf07550>
-tdms_raw_WT_5kHz       TdmsFile               <nptdms.tdms.TdmsFile object at 0x7fc1c8ac8fd0>
-ts                     ndarray                150: 150 elems, type `float64`, 1200 bytes
-x                      TdmsFile               <nptdms.tdms.TdmsFile object at 0x7fc1d81243d0>
-y_lfilter              ndarray                150: 150 elems, type `float64`, 1200 bytes
-yerr                   ndarray                150: 150 elems, type `float64`, 1200 bytes
-yraw                   ndarray                150: 150 elems, type `float64`, 1200 bytes
-ys                     ndarray                150: 150 elems, type `float64`, 1200 bytes
+Variable                    Type                    Data/Info
+-------------------------------------------------------------
+CHAN_NAME                   str                     Wind2
+FIGSIZE                     tuple                   n=2
+FIGSIZE_STD                 tuple                   n=2
+FOLDER_FOR_DATA             PosixPath               /mnt/data_folder/measurem<...>2/new_record_prop_channel
+GROUP_NAME                  str                     Wind Measurement
+Graph_data_container        type                    <class 'pros_noisefilteri<...>er.Graph_data_container'>
+NPERSEG                     int                     65536
+Path                        type                    <class 'pathlib.Path'>
+SEPARATING_LINE             str                     
+TDMS_FNAME                  str                     Data.tdms
+TdmsFile                    type                    <class 'nptdms.tdms.TdmsFile'>
+WT_NoiseChannelProc         type                    <class 'pros_noisefilteri<...>roc.WT_NoiseChannelProc'>
+a                           ndarray                 5: 5 elems, type `float64`, 40 bytes
+ab                          ndarray                 5: 5 elems, type `float64`, 40 bytes
+anti_aliased                ndarray                 31000: 31000 elems, type `float64`, 248000 bytes (242.1875 kb)
+anti_aliased_50             ndarray                 310000: 310000 elems, type `float64`, 2480000 bytes (2.3651123046875 Mb)
+b                           ndarray                 5: 5 elems, type `float64`, 40 bytes
+bb                          ndarray                 5: 5 elems, type `float64`, 40 bytes
+butter_200                  ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
+butter_2000                 ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
+butter_filter_2000          function                <function filt_butter_fac<...>butter at 0x7f2e1f975b20>
+butter_iir_2000             function                <function filt_butter_fac<...>butter at 0x7f2e1f6934c0>
+ca1_0                       WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fd1ff10>
+ca1_10                      WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ec90>
+ca1_5                       WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ed50>
+ca_data_to_filter           list                    n=2
+ca_meas_dir                 PosixPath               /mnt/data_folder/measurem<...>op_channel/compressed air
+comp_air_dir                str                     compressed air
+data_CA_inv_0_WS_0          str                     ca0_0.1
+data_CA_inv_0_WS_11         str                     ca0_10.1
+data_CA_inv_0_WS_5          str                     ca0_5.1
+data_CA_inv_1_WS_0          str                     ca1_0.1
+data_CA_inv_1_WS_10         str                     ca1_10.1
+data_CA_inv_1_WS_5          str                     ca1_5.1
+data_inv_inv_0_WS_0         str                     in0_0.1
+data_inv_inv_1_WS10         str                     in1_10.1
+data_inv_inv_1_WS15         str                     in1_15.1
+data_inv_inv_1_WS_0         str                     in1_0.1
+data_inv_inv_1_WS_20        str                     in1_20.1
+data_inv_inv_1_WS_5         str                     in1_5.1
+dec_50kHz                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fd16450>
+dec_5kHz                    WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fd548d0>
+dec_at_50_kHz               str                     de50.1
+dec_at_5_kHz                str                     de5.1
+dec_meas_dir                PosixPath               /mnt/data_folder/measurem<...>d_prop_channel/Decimation
+df_tdms_0_0                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3c0c0310>
+df_tdms_0_10                WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026e390>
+df_tdms_0_5                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ed10>
+df_tdms_1_0                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ded0>
+df_tdms_1_10                WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ec90>
+df_tdms_1_5                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ed50>
+dfi_i0_w0                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e302728d0>
+dfi_i1_w0                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30286d50>
+dfi_i1_w10                  WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287750>
+dfi_i1_w15                  WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287710>
+dfi_i1_w20                  WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287790>
+dfi_i1_w5                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30286610>
+each                        WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287790>
+f                           ndarray                 328: 328 elems, type `float64`, 2624 bytes
+filt_butter_factory         function                <function filt_butter_factory at 0x7f2e3b0fc400>
+fir_200                     function                <function fir_factory_con<...>filter at 0x7f2e1fe84900>
+fir_2000                    function                <function fir_factory_con<...>filter at 0x7f2e1fd837e0>
+fir_data_out                list                    n=4
+fir_factory_constructor     function                <function fir_factory_con<...>ructor at 0x7f2e30230fe0>
+fir_filt_200                ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
+fir_filt_2000               ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
+fir_out_1_5_ca              WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1f1c6350>
+fs                          int                     30
+hb                          ndarray                 512: 512 elems, type `complex128`, 8192 bytes
+iir_data_out                list                    n=4
+iir_out_1_5_ca              WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1f1c7990>
+in1_0_av100                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fe0b390>
+inv_meas_dir                str                     inverter
+item                        str                     in1_20.1
+l_tdms_CA                   list                    n=6
+l_tdms_Inv                  list                    n=6
+math                        module                  <module 'math' from '/usr<...>311-x86_64-linux-gnu.so'>
+medec                       int                     100
+np                          module                  <module 'numpy' from '/us<...>kages/numpy/__init__.py'>
+path_ca_meas                PosixPath               /mnt/data_folder/measurem<...>sed air/ca1_0.1/Data.tdms
+path_comp                   PosixPath               /mnt/data_folder/measurem<...>ord_prop_channel/inverter
+path_dec_meas_50_kHz        PosixPath               /mnt/data_folder/measurem<...>cimation/de50.1/Data.tdms
+path_dec_meas_5_kHz         PosixPath               /mnt/data_folder/measurem<...>ecimation/de5.1/Data.tdms
+plot_comparative_response   function                <function plot_comparativ<...>sponse at 0x7f2e3ca68e00>
+plot_spect_comb2            function                <function plot_spect_comb2 at 0x7f2e30207f60>
+plt                         module                  <module 'matplotlib.pyplo<...>es/matplotlib/pyplot.py'>
+raw_signal_CA               list                    n=6
+scipy                       module                  <module 'scipy' from '/us<...>kages/scipy/__init__.py'>
+sign                        Graph_data_container    <pros_noisefiltering.Grap<...>object at 0x7f2e1facd950>
+signal                      module                  <module 'scipy.signal' fr<...>cipy/signal/__init__.py'>
+table                       list                    n=6
+table_filts                 list                    n=2
+table_std                   list                    n=4
+table_std_filtering         list                    n=4
+tablexydec                  list                    n=3
+tablexyrec                  list                    n=3
+tablexysign                 list                    n=3
+tabulate                    function                <function tabulate at 0x7f2e1fd81080>
+tdms_raw_WT                 TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e641a6810>
+tdms_raw_WT_50kHz           TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e1fd49390>
+tdms_raw_WT_5kHz            TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e640e97d0>
+ts                          ndarray                 150: 150 elems, type `float64`, 1200 bytes
+wb                          ndarray                 512: 512 elems, type `float64`, 4096 bytes
+wt_data_to_filter           list                    n=4
+x                           TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e30271590>
+y                           ndarray                 31000: 31000 elems, type `float64`, 248000 bytes (242.1875 kb)
+y_filtfilt                  ndarray                 150: 150 elems, type `float64`, 1200 bytes
+y_lfilter                   ndarray                 150: 150 elems, type `float64`, 1200 bytes
+yerr                        ndarray                 150: 150 elems, type `float64`, 1200 bytes
+yraw                        ndarray                 150: 150 elems, type `float64`, 1200 bytes
+ys                          ndarray                 150: 150 elems, type `float64`, 1200 bytes
+z                           ndarray                 328: 328 elems, type `float64`, 2624 bytes
 #+end_example
 :end:
 ** FFT
