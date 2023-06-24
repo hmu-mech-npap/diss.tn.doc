@@ -1,11 +1,16 @@
 * Inbox
-** TODO add the right book page
+** DONE add the right book page
+CLOSED: [2023-06-18 Κυρ 12:30]
+:LOGBOOK:
+- CLOSING NOTE [2023-06-18 Κυρ 12:30]
+:END:
 + This should be done and checked through ...
 + maybe will not work
-
-[[file:~/Documents/dissertation/org-docs/dissertation document/main_doc.org::*using discrete time processing][using discrete time processing]]
-
 ** DONE write more in greek.[100%]
 CLOSED: [2022-08-31 Τετ 13:39]
 + [X] should find a dictionary for gr.
 + [X] aspell should do the job!!
+* place a logo in every page
+[[https://stackoverflow.com/questions/22033474/place-background-image-in-bottom-corner-of-every-slide-of-reveal-js][stack overflow cistomize css solution]]
+* backround imager
+[[https://danielabaron.me/blog/build-and-publish-presentation-with-html-and-css/][html way of things (code blocks for me for sure)]]
