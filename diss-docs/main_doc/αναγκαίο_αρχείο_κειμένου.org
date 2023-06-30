@@ -1,0 +1,9 @@
+* Τίτλος εργασίας στα Αγγλικά
+Frequency filters and isolation of Electromagnetic induced noise in a wind tunnel environment.
+* Περίληψη
+* Abstract
+* Λέξεις κλειδία
+- Αγγλικά:
+  signal-processing, filtering, EMI, frequency filters, wind tunnel, pitot-tube
+- Ελληνικά:
+  επεξεργασία σημάτων, φίλτρα συχνοτήτων, απομοίωση θορύβου, Η/Μ παρεμβολές, αεροσήραγγα
