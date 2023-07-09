@@ -8,6 +8,7 @@
 #+TAGS:  noexport(n)
 #+INCLUDE: title_page_latex.org
 :END:
+\numcommafalse
 \clearpage \tableofcontents \clearpage
 * Imports :noexport:
 #+begin_src jupyter-python :session python3thon3 :async yes :results drawer :tangle ./src/tables_data_process_blocks.py
@@ -394,10 +395,13 @@ ${(Digital\ signal\ processing)}$ επεξεργάζονται σήματα πο
 που τα κατηγοριοποιούν σε αρχικό βαθμό. Επειδή ο στόχος της παρούσας εργασίας
 ήταν η απόρριψη θορύβου δεν θα γίνει η πρέπουσα ανάλυση στην θεωρία των σημάτων,
 αντιθέτως θα παρατεθούν οι βασικές αρχές και έννοιες ώστε να υπάρχει το υπόβαθρο
-για τα επόμενα κεφάλαια. Σήμα συνεχούς χρόνου ορίζουμε ως την εξίσωση που
+για τα επόμενα κεφάλαια.
+
+Σήμα συνεχούς χρόνου ορίζουμε ως την εξίσωση που
 περιγράφει την εξέλιξη μιας περιοδικής κυματομορφής στο χρόνο. Πιο συγκεκριμένα
 αν υποθέσουμε πως ο χρόνος διάρκειας του σήματος είναι \(t\), τότε η κυματομορφή στο
-πεδίο του χρόνου θα εκφράζεται ως συνάρτηση αυτού \(s(t)\). Μπορεί λοιπόν να παρασταθεί από μία ανεξάρτητη μεταβλητή και ορίζεται για κάθε
+πεδίο του χρόνου θα εκφράζεται ως συνάρτηση αυτού \(s(t)\).
+Μπορεί λοιπόν να παρασταθεί από μία ανεξάρτητη μεταβλητή και ορίζεται για κάθε
 τιμή της. Συνήθως τα συναντούμε στην μορφή συνεχούς ρεύματος σε μετρητικές
 και άλλες συσκευές
 
@@ -426,10 +430,9 @@ A &= [0, … ,n],\ t \in [a,b] n \in \mathbb{Z} \\
 σειρά από “πονοκεφάλους” αρχικά στην επιστημονική κοινότητα. Τα
 πλεονεκτήματα ήταν πολλά και τελικά επικράτησαν. Παρακάτω θα παρατεθούν
 κάποιες βασικές έννοιες και αρχές που τα διέπουν.
------
 ** Σήματα διακριτού χρόνου
 Σήμα διακριτού χρόνου ονομάζεται μια ακολουθία αριθμών καταγεγραμμένες
-ανά συγκεκριμένο χρονικό διάστημα, π.χ. κάθε 0,01 δευτερόλεπτο. Το
+ανά συγκεκριμένο χρονικό διάστημα, π.χ. κάθε 0.01 δευτερόλεπτο. Το
 διάστημα αυτό ορίζει την ταχύτητα καταγραφής του σήματος από την
 εκάστοτε συσκευή, όμως εμείς αναφερόμαστε σε αυτό το χρόνο μέσω της
 συχνότητας καταγραφής ή αλλιώς ${sampling\ frequency}$. Η συχνότητα αυτή
@@ -437,7 +440,7 @@ A &= [0, … ,n],\ t \in [a,b] n \in \mathbb{Z} \\
 καταγραφής, δηλαδή από το παραπάνω παράδειγμα θα είχαμε μια συχνότητα
 καταγραφής σε \([Hz]\) :
 \begin{equation}
-fs = \frac{1}{0,01} [Hz]
+fs = \frac{1}{0.01} [Hz]
 \end{equation}
 Σημαντικό είναι να αναφερθεί ότι υπάρχει ένα όριο το οποίο πρέπει να
 τηρείται ώστε η επαναδημιουργία του σήματος να απεικονίζει όσο το
@@ -904,7 +907,7 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 είναι η καθυστέρηση της αρχής της ακολουθίας $\en{x}$[•] κατά Μ, και να λυθεί
 το παραπάνω άθροισμα ξανά. Αν ο παράγοντας Μ=2, η συνάρτηση $\en{h}$[•] μπορεί
 να αντιπροσωπεύει ένα φίλτρο μισών συχνοτήτων, όπου σχεδόν το μισό πλήθος
-των δειγμάτων του αρχικού σήματος θα είναι μηδενικής ισχύος ($\en{amplitute}$)
+των δειγμάτων του αρχικού σήματος θα είναι μηδενικής ισχύος ($\en{amplitude}$)
 και δεν θα συμπεριληφθούν στο προϊόν πολλαπλασιασμού.
 Οι *τιμές* της απόκρισης του παλμού κατά διαστήματα Μ δημιουργούν
 υποαληλλουχίες, πλήθους Μ περιπλεγμένες μεταξύ τους.Το παράγωγο του
@@ -1517,50 +1520,52 @@ plt.show()
 τιμή για την τάξη μεγέθους, ώστε να αποφευχθεί η κατασκευή διαγραμμάτων κάθε
 φορά που πειραματιζόμασταν με διάφορα χαρακτηριστικά του εκάστοτε φίλτρου.
 
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#+NAME: std_1st
+#+begin_src jupyter-python :session python3 :async yes :results replace table :exports results
 #%%
-from tabulate import tabulate
-table = [[f'{dfi_i0_w0.description.replace("Inverter Off", "Μετ. κλειστός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
-          "{:.4f}".format(np.std(df_tdms_0_0.data)),
-          "{:.4f}".format(np.std(dfi_i0_w0.data))],
+# from tabulate import tabulate
+table = ([['Μετ/στής και ταχύτητα ανέμου', 'Συμπιεσμένος αέρας', 'Αεροσήραγγα'],
+          None,
+          [f'{dfi_i0_w0.description.replace("Inverter Off", "Μετ. κλειστός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+           "{:.4f}".format(np.std(df_tdms_0_0.data)),
+           "{:.4f}".format(np.std(dfi_i0_w0.data))],
 
-         [f'{dfi_i1_w0.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
-          "{:.4f}".format(np.std(df_tdms_1_0.data)),
-          "{:.4f}".format(np.std(dfi_i1_w0.data))],
-         [f'{dfi_i1_w5.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
-          "{:.4f}".format(np.std(df_tdms_1_5.data)),
-          "{:.4f}".format(np.std(dfi_i1_w5.data))],
-         [f'{dfi_i1_w10.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
-          "{:.4f}".format(np.std(df_tdms_1_10.data)),
-          "{:.4f}".format(np.std(dfi_i1_w10.data))],
+          [f'{dfi_i1_w0.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+           "{:.4f}".format(np.std(df_tdms_1_0.data)),
+           "{:.4f}".format(np.std(dfi_i1_w0.data))],
+          [f'{dfi_i1_w5.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+           "{:.4f}".format(np.std(df_tdms_1_5.data)),
+           "{:.4f}".format(np.std(dfi_i1_w5.data))],
+          [f'{dfi_i1_w10.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+           "{:.4f}".format(np.std(df_tdms_1_10.data)),
+           "{:.4f}".format(np.std(dfi_i1_w10.data))],
 
-         [f'{dfi_i1_w15.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
-          "{:.4f}".format(0),
+         [f'{dfi_i1_w15.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+          "-",
           "{:.4f}".format(np.std(dfi_i1_w15.data))],
-         [f'{dfi_i1_w20.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "Ταχ. αν.").replace("100kHz", "")}',
-          "{:.4f}".format(0),
-          "{:.4f}".format(np.std(dfi_i1_w20.data))],
-         ]
+          [f'{dfi_i1_w20.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+           "-",
+           "{:.4f}".format(np.std(dfi_i1_w20.data))],
+          ])
 
-print(tabulate(table, headers=["Ταχύτητα ανέμου και μετασχηματιστής",
-                               "Συμπιεσμένος αέρας",
-                               "Αεροσήραγγα"]))
+# print(tabulate(table))
+# print(table)
+def dummy (some):
+    return some
+dummy(table)
 
 #+end_src
 
-#+RESULTS:
-:results:
-: Ταχύτητα ανέμου και μετασχηματιστής      Συμπιεσμένος αέρας    Αεροσήραγγα
-: -------------------------------------  --------------------  -------------
-: Μετ. κλειστός, Ταχ. αν.=0,                           0.0062         0.0076
-: Μετ. ανοιχτός, Ταχ. αν.=0,                           0.0364         0.0392
-: Μετ. ανοιχτός, Ταχ. αν.=5,                           0.0434         0.0385
-: Μετ. ανοιχτός, Ταχ. αν.=10,                          0.0841         0.04
-: Μετ. ανοιχτός, Ταχ. αν.=15,                          0              0.0421
-: Μετ. ανοιχτός, Ταχ. αν.=20,                          0              0.0566
-:end:
-Πίνακας τυπικής απόκλισης αρχικών σημάτων.
-
+#+CAPTION: Πίνακας τυπικής απόκλισης σημάτων καταγεγραμμένα με διαφορετική παροχή ανέμου (συμπιεσμένος και μή).
+#+RESULTS: std_1st
+| Μετ/στής και ταχύτητα ανέμου | Συμπιεσμένος αέρας | Αεροσήραγγα |
+|---+---+---|
+| Μετ. κλειστός, ταχ.=0 \(m/s\) | 0.0062 | 0.0076 |
+| Μετ. ανοιχτός, ταχ.=0 \(m/s\) | 0.0364 | 0.0392 |
+| Μετ. ανοιχτός, ταχ.=5 \(m/s\) | 0.0434 | 0.0385 |
+| Μετ. ανοιχτός, ταχ.=10 \(m/s\) | 0.0841 | 0.0400 |
+| Μετ. ανοιχτός, ταχ.=15 \(m/s\) | - | 0.0421 |
+| Μετ. ανοιχτός, ταχ.=20 \(m/s\) | - | 0.0566 |
 ** Εφαρμογή φίλτρων
 Για την παρεμβολή που επηρεάζει το σήμα του αισθητήρα θα εφαρμοστεί ένα φίλτρο
 διέλευσης χαμηλών συχνοτήτων. Είμαστε σε θέση να γνωρίζουμε πως οι χαμηλές
@@ -2038,7 +2043,8 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 είναι η τάξη του φίλτρου. Όμως ταυτόχρονα αυξάνεται και η ταχύτητα υπολογισμού
 αφού δεν καλείται αναδρομικά η έξοδος του φίλτρου όπως έχει σημειωθεί στην
 ενότητα των φίλτρων. Κατά την εφαρμογή των δύο μεθόδων θα διαπιστώσουμε πως τα
-αποτελέσματα αποκλίνουν σε πολύ μικρό βαθμό συγκρίνοντας τις τυπικές αποκλίσεις των εξόδων σχετικά με την είσοδο των φίλτρων.
+αποτελέσματα αποκλίνουν σε πολύ μικρό βαθμό συγκρίνοντας τις τυπικές
+αποκλίσεις των εξόδων σχετικά με την είσοδο των φίλτρων.
 
 - Διαγράμματα ισχύος με την μέθοδο \(Welch\) για πεπιεσμένο αέρα
   - \(FIR\) φίλτρο απλού παραθύρου με τάξη ίση με 60 (αριθμός συντελεστών πολυωνύμου)
@@ -2093,7 +2099,6 @@ plot_comparative_response(ca1_10,
    [[file:./.ob-jupyter/0ca1155c1309d384c49d587ebe2854960ee9de1a.png]]
    [[file:./.ob-jupyter/113953e9338dc3c032044042256d6a8d091cef30.png]]
    :end:
-
 - Διαγράμματα ισχύος με την μέθοδο \(Welch\) για παροχή ανέμου από την αεροσήραγγα
 
   Εδώ θα παρατηρήσει κανείς πως ο θόρυβος είναι λιγότερο εμφανής από τα
@@ -2167,23 +2172,21 @@ plot_comparative_response(dfi_i1_w15,
                           nperseg=NPERSEG,
                           figsize=(8, 4))
 plot_comparative_response(dfi_i1_w20,
-                         filter_func=butter_filter_2000,
-                         response_offset=2e-4,
-                         Kolmogorov_offset=4e0,
-                         nperseg=NPERSEG,
-                         figsize=(8, 4))
+                       filter_func=butter_filter_2000,
+                       response_offset=2e-4,
+                       Kolmogorov_offset=4e0,
+                       nperseg=NPERSEG,
+                       figsize=(8, 4))
 
-                         #+end_src
+                       #+end_src
 
-    #+RESULTS:
-    :results:
-    [[file:./.ob-jupyter/5c357c6e7c3b087f1dffc7b15311fe1c7c978308.png]]
-    [[file:./.ob-jupyter/2406695beec08654bec870291d14bb908408e5b3.png]]
-    [[file:./.ob-jupyter/1f8daa26a48447a7a2d83fcfdd89f6b52ec7fce1.png]]
-    [[file:./.ob-jupyter/ec7b1604fde14b50450f0eca88e54b9b1980342e.png]]
-    :end:
-
-
+  #+RESULTS:
+  :results:
+  [[file:./.ob-jupyter/5c357c6e7c3b087f1dffc7b15311fe1c7c978308.png]]
+  [[file:./.ob-jupyter/2406695beec08654bec870291d14bb908408e5b3.png]]
+  [[file:./.ob-jupyter/1f8daa26a48447a7a2d83fcfdd89f6b52ec7fce1.png]]
+  [[file:./.ob-jupyter/ec7b1604fde14b50450f0eca88e54b9b1980342e.png]]
+  :end:
 - Πίνακας τυπικής απόκλισης εισόδου και εξόδου φίλτρων για πεπιεσμένο αέρα
 
   Στους παρακάτω πίνακες παραθέτονται οι τυπικές αποκλίσεις των σημάτων
@@ -2192,7 +2195,7 @@ plot_comparative_response(dfi_i1_w20,
   όπως επίσης και για τις δύο κατηγορίες φίλτρων.
 
   \selectlanguage{english}
-  #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
+  #+begin_src jupyter-python :session python3 :async yes :results replace table :exports results
 from pros_noisefiltering.WT_NoiProc import filt_butter_factory
 butter_iir_2000 = filt_butter_factory(fc_Hz=2000, filt_order=4)
 
@@ -2214,33 +2217,39 @@ for each in ca_data_to_filter:
                                     filter_func=butter_iir_2000))
 
 
-table_std_filtering = [[f"{ca_data_to_filter[0].description}",
-                        np.std(ca_data_to_filter[0].data),
-                        np.std(fir_data_out[0].data),
-                        np.std(iir_data_out[0].data)],
+table_std_filtering = [['Record description',
+                        'std raw signal',
+                        'FIR',
+                        'IIR'],
+                       None,
+                       [f"{ca_data_to_filter[0].description}",
+                        "{:.4f}".format(np.std(ca_data_to_filter[0].data)),
+                        "{:.4f}".format(np.std(fir_data_out[0].data)),
+                        "{:.4f}".format(np.std(iir_data_out[0].data))],
 
                        [f"{ca_data_to_filter[1].description}",
-                        np.std(ca_data_to_filter[1].data),
-                        np.std(fir_data_out[1].data),
-                        np.std(iir_data_out[1].data)]]
-print(tabulate(table_std_filtering,
-               headers=["Record description",
-                        "std raw signal",
-                        "FIR",
-                        "IIR"],
-               floatfmt=".4f" ))
+                        "{:.4f}".format(np.std(ca_data_to_filter[1].data)),
+                        "{:.4f}".format(np.std(fir_data_out[1].data)),
+                        "{:.4f}".format(np.std(iir_data_out[1].data))]]
+def dummy(some):
+    return some
+dummy(table_std_filtering)
+# print(tabulate(table_std_filtering,
+#                headers=["Record description",
+#                         "std raw signal",
+#                         "FIR",
+#                         "IIR"],
+#                floatfmt=".4f" ))
 # print(np.std(fir_out_1_5_ca.data), np.std(ca1_5.data))
 # print(np.std(iir_out_1_5_ca.data), np.std(ca1_5.data))
 # butter_iir_200 = filt_butter_factory(fc_Hz=200, filt_order=4)
 
   #+end_src
   #+RESULTS:
-  :results:
-  : Record description      std raw signal     FIR     IIR
-  : --------------------  ----------------  ------  ------
-  : Inverter on, WS=5               0.0434  0.0245  0.0241
-  : Inverter on, WS=10              0.0841  0.0760  0.0759
-  :end:
+  | Record description | std raw signal | FIR | IIR |
+  |---+---+---+---|
+  | Inverter on, WS=5 | 0.0434 | 0.0245 | 0.0241 |
+  | Inverter on, WS=10 | 0.0841 | 0.0760 | 0.0759 |
 
 \selectlanguage{greek}
 \clearpage

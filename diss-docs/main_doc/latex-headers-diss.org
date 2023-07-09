@@ -24,7 +24,7 @@
 
 #+LATEX: \onehalfspacing
 #+LATEX: \frontmatter
-
+#+LATEX: \decimalpoint
 
 # Fancy headers
 #+latex_header: \usepackage{fancyhdr}
