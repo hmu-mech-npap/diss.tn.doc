@@ -9,6 +9,9 @@
 #+LATEX_HEADER: \usepackage{setspace}
 #+LATEX_HEADER: \usepackage{caption}
 #+LATEX_HEADER: \usepackage{subcaption}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \graphicspath{{figures/}}
+#+LATEX_HEADER: \usepackage{array}
 #+LATEX_HEADER: \usepackage[demo]{graphicx}
 #+LATEX_HEADER: \usepackage[utf8]{inputenc}
 #+LATEX_HEADER: \usepackage[LGR]{fontenc}
@@ -41,4 +44,6 @@
 #+latex_header: \newcommand{\AuthorShort}{\mbox{Τοροσιάν Νικόλας}}
 #+latex_header: \newcommand{\AuthorFull}{\mbox{Τοροσιάν Νικόλας ΤΜ6220}}
 #+latex_header: \newcommand{\Supervisor}{\mbox{Καθ. Παπαδάκης Νίκος}}
-
+#+latex_header: \usepackage{biblatex}
+#+latex_header: \bibliographystyle{plain}
+#+latex_header: \usepackage[hyphens]{url}  % allow line breaks at hyphens

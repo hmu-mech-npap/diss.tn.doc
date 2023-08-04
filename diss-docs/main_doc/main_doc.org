@@ -1,31 +1,37 @@
 :ORG-PROPERTIES:
 #+LANGUAGE: gr
-#+STARTUP: latexpreview showeverything
+#+STARTUP: latexpreview showeverything align
 #+OPTIONS: tags:t toc:nil
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+EXCLUDE_TAGS: noexport
 #+TAGS:  noexport(n)
+#+cite_export: basic author author-year
 #+INCLUDE: title_page_latex.org
 :END:
+
 \numcommafalse
-\clearpage \tableofcontents \clearpage
+\clearpage
+\tableofcontents
+#+TOC: tables
+\listoffigures
+\clearpage
 * Imports :noexport:
-#+begin_src jupyter-python :session python3thon3 :async yes :results drawer :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session python3 :async yes :results drawer
 #%%
 import numpy as np
 import math
 import matplotlib.pyplot as plt
 from scipy import signal
 from tabulate import tabulate
-from pros_noisefiltering.WT_NoiProc import fir_factory_constructor
+from pros_noisefiltering.filters.fir import fir_factory_constructor
 #+end_src
 
 #+RESULTS:
 :results:
 :end:
 
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session python3 :async yes :results raw drawer 
 
 #%%
 from pathlib import Path
@@ -40,7 +46,7 @@ from pros_noisefiltering.gen_functions import plot_spect_comb2
 :results:
 :end:
 ** Basic folders and data
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session python3 :async yes :results raw drawer 
 #%%
 FOLDER_FOR_DATA = Path(
     '/mnt/data_folder/measurements_12_05_22/new_record_prop_channel/')
@@ -178,8 +184,8 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
 #+RESULTS:
 :results:
 :end:
-
-* Εισαγωγή
+* Θεωρητικό μέρος
+** Εισαγωγή
 #+ODT: <text:p text:style-name="PageBreak"/>
 Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
 τηλεπικοινωνίες μετά ή/και πριν την μετάδοση από τον πομπό προς τον
@@ -191,7 +197,7 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
 Η απομόνωση αυτή μπορεί να επιτευχθεί είτε μέσω συμβατικών φίλτρων,
 δηλαδή αντιστάσεις και πυκνωτές κατάλληλα τοποθετημένα στο κύκλωμα που
 συλλέγει την τάση (*ρεύμα μέτρησης*), είτε με την χρήση μεθόδων ψηφιακής
-επεξεργασίας σημάτων \(DSP\).
+επεξεργασίας σημάτων \(\selectlanguage{english}\text{DSP}\selectlanguage{greek}\).
 Στις μέρες μας προτιμάται ο 2ος τρόπος λόγω
 της ραγδαίας εξέλιξης των Η/Υ, με αποτέλεσμα να επιφέρει μεγαλύτερο
 κόστος η εγκατάσταση αναλογικών φίλτρων σε κάθε θέση που απαιτείται.
@@ -211,6 +217,14 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
 να δοκιμάζει διάφορες λύσεις χωρίς να επισκεφτεί την πειραματική διάταξη
 σε πολλές περιπτώσεις μετά την καταγραφή των μετρήσεων.
 
+Αξίζει εδώ να σχολιαστεί ότι τα πρότυπα φίλτρα που εφαρμόστηκαν, τυποποιήθηκαν
+από το λογισμικό υπολογισμών και προγραμματισμού \(Matlab\) και στην συνέχεια
+πολλές γλώσσες προγραμματισμού τα συμπεριέλαβαν σε βιβλιοθήκες για επεξεργασία
+σημάτων. Η \(python\) θεωρείται από τις γλώσσες με τις αναλυτικότερες βιβλιοθήκες
+για την κατασκευή φίλτρων, λόγω των πολλών επιλογών σε τύπους αλλά ειδικά στην
+πλειθώρα χαρακτηριστικών που μπορεί ο χρήστης να καθορίσει για τη συμπεριφορά
+και απόκριση των φίλτρων.
+
 Στην παρούσα εργασία θα πραγματευτούμε την απομείωση συγκεκριμένων
 συχνοτήτων με την χρήση Ψηφιακής Ανάλυσης Σημάτων και φίλτρων, διαφόρων
 κατηγοριών. Στο πλαίσιο αυτό θα παρουσιαστεί, μια μελέτη που
@@ -227,7 +241,7 @@ _ιδιαιτερότητα_ που παρουσιάστηκε στην εγκα
 Επίσης θα υπάρξει παράθεση των θετικών και αρνητικών που παρατηρήθηκαν κατά την
 διάρκεια εκτέλεσης της επεξεργασίας και καταγραφής των δεδομένων.
 -----
-* Ιστορική αναδρομή
+** Ιστορική αναδρομή
 :PROPERTIES:
 :ATTR_ODT: :page-break t
 :END:
@@ -265,8 +279,9 @@ ${Burrus}$ (1984) έδειξε ότι ο ${Gauss}$ είχε ανακαλύψει
 κατασκευή της αναλογικής συσκευής που τελικά θα εκτελούσε την
 επιθυμητή εργασία. Παραδείγματα τέτοιων προσομοιώσεων ήταν εκείνες
 που πραγματοποιήθηκαν στο Εργαστήριο Λίνκολν και στα Εργαστήρια Μπελλ
-όπου προσομοιώθηκε ένας κωδικοποιητής φωνής ${vocoder}$. Στην κατασκευή
-ενός αναλογικού καναλιού κωδικοποιητής φωνής, τα χαρακτηριστικά του
+όπου προσομοιώθηκε ένας κωδικοποιητής φωνής ${vocoder}$ \selectlanguage{english}
+[cite:@vocoded67] \selectlanguage{greek}.
+Στην κατασκευή ενός αναλογικού καναλιού κωδικοποιητής φωνής, τα χαρακτηριστικά του
 φίλτρου επηρεάζουν την ποιότητα της φωνής σε βαθμό που ήταν δύσκολο να
 διακριθούν αντικειμενικά. Μέσω προγραμματισμένων προσομοιώσεων
 κατάφεραν την ρύθμιση των χαρακτηριστικών, ώστε να καθορίσουν το
@@ -329,8 +344,7 @@ ${Burrus}$ (1984) έδειξε ότι ο ${Gauss}$ είχε ανακαλύψει
 αριθμών. Έτσι σήμερα η ανάλυση σημάτων, η καταγραφή όπως και η μετάδοσή τους
 γίνεται πολλές φορές εξ' ολοκλήρου από ψηφιακά συστήματα.
 -----
-* Σήματα
-** Εισαγωγή
+** Εισαγωγή Σήματα
 Ο όρος σήμα ${(signal)}$ δίνεται σε κάτι που εμπεριέχει πληροφορία. Γενικά
 τα σήματα χρησιμοποιούνται στην κωδικοποίηση και εξαγωγή πληροφοριών για
 την κατάσταση ή/και την συμπεριφορά ενός φυσικού συστήματος. Συχνά
@@ -353,7 +367,7 @@ ${Burrus}$ (1984) έδειξε ότι ο ${Gauss}$ είχε ανακαλύψει
 διαστήματα ή αλλιώς χρονικές στιγμές. Εδώ η αναπαράσταση του χρόνου γίνεται
 με την χρήση ακολουθίας αριθμών, συνήθως ανά συγκεκριμένο διάστημα π.χ.
 κάθε 0,1 δευτερόλεπτα. Εκτός του χρόνου, την ίδια κατηγοριοποίηση συναντούμε
-και στην αναπαράσταση της ισχύος ενός σήματος \((amplitute)\). *Ψηφιακά σήματα*
+και στην αναπαράσταση της ισχύος ενός σήματος \((amplitude)\). *Ψηφιακά σήματα*
 ονομάζονται όσα έχουν διακριτές τιμές ισχύος *και* χρόνου.
 
 Τα συστήματα ανάλυσης σημάτων κατηγοριοποιούνται ανάλογα. Συστήματα συνεχούς
@@ -390,7 +404,7 @@ ${(Digital\ signal\ processing)}$ επεξεργάζονται σήματα πο
 ανάλογο πλαίσιο επεξεργασίας. Εδώ ασχοληθήκαμε μόνο με ψηφιακά σήματα
 καθώς η καταγραφή των σημάτων έγινε με Η/Υ μέσω προγράμματος ${(Lab-View)}$.
 
-** Σήματα συνεχούς χρόνου
+*** Σήματα συνεχούς χρόνου
 Στην εισαγωγή αναφερθήκαμε στον γενικό ορισμό των σημάτων και τις διαφορές
 που τα κατηγοριοποιούν σε αρχικό βαθμό. Επειδή ο στόχος της παρούσας εργασίας
 ήταν η απόρριψη θορύβου δεν θα γίνει η πρέπουσα ανάλυση στην θεωρία των σημάτων,
@@ -430,7 +444,7 @@ A &= [0, … ,n],\ t \in [a,b] n \in \mathbb{Z} \\
 σειρά από “πονοκεφάλους” αρχικά στην επιστημονική κοινότητα. Τα
 πλεονεκτήματα ήταν πολλά και τελικά επικράτησαν. Παρακάτω θα παρατεθούν
 κάποιες βασικές έννοιες και αρχές που τα διέπουν.
-** Σήματα διακριτού χρόνου
+*** Σήματα διακριτού χρόνου
 Σήμα διακριτού χρόνου ονομάζεται μια ακολουθία αριθμών καταγεγραμμένες
 ανά συγκεκριμένο χρονικό διάστημα, π.χ. κάθε 0.01 δευτερόλεπτο. Το
 διάστημα αυτό ορίζει την ταχύτητα καταγραφής του σήματος από την
@@ -681,15 +695,15 @@ r[u] = \log_{10}(|x[u]|)
 στην συγκεκριμένη περίπτωση, αφού \(\log1=0,\ \log10=1\).
 
 Η ενότητα αυτή θα μπορούσε να γεμίσει το περιεχόμενο της παρούσας εργασίας
-και άλλες τόσες μαζί. Έχουν γραφεί πολλά βιβλία που αναλύουν το ζήτημα, ένα
-από τα αναλυτικότερα φέρει τον τίτλο \(Discrete-Time\ Signal\ Processing\) των \(Alan\ Oppenheim\) και
-\(Ronald\ Schafer\) παρέχοντας στον αναγνώστη εκτεταμένες βάσεις για την επεξεργασία
+και άλλες τόσες μαζί. Έχουν γραφεί πολλά βιβλία που αναλύουν το ζήτημα,
+\selectlanguage{english} [cite:@sigprocfirst] [cite:@oppenheim99]
+\selectlanguage{greek},
+παρέχοντας στον αναγνώστη εκτεταμένες βάσεις για την επεξεργασία
 και μαθηματική αναπαράσταση σημάτων και συστημάτων. Εδώ αναφέρθηκαν οι βασικές
 έννοιες και αρχές, με σκοπό την καλύτερη κατανόηση της καταγραφής και της
 απομείωσης θορύβου σε σήματα. Στην συνέχεια θα ασχοληθούμε με την καταγραφή
 ψηφιακών σημάτων και μερικά από τα σημαντικά προβλήματα κατά την διαδικασία.
-* Καταγραφή σημάτων
-** Φαινόμενα καταγραφής
+** Φαινόμενα καταγραφής σημάτων
     Σε αυτή την ενότητα θα περιγραφούν, οι βασικές θεωρίες που χρησιμοποιούνται
 για την ψηφιακή καταγραφή και επεξεργασία σημάτων, καθώς και κάποια προβλήματα
 που μπορεί να εμφανιστούν κατά τις διαδικασίες αυτές. Μια από τις σημαντικότερες
@@ -792,11 +806,11 @@ x_{a}(cT) &= \cos(2 \pi cT \cdot (f_{z}+f_{s})+ \phi) \Rightarrow \\
 πολλαπλάσια από εκείνη της καταγραφής \(f_{s}\), το σήμα εμπεριέχει στοιχεία
 στο συγκεκριμένο φάσμα. Στην περίπτωση που δεν ικανοποιείται το θεώρημα
 της δειγματοληψίας προκύπτει η λεγόμενη αλλοίωση, προσθέτοντας αναληθή
-δείγματα στο σήμα ή αλλιώς *ψευδώνυμα συχνοτήτων*. Η καταστρεπτική αυτή
-συμπεριφορά θα αναλυθεί στην παρακάτω ενότητα ενώ αξίζει να σημειωθεί
-πως, υπάρχει πιθανότητα να υποφέρουν και οι πειραματικές μετρήσεις του
-εργαστηρίου από το φαινόμενο αυτό, καθώς η μέγιστη συχνότητα καταγραφής
-που επιτεύχθηκε ήταν στα 500 \(kHz\).
+δείγματα στο σήμα ή αλλιώς *ψευδώνυμα συχνοτήτων* \((aliased\ frequencies)\).
+Η καταστρεπτική αυτή συμπεριφορά θα αναλυθεί στην παρακάτω ενότητα ενώ
+αξίζει να σημειωθεί πως, υπάρχει πιθανότητα να υποφέρουν και οι πειραματικές
+μετρήσεις του εργαστηρίου από το φαινόμενο αυτό, καθώς η μέγιστη συχνότητα
+καταγραφής που επιτεύχθηκε ήταν στα 500 \(kHz\).
 *** Αλλοίωση
 Ως αλλοίωση αναφερόμαστε εδώ στο αποτέλεσμα καταγραφής ενός σήματος,
 όπου η έξοδος αποτελείται από διαφορετικά σήματα και δεν είναι δυνατό να
@@ -805,7 +819,7 @@ x_{a}(cT) &= \cos(2 \pi cT \cdot (f_{z}+f_{s})+ \phi) \Rightarrow \\
 Είναι λοιπόν σημαντικό να αποφευχθεί, όσο το δυνατόν περισσότερο, η
 αλλοίωση των σημάτων κατά την διαδικασία καταγραφής τους. Για τον λόγο
 αυτό συνήθως εφαρμόζεται ένα φίλτρο χαμηλών συχνοτήτων ή φίλτρο κατά της
-αλλοίωσης $\en{AAF}$.
+αλλοίωσης $\en{(A.A.F. (Anti\ Aliasing\ Filter))}$.
 
 Στην ελληνική βιβλιογραφία το φαινόμενο αυτό αναφέρεται ως *ψευδώνυμα συχνοτήτων*
 και ερευνήθηκε από τους $\en{Harry\ Niquist}$ και $\en{Claude\ Shannon}$, ερευνητές στα
@@ -930,8 +944,7 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 με 0) και αποδεκατίζοντας την έξοδο κατά έναν παράγοντα Μ. Η παραπάνω
 διαδικασία ονομάστηκε στα αγγλικά $\en{the\ first\ Noble\ identity}$ και εφαρμόζεται σε
 διάφορες πολυφασικές μεθόδους.
-* Σχεδιασμός Φίλτρων
-** Κατηγορίες
+** Κατηγορίες Φίλτρων
 Λόγω των πολλών εφαρμογών που έχουν και την εκθετική αύξηση της χρήσης
 ηλεκτρονικών συσκευών στην καθημερινότητα, οι δυνατότητες επεξεργασίας
 ψηφιακών σημάτων αποτελεί πρακτικά απαραίτητη προϋπόθεση. Έτσι η ανάγκη
@@ -948,6 +961,10 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 Αν το φίλτρο επηρεάζει μία περιοχή ή *φάσμα* συχνοτήτων και
 απορρίπτει όσες βρίσκονται πριν και μετά, ονομάζεται φίλτρο διέλευσης
 εύρους συχνοτήτων ($\en{band-pass\ filter}$).
+*** Φίλτρα διέλευσης συχνοτήτων
+Εδώ πρέπει να εξιγήσω τι γίνεται με τα φίλτρα που αφήνουν το ευρος συχνοτήτων
+*** Φίλτρα απόρριψης συχνοτήτων
+Εδώ πρέπει να εξιγήσω τι γίνεται με τα φίλτρα που απορρίπτουν το ευρος συχνοτήτων
 ** Φίλτρο μέσης τρέχουσας τιμής
 Στα προηγούμενα κεφάλαια επικεντρωθήκαμε περισσότερο στην μαθηματική αναπαράσταση
 των σημάτων, με μια μικρή αναφορά στα γραμμικά συστήματα. Τα φίλτρα αποτελούν γραμμικά
@@ -962,6 +979,9 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 επανέλθουμε στον όρο της γραμμικότητας και θα αναφερθούμε και στην χρονική αμεταβλητότητα
 που συνδυασμένες καλύπτουν ένα ευρύ φάσμα της εν' λόγω κατηγορίας.
 *** Μέση τρέχουσα τιμή και σχεδιασμός συστήματος
+:PROPERTIES:
+:on:       <2023-07-23 Κυρ 15:31>
+:END:
 Ένας από τους πιο διαδεδομένους τρόπους μετασχηματισμού σημάτων είναι ο υπολογισμός
 της μέσης τιμής για δύο ή παραπάνω δείγματα, με σκοπό την αφαίρεση έντονων στιγμιαίων
 διακυμάνσεων του σήματος γύρω από κάποια επιθυμητή τιμή. Λόγω της πληθώρας αλγόριθμων
@@ -980,11 +1000,12 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 τον μέσο όρο από πέντε δείγματα την φορά. Τότε για κάθε δείγμα της ακολουθίας εξόδου του
 συστήματος θα ισχύει ότι:
 \begin{equation}
+\label{fir-filter}
 \begin{align}
 out[n] = \frac{1}{k} \cdot \sum_{z}^{{k-1}}in[n+z], k=5 \\
 \end{align}
 \end{equation}
-Η ανωτέρω σχέση (24) ονομάζεται και σχέση διαφορών, αποτελόντας πλήρη περιγραφή ενός *συστήματος
+Η ανωτέρω σχέση \((\ref{fir-filter})\) ονομάζεται και σχέση διαφορών, αποτελόντας πλήρη περιγραφή ενός *συστήματος
 \(F.I.R\)*, δίνοντας την δυνατότητα στον χρήστη να εξάγει πληροφορία για κάθε τιμή του σήματος
 εισόδου \(in[n]\). Όσο για τον προσδιορισμό της αρχικής τιμής της μεταβλητής \(z\), τις περισσότερες
 φορές επιλέγεται η τιμή μηδέν με σκοπό να συμπεριλάβουμε το πρώτο δείγμα της εισόδου,
@@ -995,6 +1016,21 @@ out[n] = \frac{1}{k} \cdot \sum_{z}^{{k-1}}in[n+z], k=5 \\
 συγκεκριμένη οπτική εντάσσει την έννοια των “παραθύρων” καθώς ένα συρόμενο παράθυρο, πέντε
 τιμών συνεχίζοντας το παράδειγμα, θα ορίσει τις επιλεγμένες τιμές για τον υπολογισμό του
 σήματος εξόδου \(out[n]\).
+
+#+begin_src jupyter-python :session python3 :async no :export results :results raw drawer
+# add the plot to explain the above equation
+"""Should investigate this and how to make a plot with anottation"""
+signal = np.linspace(2 * np.pi * 20, 200, 200)
+
+# plt.plot(signal, np.linspace(0, 5, 1), marker='o')
+plt.plot(signal, np.linspace(2 * np.pi * 20, 200, 200), marker='o')
+# plt.xlim(-10, 10)
+# plt.ylim(-10, 10)
+# plt.legend()
+plt.grid('both')
+#+end_src
+#+RESULTS:
+[[file:./.ob-jupyter/f9ce235a9ecae4356b525fe4d06849b122419e4a.png]]
 *** Σχεδιασμός και εφαρμογή φίλτρων
 Ένα \(F.I.R.\) φίλτρο κατασκευάζεται από την γενική εξίσωση διαφορών που θα δούμε παρακάτω,
 όμως αξίζει να αναφέρουμε ένα χαρακτηριστικό. Για τα φίλτρα που κατασκευάζονται
@@ -1087,9 +1123,6 @@ out[z] = - \sum_{f=1}^{T}c(f)out(z-f) + \sum_{f=0}^{I}d(f)in(z-f) \\
 παραπάνω εξισώσεων. Εξαίρεση απαιτεί το φίλτρο \(butterworth\) που
 λεπτομέρειες θα αναφέρουμε στην συνέχεια.
 
-*** notes :noexport:
-- να προστεθεί
-  [[file:../books/ScienceDirect_articles_18Feb2023_15-57-03.874/7---Infinite-impulse-response--IIR--filte_2003_Practical-Digital-Signal-Proc.pdf][iir intro]]
 *** Παραδείγματα με κώδικα
 \selectlanguage{greek}
 Εδώ φαίνονται μερικά από τα βασικότερα φίλτρα άπειρης κρουστικής απόκρισης, που
@@ -1137,7 +1170,7 @@ plt.grid(which = 'both', axis='both')
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/87ef5e6ac3e463c1a27a094c6ae4ea3dd05c83f2.png]]
+[[file:./.ob-jupyter/98c295f34315b0f02971668dc65193249a255080.png]]
 :end:
 
 #+CAPTION:Butterworth filter frequency response
@@ -1222,14 +1255,7 @@ plt.grid(which= 'both', axis= 'both')
 κατηγορίες περεταίρω, με την χρήση αλγορίθμων βελτιστοποίησης, όμως στο πλαίσιο
 της παρούσας εργασίας δεν θα σχολιαστούν τέτοιες μέθοδοι.
 
-Αξίζει εδώ να σχολιαστεί ότι τα συγκεκριμένα πρότυπα φίλτρων τυποποιήθηκαν
-από το λογισμικό υπολογισμών και προγραμματισμού \(Matlab\) και στην συνέχεια
-πολλές γλώσσες προγραμματισμού τα συμπεριέλαβαν σε βιβλιοθήκες για επεξεργασία
-σημάτων. Η \(python\) θεωρείται από τις γλώσσες με τις αναλυτικότερες βιβλιοθήκες
-για την κατασκευή φίλτρων, λόγω των πολλών επιλογών σε τύπους αλλά ειδικά στην
-πλειθώρα χαρακτηριστικών που μπορεί ο χρήστης να καθορίσει για τη συμπεριφορά
-και απόκριση των φίλτρων.
-* Αποτελέσματα και εγκατάσταση εργαστηρίου
+* Μεθοδολογία
 ** Εγκατάσταση εργαστηρίου
     Η εγκατάσταση που χρησιμοποιήθηκε για την συλλογή των δεδομένων
 αποτελείται από μία αεροσήραγγα την οποία τροφοδοτεί με σταθερή ταχύτητα
@@ -1244,6 +1270,8 @@ plt.grid(which= 'both', axis= 'both')
 #+attr_latex:  :center t
 #+ATTR_LATEX: :caption \caption{Θάλαμος ομοιόμορφης παροχής ανέμου στο αισθητήριο όργανο όπου τοποθετείται στο σημείο \textbf{Α}. Στο σημείο  \textbf{\(A_{s}\)}, βρίσκεται ένα πλέγμα διάσπασης της ροής που μας επιτρέπει την ομαλή ταχύτητα στο σημείο εξόδου \textbf{A}.}
 [[file:./Wind_Tunnel_setup_lab.png]]
+\clearpage
+** Μεθοδολογία καταγραφής
 ** Μεθοδολογία επεξεργασίας
     Ένας λόγος που δεν χρησιμοποιήθηκε επεξεργασία σε πραγματικό χρόνο είναι
 ότι η εγκατάσταση που χρησιμοποιήθηκε για την συλλογή των δεδομένων,
@@ -1260,36 +1288,47 @@ plt.grid(which= 'both', axis= 'both')
 βαθμονόμιση του φίλτρου, για να μην προστεθεί περαιτέρω σφάλμα στην
 μέτρηση. Παρακάτω φαίνεται ένα διάγραμμα της συνδεσμολογίας και του τρόπου
 καταγραφής του σήματος.
-
+#+NAME: big_graph
 #+begin_src dot :file ./flowcharts/test-first.png :results file :exports results :session dot :tangle ./graphviz/lab-struct.gv
 digraph regexp  {
-    // size= "4,6!"
-    "Pitot-tube" ->
-    "H/Y" ->
-    "Αρχείο δεδομένων" ->
-    "Αρχικό σήμα πρoς επεξεργασία" ->
-    "Περιπτώσεις πειράματος" ->
-    {"Συμπιεσμένος αέρας"  "Αεροσύραγκα" } [color=red]
-
-    "Συμπιεσμένος αέρας" -> "5, 10 m/s" [color=forestgreen]
-
-    "Αεροσύραγκα" -> "5, 10, 15, 20 m/s" [color=magenta]
-
-    {"5, 10, 15, 20 m/s" "5, 10 m/s" }
-    -> {"Ανοιχτός Inverter" "Κλειστός Inverter"}[color = blueviolet,
-                                                 arrowhead = diamond,
-                                                 arrowsize = 1.4 ]
-
-    "Pitot-tube" -> "Αρχικό σήμα πρoς επεξεργασία"
+    compound=true;
+    // graph [fontsize=10 fontname="Verdana" compound=true];
+    // node [shape=record fontsize=10 fontname="Verdana"];
+    subgraph cluster_0{
+        style=filled;
+        color=lightgray;
+        node [style=filled,color=white];
+        "Pitot-tube" -> "H/Y" -> "Αρχείο δεδομένων" -> "Αρχικό σήμα πρoς επεξεργασία";
+        label= "Ανάκτηση δεδομένων από αισθητήρα";
+    }
+    subgraph cluster_1{
+        fontcolor="#D4C9AF";
+        style=filled;
+        color="#285162";
+        node [style=filled, color=white];
+        // "Περιπτώσεις πειράματος" ->
+        // {"Συμπιεσμένος \n αέρας"  "Αεροσύραγκα" } [color=red]
+        "Συμπιεσμένος \n αέρας" -> {"5" "10"} [color=forestgreen, style=dashed]
+        "Αεροσύραγκα" -> {"5" "10" "15" "20"} [color=magenta, lhead=cluster_2]
+        label = "Περιπτώσεις πειράματος";
+        // color=blue
+        subgraph cluster_2{
+            "5" "10" "15" "20";
+            label="Ταχύτητες σε m/s"
+        }
+    }
+    "Pitot-tube" -> "Αρχικό σήμα πρoς επεξεργασία" ;
+    {"5" "10" "15" "20"} ->
+    {"Ανοιχτός Inverter" "Κλειστός Inverter"}[color=magenta]
+    {"5" "10" } ->
+    {"Ανοιχτός Inverter" "Κλειστός Inverter"}[color=forestgreen, style=dashed]
 }
-
 #+end_src
-
-#+attr_latex:  :width 420px
-#+attr_latex:  :height 550px
 #+attr_latex:  :center t
-#+RESULTS:
+#+caption: Διάγραμμα ροής για την μέθοδο καταγραφής και τις περιπτώσεις που εξετάστηκαν.
+#+RESULTS: big_graph
 [[file:./flowcharts/test-first.png]]
+
 
 Για την επεξεργασία των δεδομένων έπρεπε αρχικά να σιγουρευτούμε πως οι
 μετρήσεις δεν υπέφεραν από το φαινόμενο της αλλοίωσης. Έτσι καθίσταται
@@ -1301,6 +1340,26 @@ digraph regexp  {
 φάνηκε ξεκάθαρα μια περιοχή συχνοτήτων στα σήματα από τα 2000 \(Hz\), επηρεασμένα
 από θόρυβο. Εδώ φαίνονται δύο από τα διαγράμματα της ανάλυσης των φίλτρων, που
 χρησιμοποιήθηκαν στην σύγκριση των μεθόδων απόρριψης του θορύβου.
+#+NAME: comb-pics
+#+begin_export latex
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+\centering
+\includegraphics[width=.8 \linewidth]{./fir-200.png}
+\caption{\(F.I.R.\) φίλτρο}
+\label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+\centering
+\includegraphics[width=.8 \linewidth]{./iir-butter-200.png}
+\caption{\(I.I.R.\) φίλτρο}
+\label{fig:sub2}
+\end{subfigure}
+\caption{Διαφορετικά φίλτρα διέλευσης χαμηλών συχνοτήτων}
+\label{fig:test}
+\end{figure}
+#+end_export
 
 Η εύρεση της μέσης τιμής για κάθε στοιχείο του σήματος με την συνάρτηση
 \(average()\) για την ανάλυση του σήματος στο πεδίο του
@@ -1317,57 +1376,65 @@ digraph regexp  {
 εντάσσουν καταστρεπτικές συμπεριφορές στο σύστημα που αν δεν ληφθούν
 υπ' όψη ενδέχεται να επηρεάσουν το σήμα εξόδου.
 
-
-#+begin_src latex
-\begin{figure}
-\centering
-\begin{subfigure}{.5\textwidth}
-\centering
-\includegraphics[width=.8 \linewidth]{./fir-200.png}
-\caption{\(F.I.R.\) φίλτρο}
-\label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-\centering
-\includegraphics[width=.8 \linewidth]{./iir-butter-200.png}
-\caption{\(I.I.R.\) φίλτρο}
-\label{fig:sub2}
-\end{subfigure}
-\caption{Διαφορετικά φίλτρα διέλευσης χαμηλών συχνοτήτων}
-\label{fig:test}
-\end{figure}
-#+end_src
-
-#+RESULTS:
-#+begin_example
-\begin{figure}
-\centering
-\begin{subfigure}{.5\textwidth}
-\centering
-\includegraphics[width=.8 \linewidth]{./fir-200.png}
-\caption{\(F.I.R.\) φίλτρο}
-\label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-\centering
-\includegraphics[width=.8 \linewidth]{./iir-butter-200.png}
-\caption{\(I.I.R.\) φίλτρο}
-\label{fig:sub2}
-\end{subfigure}
-\caption{Διαφορετικά φίλτρα διέλευσης χαμηλών συχνοτήτων}
-\label{fig:test}
-\end{figure}
-#+end_example
-
+#+NAME: more_in_depth
 #+begin_src dot :file ./flowcharts/proc-meth.png :results file :exports results :session dot :tangle ./graphviz/proc-methods.gv
 
 digraph processing {
+    newrank=true;
+    compound=true;
     // root of operations
-    root [label="Επεξεργασία σήματος με θόρυβο" ]
-    filt [label="Απομείωση θορυβου"]
+    // filt [label="Απομείωση θορυβου"]
     aliasing [label="Έλεγχος \n αλλοίωσης"]
     averg [label="Υπολογισμός \n μέσης τιμής \n σήματος"]
 
+    //clusters for clarity
+    subgraph cluster_0{
+        fontcolor="#285162";
+        style=filled;
+        fillcolor="#D4C9AF";
+        node[style=filled; color=white];
+        fftmethod;
+        timedom;
+        label="Επεξεργασία σήματος με θόρυβο"
+
+        subgraph cluster_1{
+            // fontcolor=red;
+            style=filled;
+            fillcolor=forestgreen;
+            node[style=filled; color=white];
+            aliasing;
+            averg;
+            label= "Αρχική φάση επεξεργασίας"
+
+            subgraph cluster_3{
+                avrged;
+                decimop;
+                label="Μέθοδοι";
+            }
+        }
+        subgraph cluster_2{
+            fontcolor="#D4C9AF";
+            style=filled;
+            fillcolor="#285162";
+            node[style=filled; color=white];
+            choosfilt;
+            filterconst;
+            fir;
+            iir;
+            apply;
+            welch;
+            filt_type;
+            label= "Συχνοτικά φίλτρα";
+        }
+        subgraph cluster_4{
+            graphs -> results [color=forestgreen, style=bold]
+            label="Αποτελέσματα"
+        }
+    }
+    {rank=same; fftmethod; timedom;}
+    {rank=same; aliasing; averg; choosfilt;}
+    {rank=same; graphs; avrged; filt_type;}
+    {rank=same; filterconst; decimop;}
     // filter related
     fir [label="FIR"]
     iir [label="IIR"]
@@ -1376,29 +1443,22 @@ digraph processing {
     filt_type [label="Διέλευσης χαμηλών \n συχνοτήτων \n (low-pass)"]
 
     // aliasing
-    decimop [label="Αποδεκατισμός \n ανά 5 και 50 δείγματα \n (decimation)"]
-    timedom [label="Επεξεργασία στο πεδίο \n του χρόνου"]
+    decimop [label="Αποδεκατισμός \n ανά 10 και 100 δείγματα \n (decimation)"]
+    timedom [label="Πεδίο του χρόνου \n καταγραφή"]
 
     //general bubbles
     graphs [label="Γραφήματα"]
     fftmethod [label= "Πεδίο συνχότητας \n (fft algorithm)" ]
     choosfilt [label="Επιλογή επιθυμητών \n συχνοτήτων \n(cutoff frequency)"]
-    results [label="Σύγκριση αποτελεσμάτων"]
+    results [label="Σύγκριση μεθόδων"]
     avrged [label="average(signal, fs) \n \n Ανάλογα με την \n συχνότητα \n καταγραφής, fs"]
     welch [label="Μέθοδος Welch \n (Spectral density)"]
-
-    {rank=same; apply filt_type }
-    {rank=same; filt timedom }
-    {rank=same; fftmethod aliasing averg}
-    {rank=same; decimop filterconst avrged}
-
     // start the graph at last 🫠
-    root -> {filt timedom}
-
+    fftmethod -> timedom -> fftmethod[style=dotted,];
     // filtering path
-    filt ->
-    fftmethod ->
     choosfilt ->
+    filterconst [color=red, style=bold];
+
     filterconst -> {fir iir} ->
     filt_type ->
     apply ->
@@ -1409,80 +1469,30 @@ digraph processing {
     timedom ->
     aliasing ->
     decimop ->
-    apply ->
-    graphs[color=blueviolet , style=bold]
+    // apply ->
+    graphs[color=blueviolet , style=dashed]
+    fftmethod ->
+    choosfilt[color=red, style=dotted];
 
     // aliasing path
     timedom ->
     averg ->
     avrged ->
-    apply ->
-    graphs [color=magenta]
+    // apply ->
+    graphs [color=magenta, style=dashed, ]
 
-    graphs -> results [color=forestgreen, style=bold]
 }
 #+end_src
 
-#+attr_latex:  :width 420px
-#+attr_latex:  :height 699px
+# #+attr_latex:  :width 420px
+# #+attr_latex:  :height 699px
 #+attr_latex:  :center t
-#+RESULTS:
+#+caption: Μέθοδος ανάλυσης και επεξεργασίας σημάτων για την εκλογή καταλληλότερου φίλτρου διέλευσης χαμηλών συχνοτήτων.
+#+RESULTS: more_in_depth
 [[file:./flowcharts/proc-meth.png]]
+
 \clearpage
-** DONE Phase delay problem :noexport:
-CLOSED: [2023-04-07 Παρ 20:09]
-:LOGBOOK:
-- CLOSING NOTE [2023-04-07 Παρ 20:09] \\
-  done and demonstrated bellow
-:END:
-*** the phase problem with python
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports none
-import numpy as np
-import scipy.signal
-
-np.random.seed(42)  # for reproducibility
-fs = 30  # sampling rate, Hz
-ts = np.arange(0, 5, 1.0 / fs)  # time vector - 5 seconds
-ys = np.sin(2*np.pi * 1.0 * ts)  # signal @ 1.0 Hz, without noise
-yerr = 0.5 * np.random.normal(size=len(ts))  # Gaussian noise
-yraw = ys + yerr
-
-b, a = scipy.signal.iirfilter(4, Wn=2.5, fs=fs, btype="low", ftype="butter")
-print(b, a, sep="\n")
-y_lfilter = scipy.signal.lfilter(b, a, yraw)
-
-
-plt.tight_layout()
-# plt.savefig("simple-lowpass-lfilter.png", dpi=100)
-
-# apply filter forward and backward using filtfilt
-y_filtfilt = scipy.signal.filtfilt(b, a, yraw)
-
-plt.figure(figsize=[6.4, 2.4])
-plt.plot(ts, yraw, label="Raw signal")
-plt.plot(ts, y_lfilter, alpha=0.5, lw=3, label="with delay")
-plt.plot(ts, y_filtfilt, alpha=0.8, lw=4, label="without delay")
-plt.legend(loc="lower center", bbox_to_anchor=[0.5, 1], ncol=3,
-           fontsize="smaller")
-plt.xlabel("Time / s")
-plt.ylabel("Amplitude")
-
-plt.tight_layout()
-plt.savefig("./bucket/filters/lowpass-filtfilt.png", dpi=100)
-plt.show()
-
-#+end_src
-
-#+RESULTS:
-:results:
-: [0.00257643 0.01030574 0.01545861 0.01030574 0.00257643]
-: [ 1.         -2.63862774  2.76930979 -1.33928076  0.24982167]
-: <Figure size 640x480 with 0 Axes>
-[[file:./.ob-jupyter/c0bb46f715a888827cb46ad3996973fce886bdf6.png]]
-:end:
-
-[[https://www.samproell.io/posts/yarppg/digital-filters-python/][reference]]
-** Σύγκριση αποτελεσμάτων φίλτρων
+** Μεθοδολογία σύγκρισης
 Για να συγκρίνουμε τις δυο διαφορετικές διαδικασίες είναι προφανές ότι δεν
 ωφελεί να επικεντρωθούμε στην ταχύτητα έκδοσης αποτελεσμάτων. Θα πρέπει λοιπόν
 να εξετάσουμε τις διαστρεβλώσεις σε χαμηλές συχνότητες που εντάσσει η κάθε
@@ -1505,7 +1515,7 @@ plt.show()
 αυξάνεται, το σύστημα επηρεάζεται καταστρεπτικά από την διεργασία που
 εφαρμόζεται σε αυτό. Παρατηρήθηκε αντίστοιχη συμπεριφορά αυξάνοντας την τάξη
 του φίλτρου πέραν του αναγκαίου κατά πολλές τάξεις μεγέθους.
-
+* Αποτελέσματα καταγραφής και επεξεργασίας
 ** Επεξεργασία δεδομένων ανέμου
 Όπως φαίνεται και στο παραπάνω διάγραμμα ροής, για την ικανοποιητική σύγκριση
 της επιρροής του φίλτρου στο σήμα που καταγράφηκε από τον αισθητήρα μέτρησης
@@ -1524,28 +1534,41 @@ plt.show()
 #+begin_src jupyter-python :session python3 :async yes :results replace table :exports results
 #%%
 # from tabulate import tabulate
-table = ([['Μετ/στής και ταχύτητα ανέμου', 'Συμπιεσμένος αέρας', 'Αεροσήραγγα'],
+table = ([['', 'Συμπιεσμένος αέρας', '', 'Αεροσήραγγα', ''],
           None,
-          [f'{dfi_i0_w0.description.replace("Inverter Off", "Μετ. κλειστός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
-           "{:.4f}".format(np.std(df_tdms_0_0.data)),
-           "{:.4f}".format(np.std(dfi_i0_w0.data))],
-
-          [f'{dfi_i1_w0.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+          ["Μετ/στής", "\(\text{\selectlanguage{english}On}\)", "\(\text{\selectlanguage{english}Off}\)", "\(\text{\selectlanguage{english}On}\)", "\(\text{\selectlanguage{english}Off}\)"],
+          None,
+          ["/", "<", "", "<", ""],
+          [f'{dfi_i0_w0.description.replace("Inverter Off,", "").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
            "{:.4f}".format(np.std(df_tdms_1_0.data)),
-           "{:.4f}".format(np.std(dfi_i1_w0.data))],
-          [f'{dfi_i1_w5.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+           "{:.4f}".format(np.std(df_tdms_0_0.data)),
+           "{:.4f}".format(np.std(dfi_i1_w0.data)),
+           "{:.4f}".format(np.std(dfi_i0_w0.data)),
+           ],
+          [f'{dfi_i1_w5.description.replace("Inverter On,", "").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
            "{:.4f}".format(np.std(df_tdms_1_5.data)),
-           "{:.4f}".format(np.std(dfi_i1_w5.data))],
-          [f'{dfi_i1_w10.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
-           "{:.4f}".format(np.std(df_tdms_1_10.data)),
-           "{:.4f}".format(np.std(dfi_i1_w10.data))],
-
-         [f'{dfi_i1_w15.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
-          "-",
-          "{:.4f}".format(np.std(dfi_i1_w15.data))],
-          [f'{dfi_i1_w20.description.replace("Inverter On", "Μετ. ανοιχτός").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+           "{:.4f}".format(np.std(df_tdms_0_5.data)),
+           "{:.4f}".format(np.std(dfi_i1_w5.data)),
            "-",
-           "{:.4f}".format(np.std(dfi_i1_w20.data))],
+           ],
+          [f'{dfi_i1_w10.description.replace("Inverter On,", "").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+           "{:.4f}".format(np.std(df_tdms_1_10.data)),
+           "{:.4f}".format(np.std(df_tdms_0_10.data)),
+           "{:.4f}".format(np.std(dfi_i1_w10.data)),
+           "-"],
+
+         [f'{dfi_i1_w15.description.replace("Inverter On,", "").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+          "-",
+          "-",
+          "{:.4f}".format(np.std(dfi_i1_w15.data)),
+          "-",
+          ],
+          [f'{dfi_i1_w20.description.replace("Inverter On,", "").replace("WS", "ταχ.").replace(", 100kHz", "")}'" \(m/s\)",
+           "-",
+           "-",
+           "{:.4f}".format(np.std(dfi_i1_w20.data)),
+           "-",
+           ],
           ])
 
 # print(tabulate(table))
@@ -1558,14 +1581,15 @@ dummy(table)
 
 #+CAPTION: Πίνακας τυπικής απόκλισης σημάτων καταγεγραμμένα με διαφορετική παροχή ανέμου (συμπιεσμένος και μή).
 #+RESULTS: std_1st
-| Μετ/στής και ταχύτητα ανέμου | Συμπιεσμένος αέρας | Αεροσήραγγα |
-|---+---+---|
-| Μετ. κλειστός, ταχ.=0 \(m/s\) | 0.0062 | 0.0076 |
-| Μετ. ανοιχτός, ταχ.=0 \(m/s\) | 0.0364 | 0.0392 |
-| Μετ. ανοιχτός, ταχ.=5 \(m/s\) | 0.0434 | 0.0385 |
-| Μετ. ανοιχτός, ταχ.=10 \(m/s\) | 0.0841 | 0.0400 |
-| Μετ. ανοιχτός, ταχ.=15 \(m/s\) | - | 0.0421 |
-| Μετ. ανοιχτός, ταχ.=20 \(m/s\) | - | 0.0566 |
+|                 | Συμπιεσμένος αέρας                    |                                        |                           Αεροσήραγγα |                                        |
+|-----------------+---------------------------------------+----------------------------------------+---------------------------------------+----------------------------------------|
+| Μετ/στής        | \(\text{\selectlanguage{english}On}\) | \(\text{\selectlanguage{english}Off}\) | \(\text{\selectlanguage{english}On}\) | \(\text{\selectlanguage{english}Off}\) |
+|-----------------+---------------------------------------+----------------------------------------+---------------------------------------+----------------------------------------|
+| ταχ.=0 \(m/s\)  | 0.0364                                |                                 0.0062 |                                0.0392 | 0.0076                                 |
+| ταχ.=5 \(m/s\)  | 0.0434                                |                                 0.0244 |                                0.0385 | -                                      |
+| ταχ.=10 \(m/s\) | 0.0841                                |                                 0.0763 |                                0.0400 | -                                      |
+| ταχ.=15 \(m/s\) | -                                     |                                      - |                                0.0421 | -                                      |
+| ταχ.=20 \(m/s\) | -                                     |                                      - |                                0.0566 | -                                      |
 ** Εφαρμογή φίλτρων
 Για την παρεμβολή που επηρεάζει το σήμα του αισθητήρα θα εφαρμοστεί ένα φίλτρο
 διέλευσης χαμηλών συχνοτήτων. Είμαστε σε θέση να γνωρίζουμε πως οι χαμηλές
@@ -1623,7 +1647,7 @@ dummy(table)
 - [X] Να πω και μερικά πραγματα μαζι με τα αποτελέσματα.
 - [X] Έχω ήδη κάποια από τα αρχεία για το paper
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports code :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports code 
 #%%
 
 ca_meas_dir = FOLDER_FOR_DATA / 'compressed air'
@@ -1668,7 +1692,7 @@ dec_5kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_5kHz[GROUP_NAME][CHAN_NAME]
 :results:
 :end:
 **** *Διαγράμματα αποδεκατισμού με και χωρίς αλλοίωση στο πεδίο των συχνοτήτων*
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports none
+#+begin_src jupyter-python :session python3 :async yes :results figure :exports none
 from scipy import signal
 import matplotlib.pyplot as plt
 NPERSEG=1024<<6
@@ -1711,17 +1735,19 @@ plot_spect_comb2([
 plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent=False)
 #+end_src
 #+RESULTS:
-:results:
+:RESULTS:
 [[file:./.ob-jupyter/8027c0b392685323a7c98def9626636667d1e0a6.png]]
 [[file:./.ob-jupyter/edbe4f41909919700fee15b1f35b2b2952f34d49.png]]
-:end:
+:END:
 
 #+attr_latex: :width 500px :height 280px
-#+CAPTION: Αποδεκατισμός σήματος χωρίς επεξεργασία κατά της αλλοίωσης.
+#+CAPTION: Αποδεκατισμός σήματος χωρίς επεξεργασία κατά της αλλοίωσης για το σήμα του πεπιεσμένου αέρα με ταχύτητα ανέμου 0 \(m/s\) και μετ/στή ανοιχτό.
+#+NAME: fig:with_al
 [[file:./decimation/with_aliasing.png]]
 
 #+attr_latex: :width 500px :height 280px
-#+CAPTION: Αποδεκατισμός σήματος με φίλτρο \(FIR\) κατά της αλλοίωσης.
+#+CAPTION: Αποδεκατισμός σήματος με φίλτρο \(FIR\) κατά της αλλοίωσης για το σήμα του πεπιεσμένου αέρα σε ταχύτητα ανέμου 0 \(m/s\) και μετ/στή ανοιχτό.
+#+NAME: without_al
 [[file:./decimation/anti_aliasing_fir.png]]
 
 Όπως φαίνεται και παρακάτω, η διαδικασία της μείωσης του αριθμού των
@@ -1730,7 +1756,7 @@ plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent
 και κάποιο φίλτρο για την διόρθωση της αλλοίωσης, υπάρχουν πολλές μέθοδοι,
 ήδη στις βιβλιοθήκες που χρησιμοποιήθηκαν για την ανάλυση των σημάτων.
 \clearpage
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
 #%%
 from tabulate import SEPARATING_LINE
 NPERSEG=1024<<6
@@ -1749,166 +1775,124 @@ sign = Graph_data_container(x=z,
                             y=f,
                             label="dec factor 100")
 
-tablexydec=[["Αριθμός δειγμάτων\n\
-συχνοτήτων (χ άξονας)",
+tablexydec=[None,
+            ["Αριθμός δειγμάτων",
+             "χωρίς αποδεκατισμό",
+             "ανά 10 ",
+             "ανά 100 "],
+            None,
+            ["Συχνοτήτων (χ άξονας)",
              len(ca1_0.decimate(dec=1, offset=0).calc_spectrum( nperseg=NPERSEG).x),
              len(ca1_0.decimate(dec=10, offset=0).calc_spectrum( nperseg=NPERSEG/10).x),
              len(ca1_0.decimate(dec=100, offset=0).calc_spectrum( nperseg=NPERSEG/100).x)
              ],
-            SEPARATING_LINE,
-            ["Αριθμός δειγμάτων\n\
-ισχύος του σήματος\n\
-(ψ άξονας)",
+            # None,
+            ["Ισχύος (ψ άξονας)",
              len(ca1_0.decimate(dec=1, offset=0).calc_spectrum( nperseg=NPERSEG).y),
              len(ca1_0.decimate(dec=10, offset=0).calc_spectrum( nperseg=NPERSEG/10).y),
              len(ca1_0.decimate(dec=100, offset=0).calc_spectrum( nperseg=NPERSEG/100).y)
              ]]
 
-tablexyrec=[["Αριθμός δειγμάτων\n\
-συχνοτήτων (χ άξονας)",
-             0,
+tablexyrec=[["Αριθμός δειγμάτων ",
+             "50 \(kHz\)",
+             "5 \(kHz\)"],
+            None,
+            ["Συχνοτήτων (χ άξονας)",
              len(dec_50kHz.calc_spectrum(nperseg=NPERSEG/10).x),
              len(dec_5kHz.calc_spectrum(nperseg=NPERSEG/100).x),
              ],
-            SEPARATING_LINE,
-            ["Αριθμός δειγμάτων\n\
-ισχύος του σήματος\n\
-(ψ άξονας)",
-             0,
+            # SEPARATING_LINE,
+            ["Ισχύος (ψ άξονας)",
              len(dec_50kHz.calc_spectrum(nperseg=NPERSEG/10).y),
              len(dec_5kHz.calc_spectrum(nperseg=NPERSEG/100).y),
              ]]
 
-tablexysign=[["Αριθμός δειγμάτων\n\
-συχνοτήτων (χ άξονας)",
-             len(sign.x),
-             ],
-             SEPARATING_LINE,
-            ["Αριθμός δειγμάτων\n\
-ισχύος του σήματος\n\
-(ψ άξονας)",
-             len(sign.y),
-             ]]
-#+end_src
+tablexysign=[["Αριθμός δειγμάτων ",
+              "5 \(kHz\)"],
+             None,
+             None,
+             ["Συχνοτήτων (χ άξονας)",
+              len(sign.x),
+              ],
+             # SEPARATING_LINE,
+             ["Ισχύος (ψ άξονας)",
+              len(sign.y),
+              ]]
+             #+end_src
 
 #+RESULTS:
 :results:
 :end:
 **** *Πίνακες επαλήθευσης μεθόδων στο πεδίο των συχνοτήτων*
 
-Όπως φαίνεται στον επόμενο πίνακα, ο αριθμός των δειγμάτων καθώς
+Όπως φαίνεται παρακάτω, ο αριθμός των δειγμάτων καθώς
 εφαρμόζουμε την μέθοδο του αποδεκατισμού παραμένει σταθερός, γεγονός που
-καθορίζει την ορθότητα της εφαρμογής.
-#+NAME: :table:dec_table
-#+begin_src jupyter-python :session python3 :async yes :exports results :tangle ./src/tables_data_process_blocks.py
-#%%
-from tabulate import tabulate
-print(tabulate(tablexydec, headers=["αποδεκατισμένο σήμα",
-                                    "χωρίς αποδεκατισμό",
-                                    "ανά 10 ",
-                                    "ανά 100 "],
-               tablefmt="simple"))
-#+end_src
+καθορίζει την ορθότητα της εφαρμογής. Ο αριθμός δειγμάτων που παρατίθεται
+μετρήθηκε μετά τον υπολογισμό της πυκνότητας ισχύος του σήματος και μόνο
+για την ταχύτητα αναφοράς (0 \(m/s\)) του πεπιεσμένου αέρα. Η επιλογή
+ήταν σκόπιμη, καθώς στα 500 \(kHz\) εμπεριέχεται ο μεγαλύτερος αριθμός
+δειγμάτων. Έτσι έχουμε την δυνατότητα να υποστηρίξουμε ότι, αφαιρώντας
+δείγματα από το σήμα δεν διαφοροποιείται το αποτέλεσμα σχετικά με την
+καταγραφή του σε αντίστοιχη συχνότητα καταγραφής. Αυτό αντικατοπτρίζεται
+συγκρίνοντας τους πίνακες [[some_ref]], [[rec_low_fs_ref]] και [[dec_fir_ref]]. Στους
+δύο πρώτους φαίνεται πως η μείωση των δειγμάτων αποφέρει όμοιο σήμα με
+καταγραφή σε εφάμιλλη συχνότητα.
 
-- Πίνακας αριθμού δειγμάτων για αποδεκατισμένο σήμα χωρίς φίλτρο
-  #+ATTR_LATEX: :placement [t] :center t :booktabs t :environment tabular :width \textwidth :align X[1lm]X[2lm]
-  #+RESULTS: :table:dec_table
-  : αποδεκατισμένο σήμα      χωρίς αποδεκατισμό    ανά 10     ανά 100
-  : ---------------------  --------------------  ---------  ----------
-  : Αριθμός δειγμάτων                     32769       3277         328
-  : συχνοτήτων (χ άξονας)
-  : ---------------------  --------------------  ---------  ----------
-  : Αριθμός δειγμάτων                     32769       3277         328
-  : ισχύος του σήματος
-  : (ψ άξονας)
-- Πίνακας αριθμού δειγμάτων καταγεγραμμένου σήματος σε μικρότερη συχνότητα
-  #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
+#+ATTR_LATEX: :placement [t] :center t :booktabs t :width \textwidth :align X[1lm]X[2lm]
+#+NAME: some
+#+begin_src jupyter-python :session python3 :async yes :exports results :results replace table
+dummy(tablexydec)
+#+end_src
+#+CAPTION: Αποδεκατισμένο σήμα από 500 \(kHz\) για σήμα του πεπιεσμένου αέρα για ταχύτητα 0 \(m/s\)
+#+NAME: some_ref
+#+RESULTS: some
+|-----------------------+--------------------+--------+---------|
+| Αριθμός δειγμάτων     | χωρίς αποδεκατισμό | ανά 10 | ανά 100 |
+|-----------------------+--------------------+--------+---------|
+| Συχνοτήτων (χ άξονας) |              32769 |   3277 |     328 |
+| Ισχύος (ψ άξονας)     |              32769 |   3277 |     328 |
+
+#+ATTR_LATEX: :placement [t] :center t :booktabs t :width \textwidth :align X[1lm]X[2lm]
+#+NAME: rec_low_fs
+#+begin_src jupyter-python :session python3 :async yes :results replace table :exports results
+dummy(tablexyrec)
+#+end_src
+#+CAPTION: Καταγεγραμμένο σήμα του πεπιεσμένου αέρα για 0 \(m/s\) σε μικρότερες συχνότητες
+#+NAME: rec_low_fs_ref
+#+RESULTS: rec_low_fs
+| Αριθμός δειγμάτων     | 50 \(kHz\) | 5 \(kHz\) |
+|-----------------------+------------+-----------|
+| Συχνοτήτων (χ άξονας) |       3277 |       328 |
+| Ισχύος (ψ άξονας)     |       3277 |       328 |
+
+#+ATTR_LATEX: :placement [t] :center t :booktabs t :width \textwidth :align X[1lm]X[2lm]
+#+NAME: dec_fir
+#+begin_src jupyter-python :session python3 :async yes :results replace table :exports results
+dummy(tablexysign)
+#+end_src
+#+CAPTION: Αποδεκατισμός με φίλτρο κατά της αλλοίωσης τύπου \(F.I.R.\) για το ανωτέρω σήμα
+#+NAME: dec_fir_ref
+#+RESULTS: dec_fir
+| Αριθμός δειγμάτων     | 5 \(kHz\) |
+|-----------------------+-----------|
+|-----------------------+-----------|
+| Συχνοτήτων (χ άξονας) |       328 |
+| Ισχύος (ψ άξονας)     |       328 |
+
+Στον πίνακα [[dec_fir_ref]] η διαδικασία του αποδεκατισμού συνδυάστηκε με
+την εφαρμογή φίλτρου κατά της αλλοίωσης, συμπεριλαμβανόμενη στην εντολή
+του αποδεκατισμού. Η χρήση του εν' λόγω φίλτρου οδηγεί σε πολύ καλά αποτελέσματα,
+όπως δείχνουν και τα διαγράμματα, [[fig:with_al]] και [[without_al]] καθώς απομοιώνουν
+όσες συχνότητες αλλοιώνονται από την διαδικασία του αποδεκατισμού.
+
+#+ATTR_LATEX: :placement [hb!]
+#+NAME: dec_anti_aliased
+#+begin_src jupyter-python :session python3 :async no :results replace table :exports results
 #%%
-from tabulate import tabulate
-print(tabulate(tablexyrec, headers=["καταγεγραμμένο σε \n\
-μικρότερη συχνότητα",
-                                    "χωρίς αποδεκατισμό",
-                                    "50.000 \n\
-Χέρτζ",
-                                    "5.000 \n\
-Χέρτζ"],
-               tablefmt="simple"))
-  #+end_src
-  #+RESULTS:
-  :results:
-  : καταγεγραμμένο σε        χωρίς αποδεκατισμό    50.000     5.000
-  : μικρότερη συχνότητα                              Χέρτζ     Χέρτζ
-  : ---------------------  --------------------  ---------  --------
-  : Αριθμός δειγμάτων                         0       3277       328
-  : συχνοτήτων (χ άξονας)
-  : ---------------------  --------------------  ---------  --------
-  : Αριθμός δειγμάτων                         0       3277       328
-  : ισχύος του σήματος
-  : (ψ άξονας)
-  :end:
-- Πίνακας αριθμού δειγμάτων με φίλτρο
-  #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
-#%%
-print(tabulate(tablexysign,
-               headers=["σήμα με φίλτρο \n\
-κατά της αλλοίωσης",
-                        "5.000\n\
-Χέρτζ"],
-               tablefmt="simple"))
-  #+end_src
-  #+RESULTS:
-  :results:
-  : σήμα με φίλτρο           5.000
-  : κατά της αλλοίωσης       Χέρτζ
-  : ---------------------  -------
-  : Αριθμός δειγμάτων          328
-  : συχνοτήτων (χ άξονας)
-  : ---------------------  -------
-  : Αριθμός δειγμάτων          328
-  : ισχύος του σήματος
-  : (ψ άξονας)
-  :end:
-\clearpage
-- Πίνακας τυπικών αποκλίσεων σε σχέση με την μέθοδο επεξεργασίας.
-  - Αποδεκατισμός
-    \selectlanguage{english}
-    #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
-#%%
-from pros_noisefiltering.WT_NoiProc import fir_factory_constructor
+from pros_noisefiltering.filters.fir import fir_factory_constructor
 
 anti_aliased = signal.decimate(ca1_0.data, 100, ftype='fir')
 anti_aliased_50 = signal.decimate(ca1_0.data, 10, ftype='fir')
-
-table_std = [["5 kHz", np.std(anti_aliased), np.std(dec_5kHz.data)],
-             ["50 kHz", np.std(anti_aliased_50), np.std(dec_50kHz.data)],
-             SEPARATING_LINE,
-             ["origin (500 kHz)", None, np.std(ca1_0.data)]]
-
-
-print(tabulate(table_std,
-               headers=["decimation",
-                        "with anti-aliasing",
-                        "without anti-aliasing"],
-               tablefmt="rst",
-               floatfmt=".4f"))
-
-  #+end_src
-    #+RESULTS:
-    :results:
-    : ================  ====================  =======================
-    : decimation          with anti-aliasing    without anti-aliasing
-    : ================  ====================  =======================
-    : 5 kHz                           0.0058                   0.0350
-    : 50 kHz                          0.0105                   0.0366
-    : ================  ====================  =======================
-    : origin (500 kHz)                                         0.0364
-    : ================  ====================  =======================
-    :end:
-  \selectlanguage{greek}
-  - Εφαρμογή φίλτρων
-     \selectlanguage{english}
-     #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results :tangle ./src/tables_data_process_blocks.py
-#%%
 
 butter_2000 = ca1_0.filter(fc_Hz=2000).data
 butter_200 = ca1_0.filter(fc_Hz=200).data
@@ -1921,31 +1905,58 @@ fir_200 = fir_factory_constructor(fir_order=60, fc_Hz=200)
 fir_filt_2000 = ca1_0.filter(fc_Hz=2_000, filter_func=fir_2000).data
 fir_filt_200 = ca1_0.filter(fc_Hz=2_00, filter_func=fir_200).data
 
-table_filts = [["butterworth IIR", np.std(butter_2000), np.std(butter_200)],
-               ["simple FIR", np.std(fir_filt_2000), np.std(fir_filt_200)],
-               ]
+table_std = [["","\(\text{\selectlanguage{english}decimation}\)",""],
+             None,
+             ["\(\text{\selectlanguage{english}fs}\)",
+              "\(\text{\selectlanguage{english}recorded at origin}\)",
+              "\(\text{\selectlanguage{english}decimated with anti-aliasing}\)",],
+             # ["<c>","<c>","<c>"],
+             None,
+             ["\(\text{\selectlanguage{english}5 kHz}\)", "{:.4f}".format(np.std(dec_5kHz.data)), "{:.4f}".format(np.std(anti_aliased))],
+             ["\(\text{\selectlanguage{english}50 kHz}\)", "{:.4f}".format(np.std(dec_50kHz.data)), "{:.4f}".format(np.std(anti_aliased_50))],
+             # SEPARATING_LINE,
+             ["\(\text{\selectlanguage{english}500 kHz}\)", "{:.4f}".format(np.std(ca1_0.data)), "-"],
+             None,
+             ["", "\(\text{\selectlanguage{english}filtering operations}\)", "\(\text{\selectlanguage{english} in respect to cutoff frequency}\)"],
+             None,
+             ["\(\text{\selectlanguage{english}low-pass filter}\)",
+              "\(\text{\selectlanguage{english}2 kHz}\)" ,
+              "\(\text{\selectlanguage{english}200 Hz}\)"],
+             None,
+             ["\(\text{\selectlanguage{english}butterworth IIR}\)", "{:.4f}".format(np.std(butter_2000)), "{:.4f}".format(np.std(butter_200))],
+             ["\(\text{\selectlanguage{english}simple FIR}\)", "{:.4f}".format(np.std(fir_filt_2000)), "{:.4f}".format(np.std(fir_filt_200))],
+             ]
 
-# filtering table
-print(tabulate(table_filts,
-               headers=["low-pass filter",
-                        "2 kHz cutoff" ,
-                        "200 Hz cutoff"],
-               tablefmt="rst",
-               floatfmt=".4f"))
+dummy(table_std)
+#+end_src
+#+CAPTION: Πίνακας τυπικής απόκλησης για το σήμα πεπιεσμένου αέρα με ταχύτητα 0 \(m/s\) αποδεκατισμένο με φίλτρο κατά της αλλοίωσης τύπου \(F.I.R.\).
+#+NAME: dec_anti_aliased
+#+RESULTS: dec_anti_aliased
+|                                                    |                                                         | \(\text{\selectlanguage{english}decimation}\)                      |   |
+|----------------------------------------------------+---------------------------------------------------------+--------------------------------------------------------------------+---|
+| \(\text{\selectlanguage{english}fs}\)              |   \(\text{\selectlanguage{english}recorded at origin}\) | \(\text{\selectlanguage{english}decimated with anti-aliasing}\)    |   |
+|----------------------------------------------------+---------------------------------------------------------+--------------------------------------------------------------------+---|
+| \(\text{\selectlanguage{english}5 kHz}\)           |                                                  0.0350 | 0.0058                                                             |   |
+| \(\text{\selectlanguage{english}50 kHz}\)          |                                                  0.0366 | 0.0105                                                             |   |
+| \(\text{\selectlanguage{english}500 kHz}\)         |                                                  0.0364 | -                                                                  |   |
+|----------------------------------------------------+---------------------------------------------------------+--------------------------------------------------------------------+---|
+|                                                    | \(\text{\selectlanguage{english}filtering operations}\) | \(\text{\selectlanguage{english} in respect to cutoff frequency}\) |   |
+|----------------------------------------------------+---------------------------------------------------------+--------------------------------------------------------------------+---|
+| \(\text{\selectlanguage{english}low-pass filter}\) |                \(\text{\selectlanguage{english}2 kHz}\) | \(\text{\selectlanguage{english}200 Hz}\)                          |   |
+|----------------------------------------------------+---------------------------------------------------------+--------------------------------------------------------------------+---|
+| \(\text{\selectlanguage{english}butterworth IIR}\) |                                                  0.0035 | 0.0029                                                             |   |
+| \(\text{\selectlanguage{english}simple FIR}\)      |                                                  0.0054 | 0.0054                                                             |   |
+# \clearpage
 
-    #+end_src
-
-    #+RESULTS:
-    :results:
-    : =================  ==============  ===============
-    : low-pass filter      2 kHz cutoff    200 Hz cutoff
-    : =================  ==============  ===============
-    : butterworth IIR            0.0035           0.0029
-    : simple FIR                 0.0054           0.0054
-    : =================  ==============  ===============
-    :end:
-
-  \selectlanguage{greek}
+Τέλος, στον πίνακα [[dec_anti_aliased]], παρατηρούμε πως η τυπική απόκλιση
+του σήματος, παρουσιάζει σταθεροποίηση στην μέθοδο των \(FIR\) συστημάτων
+ανεξαρτήτος της συχνότητας αποκοπής του. Είναι εύκολο να συμπεράνουμε πώς,
+ο τύπος \(IIR\) είναι πίο ακριβής καθώς για την ίδια διαφορά στις συχνότητες
+απόρριψης παρατηρείται περεταίρω μείωση του θορύβου. Αυτό συμβαίνει λόγω
+της μεθόδου της αναδρομής που αναφέραμε στα θεωριτικά κεφάλαια. Μας δίνεται
+λοιπόν η δυνατότητα να αφαιρούμε τις συχνότητες που καταστρέφουν το σήμα
+με μεγαλύτερη ακρίβεια και επομένως να διαχωριστούν φάσματα που δεν απέχουν
+πολύ μεταξύ τους.
 **** plots for decimated signals from same origin :noexport:
 #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports none
 
@@ -1979,7 +1990,7 @@ in1_0_av100 = ca1_0.average(100)
 print(ca1_0.operations)
 print(in1_0_av100.operations)
 print(ca1_0.decimate(1).operations)
-print(ca1_0.decimate(1).average(100).operations)
+print(ca1_0.decimate(10).average(100).operations)
 print(ca1_0.filter(fc_Hz=100).average(100).operations)
 #+end_src
 
@@ -1988,7 +1999,7 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 : ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014']
 : ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'Apply Averaging :100']
 : ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'Decimation factor:1, Offset:0, new fs_Hz:500000.0000000014']
-: ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'Decimation factor:1, Offset:0, new fs_Hz:500000.0000000014', 'Apply Averaging :100']
+: ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'Decimation factor:10, Offset:0, new fs_Hz:50000.00000000014', 'Apply Averaging :100']
 : ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'pass filter 100', 'Apply Averaging :100']
 :end:
 *** Απομείωση θορύβου
@@ -2017,7 +2028,7 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 τρόπος και οι μέθοδοι που θα χρησιμοποιηθούν και έπειτα να εφαρμοστούν
 σωστά. Τέλος, θα δειχθεί πως και οι δύο μέθοδοι είναι αποδεκτοί για την
 συγκεκριμένη εφαρμογή, υπό προϋποθέσεις που θα συζητηθούν στα συμπεράσματα.
-
+\clearpage
 *** notes :noexport:
 - [X] *Εδώ πρέπει να μπουν διαγράμματα από \(filters\ and\ welch\)*
 - [X] *Να φέρω τα αναγκαία εδώ σε \(code\ blocks\)*
@@ -2046,11 +2057,10 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 αποτελέσματα αποκλίνουν σε πολύ μικρό βαθμό συγκρίνοντας τις τυπικές
 αποκλίσεις των εξόδων σχετικά με την είσοδο των φίλτρων.
 
-- Διαγράμματα ισχύος με την μέθοδο \(Welch\) για πεπιεσμένο αέρα
-  - \(FIR\) φίλτρο απλού παραθύρου με τάξη ίση με 60 (αριθμός συντελεστών πολυωνύμου)
-    #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
-from pros_noisefiltering.WT_NoiProc import (plot_comparative_response,
-                                            filt_butter_factory)
+#+NAME: fc1_5
+#+begin_src jupyter-python :session python3 :async no :exports results
+from pros_noisefiltering.plotting_funcs import plot_comparative_response
+from pros_noisefiltering.filters.iir import filt_butter_factory
 
 butter_filter_2000 = filt_butter_factory(filt_order=4, fc_Hz=2000)
 ca1_5 = df_tdms_1_5
@@ -2062,270 +2072,170 @@ plot_comparative_response(ca1_5,
                           Kolmogorov_offset=4e0,
                           nperseg=NPERSEG,
                           figsize=(8, 4))
+#+end_src
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\).
+#+LABEL: fc1_5
+#+RESULTS: fc1_5
+
+#+NAME: fc1_10
+#+begin_src jupyter-python :session python3 :async no :exports results
 plot_comparative_response(ca1_10,
-                         filter_func=fir_2000,
-                         response_offset=2e-4,
-                         Kolmogorov_offset=4e0,
-                         nperseg=NPERSEG,
-                         figsize=(8, 4))
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=4e0,
+                          nperseg=NPERSEG,
+                          figsize=(8, 4))
 
-                         #+end_src
+#+end_src
 
-    #+RESULTS:
-    :results:
-    [[file:./.ob-jupyter/c469ed3fa3a6519d08d5db5af8e8102d4ae24c1c.png]]
-    [[file:./.ob-jupyter/626aba17ce5e7b93d79643fefdf4073ca486b9a8.png]]
-    :end:
-  -  \(IIR\) φίλτρο τύπου \(butterworth\) με τάξη ίση με 2
-    #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 10 \(m/s\).
+#+LABEL: fc1_10
+#+RESULTS: fc1_10
+
+#+NAME: ic1_5
+#+begin_src jupyter-python :session python3 :async no :exports results
 plot_comparative_response(ca1_5,
                           filter_func=butter_filter_2000,
                           response_offset=2e-4,
                           Kolmogorov_offset=4e0,
                           nperseg=NPERSEG,
                           figsize=(8, 4))
+#+end_src
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\).
+#+LABEL: ic1_5
+#+RESULTS: ic1_5
+
+#+NAME: ic1_10
+#+begin_src jupyter-python :session python3 :async no :exports results
 plot_comparative_response(ca1_10,
-                      filter_func=butter_filter_2000,
-                      response_offset=2e-4,
-                      Kolmogorov_offset=4e0,
-                      nperseg=NPERSEG,
-                      figsize=(8, 4))
-
-
-                      #+end_src
-
-   #+RESULTS:
-   :results:
-   [[file:./.ob-jupyter/0ca1155c1309d384c49d587ebe2854960ee9de1a.png]]
-   [[file:./.ob-jupyter/113953e9338dc3c032044042256d6a8d091cef30.png]]
-   :end:
-- Διαγράμματα ισχύος με την μέθοδο \(Welch\) για παροχή ανέμου από την αεροσήραγγα
-
-  Εδώ θα παρατηρήσει κανείς πως ο θόρυβος είναι λιγότερο εμφανής από τα
-  προηγούμενα διαγράμματα. Αυτό συμβαίνει λόγω της χαμηλότερης συχνότητας
-  καταγραφής στην περίπτωση της αεροσήραγγας. Όπως αναγράφεται και στους
-  τίτλους των διαγραμμάτων τα παρακάτω σήματα καταγράφηκαν με συχνότητα
-  \(100\ kHz\). Έτσι λόγω του θεωρήματος \(Niquist\) το μέγιστο φάσμα που
-  μπορούμε να απεικονίσουμε υποχωρεί από τα \(250\ kHz\), του πειράματος με
-  τον πεπιεσμένο αέρα, στα \(50\ kHz\). Επιλέξαμε την μείωση αυτή, για
-  λόγους πειραματισμού καθώς η μείωση του αριθμού των δειγμάτων, προσφέρει
-  ταχύτερη επεξεργασία.
-
-   - \(FIR\) φίλτρο απλού παραθύρου με τάξη ίση με 60 (αριθμός συντελεστών πολυωνύμου)
-    #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
-plot_comparative_response(dfi_i1_w5,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-plot_comparative_response(dfi_i1_w10,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-
-plot_comparative_response(dfi_i1_w15,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-plot_comparative_response(dfi_i1_w20,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-
-                          #+end_src
-
-    #+RESULTS:
-    :results:
-    [[file:./.ob-jupyter/14263a900760581982f9a87f593f8894a7a6c24e.png]]
-    [[file:./.ob-jupyter/328c1bf5701027dc0a2c71f2d361c8a21878b1d8.png]]
-    [[file:./.ob-jupyter/0bee83ba9176ddfd1d086b65d8e8c09fe4ee5773.png]]
-    [[file:./.ob-jupyter/48908e838951101d1cd115e595e1e3fe5767c1f8.png]]
-    :end:
-
-   \clearpage
-   - \(IIR\) φίλτρο τύπου \(butterworth\) με τάξη ίση με 2
-    #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
-plot_comparative_response(dfi_i1_w5,
                           filter_func=butter_filter_2000,
                           response_offset=2e-4,
                           Kolmogorov_offset=4e0,
                           nperseg=NPERSEG,
                           figsize=(8, 4))
-plot_comparative_response(dfi_i1_w10,
-                          filter_func=butter_filter_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-
-plot_comparative_response(dfi_i1_w15,
-                          filter_func=butter_filter_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-plot_comparative_response(dfi_i1_w20,
-                       filter_func=butter_filter_2000,
-                       response_offset=2e-4,
-                       Kolmogorov_offset=4e0,
-                       nperseg=NPERSEG,
-                       figsize=(8, 4))
-
-                       #+end_src
-
-  #+RESULTS:
-  :results:
-  [[file:./.ob-jupyter/5c357c6e7c3b087f1dffc7b15311fe1c7c978308.png]]
-  [[file:./.ob-jupyter/2406695beec08654bec870291d14bb908408e5b3.png]]
-  [[file:./.ob-jupyter/1f8daa26a48447a7a2d83fcfdd89f6b52ec7fce1.png]]
-  [[file:./.ob-jupyter/ec7b1604fde14b50450f0eca88e54b9b1980342e.png]]
-  :end:
-- Πίνακας τυπικής απόκλισης εισόδου και εξόδου φίλτρων για πεπιεσμένο αέρα
-
-  Στους παρακάτω πίνακες παραθέτονται οι τυπικές αποκλίσεις των σημάτων
-  που χρησιμοποιήθηκαν για την εξαγωγή των ανωτέρω διαγραμμάτων. Σε κάθε
-  πίνακα καταγράφονται οι τυπικές αποκλίσεις για το καταγεγραμμένο σήμα,
-  όπως επίσης και για τις δύο κατηγορίες φίλτρων.
-
-  \selectlanguage{english}
-  #+begin_src jupyter-python :session python3 :async yes :results replace table :exports results
-from pros_noisefiltering.WT_NoiProc import filt_butter_factory
-butter_iir_2000 = filt_butter_factory(fc_Hz=2000, filt_order=4)
-
-fir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
-                              filter_func=fir_2000)
-iir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
-                              filter_func=butter_iir_2000)
-ca_data_to_filter = [ca1_5, ca1_10]
-iir_data_out = []
-fir_data_out = []
-# filter with fir all data and make a list for the output
-for each in ca_data_to_filter:
-    fir_data_out.append(each.filter(fc_Hz=2000,
-                                    filter_func=fir_2000))
-
-# filter with iir all data and make a list for the output
-for each in ca_data_to_filter:
-    iir_data_out.append(each.filter(fc_Hz=2000,
-                                    filter_func=butter_iir_2000))
-
-
-table_std_filtering = [['Record description',
-                        'std raw signal',
-                        'FIR',
-                        'IIR'],
-                       None,
-                       [f"{ca_data_to_filter[0].description}",
-                        "{:.4f}".format(np.std(ca_data_to_filter[0].data)),
-                        "{:.4f}".format(np.std(fir_data_out[0].data)),
-                        "{:.4f}".format(np.std(iir_data_out[0].data))],
-
-                       [f"{ca_data_to_filter[1].description}",
-                        "{:.4f}".format(np.std(ca_data_to_filter[1].data)),
-                        "{:.4f}".format(np.std(fir_data_out[1].data)),
-                        "{:.4f}".format(np.std(iir_data_out[1].data))]]
-def dummy(some):
-    return some
-dummy(table_std_filtering)
-# print(tabulate(table_std_filtering,
-#                headers=["Record description",
-#                         "std raw signal",
-#                         "FIR",
-#                         "IIR"],
-#                floatfmt=".4f" ))
-# print(np.std(fir_out_1_5_ca.data), np.std(ca1_5.data))
-# print(np.std(iir_out_1_5_ca.data), np.std(ca1_5.data))
-# butter_iir_200 = filt_butter_factory(fc_Hz=200, filt_order=4)
-
-  #+end_src
-  #+RESULTS:
-  | Record description | std raw signal | FIR | IIR |
-  |---+---+---+---|
-  | Inverter on, WS=5 | 0.0434 | 0.0245 | 0.0241 |
-  | Inverter on, WS=10 | 0.0841 | 0.0760 | 0.0759 |
-
-\selectlanguage{greek}
+#+end_src
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 10 \(m/s\).
+#+LABEL: ic1_10
+#+RESULTS: ic1_10
 \clearpage
-- Πίνακας τυπικής απόκλισης εισόδου και εξόδου φίλτρων για αεροσήραγγα
-  \selectlanguage{english}
-  #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
-from pros_noisefiltering.WT_NoiProc import filt_butter_factory
-butter_iir_2000 = filt_butter_factory(fc_Hz=2000, filt_order=4)
 
-fir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
-                              filter_func=fir_2000)
-iir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
-                              filter_func=butter_iir_2000)
-wt_data_to_filter = [dfi_i1_w5, dfi_i1_w10,
-                     dfi_i1_w15, dfi_i1_w20]
-iir_data_out = []
-fir_data_out = []
-# filter with fir all data and make a list for the output
-for each in wt_data_to_filter:
-    fir_data_out.append(each.filter(fc_Hz=2000,
-                                    filter_func=fir_2000))
+Εδώ θα παρατηρήσει κανείς πως ο θόρυβος είναι λιγότερο εμφανής από τα
+προηγούμενα διαγράμματα. Αυτό συμβαίνει λόγω της χαμηλότερης συχνότητας
+καταγραφής στην περίπτωση της αεροσήραγγας. Όπως αναγράφεται και στους
+τίτλους των διαγραμμάτων, τα παρακάτω σήματα καταγράφηκαν με συχνότητα
+\(100\ kHz\). Έτσι λόγω του θεωρήματος \(Niquist\) το μέγιστο φάσμα που
+μπορούμε να απεικονίσουμε υποχωρεί από τα \(250\ kHz\), του πειράματος με
+τον πεπιεσμένο αέρα, στα \(50\ kHz\). Επιλέξαμε την μείωση αυτή, για
+λόγους πειραματισμού καθώς η μείωση του αριθμού των δειγμάτων, προσφέρει
+ταχύτερη επεξεργασία.
+#+NAME: fi1_w5
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w5,
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=4e0,
+                          nperseg=NPERSEG,
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 5 \(m/s\).
+#+LABEL: fi1_5
+#+RESULTS: fi1_w5
+[[file:./.ob-jupyter/14263a900760581982f9a87f593f8894a7a6c24e.png]]
 
-# filter with iir all data and make a list for the output
-for each in wt_data_to_filter:
-    iir_data_out.append(each.filter(fc_Hz=2000,
-                                    filter_func=butter_iir_2000))
+#+NAME: fi1_w10
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w10,
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=4e0,
+                          nperseg=NPERSEG,
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 10 \(m/s\).
+#+LABEL: fi1_10
+#+RESULTS: fi1_w10
 
+#+NAME: fi1_w15
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w15,
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=4e0,
+                          nperseg=NPERSEG,
+                          figsize=(8, 4))
+#+end_src
 
-table_std_filtering = [[f"{wt_data_to_filter[0].description}",
-                        np.std(wt_data_to_filter[0].data),
-                        np.std(fir_data_out[0].data),
-                        np.std(iir_data_out[0].data)],
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 15 \(m/s\).
+#+LABEL: fi1_15
+#+RESULTS: fi1_w15
+[[file:./.ob-jupyter/0bee83ba9176ddfd1d086b65d8e8c09fe4ee5773.png]]
 
-                       [f"{wt_data_to_filter[1].description}",
-                        np.std(wt_data_to_filter[1].data),
-                        np.std(fir_data_out[1].data),
-                        np.std(iir_data_out[1].data)],
+#+NAME: fi1_w20
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w20,
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=4e0,
+                          nperseg=NPERSEG,
+                          figsize=(8, 4))
+#+end_src
 
-                       [f"{wt_data_to_filter[2].description}",
-                        np.std(wt_data_to_filter[2].data),
-                        np.std(fir_data_out[2].data),
-                        np.std(iir_data_out[2].data)],
-                       [f"{wt_data_to_filter[3].description}",
-                        np.std(wt_data_to_filter[3].data),
-                        np.std(fir_data_out[3].data),
-                        np.std(iir_data_out[3].data)],
-                       ]
-print(tabulate(table_std_filtering,
-               headers=["Record description",
-                        "std raw signal",
-                        "FIR",
-                        "IIR"],
-               floatfmt=".4f" ))
-# print(np.std(fir_out_1_5_ca.data), np.std(ca1_5.data))
-# print(np.std(iir_out_1_5_ca.data), np.std(ca1_5.data))
-# butter_iir_200 = filt_butter_factory(fc_Hz=200, filt_order=4)
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 20 \(m/s\).
+#+LABEL: fi1_w20
+#+RESULTS: fi1_w20
 
-  #+end_src
+#+NAME: ii1_w5
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w5,
+                          filter_func=butter_filter_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=4e0,
+                          nperseg=NPERSEG,
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 5 \(m/s\).
+#+LABEL: ii1_w5
+#+RESULTS: ii1_w5
 
-  #+RESULTS:
-  :results:
-  : Record description            std raw signal     FIR     IIR
-  : --------------------------  ----------------  ------  ------
-  : Inverter On, WS=5, 100kHz             0.0385  0.0074  0.0083
-  : Inverter On, WS=10, 100kHz            0.0400  0.0124  0.0130
-  : Inverter On, WS=15, 100kHz            0.0421  0.0279  0.0281
-  : Inverter On, WS=20, 100kHz            0.0566  0.0483  0.0484
-  :end:
+#+NAME: ii1_w10
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w10,
+                          filter_func=butter_filter_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=4e0,
+                          nperseg=NPERSEG,
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 10 \(m/s\).
+#+LABEL: ii1_w10
+#+RESULTS: ii1_w10
 
-\selectlanguage{greek}
-     
-*** notes :noexport:
-- \(Welch\ method\ filtered-raw\ signal\) [100%]
-  - [X] Διαγράμματα για κομπρεσέρ
-  - [X] Διαγράμματα για αεροσήραγγα
-  - [X] τυπικές αποκλείσεις
+#+NAME: ii1_w15
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w15,
+                          filter_func=butter_filter_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=4e0,
+                          nperseg=NPERSEG,
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 15 \(m/s\).
+#+LABEL: ii1_w15
+#+RESULTS: ii1_w15
+
+#+NAME: ii1_w20
+#+begin_src jupyter-python :session python3 :async no  :exports results
+plot_comparative_response(dfi_i1_w20,
+                          filter_func=butter_filter_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=4e0,
+                          nperseg=NPERSEG,
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 20 \(m/s\).
+#+LABEL: ii1_w20
+#+RESULTS: ii1_w20
+\clearpage
 * Συμπεράσματα
 Όπως αναφέρθηκε αρκετές φορές και οι δύο κατηγορίες φίλτρων αποφέρουν αποδεκτά
 αποτελέσματα. Η σύγκριση μπορεί να γίνει λοιπόν στην ταχύτητα
@@ -2388,265 +2298,20 @@ print(tabulate(table_std_filtering,
 φιλτραρίσματος κρίνονται επαρκείς.
 \clearpage
 * Βιβλιογραφία
-\selectlanguage{english}
 #+bibliography: ./diss_bibliography.bib
+\selectlanguage{english}
+[cite/n:@vocoded67]
 [cite/n:@SULAIMAN20223117]
 [cite/n:@auto-fir-from-analog]
 [cite/n:@iir-survey]
-[cite/n:@SMITH2003333]
+[cite/n:@SMITHall]
+[cite/n:@LAIall]
 [cite/n:@pitot-standards]
-[cite/n:@LAI200314]
-[cite/n:@LAI200350]
-[cite/n:@LAI200361]
-[cite/n:@LAI200398]
 [cite/n:@Re-on-pitot]
-[cite/n:@sig-proc-first]
+[cite/n:@sigprocfirst]
 [cite/n:@oppenheim99]
-[cite/n:@SMITH200387]
-[cite/n:@SMITH2003169]
-[cite/n:@SMITH2003185]
-[cite/n:@SMITH2003225]
-[cite/n:@SMITH2003243]
-[cite/n:@SMITH2003261]
-[cite/n:@SMITH2003277]
-[cite/n:@SMITH2003285]
-[cite/n:@SMITH2003319]
 #+print_bibliography:
-* Source blocks :noexport: :noexport:
-** [#A] WHAT IS LOADED TO JUPYTER KERNEL
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer
-%whos
-#+end_src
-
-#+RESULTS:
-:results:
-#+begin_example
-Variable                    Type                    Data/Info
--------------------------------------------------------------
-CHAN_NAME                   str                     Wind2
-FIGSIZE                     tuple                   n=2
-FIGSIZE_STD                 tuple                   n=2
-FOLDER_FOR_DATA             PosixPath               /mnt/data_folder/measurem<...>2/new_record_prop_channel
-GROUP_NAME                  str                     Wind Measurement
-Graph_data_container        type                    <class 'pros_noisefilteri<...>er.Graph_data_container'>
-NPERSEG                     int                     65536
-Path                        type                    <class 'pathlib.Path'>
-SEPARATING_LINE             str                     
-TDMS_FNAME                  str                     Data.tdms
-TdmsFile                    type                    <class 'nptdms.tdms.TdmsFile'>
-WT_NoiseChannelProc         type                    <class 'pros_noisefilteri<...>roc.WT_NoiseChannelProc'>
-a                           ndarray                 5: 5 elems, type `float64`, 40 bytes
-ab                          ndarray                 5: 5 elems, type `float64`, 40 bytes
-anti_aliased                ndarray                 31000: 31000 elems, type `float64`, 248000 bytes (242.1875 kb)
-anti_aliased_50             ndarray                 310000: 310000 elems, type `float64`, 2480000 bytes (2.3651123046875 Mb)
-b                           ndarray                 5: 5 elems, type `float64`, 40 bytes
-bb                          ndarray                 5: 5 elems, type `float64`, 40 bytes
-butter_200                  ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
-butter_2000                 ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
-butter_filter_2000          function                <function filt_butter_fac<...>butter at 0x7f2e1f975b20>
-butter_iir_2000             function                <function filt_butter_fac<...>butter at 0x7f2e1f6934c0>
-ca1_0                       WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fd1ff10>
-ca1_10                      WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ec90>
-ca1_5                       WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ed50>
-ca_data_to_filter           list                    n=2
-ca_meas_dir                 PosixPath               /mnt/data_folder/measurem<...>op_channel/compressed air
-comp_air_dir                str                     compressed air
-data_CA_inv_0_WS_0          str                     ca0_0.1
-data_CA_inv_0_WS_11         str                     ca0_10.1
-data_CA_inv_0_WS_5          str                     ca0_5.1
-data_CA_inv_1_WS_0          str                     ca1_0.1
-data_CA_inv_1_WS_10         str                     ca1_10.1
-data_CA_inv_1_WS_5          str                     ca1_5.1
-data_inv_inv_0_WS_0         str                     in0_0.1
-data_inv_inv_1_WS10         str                     in1_10.1
-data_inv_inv_1_WS15         str                     in1_15.1
-data_inv_inv_1_WS_0         str                     in1_0.1
-data_inv_inv_1_WS_20        str                     in1_20.1
-data_inv_inv_1_WS_5         str                     in1_5.1
-dec_50kHz                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fd16450>
-dec_5kHz                    WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fd548d0>
-dec_at_50_kHz               str                     de50.1
-dec_at_5_kHz                str                     de5.1
-dec_meas_dir                PosixPath               /mnt/data_folder/measurem<...>d_prop_channel/Decimation
-df_tdms_0_0                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3c0c0310>
-df_tdms_0_10                WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026e390>
-df_tdms_0_5                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ed10>
-df_tdms_1_0                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ded0>
-df_tdms_1_10                WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ec90>
-df_tdms_1_5                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ed50>
-dfi_i0_w0                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e302728d0>
-dfi_i1_w0                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30286d50>
-dfi_i1_w10                  WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287750>
-dfi_i1_w15                  WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287710>
-dfi_i1_w20                  WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287790>
-dfi_i1_w5                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30286610>
-each                        WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287790>
-f                           ndarray                 328: 328 elems, type `float64`, 2624 bytes
-filt_butter_factory         function                <function filt_butter_factory at 0x7f2e3b0fc400>
-fir_200                     function                <function fir_factory_con<...>filter at 0x7f2e1fe84900>
-fir_2000                    function                <function fir_factory_con<...>filter at 0x7f2e1fd837e0>
-fir_data_out                list                    n=4
-fir_factory_constructor     function                <function fir_factory_con<...>ructor at 0x7f2e30230fe0>
-fir_filt_200                ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
-fir_filt_2000               ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
-fir_out_1_5_ca              WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1f1c6350>
-fs                          int                     30
-hb                          ndarray                 512: 512 elems, type `complex128`, 8192 bytes
-iir_data_out                list                    n=4
-iir_out_1_5_ca              WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1f1c7990>
-in1_0_av100                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fe0b390>
-inv_meas_dir                str                     inverter
-item                        str                     in1_20.1
-l_tdms_CA                   list                    n=6
-l_tdms_Inv                  list                    n=6
-math                        module                  <module 'math' from '/usr<...>311-x86_64-linux-gnu.so'>
-medec                       int                     100
-np                          module                  <module 'numpy' from '/us<...>kages/numpy/__init__.py'>
-path_ca_meas                PosixPath               /mnt/data_folder/measurem<...>sed air/ca1_0.1/Data.tdms
-path_comp                   PosixPath               /mnt/data_folder/measurem<...>ord_prop_channel/inverter
-path_dec_meas_50_kHz        PosixPath               /mnt/data_folder/measurem<...>cimation/de50.1/Data.tdms
-path_dec_meas_5_kHz         PosixPath               /mnt/data_folder/measurem<...>ecimation/de5.1/Data.tdms
-plot_comparative_response   function                <function plot_comparativ<...>sponse at 0x7f2e3ca68e00>
-plot_spect_comb2            function                <function plot_spect_comb2 at 0x7f2e30207f60>
-plt                         module                  <module 'matplotlib.pyplo<...>es/matplotlib/pyplot.py'>
-raw_signal_CA               list                    n=6
-scipy                       module                  <module 'scipy' from '/us<...>kages/scipy/__init__.py'>
-sign                        Graph_data_container    <pros_noisefiltering.Grap<...>object at 0x7f2e1facd950>
-signal                      module                  <module 'scipy.signal' fr<...>cipy/signal/__init__.py'>
-table                       list                    n=6
-table_filts                 list                    n=2
-table_std                   list                    n=4
-table_std_filtering         list                    n=4
-tablexydec                  list                    n=3
-tablexyrec                  list                    n=3
-tablexysign                 list                    n=3
-tabulate                    function                <function tabulate at 0x7f2e1fd81080>
-tdms_raw_WT                 TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e641a6810>
-tdms_raw_WT_50kHz           TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e1fd49390>
-tdms_raw_WT_5kHz            TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e640e97d0>
-ts                          ndarray                 150: 150 elems, type `float64`, 1200 bytes
-wb                          ndarray                 512: 512 elems, type `float64`, 4096 bytes
-wt_data_to_filter           list                    n=4
-x                           TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e30271590>
-y                           ndarray                 31000: 31000 elems, type `float64`, 248000 bytes (242.1875 kb)
-y_filtfilt                  ndarray                 150: 150 elems, type `float64`, 1200 bytes
-y_lfilter                   ndarray                 150: 150 elems, type `float64`, 1200 bytes
-yerr                        ndarray                 150: 150 elems, type `float64`, 1200 bytes
-yraw                        ndarray                 150: 150 elems, type `float64`, 1200 bytes
-ys                          ndarray                 150: 150 elems, type `float64`, 1200 bytes
-z                           ndarray                 328: 328 elems, type `float64`, 2624 bytes
-#+end_example
-:end:
-** FFT
-
-#+begin_src jupyter-python :session none  :async yes :results drawer
-
-class FftNew:
-    """# Better approach to fft.
-
-    Here is an example of how the calculation of fft for a given
-    signal is implemented.
-
-    Main function
-    ----------
-    >>>def fft_calc_and_plot(self):
-    >>>    num_samp = len(self.time_sec)
-    >>>    # compute fft
-    >>>    fhat = fft(self.sig, num_samp)
-    >>>    # Power spectrum (power/freq)
-    >>>    psd = fhat * np.conj(fhat) / num_samp
-    >>>    # create x-axis (frequencies)
-    >>>    freq = (1/(self.time_interv * num_samp)) * np.arange(num_samp)
-    >>>    # plot only first half (possitive)
-    >>>    plt_pos = np.arange(1, np.floor(num_samp/2), dtype=int)
-
-    Usage
-    ----------
-    >>>FftNew(df_tdms_1_0.decimate(dec=5, offset=0),
-    >>>     title='Decimation number 5 CA INV ON').fft_calc_and_plot()
-
-    Reference
-    ----------
-    http://databookuw.com/
-    """
-
-    def __init__(self, sign, title):
-        """# Object initialize.
-
-        This function constructs an object for a given signal
-        which will be plotted in the frequency domain.
-        """
-        self.plt_title = title
-        self.samp_rate = sign.fs_Hz
-        self.sig = sign.data
-        self.ind = sign.data_as_Series.index
-        self.time_interv = 1 / int(self.samp_rate)
-        self.time_sec = self.ind * self.time_interv
-
-    def fft_calc_and_plot(self):
-        """# FFT calculation and plotting.
-
-        This function is used to calculate and plot a signal in the
-        frequency domain using the fft library from numpy.
-        """
-        num_samp = len(self.time_sec)
-        # compute fft
-        fhat = fft(self.sig, num_samp)
-        # Power spectrum (power/freq)
-        psd = fhat * np.conj(fhat) / num_samp
-        # create x-axis (frequencies)
-        freq = (1/(self.time_interv * num_samp)) * np.arange(num_samp)
-        # plot only first half (possitive)
-        plt_pos = np.arange(1, np.floor(num_samp/2), dtype=int)
-
-        fig, axs = plt.subplots(2, 1)
-
-        plt.sca(axs[0])
-        plt.grid(True, which='both')
-        plt.title(self.plt_title)
-        plt.xlabel('Time [s]')
-        plt.ylabel('Amplitute (Voltage)')
-        plt.plot(self.time_sec, self.sig)
-        # plt.loglog(freq[plt_pos],(PSD[plt_pos]))
-
-        plt.sca(axs[1])
-        plt.loglog(freq[plt_pos], abs(psd[plt_pos]))
-        plt.title('Frequency domain')
-        plt.xlabel('Frequencies [Hz]')
-        plt.ylabel('Power/Freq')
-        plt.grid(True, which='both')
-
-
-#+end_src
-
-#+RESULTS:
-: 79f950729e3c1baa1f0d390325623460
-
-#+begin_src jupyter-python :session none  :async yes :results drawer
-
-#+end_src
-
-** LaTeX blocks
-*** 2 image side by side
-
-
-\begin{figure}
-\centering
-\begin{subfigure}{.5\textwidth}
-\centering
-\includegraphics[width=.8 \linewidth]{./decimation/with_aliasing.png}
-\caption{Αποδεκατισμός σήματος στα 5 \(kHz\)}
-\label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-\centering
-\includegraphics[width=.8 \linewidth]{./decimation/anti_aliasing_fir.png}
-\caption{Αποδεκατισμός με φίλτρο κατά της αλλοίωσης}
-\label{fig:sub2}
-\end{subfigure}
-\caption{Αποδεκατισμός σήματος με και χωρίς επεξεργασία κατά της αλλοίωσης.}
-\label{fig:test}
-\end{figure}
+\selectlanguage{greek}
 * GO BUTTONS :noexport:
 # <(agenda)> file:~/org/agenda.org
 # <(code)>
