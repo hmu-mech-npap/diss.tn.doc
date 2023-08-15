@@ -9,13 +9,15 @@
 #+cite_export: basic author author-year
 #+INCLUDE: title_page_latex.org
 :END:
-
+:LATEX:
 \numcommafalse
 \clearpage
 \tableofcontents
 #+TOC: tables
 \listoffigures
+\textnormal
 \clearpage
+:END:
 * Imports :noexport:
 #+begin_src jupyter-python :session python3 :async yes :results drawer
 #%%
@@ -184,8 +186,7 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
 #+RESULTS:
 :results:
 :end:
-* Θεωρητικό μέρος
-** Εισαγωγή
+* Εισαγωγή
 #+ODT: <text:p text:style-name="PageBreak"/>
 Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
 τηλεπικοινωνίες μετά ή/και πριν την μετάδοση από τον πομπό προς τον
@@ -197,7 +198,7 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
 Η απομόνωση αυτή μπορεί να επιτευχθεί είτε μέσω συμβατικών φίλτρων,
 δηλαδή αντιστάσεις και πυκνωτές κατάλληλα τοποθετημένα στο κύκλωμα που
 συλλέγει την τάση (*ρεύμα μέτρησης*), είτε με την χρήση μεθόδων ψηφιακής
-επεξεργασίας σημάτων \(\selectlanguage{english}\text{DSP}\selectlanguage{greek}\).
+επεξεργασίας σημάτων \(\selectlanguage{english}\text{(DSP)}\selectlanguage{greek}\).
 Στις μέρες μας προτιμάται ο 2ος τρόπος λόγω
 της ραγδαίας εξέλιξης των Η/Υ, με αποτέλεσμα να επιφέρει μεγαλύτερο
 κόστος η εγκατάσταση αναλογικών φίλτρων σε κάθε θέση που απαιτείται.
@@ -209,7 +210,7 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
 αποτέλεσμα την ευρύτερη εγκαθίδρυση των ψηφιακών μέσων επεξεργασίας
 σημάτων. Στις μέρες μας η ανάγκη διαχείρισης ολοένα και μεγαλύτερων
 αρχείων δεδομένων με καλύτερη ακρίβεια οδήγησε την επιστημονική κοινότητα
-στην χρήση της μεθόδου *μετα-επεξεργασίας* (\(post-processing\)). Βασικό όφελος
+στην χρήση της μεθόδου *μετα-επεξεργασίας* \(\selectlanguage{english}\text{(post-processing)}\selectlanguage{greek}\). Βασικό όφελος
 ήταν η δυνατότητα επαναληψιμότητας του πειράματος και σύγκρισης των
 αποτελεσμάτων σε όλο τον κόσμο, ουσιαστική αρχή της πειραματικής
 διαδικασίας. Έτσι με την χρήση προγραμματισμού δίνεται πλέον η
@@ -218,9 +219,9 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
 σε πολλές περιπτώσεις μετά την καταγραφή των μετρήσεων.
 
 Αξίζει εδώ να σχολιαστεί ότι τα πρότυπα φίλτρα που εφαρμόστηκαν, τυποποιήθηκαν
-από το λογισμικό υπολογισμών και προγραμματισμού \(Matlab\) και στην συνέχεια
+από το λογισμικό υπολογισμών και προγραμματισμού \(\selectlanguage{english}\text{Matlab}\selectlanguage{greek}\) και στην συνέχεια
 πολλές γλώσσες προγραμματισμού τα συμπεριέλαβαν σε βιβλιοθήκες για επεξεργασία
-σημάτων. Η \(python\) θεωρείται από τις γλώσσες με τις αναλυτικότερες βιβλιοθήκες
+σημάτων. Η \(\selectlanguage{english}\text{python}\selectlanguage{greek}\) θεωρείται από τις γλώσσες με τις αναλυτικότερες βιβλιοθήκες
 για την κατασκευή φίλτρων, λόγω των πολλών επιλογών σε τύπους αλλά ειδικά στην
 πλειθώρα χαρακτηριστικών που μπορεί ο χρήστης να καθορίσει για τη συμπεριφορά
 και απόκριση των φίλτρων.
@@ -245,7 +246,7 @@ _ιδιαιτερότητα_ που παρουσιάστηκε στην εγκα
 :PROPERTIES:
 :ATTR_ODT: :page-break t
 :END:
-Από την εποχή της ανακάλυψης του Απειροστικού λογισμού \(calculus\)
+Από την εποχή της ανακάλυψης του Απειροστικού λογισμού \(\selectlanguage{english}\text{(calculus)}\selectlanguage{greek}\)
 τον 17ο αιώνα, οι επιστήμονες προσπαθούν να εξηγήσουν τα φυσικά
 φαινόμενα με μαθηματικά μοντέλα χρησιμοποιώντας εξισώσεις
 συνεχών μεταβλητών και διαφορικές εξισώσεις. Χρησιμοποιήθηκαν
@@ -253,7 +254,7 @@ _ιδιαιτερότητα_ που παρουσιάστηκε στην εγκα
 ήταν εφικτό να καθοριστούν. Αργότερα μαθηματικοί του 18ου αιώνα
 όπως οι Ευλερ, Μπερνούλι και Λαγκραντζ κατασκεύασαν μεθόδους
 για αριθμητική ολοκλήρωση και την εισαγωγή εξισώσεων συνεχών
-μεταβλητών. Μια ιστορική μελέτη από τους \(Heideman,\ Johnson\) και
+μεταβλητών. Μια ιστορική μελέτη από τους _ref  \(Heideman,\ Johnson\)__ και
 ${Burrus}$ (1984) έδειξε ότι ο ${Gauss}$ είχε ανακαλύψει την βασική
 αρχή του γρήγορου μετασχηματισμού ${Fourier}$ ήδη από το 1805, πριν
 την δημοσίευση της διατριβής του πάνω στην απεικόνιση
@@ -344,8 +345,9 @@ ${Burrus}$ (1984) έδειξε ότι ο ${Gauss}$ είχε ανακαλύψει
 αριθμών. Έτσι σήμερα η ανάλυση σημάτων, η καταγραφή όπως και η μετάδοσή τους
 γίνεται πολλές φορές εξ' ολοκλήρου από ψηφιακά συστήματα.
 -----
-** Εισαγωγή Σήματα
-Ο όρος σήμα ${(signal)}$ δίνεται σε κάτι που εμπεριέχει πληροφορία. Γενικά
+* Θεωρητικό υπόβαθρο
+** Τι είναι σήμα?
+Ο όρος σήμα ${\selectlanguage{english}\text{(signal)}\selectlanguage{greek}}$ δίνεται σε κάτι που εμπεριέχει πληροφορία. Γενικά
 τα σήματα χρησιμοποιούνται στην κωδικοποίηση και εξαγωγή πληροφοριών για
 την κατάσταση ή/και την συμπεριφορά ενός φυσικού συστήματος. Συχνά
 συνδυάζοντας διαφορετικά σήματα υπάρχει η δυνατότητα επικοινωνίας μεταξύ
@@ -1631,7 +1633,368 @@ dummy(table)
 Καταγράφηκαν και σήματα με συχνότητα δειγματοληψίας 500 \(kHz\) και ο θόρυβος
 παραμένει, επομένως κρίθηκε πως πρόκειται για παρεμβολή μεγαλύτερης συχνότητας
 από τις δυνατότητες καταγραφής του συστήματος που διαθέτουμε.
-*** Αποδεκατισμός σήματος
+*** Απομείωση θορύβου
+Για την επιλογή του κατάλληλου φίλτρου εξετάστηκαν οι δύο βασικές
+κατηγορίες, συγκρίνοντας την τιμή της τυπικής απόκλισης του σήματος, πριν
+και μετά την εφαρμογή.  Από τους σημαντικότερους παράγοντες
+που επηρεάζουν τον χρόνο υπολογισμού στα φίλτρα είναι η τάξη τους, δηλαδή
+το πλήθος των συντελεστών του πολυωνύμου που θα κατασκευαστεί από τον
+εκάστοτε αλγόριθμο. Όπως θα δειχθεί και στη συνέχεια, τα φίλτρα \(IIR\), ενώ
+αποδίδουν καλύτερα στην απομείωση του θορύβου με μικρότερης τάξης φίλτρα
+από τα \(FIR\), απαιτούν μεγαλύτερη υπολογιστική ισχύ λόγω της αναδρομικής
+συμπεριφοράς τους. Στην πράξη ανάλογα με την συχνότητα καταγραφής και
+την διάρκεια του σήματος, δηλαδή την ποσότητα των στοιχείων που εκφράζουν
+το διακριτό σήμα προς επεξεργασία, επιλέγεται και μια από τις βασικές
+κατηγορίες. Εδώ εξετάστηκαν και οι δύο μέθοδοι με σήματα διάρκειας περίπου
+επτά δευτερόλεπτα σε συχνότητες καταγραφής 500 και 100 \(kHz\). Η πηγή του
+ανέμου από το καλώδιο πεπιεσμένου αέρα καταγράφηκε με συχνότητα 500 \(kHz\),
+ενώ του ανεμιστήρα της αεροσήραγγας (*\(ventilator\)*) στα 100 \(kHz\).
+
+#+CAPTION: Διάγραμμα απεικόνισης σήματος στα πεδία χρόνου και συχνότητας εφαρμόζοντας ένα απλό \(butterworth\) φίλτρο διέλευσης χαμηλών συχνοτήτων.
+#+attr_latex: :width 450px :height 480px
+[[file:./src/sign_overview/butterworth_IIR_low_pass_2000_Hz_Inverter_on_WS_0_.jpg]]
+
+Όπως θα γίνει αντιληπτό στη συνέχεια, η διαδικασία παραγωγής των αποτελεσμάτων
+αποτέλεσε το μικρότερο μέρος της εργασίας. Σημαντικό ήταν να καθοριστεί ο
+τρόπος και οι μέθοδοι που θα χρησιμοποιηθούν και έπειτα να εφαρμοστούν
+σωστά. Τέλος, θα δειχθεί πως και οι δύο μέθοδοι είναι αποδεκτοί για την
+συγκεκριμένη εφαρμογή, υπό προϋποθέσεις που θα συζητηθούν στα συμπεράσματα.
+\clearpage
+*** Διαγράμματα πυκνότητας ισχύος εισόδου και εξόδου φίλτρων
+Η βασική ανάλυση των σημάτων γίνεται στο πεδίο των συχνοτήτων και κυρίως
+μέσω της πολυαναφερόμενης μέχρι στιγμής μεθόδου \(Welch\). Αυτό συμβαίνει
+καθώς απεικονίζοντας το σήμα στο πεδίο του χρόνου, εκτός της μεταβολής της
+ισχύος του σήματος (αν αυτή απεικονίζεται), δεν μπορούμε να καθορίσουμε
+τυχών θορυβώδη φάσματα συχνοτήτων. Έτσι πρώτο βήμα είναι να αποτυπωθεί το
+φάσμα που επηρεάζει τις χαμηλές συχνότητες, όπου και καταγράφεται η
+πληροφορία από τον αισθητήρα. Στις περισσότερες συσκευές οι συχνότητες
+που ξεπερνούν τα \(2-5\ kHz\), είτε αναφέρονται σε σήμα ήχου ή/και εικόνας,
+είτε αποτελούν θόρυβο από το περιβάλλον πέραν εξαιρέσεων. Στην περίπτωση
+που εξετάστηκε στο εργαστήριο, κρίθηκε πως μετά τα \(2\ kHz\), το σήμα δεν
+περιείχε “ουσιώδη” πληροφορία. Έτσι τα φίλτρα που εφαρμόστηκαν ήταν διέλευσης
+χαμηλών συχνοτήτων από \(100-2000\ Hz\).  Στα παρακάτω διαγράμματα σημειώνεται
+με μπλε διακεκομμένη γραμμή.
+
+Θα φανεί από τα πρώτα διαγράμματα πως τα \(FIR\) συστήματα παρουσιάζουν πολύ
+πιο απότομη κλίση. Αυτό συμβαίνει καθώς ο κύριος παράγοντας που την επηρεάζει,
+είναι η τάξη του φίλτρου. Όμως ταυτόχρονα αυξάνεται και η ταχύτητα υπολογισμού
+αφού δεν καλείται αναδρομικά η έξοδος του φίλτρου όπως έχει σημειωθεί στην
+ενότητα των φίλτρων. Κατά την εφαρμογή των δύο μεθόδων θα διαπιστώσουμε πως τα
+αποτελέσματα αποκλίνουν σε πολύ μικρό βαθμό συγκρίνοντας τις τυπικές
+αποκλίσεις των εξόδων σχετικά με την είσοδο των φίλτρων.
+
+#+NAME: fc1_5
+#+begin_src jupyter-python :session python3 :async no :exports results
+from pros_noisefiltering.plotting_funcs import plot_comparative_response
+from pros_noisefiltering.filters.iir import filt_butter_factory
+
+butter_filter_2000 = filt_butter_factory(filt_order=4, fc_Hz=2000)
+ca1_5 = df_tdms_1_5
+ca1_10 = df_tdms_1_10
+
+plot_comparative_response(ca1_5,
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          figsize=(10, 5))
+#+end_src
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\).
+#+LABEL: fc1_5
+#+RESULTS: fc1_5
+
+#+NAME: fc1_10
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(ca1_10,
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          figsize=(10, 5))
+
+#+end_src
+
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 10 \(m/s\).
+#+LABEL: fc1_10
+#+RESULTS: fc1_10
+
+#+NAME: ic1_5
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(ca1_5,
+                          filter_func=butter_filter_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          figsize=(10, 5))
+#+end_src
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\).
+#+LABEL: ic1_5
+#+RESULTS: ic1_5
+[[file:./.ob-jupyter/2385fe2b5129bcc279465fedd2958fce5a2127ce.png]]
+
+#+NAME: ic1_10
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(ca1_10,
+                          filter_func=butter_filter_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          figsize=(10, 5))
+#+end_src
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 10 \(m/s\).
+#+LABEL: ic1_10
+#+RESULTS: ic1_10
+\clearpage
+
+Εδώ θα παρατηρήσει κανείς πως ο θόρυβος είναι λιγότερο εμφανής από τα
+προηγούμενα διαγράμματα. Αυτό συμβαίνει λόγω της χαμηλότερης συχνότητας
+καταγραφής στην περίπτωση της αεροσήραγγας. Όπως αναγράφεται και στους
+τίτλους των διαγραμμάτων, τα παρακάτω σήματα καταγράφηκαν με συχνότητα
+\(100\ kHz\). Έτσι λόγω του θεωρήματος \(Niquist\) το μέγιστο φάσμα που
+μπορούμε να απεικονίσουμε υποχωρεί από τα \(250\ kHz\), του πειράματος με
+τον πεπιεσμένο αέρα, στα \(50\ kHz\). Επιλέξαμε την μείωση αυτή, για
+λόγους πειραματισμού καθώς η μείωση του αριθμού των δειγμάτων, προσφέρει
+ταχύτερη επεξεργασία.
+#+NAME: fi1_w5
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w5,
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          xlim=(1e0, 1e5),
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 5 \(m/s\).
+#+LABEL: fi1_5
+#+RESULTS: fi1_w5
+[[file:./.ob-jupyter/e0d5d27491f984b8b36d4495b30d40023a673025.png]]
+
+#+NAME: fi1_w10
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w10,
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          xlim=(1e0, 1e5),
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 10 \(m/s\).
+#+LABEL: fi1_10
+#+RESULTS: fi1_w10
+[[file:./.ob-jupyter/a8f3e9280faa952909a223e4a4f631623668af4f.png]]
+
+#+NAME: fi1_w15
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w15,
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          xlim=(1e0, 1e5),
+                          figsize=(8, 4))
+#+end_src
+
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 15 \(m/s\).
+#+LABEL: fi1_15
+#+RESULTS: fi1_w15
+[[file:./.ob-jupyter/0bee83ba9176ddfd1d086b65d8e8c09fe4ee5773.png]]
+
+#+NAME: fi1_w20
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w20,
+                          filter_func=fir_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          xlim=(1e0, 1e5),
+                          figsize=(8, 4))
+#+end_src
+
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 20 \(m/s\).
+#+LABEL: fi1_w20
+#+RESULTS: fi1_w20
+
+#+NAME: ii1_w5
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w5,
+                          filter_func=butter_filter_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          xlim=(1e0, 1e5),
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 5 \(m/s\).
+#+LABEL: ii1_w5
+#+RESULTS: ii1_w5
+
+#+NAME: ii1_w10
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w10,
+                          filter_func=butter_filter_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          xlim=(1e0, 1e5),
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 10 \(m/s\).
+#+LABEL: ii1_w10
+#+RESULTS: ii1_w10
+
+#+NAME: ii1_w15
+#+begin_src jupyter-python :session python3 :async no :exports results
+plot_comparative_response(dfi_i1_w15,
+                          filter_func=butter_filter_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          xlim=(1e0, 1e5),
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 15 \(m/s\).
+#+LABEL: ii1_w15
+#+RESULTS: ii1_w15
+
+#+NAME: ii1_w20
+#+begin_src jupyter-python :session python3 :async no  :exports results
+plot_comparative_response(dfi_i1_w20,
+                          filter_func=butter_filter_2000,
+                          response_offset=2e-4,
+                          Kolmogorov_offset=None,
+                          nperseg=NPERSEG,
+                          xlim=(1e0, 1e5),
+                          figsize=(8, 4))
+#+end_src
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 20 \(m/s\).
+#+LABEL: ii1_w20
+#+RESULTS: ii1_w20
+[[file:./.ob-jupyter/54705a03fc7393cab8d1ac85fdde21f9cb744dc1.png]]
+\clearpage
+*** notes :noexport:
+- [X] *Εδώ πρέπει να μπουν διαγράμματα από \(filters\ and\ welch\)*
+- [X] *Να φέρω τα αναγκαία εδώ σε \(code\ blocks\)*
+- [X] Τα έχω ήδη από τα τους φακέλους με τα φίλτρα
+- [X] Να τσεκαριστούν για να είμαι σίγουρος
+* Σύκγριση αποτελεσμάτων
+** Επιρροή μετασχηματιστή στον αισθητήρα
+Όπως θα γίνει αντιληπτό παρακάτω, απεικονίζοντας τις μετρήσεις για τον
+μετασχηματιστή ανοιχτό και κλειστό σε αντίστοιχες ταχύτητες ανέμου, μπορούμε
+να συμπεράνουμε δύο βασικά χαρακτηριστικά. Το πρώτο αναφέρεται στο εύρος των
+συχνοτήτων που επηρεάζονται. Καθώς μειώνεται η συχνότητα καταγραφής, ο θόρυβος
+των ηλεκτρομαγνητικών κυμάτων μεταφέρεται από τις χαμηλές προς τις υψηλές
+συχνότητες. Αιτία του συγκεκριμένου φαινομένου είναι το όριο της συχνότητας
+που προσφέρει το καταγραφικό σύστημα της εγκατάστασης. Λογικά το εύρος
+συχνοτήτων που καλύπτει ο θόρυβος βρίσκεται σε μεγαλύτερες συχνότητες και
+επηρεάζεται από αλλοίωση, αφού η συχνότητα καταγραφής είναι μικρότερη εκείνης
+του θορύβου.
+#+NAME: fig:invOpenZero
+#+begin_src jupyter-python :session python3 :results figure :exports results
+NPERSEG=1024<<6
+FIGSIZE = (10, 5)
+medec = 100
+
+plot_spect_comb2([
+    df_tdms_1_0.set_desc('500 kHz (inverter On)').calc_spectrum(nperseg=NPERSEG, scaling='density'),
+    df_tdms_0_0.set_desc('500 kHz (inverter Off)').calc_spectrum(nperseg=NPERSEG, scaling='density'),
+    # dec_5kHz.set_desc('5 kHz origin').calc_spectrum(nperseg=NPERSEG/100, scaling='density')
+],
+                 title='Σημάτα αισθητήρα για μηδενική ταχύτητα ανέμου με τον μετ/στή ανοιχτό και κλειστό.',
+                 xlim=[1e0,3e5], ylim = [1e-6,0.5e-2],
+                 figsize = FIGSIZE,
+                 # draw_lines=True,
+                 # alpha=0.2,
+                 markersize=0.6,
+                 )
+# plt.savefig(f'./500khz_raw_on_off.png',facecolor='white', transparent=False)
+# plt.savefig(f'./100khz_raw_on_off.png',facecolor='white', transparent=False)
+#+end_src
+
+#+CAPTION: Σύγκριση σήματος για μηδενική ταχύτητα και τον μετ/στή ανοιχτό και κλειστό καταγεγραμμένο στα \selectlanguage{english}\text{500\ kHz}\selectlanguage{greek}.
+#+NAME: fig:invOpenZero
+#+RESULTS: fig:invOpenZero
+[[file:./.ob-jupyter/40faed2780e08fbba7a08055f5e4f70b69b2152d.png]]
+
+#+NAME: fig:invOpenZero100Ref
+#+begin_src jupyter-python :session python3 :results figure :exports results
+plot_spect_comb2([
+    dfi_i1_w0.set_desc('100 kHz (inverter On)').calc_spectrum(nperseg=NPERSEG/5, scaling='density'),
+    dfi_i0_w0.set_desc('100 kHz (inverter Off)').calc_spectrum(nperseg=NPERSEG/5, scaling='density'),],
+                 title='Σημάτα αισθητήρα για μηδενική ταχύτητα ανέμου με τον μετ/στή ανοιχτό και κλειστό.',
+                 xlim=[1e0,3e5], ylim = [1e-6,0.5e-2],
+                 figsize = FIGSIZE,
+                 # draw_lines=True,
+                 # alpha=0.2,
+                 markersize=0.6,
+                 )
+#+end_src
+
+#+CAPTION: Σύγκριση σήματος για μηδενική ταχύτητα και τον μετ/στή ανοιχτό και κλειστό καταγεγραμμένο στα \selectlanguage{english}\text{100\ kHz}\selectlanguage{greek}.
+#+NAME: fig:invOpenZero100Ref
+#+RESULTS: fig:invOpenZero100Ref
+[[file:./.ob-jupyter/8d88979c589d124e2b6a84c0b11aeb3b9a120aeb.png]]
+
+#+NAME: fig:invOpenTen
+#+begin_src jupyter-python :session python3 :results figure :exports results
+NPERSEG=1024<<6
+FIGSIZE = (10, 5)
+medec = 100
+
+plot_spect_comb2([
+    df_tdms_0_10.set_desc('500 kHz origin').calc_spectrum(nperseg=NPERSEG, scaling='density'),
+    df_tdms_1_10.set_desc('500 kHz (inverter On)').calc_spectrum(nperseg=NPERSEG, scaling='density'),
+    # dfi_i1_w10.set_desc('100 kHz (inverter On)').calc_spectrum(nperseg=NPERSEG/5, scaling='density'),
+    # dec_5kHz.set_desc('5 kHz origin').calc_spectrum(nperseg=NPERSEG/100, scaling='density')
+],
+                 title='Σημάτα αισθητήρα για ταχύτητα ανέμου (10 m/s) με τον μετ/στή ανοιχτό και κλειστό.',
+                 xlim=[8e0,3e5], ylim = [1e-6,0.5e-1],
+                 figsize = FIGSIZE,
+                 draw_lines=True,
+                 # alpha=0.2,
+                 # markersize=0.8,
+                 )
+
+#+end_src
+
+Στις εικόνες [[fig:invOpenZero]] και [[fig:invOpenZero100Ref]] φαίνεται ο θόρυβος να μεταφέρεται από τα
+\selectlanguage{english}\text{10-100\ kHz}\selectlanguage{greek}
+στα \selectlanguage{english}\text{1-10\ kHz}\selectlanguage{greek}. Στο επόμενο
+διάγραμμα ([[fig:invOpenTenRef]]) φαίνεται η αύξηση της ισχύος του σήματος όταν ο
+μετασχηματιστής είναι ανοιχτός. Πίο συγκεκριμένα παρατηρείται, μικρή αύξηση
+της έντασης στην περιοχή των \selectlanguage{english}\text{200-800\ Hz}\selectlanguage{greek}
+με την έντονη αύξηση να παρουσιάζεται μετά τα \selectlanguage{english}\text{2-3\ kHz}
+\selectlanguage{greek}. Η διαφορά αυτή είναι ξεκάθαρη στο
+
+
+#+CAPTION: Σύγκριση σήματος για ταχύτητα 10 \(\selectlanguage{english}\text{m/s}\selectlanguage{greek}\) και τον μετ/στή ανοιχτό και κλειστό.
+#+NAME: fig:invOpenTenRef
+#+RESULTS: fig:invOpenTen
+[[file:./.ob-jupyter/861dcda7acfeab2e9480641242a98d00cd115866.png]]
+
+Εδω πρεπει να μιλησω για διαφορα... σε λιγο όμως...
+
+#+NAME: fig:sfreqComp
+#+begin_src jupyter-python :session python3 :results figure :exports results
+
+plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
+                  dec_50kHz.set_desc('50 kHz').calc_spectrum( nperseg=NPERSEG/10),
+                  dec_5kHz.set_desc('5 kHz').calc_spectrum( nperseg=NPERSEG/100)
+                  ],
+                 title='Σύγκριση σημάτων με διαφορετικές συχνότητες καταγραφής για μηδενική ταχύτητα',
+                 xlim=[1e1,3.5e5], ylim = [1e-5,0.5e-2],
+                 figsize = (10, 5),
+                 draw_lines=True
+                 )
+
+#+end_src
+
+#+CAPTION: Σύγκριση σήματος σε διαφορετικές συχνότητες καταγραφής με τον μετασχηματιστή ανοιχτό και μηδενική ταχύτητα ανέμου.
+#+RESULTS: fig:sfreqComp
+[[file:./.ob-jupyter/2a1fa5fb4ca167197da6ec7ce5d20eda33057ad9.png]]
+\clearpage
+** Αποδεκατισμός σήματος
 <<sec:decimation-chapter>>
 Η τεχνική του αποδεκατισμού εφαρμόστηκε κυρίως στην αρχή της επεξεργασίας
 για να ελεγχθεί η διαδικασία καταγραφής. Κατέστη αναγκαίο να μπορέσουμε
@@ -1642,12 +2005,12 @@ dummy(table)
 διάρκειας σήματος, για την ολοκλήρωση των διαδικασιών που εφαρμόζονται, θα
 χρειαζόμασταν πολύ χρόνο. Στα παρακάτω διαγράμματα αποτυπώνεται ο τρόπος
 που επηρεάζει το σήμα η διαδικασία αυτή.
-**** Directories :noexport:
+*** Directories :noexport:
 - [X] *Εδώ πρεπει να μπουν διαγράμματα απο \(decimation\)*
 - [X] Να πω και μερικά πραγματα μαζι με τα αποτελέσματα.
 - [X] Έχω ήδη κάποια από τα αρχεία για το paper
 - [X] Να τσεκαριστούν για να είμαι σίγουρος
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports code 
+#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports code
 #%%
 
 ca_meas_dir = FOLDER_FOR_DATA / 'compressed air'
@@ -1691,12 +2054,12 @@ dec_5kHz = WT_NoiseChannelProc.from_tdms(tdms_raw_WT_5kHz[GROUP_NAME][CHAN_NAME]
 #+RESULTS:
 :results:
 :end:
-**** *Διαγράμματα αποδεκατισμού με και χωρίς αλλοίωση στο πεδίο των συχνοτήτων*
+*** *Διαγράμματα αποδεκατισμού με και χωρίς αλλοίωση στο πεδίο των συχνοτήτων*
 #+begin_src jupyter-python :session python3 :async yes :results figure :exports none
 from scipy import signal
 import matplotlib.pyplot as plt
 NPERSEG=1024<<6
-FIGSIZE = (15,10)
+FIGSIZE = (10, 5)
 medec = 100
 
 # print(len(ca1_0.decimate(dec=medec, offset=0).data))
@@ -1713,7 +2076,7 @@ sign = Graph_data_container(x=z,
 
 plot_spect_comb2([
     ca1_0.decimate(dec=1,offset=0).set_desc('500 kHz origin').calc_spectrum( nperseg=NPERSEG, scaling='density'),
-    ca1_0.decimate(dec=medec,offset=0).set_desc('5 kHz (dec=10)').calc_spectrum( nperseg=NPERSEG/medec, scaling='density'),
+    ca1_0.decimate(dec=medec,offset=0).set_desc('5 kHz (dec=100)').calc_spectrum( nperseg=NPERSEG/medec, scaling='density'),
     dec_5kHz.set_desc('5 kHz origin').calc_spectrum(nperseg=NPERSEG/100, scaling='density')
 ],
                  title='Αποδεκατισμός σήματος χωρίς επεξεργασία κατά της αλλοίωσης',
@@ -1736,8 +2099,8 @@ plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent
 #+end_src
 #+RESULTS:
 :RESULTS:
-[[file:./.ob-jupyter/8027c0b392685323a7c98def9626636667d1e0a6.png]]
-[[file:./.ob-jupyter/edbe4f41909919700fee15b1f35b2b2952f34d49.png]]
+[[file:./.ob-jupyter/70e7c52ead4cae9bf29cb4414ae8226698b16782.png]]
+[[file:./.ob-jupyter/c1b4f267ec74d607df908d087422ee163ef47ccd.png]]
 :END:
 
 #+attr_latex: :width 500px :height 280px
@@ -1755,7 +2118,7 @@ plt.savefig(f'./decimation/anti_aliasing_fir.png',facecolor='white', transparent
 μπορέσουμε να εφαρμόσουμε σωστά την συγκεκριμένη τεχνική, χρησιμοποιώντας
 και κάποιο φίλτρο για την διόρθωση της αλλοίωσης, υπάρχουν πολλές μέθοδοι,
 ήδη στις βιβλιοθήκες που χρησιμοποιήθηκαν για την ανάλυση των σημάτων.
-\clearpage
+
 #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports results
 #%%
 from tabulate import SEPARATING_LINE
@@ -1823,7 +2186,7 @@ tablexysign=[["Αριθμός δειγμάτων ",
 #+RESULTS:
 :results:
 :end:
-**** *Πίνακες επαλήθευσης μεθόδων στο πεδίο των συχνοτήτων*
+*** *Πίνακες επαλήθευσης μεθόδων στο πεδίο των συχνοτήτων*
 
 Όπως φαίνεται παρακάτω, ο αριθμός των δειγμάτων καθώς
 εφαρμόζουμε την μέθοδο του αποδεκατισμού παραμένει σταθερός, γεγονός που
@@ -1957,7 +2320,7 @@ dummy(table_std)
 λοιπόν η δυνατότητα να αφαιρούμε τις συχνότητες που καταστρέφουν το σήμα
 με μεγαλύτερη ακρίβεια και επομένως να διαχωριστούν φάσματα που δεν απέχουν
 πολύ μεταξύ τους.
-**** plots for decimated signals from same origin :noexport:
+*** plots for decimated signals from same origin :noexport:
 #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports none
 
 
@@ -1982,9 +2345,9 @@ plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/6068645eb6533d71c74f84931e8fa9a7eedcd204.png]]
+[[file:./.ob-jupyter/fa815193629efd9c9f7092187af14e799cdd1933.png]]
 :end:
-**** time histories :noexport:
+*** time histories :noexport:
 #+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports code
 in1_0_av100 = ca1_0.average(100)
 print(ca1_0.operations)
@@ -2002,240 +2365,6 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 : ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'Decimation factor:10, Offset:0, new fs_Hz:50000.00000000014', 'Apply Averaging :100']
 : ['Loaded from tdms file Wind Measurement/Wind2, 500000.0000000014', 'pass filter 100', 'Apply Averaging :100']
 :end:
-*** Απομείωση θορύβου
-Για την επιλογή του κατάλληλου φίλτρου εξετάστηκαν οι δύο βασικές
-κατηγορίες, συγκρίνοντας την τιμή της τυπικής απόκλισης του σήματος, πριν
-και μετά την εφαρμογή.  Από τους σημαντικότερους παράγοντες
-που επηρεάζουν τον χρόνο υπολογισμού στα φίλτρα είναι η τάξη τους, δηλαδή
-το πλήθος των συντελεστών του πολυωνύμου που θα κατασκευαστεί από τον
-εκάστοτε αλγόριθμο. Όπως θα δειχθεί και στη συνέχεια, τα φίλτρα \(IIR\), ενώ
-αποδίδουν καλύτερα στην απομείωση του θορύβου με μικρότερης τάξης φίλτρα
-από τα \(FIR\), απαιτούν μεγαλύτερη υπολογιστική ισχύ λόγω της αναδρομικής
-συμπεριφοράς τους. Στην πράξη ανάλογα με την συχνότητα καταγραφής και
-την διάρκεια του σήματος, δηλαδή την ποσότητα των στοιχείων που εκφράζουν
-το διακριτό σήμα προς επεξεργασία, επιλέγεται και μια από τις βασικές
-κατηγορίες. Εδώ εξετάστηκαν και οι δύο μέθοδοι με σήματα διάρκειας περίπου
-επτά δευτερόλεπτα σε συχνότητες καταγραφής 500 και 100 \(kHz\). Η πηγή του
-ανέμου από το καλώδιο πεπιεσμένου αέρα καταγράφηκε με συχνότητα 500 \(kHz\),
-ενώ του ανεμιστήρα της αεροσήραγγας (*\(ventilator\)*) στα 100 \(kHz\).
-
-#+CAPTION: Διάγραμμα απεικόνισης σήματος στα πεδία χρόνου και συχνότητας εφαρμόζοντας ένα απλό \(butterworth\) φίλτρο διέλευσης χαμηλών συχνοτήτων.
-#+attr_latex: :width 450px :height 480px
-[[file:./src/sign_overview/butterworth_IIR_low_pass_2000_Hz_Inverter_on_WS_0_.jpg]]
-
-Όπως θα γίνει αντιληπτό στη συνέχεια, η διαδικασία παραγωγής των αποτελεσμάτων
-αποτέλεσε το μικρότερο μέρος της εργασίας. Σημαντικό ήταν να καθοριστεί ο
-τρόπος και οι μέθοδοι που θα χρησιμοποιηθούν και έπειτα να εφαρμοστούν
-σωστά. Τέλος, θα δειχθεί πως και οι δύο μέθοδοι είναι αποδεκτοί για την
-συγκεκριμένη εφαρμογή, υπό προϋποθέσεις που θα συζητηθούν στα συμπεράσματα.
-\clearpage
-*** notes :noexport:
-- [X] *Εδώ πρέπει να μπουν διαγράμματα από \(filters\ and\ welch\)*
-- [X] *Να φέρω τα αναγκαία εδώ σε \(code\ blocks\)*
-- [X] Τα έχω ήδη από τα τους φακέλους με τα φίλτρα
-- [X] Να τσεκαριστούν για να είμαι σίγουρος
-*** Διαγράμματα πυκνότητας ισχύος εισόδου και εξόδου φίλτρων
-Η βασική ανάλυση των σημάτων γίνεται στο πεδίο των συχνοτήτων και κυρίως
-μέσω της πολυαναφερόμενης μέχρι στιγμής μεθόδου \(Welch\). Αυτό συμβαίνει
-καθώς απεικονίζοντας το σήμα στο πεδίο του χρόνου, εκτός της μεταβολής της
-ισχύος του σήματος (αν αυτή απεικονίζεται), δεν μπορούμε να καθορίσουμε
-τυχών θορυβώδη φάσματα συχνοτήτων. Έτσι πρώτο βήμα είναι να αποτυπωθεί το
-φάσμα που επηρεάζει τις χαμηλές συχνότητες, όπου και καταγράφεται η
-πληροφορία από τον αισθητήρα. Στις περισσότερες συσκευές οι συχνότητες
-που ξεπερνούν τα \(2-5\ kHz\), είτε αναφέρονται σε σήμα ήχου ή/και εικόνας,
-είτε αποτελούν θόρυβο από το περιβάλλον πέραν εξαιρέσεων. Στην περίπτωση
-που εξετάστηκε στο εργαστήριο, κρίθηκε πως μετά τα \(2\ kHz\), το σήμα δεν
-περιείχε “ουσιώδη” πληροφορία. Έτσι τα φίλτρα που εφαρμόστηκαν ήταν διέλευσης
-χαμηλών συχνοτήτων από \(100-2000\ Hz\).  Στα παρακάτω διαγράμματα σημειώνεται
-με μπλε διακεκομμένη γραμμή.
-
-Θα φανεί από τα πρώτα διαγράμματα πως τα \(FIR\) συστήματα παρουσιάζουν πολύ
-πιο απότομη κλίση. Αυτό συμβαίνει καθώς ο κύριος παράγοντας που την επηρεάζει,
-είναι η τάξη του φίλτρου. Όμως ταυτόχρονα αυξάνεται και η ταχύτητα υπολογισμού
-αφού δεν καλείται αναδρομικά η έξοδος του φίλτρου όπως έχει σημειωθεί στην
-ενότητα των φίλτρων. Κατά την εφαρμογή των δύο μεθόδων θα διαπιστώσουμε πως τα
-αποτελέσματα αποκλίνουν σε πολύ μικρό βαθμό συγκρίνοντας τις τυπικές
-αποκλίσεις των εξόδων σχετικά με την είσοδο των φίλτρων.
-
-#+NAME: fc1_5
-#+begin_src jupyter-python :session python3 :async no :exports results
-from pros_noisefiltering.plotting_funcs import plot_comparative_response
-from pros_noisefiltering.filters.iir import filt_butter_factory
-
-butter_filter_2000 = filt_butter_factory(filt_order=4, fc_Hz=2000)
-ca1_5 = df_tdms_1_5
-ca1_10 = df_tdms_1_10
-
-plot_comparative_response(ca1_5,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\).
-#+LABEL: fc1_5
-#+RESULTS: fc1_5
-
-#+NAME: fc1_10
-#+begin_src jupyter-python :session python3 :async no :exports results
-plot_comparative_response(ca1_10,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-
-#+end_src
-
-#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 10 \(m/s\).
-#+LABEL: fc1_10
-#+RESULTS: fc1_10
-
-#+NAME: ic1_5
-#+begin_src jupyter-python :session python3 :async no :exports results
-plot_comparative_response(ca1_5,
-                          filter_func=butter_filter_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\).
-#+LABEL: ic1_5
-#+RESULTS: ic1_5
-
-#+NAME: ic1_10
-#+begin_src jupyter-python :session python3 :async no :exports results
-plot_comparative_response(ca1_10,
-                          filter_func=butter_filter_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 10 \(m/s\).
-#+LABEL: ic1_10
-#+RESULTS: ic1_10
-\clearpage
-
-Εδώ θα παρατηρήσει κανείς πως ο θόρυβος είναι λιγότερο εμφανής από τα
-προηγούμενα διαγράμματα. Αυτό συμβαίνει λόγω της χαμηλότερης συχνότητας
-καταγραφής στην περίπτωση της αεροσήραγγας. Όπως αναγράφεται και στους
-τίτλους των διαγραμμάτων, τα παρακάτω σήματα καταγράφηκαν με συχνότητα
-\(100\ kHz\). Έτσι λόγω του θεωρήματος \(Niquist\) το μέγιστο φάσμα που
-μπορούμε να απεικονίσουμε υποχωρεί από τα \(250\ kHz\), του πειράματος με
-τον πεπιεσμένο αέρα, στα \(50\ kHz\). Επιλέξαμε την μείωση αυτή, για
-λόγους πειραματισμού καθώς η μείωση του αριθμού των δειγμάτων, προσφέρει
-ταχύτερη επεξεργασία.
-#+NAME: fi1_w5
-#+begin_src jupyter-python :session python3 :async no :exports results
-plot_comparative_response(dfi_i1_w5,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 5 \(m/s\).
-#+LABEL: fi1_5
-#+RESULTS: fi1_w5
-[[file:./.ob-jupyter/14263a900760581982f9a87f593f8894a7a6c24e.png]]
-
-#+NAME: fi1_w10
-#+begin_src jupyter-python :session python3 :async no :exports results
-plot_comparative_response(dfi_i1_w10,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 10 \(m/s\).
-#+LABEL: fi1_10
-#+RESULTS: fi1_w10
-
-#+NAME: fi1_w15
-#+begin_src jupyter-python :session python3 :async no :exports results
-plot_comparative_response(dfi_i1_w15,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 15 \(m/s\).
-#+LABEL: fi1_15
-#+RESULTS: fi1_w15
-[[file:./.ob-jupyter/0bee83ba9176ddfd1d086b65d8e8c09fe4ee5773.png]]
-
-#+NAME: fi1_w20
-#+begin_src jupyter-python :session python3 :async no :exports results
-plot_comparative_response(dfi_i1_w20,
-                          filter_func=fir_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 20 \(m/s\).
-#+LABEL: fi1_w20
-#+RESULTS: fi1_w20
-
-#+NAME: ii1_w5
-#+begin_src jupyter-python :session python3 :async no :exports results
-plot_comparative_response(dfi_i1_w5,
-                          filter_func=butter_filter_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 5 \(m/s\).
-#+LABEL: ii1_w5
-#+RESULTS: ii1_w5
-
-#+NAME: ii1_w10
-#+begin_src jupyter-python :session python3 :async no :exports results
-plot_comparative_response(dfi_i1_w10,
-                          filter_func=butter_filter_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 10 \(m/s\).
-#+LABEL: ii1_w10
-#+RESULTS: ii1_w10
-
-#+NAME: ii1_w15
-#+begin_src jupyter-python :session python3 :async no :exports results
-plot_comparative_response(dfi_i1_w15,
-                          filter_func=butter_filter_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 15 \(m/s\).
-#+LABEL: ii1_w15
-#+RESULTS: ii1_w15
-
-#+NAME: ii1_w20
-#+begin_src jupyter-python :session python3 :async no  :exports results
-plot_comparative_response(dfi_i1_w20,
-                          filter_func=butter_filter_2000,
-                          response_offset=2e-4,
-                          Kolmogorov_offset=4e0,
-                          nperseg=NPERSEG,
-                          figsize=(8, 4))
-#+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 20 \(m/s\).
-#+LABEL: ii1_w20
-#+RESULTS: ii1_w20
-\clearpage
 * Συμπεράσματα
 Όπως αναφέρθηκε αρκετές φορές και οι δύο κατηγορίες φίλτρων αποφέρουν αποδεκτά
 αποτελέσματα. Η σύγκριση μπορεί να γίνει λοιπόν στην ταχύτητα

@@ -52,7 +52,6 @@ CLOSED: [2023-02-16 Πεμ 13:15]
 - [-] FIR
 - [-] IIR
 
-
 * working latex config
 
 #+ATTR_HTML: :width 45% :align right
@@ -64,6 +63,446 @@ CLOSED: [2023-02-16 Πεμ 13:15]
 ** give analysis plan
 ** give analysis plan and raw data
 ** open live streaming
+* Source blocks :noexport: :noexport:
+** [#A] WHAT IS LOADED TO JUPYTER KERNEL
+#+begin_src jupyter-python :session python3 :async yes :results raw drawer
+%whos
+#+end_src
+
+#+RESULTS:
+:results:
+#+begin_example
+Variable                    Type                    Data/Info
+-------------------------------------------------------------
+CHAN_NAME                   str                     Wind2
+FIGSIZE                     tuple                   n=2
+FIGSIZE_STD                 tuple                   n=2
+FOLDER_FOR_DATA             PosixPath               /mnt/data_folder/measurem<...>2/new_record_prop_channel
+GROUP_NAME                  str                     Wind Measurement
+Graph_data_container        type                    <class 'pros_noisefilteri<...>er.Graph_data_container'>
+NPERSEG                     int                     65536
+Path                        type                    <class 'pathlib.Path'>
+SEPARATING_LINE             str                     
+TDMS_FNAME                  str                     Data.tdms
+TdmsFile                    type                    <class 'nptdms.tdms.TdmsFile'>
+WT_NoiseChannelProc         type                    <class 'pros_noisefilteri<...>roc.WT_NoiseChannelProc'>
+a                           ndarray                 5: 5 elems, type `float64`, 40 bytes
+ab                          ndarray                 5: 5 elems, type `float64`, 40 bytes
+anti_aliased                ndarray                 31000: 31000 elems, type `float64`, 248000 bytes (242.1875 kb)
+anti_aliased_50             ndarray                 310000: 310000 elems, type `float64`, 2480000 bytes (2.3651123046875 Mb)
+b                           ndarray                 5: 5 elems, type `float64`, 40 bytes
+bb                          ndarray                 5: 5 elems, type `float64`, 40 bytes
+butter_200                  ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
+butter_2000                 ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
+butter_filter_2000          function                <function filt_butter_fac<...>butter at 0x7f2e1f975b20>
+butter_iir_2000             function                <function filt_butter_fac<...>butter at 0x7f2e1f6934c0>
+ca1_0                       WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fd1ff10>
+ca1_10                      WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ec90>
+ca1_5                       WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ed50>
+ca_data_to_filter           list                    n=2
+ca_meas_dir                 PosixPath               /mnt/data_folder/measurem<...>op_channel/compressed air
+comp_air_dir                str                     compressed air
+data_CA_inv_0_WS_0          str                     ca0_0.1
+data_CA_inv_0_WS_11         str                     ca0_10.1
+data_CA_inv_0_WS_5          str                     ca0_5.1
+data_CA_inv_1_WS_0          str                     ca1_0.1
+data_CA_inv_1_WS_10         str                     ca1_10.1
+data_CA_inv_1_WS_5          str                     ca1_5.1
+data_inv_inv_0_WS_0         str                     in0_0.1
+data_inv_inv_1_WS10         str                     in1_10.1
+data_inv_inv_1_WS15         str                     in1_15.1
+data_inv_inv_1_WS_0         str                     in1_0.1
+data_inv_inv_1_WS_20        str                     in1_20.1
+data_inv_inv_1_WS_5         str                     in1_5.1
+dec_50kHz                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fd16450>
+dec_5kHz                    WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fd548d0>
+dec_at_50_kHz               str                     de50.1
+dec_at_5_kHz                str                     de5.1
+dec_meas_dir                PosixPath               /mnt/data_folder/measurem<...>d_prop_channel/Decimation
+df_tdms_0_0                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3c0c0310>
+df_tdms_0_10                WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026e390>
+df_tdms_0_5                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ed10>
+df_tdms_1_0                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ded0>
+df_tdms_1_10                WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ec90>
+df_tdms_1_5                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e3026ed50>
+dfi_i0_w0                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e302728d0>
+dfi_i1_w0                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30286d50>
+dfi_i1_w10                  WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287750>
+dfi_i1_w15                  WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287710>
+dfi_i1_w20                  WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287790>
+dfi_i1_w5                   WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30286610>
+each                        WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e30287790>
+f                           ndarray                 328: 328 elems, type `float64`, 2624 bytes
+filt_butter_factory         function                <function filt_butter_factory at 0x7f2e3b0fc400>
+fir_200                     function                <function fir_factory_con<...>filter at 0x7f2e1fe84900>
+fir_2000                    function                <function fir_factory_con<...>filter at 0x7f2e1fd837e0>
+fir_data_out                list                    n=4
+fir_factory_constructor     function                <function fir_factory_con<...>ructor at 0x7f2e30230fe0>
+fir_filt_200                ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
+fir_filt_2000               ndarray                 3100000: 3100000 elems, type `float64`, 24800000 bytes (23.651123046875 Mb)
+fir_out_1_5_ca              WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1f1c6350>
+fs                          int                     30
+hb                          ndarray                 512: 512 elems, type `complex128`, 8192 bytes
+iir_data_out                list                    n=4
+iir_out_1_5_ca              WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1f1c7990>
+in1_0_av100                 WT_NoiseChannelProc     <pros_noisefiltering.WT_N<...>object at 0x7f2e1fe0b390>
+inv_meas_dir                str                     inverter
+item                        str                     in1_20.1
+l_tdms_CA                   list                    n=6
+l_tdms_Inv                  list                    n=6
+math                        module                  <module 'math' from '/usr<...>311-x86_64-linux-gnu.so'>
+medec                       int                     100
+np                          module                  <module 'numpy' from '/us<...>kages/numpy/__init__.py'>
+path_ca_meas                PosixPath               /mnt/data_folder/measurem<...>sed air/ca1_0.1/Data.tdms
+path_comp                   PosixPath               /mnt/data_folder/measurem<...>ord_prop_channel/inverter
+path_dec_meas_50_kHz        PosixPath               /mnt/data_folder/measurem<...>cimation/de50.1/Data.tdms
+path_dec_meas_5_kHz         PosixPath               /mnt/data_folder/measurem<...>ecimation/de5.1/Data.tdms
+plot_comparative_response   function                <function plot_comparativ<...>sponse at 0x7f2e3ca68e00>
+plot_spect_comb2            function                <function plot_spect_comb2 at 0x7f2e30207f60>
+plt                         module                  <module 'matplotlib.pyplo<...>es/matplotlib/pyplot.py'>
+raw_signal_CA               list                    n=6
+scipy                       module                  <module 'scipy' from '/us<...>kages/scipy/__init__.py'>
+sign                        Graph_data_container    <pros_noisefiltering.Grap<...>object at 0x7f2e1facd950>
+signal                      module                  <module 'scipy.signal' fr<...>cipy/signal/__init__.py'>
+table                       list                    n=6
+table_filts                 list                    n=2
+table_std                   list                    n=4
+table_std_filtering         list                    n=4
+tablexydec                  list                    n=3
+tablexyrec                  list                    n=3
+tablexysign                 list                    n=3
+tabulate                    function                <function tabulate at 0x7f2e1fd81080>
+tdms_raw_WT                 TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e641a6810>
+tdms_raw_WT_50kHz           TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e1fd49390>
+tdms_raw_WT_5kHz            TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e640e97d0>
+ts                          ndarray                 150: 150 elems, type `float64`, 1200 bytes
+wb                          ndarray                 512: 512 elems, type `float64`, 4096 bytes
+wt_data_to_filter           list                    n=4
+x                           TdmsFile                <nptdms.tdms.TdmsFile object at 0x7f2e30271590>
+y                           ndarray                 31000: 31000 elems, type `float64`, 248000 bytes (242.1875 kb)
+y_filtfilt                  ndarray                 150: 150 elems, type `float64`, 1200 bytes
+y_lfilter                   ndarray                 150: 150 elems, type `float64`, 1200 bytes
+yerr                        ndarray                 150: 150 elems, type `float64`, 1200 bytes
+yraw                        ndarray                 150: 150 elems, type `float64`, 1200 bytes
+ys                          ndarray                 150: 150 elems, type `float64`, 1200 bytes
+z                           ndarray                 328: 328 elems, type `float64`, 2624 bytes
+#+end_example
+:end:
+** DONE Phase delay problem :noexport:
+CLOSED: [2023-04-07 Παρ 20:09]
+:LOGBOOK:
+- CLOSING NOTE [2023-04-07 Παρ 20:09] \\
+  done and demonstrated bellow
+:END:
+*** the phase problem with python
+#+begin_src jupyter-python :session python3 :async yes :results raw drawer :exports none
+import numpy as np
+import scipy.signal
+
+np.random.seed(42)  # for reproducibility
+fs = 30  # sampling rate, Hz
+ts = np.arange(0, 5, 1.0 / fs)  # time vector - 5 seconds
+ys = np.sin(2*np.pi * 1.0 * ts)  # signal @ 1.0 Hz, without noise
+yerr = 0.5 * np.random.normal(size=len(ts))  # Gaussian noise
+yraw = ys + yerr
+
+b, a = scipy.signal.iirfilter(4, Wn=2.5, fs=fs, btype="low", ftype="butter")
+print(b, a, sep="\n")
+y_lfilter = scipy.signal.lfilter(b, a, yraw)
+
+
+plt.tight_layout()
+# plt.savefig("simple-lowpass-lfilter.png", dpi=100)
+
+# apply filter forward and backward using filtfilt
+y_filtfilt = scipy.signal.filtfilt(b, a, yraw)
+
+plt.figure(figsize=[6.4, 2.4])
+plt.plot(ts, yraw, label="Raw signal")
+plt.plot(ts, y_lfilter, alpha=0.5, lw=3, label="with delay")
+plt.plot(ts, y_filtfilt, alpha=0.8, lw=4, label="without delay")
+plt.legend(loc="lower center", bbox_to_anchor=[0.5, 1], ncol=3,
+           fontsize="smaller")
+plt.xlabel("Time / s")
+plt.ylabel("Amplitude")
+
+plt.tight_layout()
+plt.savefig("./bucket/filters/lowpass-filtfilt.png", dpi=100)
+plt.show()
+
+#+end_src
+
+#+RESULTS:
+:results:
+: [0.00257643 0.01030574 0.01545861 0.01030574 0.00257643]
+: [ 1.         -2.63862774  2.76930979 -1.33928076  0.24982167]
+: <Figure size 640x480 with 0 Axes>
+[[file:./.ob-jupyter/c0bb46f715a888827cb46ad3996973fce886bdf6.png]]
+:end:
+
+[[https://www.samproell.io/posts/yarppg/digital-filters-python/][reference]]
+** FFT
+
+#+begin_src jupyter-python :session none  :async yes :results drawer
+
+class FftNew:
+    """# Better approach to fft.
+
+    Here is an example of how the calculation of fft for a given
+    signal is implemented.
+
+    Main function
+    ----------
+    >>>def fft_calc_and_plot(self):
+    >>>    num_samp = len(self.time_sec)
+    >>>    # compute fft
+    >>>    fhat = fft(self.sig, num_samp)
+    >>>    # Power spectrum (power/freq)
+    >>>    psd = fhat * np.conj(fhat) / num_samp
+    >>>    # create x-axis (frequencies)
+    >>>    freq = (1/(self.time_interv * num_samp)) * np.arange(num_samp)
+    >>>    # plot only first half (possitive)
+    >>>    plt_pos = np.arange(1, np.floor(num_samp/2), dtype=int)
+
+    Usage
+    ----------
+    >>>FftNew(df_tdms_1_0.decimate(dec=5, offset=0),
+    >>>     title='Decimation number 5 CA INV ON').fft_calc_and_plot()
+
+    Reference
+    ----------
+    http://databookuw.com/
+    """
+
+    def __init__(self, sign, title):
+        """# Object initialize.
+
+        This function constructs an object for a given signal
+        which will be plotted in the frequency domain.
+        """
+        self.plt_title = title
+        self.samp_rate = sign.fs_Hz
+        self.sig = sign.data
+        self.ind = sign.data_as_Series.index
+        self.time_interv = 1 / int(self.samp_rate)
+        self.time_sec = self.ind * self.time_interv
+
+    def fft_calc_and_plot(self):
+        """# FFT calculation and plotting.
+
+        This function is used to calculate and plot a signal in the
+        frequency domain using the fft library from numpy.
+        """
+        num_samp = len(self.time_sec)
+        # compute fft
+        fhat = fft(self.sig, num_samp)
+        # Power spectrum (power/freq)
+        psd = fhat * np.conj(fhat) / num_samp
+        # create x-axis (frequencies)
+        freq = (1/(self.time_interv * num_samp)) * np.arange(num_samp)
+        # plot only first half (possitive)
+        plt_pos = np.arange(1, np.floor(num_samp/2), dtype=int)
+
+        fig, axs = plt.subplots(2, 1)
+
+        plt.sca(axs[0])
+        plt.grid(True, which='both')
+        plt.title(self.plt_title)
+        plt.xlabel('Time [s]')
+        plt.ylabel('Amplitute (Voltage)')
+        plt.plot(self.time_sec, self.sig)
+        # plt.loglog(freq[plt_pos],(PSD[plt_pos]))
+
+        plt.sca(axs[1])
+        plt.loglog(freq[plt_pos], abs(psd[plt_pos]))
+        plt.title('Frequency domain')
+        plt.xlabel('Frequencies [Hz]')
+        plt.ylabel('Power/Freq')
+        plt.grid(True, which='both')
+
+
+#+end_src
+
+#+RESULTS:
+: 79f950729e3c1baa1f0d390325623460
+
+#+begin_src jupyter-python :session none  :async yes :results drawer
+
+#+end_src
+
+** LaTeX blocks
+*** Πίνακας τυπικής απόκλισης εισόδου και εξόδου φίλτρων για πεπιεσμένο αέρα
+
+Στους παρακάτω πίνακες παραθέτονται οι τυπικές αποκλίσεις των σημάτων
+που χρησιμοποιήθηκαν για την εξαγωγή των ανωτέρω διαγραμμάτων. Σε κάθε
+πίνακα καταγράφονται οι τυπικές αποκλίσεις για το καταγεγραμμένο σήμα,
+όπως επίσης και για τις δύο κατηγορίες φίλτρων.
+
+\selectlanguage{english}
+#+NAME: table_ca
+#+begin_src jupyter-python :session python3 :async yes :results replace table :export results :tangle none
+from pros_noisefiltering.filters.iir import filt_butter_factory
+butter_iir_2000 = filt_butter_factory(fc_Hz=2000, filt_order=4)
+
+fir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
+                              filter_func=fir_2000)
+iir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
+                              filter_func=butter_iir_2000)
+ca_data_to_filter = [ca1_5, ca1_10]
+iir_data_out = []
+fir_data_out = []
+# filter with fir all data and make a list for the output
+for each in ca_data_to_filter:
+    fir_data_out.append(each.filter(fc_Hz=2000,
+                                    filter_func=fir_2000))
+
+# filter with iir all data and make a list for the output
+for each in ca_data_to_filter:
+    iir_data_out.append(each.filter(fc_Hz=2000,
+                                    filter_func=butter_iir_2000))
+
+
+table_std_filtering = [['Record description (WS=\(m/s\))',
+                        'std raw signal',
+                        'FIR',
+                        'IIR'],
+                       None,
+                       [f"{ca_data_to_filter[0].description}",
+                        "{:.4f}".format(np.std(ca_data_to_filter[0].data)),
+                        "{:.4f}".format(np.std(fir_data_out[0].data)),
+                        "{:.4f}".format(np.std(iir_data_out[0].data))],
+
+                       [f"{ca_data_to_filter[1].description}",
+                        "{:.4f}".format(np.std(ca_data_to_filter[1].data)),
+                        "{:.4f}".format(np.std(fir_data_out[1].data)),
+                        "{:.4f}".format(np.std(iir_data_out[1].data))]]
+def dummy(some):
+    return some
+dummy(table_std_filtering)
+# print(tabulate(table_std_filtering,
+#                headers=["Record description",
+#                         "std raw signal",
+#                         "FIR",
+#                         "IIR"],
+#                floatfmt=".4f" ))
+# print(np.std(fir_out_1_5_ca.data), np.std(ca1_5.data))
+# print(np.std(iir_out_1_5_ca.data), np.std(ca1_5.data))
+# butter_iir_200 = filt_butter_factory(fc_Hz=200, filt_order=4)
+
+  #+end_src
+
+#+CAPTION: Πίνακας τυπικής απόκλισης για το σήμα πεπιεσμένου αέρα και τα φίλτρα που παρουσιάστηκαν.
+#+RESULTS: table_ca
+| Record description (WS=\(m/s\)) | std raw signal |    FIR |    IIR |
+|---------------------------------+----------------+--------+--------|
+| Inverter on, WS=5               |         0.0434 | 0.0245 | 0.0241 |
+| Inverter on, WS=10              |         0.0841 | 0.0760 | 0.0759 |
+
+\selectlanguage{greek}
+*** Πίνακας τυπικής απόκλισης εισόδου και εξόδου φίλτρων για αεροσήραγγα
+\selectlanguage{english}
+#+NAME: table_wt
+#+begin_src jupyter-python :session python3 :async yes :results replace table :tangle none
+from pros_noisefiltering.filters.iir import filt_butter_factory
+butter_iir_2000 = filt_butter_factory(fc_Hz=2000, filt_order=4)
+
+fir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
+                              filter_func=fir_2000)
+iir_out_1_5_ca = ca1_5.filter(fc_Hz=2000,
+                              filter_func=butter_iir_2000)
+wt_data_to_filter = [dfi_i1_w5, dfi_i1_w10,
+                     dfi_i1_w15, dfi_i1_w20]
+iir_data_out = []
+fir_data_out = []
+# filter with fir all data and make a list for the output
+for each in wt_data_to_filter:
+    fir_data_out.append(each.filter(fc_Hz=2000,
+                                    filter_func=fir_2000))
+
+# filter with iir all data and make a list for the output
+for each in wt_data_to_filter:
+    iir_data_out.append(each.filter(fc_Hz=2000,
+                                    filter_func=butter_iir_2000))
+
+
+table_std_filtering = [['Record description (WS=\(m/s\))',
+                        "std raw signal",
+                        "FIR",
+                        "IIR"],
+                       None,
+                       [f"{wt_data_to_filter[0].description}",
+                        "{:.4f}".format(np.std(wt_data_to_filter[0].data)),
+                        "{:.4f}".format(np.std(fir_data_out[0].data)),
+                        "{:.4f}".format(np.std(iir_data_out[0].data))],
+
+                       [f"{wt_data_to_filter[1].description}",
+                        "{:.4f}".format(np.std(wt_data_to_filter[1].data)),
+                        "{:.4f}".format(np.std(fir_data_out[1].data)),
+                        "{:.4f}".format(np.std(iir_data_out[1].data))],
+
+                       [f"{wt_data_to_filter[2].description}",
+                        "{:.4f}".format(np.std(wt_data_to_filter[2].data)),
+                        "{:.4f}".format(np.std(fir_data_out[2].data)),
+                        "{:.4f}".format(np.std(iir_data_out[2].data))],
+                       [f"{wt_data_to_filter[3].description}",
+                        "{:.4f}".format(np.std(wt_data_to_filter[3].data)),
+                        "{:.4f}".format(np.std(fir_data_out[3].data)),
+                        "{:.4f}".format(np.std(iir_data_out[3].data))],
+                       ]
+dummy(table_std_filtering)
+# print(np.std(fir_out_1_5_ca.data), np.std(ca1_5.data))
+# print(np.std(iir_out_1_5_ca.data), np.std(ca1_5.data))
+# butter_iir_200 = filt_butter_factory(fc_Hz=200, filt_order=4)
+
+  #+end_src
+
+#+RESULTS: table_wt
+| Record description (WS=\(m/s\)) | std raw signal |    FIR |    IIR |
+|---------------------------------+----------------+--------+--------|
+| Inverter On, WS=5, 100kHz       |         0.0385 | 0.0074 | 0.0083 |
+| Inverter On, WS=10, 100kHz      |         0.0400 | 0.0124 | 0.0130 |
+| Inverter On, WS=15, 100kHz      |         0.0421 | 0.0279 | 0.0281 |
+| Inverter On, WS=20, 100kHz      |         0.0566 | 0.0483 | 0.0484 |
+
+\selectlanguage{greek}
+
+*** notes :noexport:
+- \(Welch\ method\ filtered-raw\ signal\) [100%]
+  - [X] Διαγράμματα για κομπρεσέρ
+  - [X] Διαγράμματα για αεροσήραγγα
+  - [X] τυπικές αποκλείσεις
+*** 2 image side by side
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+\centering
+\includegraphics[width=.8 \linewidth]{./decimation/with_aliasing.png}
+\caption{Αποδεκατισμός σήματος στα 5 \(kHz\)}
+\label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+\centering
+\includegraphics[width=.8 \linewidth]{./decimation/anti_aliasing_fir.png}
+\caption{Αποδεκατισμός με φίλτρο κατά της αλλοίωσης}
+\label{fig:sub2}
+\end{subfigure}
+\caption{Αποδεκατισμός σήματος με και χωρίς επεξεργασία κατά της αλλοίωσης.}
+\label{fig:test}
+\end{figure}
+*** table
+    #+TBLFM: <c>
+    :results:
+    |                 | record for 0 \(m/s\) from wind tunnel |               |
+    |       <c>       |                 <c20>                 |      <c>      |
+    |-----------------+---------------------------------------+---------------|
+    | low-pass filter |             2 kHz cutoff              | 200 Hz cutoff |
+    |-----------------+---------------------------------------+---------------|
+    | butterworth IIR |                0.0035                 |    0.0029     |
+    |   simple FIR    |                0.0054                 |    0.0054     |
+    |-----------------+---------------------------------------+---------------|
+    :end:
 * buttons
 # <(go to code)>
 # <(go to document)>
