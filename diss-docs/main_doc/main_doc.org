@@ -1,6 +1,6 @@
 :ORG-PROPERTIES:
 #+LANGUAGE: gr
-#+STARTUP: latexpreview showeverything align
+#+STARTUP: latexpreview showeverything align fold
 #+OPTIONS: tags:t toc:nil
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
@@ -963,9 +963,9 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 Αν το φίλτρο επηρεάζει μία περιοχή ή *φάσμα* συχνοτήτων και
 απορρίπτει όσες βρίσκονται πριν και μετά, ονομάζεται φίλτρο διέλευσης
 εύρους συχνοτήτων ($\en{band-pass\ filter}$).
-*** Φίλτρα διέλευσης συχνοτήτων
+*** TODO Φίλτρα διέλευσης συχνοτήτων
 Εδώ πρέπει να εξιγήσω τι γίνεται με τα φίλτρα που αφήνουν το ευρος συχνοτήτων
-*** Φίλτρα απόρριψης συχνοτήτων
+*** TODO Φίλτρα απόρριψης συχνοτήτων
 Εδώ πρέπει να εξιγήσω τι γίνεται με τα φίλτρα που απορρίπτουν το ευρος συχνοτήτων
 ** Φίλτρο μέσης τρέχουσας τιμής
 Στα προηγούμενα κεφάλαια επικεντρωθήκαμε περισσότερο στην μαθηματική αναπαράσταση
@@ -1019,20 +1019,36 @@ out[n] = \frac{1}{k} \cdot \sum_{z}^{{k-1}}in[n+z], k=5 \\
 τιμών συνεχίζοντας το παράδειγμα, θα ορίσει τις επιλεγμένες τιμές για τον υπολογισμό του
 σήματος εξόδου \(out[n]\).
 
-#+begin_src jupyter-python :session python3 :async no :export results :results raw drawer
+#+NAME: fig:explain
+#+begin_src jupyter-python :session python3 :async no :exports results
 # add the plot to explain the above equation
 """Should investigate this and how to make a plot with anottation"""
-signal = np.linspace(2 * np.pi * 20, 200, 200)
-
+signal = np.linspace(2 * np.pi * 2, 20, 20)
 # plt.plot(signal, np.linspace(0, 5, 1), marker='o')
-plt.plot(signal, np.linspace(2 * np.pi * 20, 200, 200), marker='o')
+fig, ax = plt.subplots()
+ax.plot(signal, np.linspace(2 * np.pi * 2, 20, 20), marker='o')
 # plt.xlim(-10, 10)
 # plt.ylim(-10, 10)
-# plt.legend()
-plt.grid('both')
+threshold=16
+ax.annotate('Παρόν (z=n)', xy=(16.05, 16.1),
+             xytext=(14, 18),
+             arrowprops=dict(facecolor='red', shrink=0.05))
+ax.fill_between(signal+0.2, 0, 1, where=np.linspace(2 * np.pi * 2, 20, 20) > threshold,
+                color='green', alpha=0.5, transform=ax.get_xaxis_transform())
+ax.fill_between(signal+0.2, 0, 20, where=np.linspace(2 * np.pi * 2, 20, 20) < threshold,
+                color="gray", alpha=0.5, transform=ax.get_xaxis_transform())
+ax.text(14.5+0.1 / 2, (0+10) / 2, "Παρελθόν\nσήματος", ha='center', va='center', fontsize=16, color="black")
+ax.text(18+0.1 / 2, (0+10) / 2, "Μέλλον\nσήματος", ha='center', va='center', fontsize=16, color='green')
+plt.xlabel('n')
+plt.ylabel('out[n]')
+# ax.legend()
+ax.grid('both')
 #+end_src
-#+RESULTS:
-[[file:./.ob-jupyter/f9ce235a9ecae4356b525fe4d06849b122419e4a.png]]
+
+#+CAPTION: Παράδειγμα απεικόνισης παραθύρου και της έννοιας του παρελθόντος και μέλλοντος σήματος.
+#+LABEL: fc1_10
+#+RESULTS: fig:explain
+[[file:./.ob-jupyter/a6dbd827792e535329964693eab1d13ea46b08e5.png]]
 *** Σχεδιασμός και εφαρμογή φίλτρων
 Ένα \(F.I.R.\) φίλτρο κατασκευάζεται από την γενική εξίσωση διαφορών που θα δούμε παρακάτω,
 όμως αξίζει να αναφέρουμε ένα χαρακτηριστικό. Για τα φίλτρα που κατασκευάζονται
@@ -1273,7 +1289,7 @@ plt.grid(which= 'both', axis= 'both')
 #+ATTR_LATEX: :caption \caption{Θάλαμος ομοιόμορφης παροχής ανέμου στο αισθητήριο όργανο όπου τοποθετείται στο σημείο \textbf{Α}. Στο σημείο  \textbf{\(A_{s}\)}, βρίσκεται ένα πλέγμα διάσπασης της ροής που μας επιτρέπει την ομαλή ταχύτητα στο σημείο εξόδου \textbf{A}.}
 [[file:./Wind_Tunnel_setup_lab.png]]
 \clearpage
-** Μεθοδολογία καταγραφής
+** TODO Μεθοδολογία καταγραφής
 ** Μεθοδολογία επεξεργασίας
     Ένας λόγος που δεν χρησιμοποιήθηκε επεξεργασία σε πραγματικό χρόνο είναι
 ότι η εγκατάσταση που χρησιμοποιήθηκε για την συλλογή των δεδομένων,
@@ -1699,9 +1715,10 @@ plot_comparative_response(ca1_5,
                           nperseg=NPERSEG,
                           figsize=(10, 5))
 #+end_src
-#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\).
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\) για φίλτρο \(FIR\).
 #+LABEL: fc1_5
 #+RESULTS: fc1_5
+[[file:./.ob-jupyter/4d217fb5b5d7112db00e353a8ae3d377ddb25b64.png]]
 
 #+NAME: fc1_10
 #+begin_src jupyter-python :session python3 :async no :exports results
@@ -1714,9 +1731,10 @@ plot_comparative_response(ca1_10,
 
 #+end_src
 
-#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 10 \(m/s\).
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 10 \(m/s\) για φίλτρο \(FIR\).
 #+LABEL: fc1_10
 #+RESULTS: fc1_10
+[[file:./.ob-jupyter/294e2b0de495d2c0d7a266bb3aecffcb47402d72.png]]
 
 #+NAME: ic1_5
 #+begin_src jupyter-python :session python3 :async no :exports results
@@ -1727,10 +1745,10 @@ plot_comparative_response(ca1_5,
                           nperseg=NPERSEG,
                           figsize=(10, 5))
 #+end_src
-#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\).
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\) για φίλτρο \(IIR\).
 #+LABEL: ic1_5
 #+RESULTS: ic1_5
-[[file:./.ob-jupyter/2385fe2b5129bcc279465fedd2958fce5a2127ce.png]]
+[[file:./.ob-jupyter/4b6aff0c6fa0a0fbfb0488e22491fb06d6fca2ad.png]]
 
 #+NAME: ic1_10
 #+begin_src jupyter-python :session python3 :async no :exports results
@@ -1741,9 +1759,10 @@ plot_comparative_response(ca1_10,
                           nperseg=NPERSEG,
                           figsize=(10, 5))
 #+end_src
-#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 10 \(m/s\).
+#+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 10 \(m/s\) για φίλτρο \(IIR\).
 #+LABEL: ic1_10
 #+RESULTS: ic1_10
+[[file:./.ob-jupyter/c34b7dee44c32c6c845e4455ee13a918a4bc7264.png]]
 \clearpage
 
 Εδώ θα παρατηρήσει κανείς πως ο θόρυβος είναι λιγότερο εμφανής από τα
@@ -1765,10 +1784,10 @@ plot_comparative_response(dfi_i1_w5,
                           xlim=(1e0, 1e5),
                           figsize=(8, 4))
 #+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 5 \(m/s\).
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 5 \(m/s\) για φίλτρο \(FIR\).
 #+LABEL: fi1_5
 #+RESULTS: fi1_w5
-[[file:./.ob-jupyter/e0d5d27491f984b8b36d4495b30d40023a673025.png]]
+[[file:./.ob-jupyter/2fe0b198366f04719a159a8a5d36f40dcb3caab5.png]]
 
 #+NAME: fi1_w10
 #+begin_src jupyter-python :session python3 :async no :exports results
@@ -1780,10 +1799,10 @@ plot_comparative_response(dfi_i1_w10,
                           xlim=(1e0, 1e5),
                           figsize=(8, 4))
 #+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 10 \(m/s\).
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 10 \(m/s\) για φίλτρο \(FIR\).
 #+LABEL: fi1_10
 #+RESULTS: fi1_w10
-[[file:./.ob-jupyter/a8f3e9280faa952909a223e4a4f631623668af4f.png]]
+[[file:./.ob-jupyter/b57b442290fe1e467ac03de87e4a39d8515e7041.png]]
 
 #+NAME: fi1_w15
 #+begin_src jupyter-python :session python3 :async no :exports results
@@ -1796,10 +1815,10 @@ plot_comparative_response(dfi_i1_w15,
                           figsize=(8, 4))
 #+end_src
 
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 15 \(m/s\).
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 15 \(m/s\) για φίλτρο \(FIR\).
 #+LABEL: fi1_15
 #+RESULTS: fi1_w15
-[[file:./.ob-jupyter/0bee83ba9176ddfd1d086b65d8e8c09fe4ee5773.png]]
+[[file:./.ob-jupyter/bbd51ae22a1a7838c2ea6160809020426399930c.png]]
 
 #+NAME: fi1_w20
 #+begin_src jupyter-python :session python3 :async no :exports results
@@ -1812,9 +1831,10 @@ plot_comparative_response(dfi_i1_w20,
                           figsize=(8, 4))
 #+end_src
 
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 20 \(m/s\).
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 20 \(m/s\) για φίλτρο \(FIR\).
 #+LABEL: fi1_w20
 #+RESULTS: fi1_w20
+[[file:./.ob-jupyter/3366e731fbbde2d4c34a56fe8bc43da12fb567ae.png]]
 
 #+NAME: ii1_w5
 #+begin_src jupyter-python :session python3 :async no :exports results
@@ -1826,9 +1846,10 @@ plot_comparative_response(dfi_i1_w5,
                           xlim=(1e0, 1e5),
                           figsize=(8, 4))
 #+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 5 \(m/s\).
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 5 \(m/s\) για φίλτρο \(IIR\).
 #+LABEL: ii1_w5
 #+RESULTS: ii1_w5
+[[file:./.ob-jupyter/7504ee1b2a40cd7f532bacb4462e38413dd0092f.png]]
 
 #+NAME: ii1_w10
 #+begin_src jupyter-python :session python3 :async no :exports results
@@ -1840,9 +1861,10 @@ plot_comparative_response(dfi_i1_w10,
                           xlim=(1e0, 1e5),
                           figsize=(8, 4))
 #+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 10 \(m/s\).
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 10 \(m/s\) για φίλτρο \(IIR\).
 #+LABEL: ii1_w10
 #+RESULTS: ii1_w10
+[[file:./.ob-jupyter/b34f9aaabccf6ea38bb0f9de30da8c1bb1b0b70b.png]]
 
 #+NAME: ii1_w15
 #+begin_src jupyter-python :session python3 :async no :exports results
@@ -1854,9 +1876,10 @@ plot_comparative_response(dfi_i1_w15,
                           xlim=(1e0, 1e5),
                           figsize=(8, 4))
 #+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 15 \(m/s\).
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 15 \(m/s\) για φίλτρο \(IIR\).
 #+LABEL: ii1_w15
 #+RESULTS: ii1_w15
+[[file:./.ob-jupyter/8e6e3969fad13ef2daee327a0e8d1236a38d9b95.png]]
 
 #+NAME: ii1_w20
 #+begin_src jupyter-python :session python3 :async no  :exports results
@@ -1868,7 +1891,7 @@ plot_comparative_response(dfi_i1_w20,
                           xlim=(1e0, 1e5),
                           figsize=(8, 4))
 #+end_src
-#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 20 \(m/s\).
+#+CAPTION: Σήμα αεροσήραγγας για ταχύτητα ανέμου 20 \(m/s\) για φίλτρο \(IIR\).
 #+LABEL: ii1_w20
 #+RESULTS: ii1_w20
 [[file:./.ob-jupyter/54705a03fc7393cab8d1ac85fdde21f9cb744dc1.png]]
