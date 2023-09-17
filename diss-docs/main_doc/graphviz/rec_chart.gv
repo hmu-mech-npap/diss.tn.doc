@@ -1,0 +1,17 @@
+digraph rec_proc {
+    compound=true;
+    pitot[label="Pitot-tube"]
+    rec_card[label="Native Instruments\n(model)"]
+    pc[label="H/Y"]
+    dataframe[label="Αρχείο δεδομένων\n(.tdms)"]
+    finished_prod[label="Αρχικό σήμα πρoς επεξεργασία"]
+    subgraph cluster_0{
+        style=filled;
+        color="#D4C9AF";
+        {rank=same;pitot;rec_card;pc;dataframe;}
+        label= "Ανάκτηση δεδομένων από αισθητήρα";
+        pitot -> rec_card;
+        rec_card -> pc -> dataframe -> finished_prod;
+        pitot -> finished_prod[style=dashed];
+    }
+}

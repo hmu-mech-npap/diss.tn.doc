@@ -1,6 +1,6 @@
-
 digraph processing {
     newrank=true;
+    compound=true;
     // root of operations
     // filt [label="Απομείωση θορυβου"]
     aliasing [label="Έλεγχος \n αλλοίωσης"]
@@ -15,33 +15,45 @@ digraph processing {
         fftmethod;
         timedom;
         label="Επεξεργασία σήματος με θόρυβο"
+
+        subgraph cluster_1{
+            // fontcolor=red;
+            style=filled;
+            fillcolor=forestgreen;
+            node[style=filled; color=white];
+            aliasing;
+            averg;
+            label= "Αρχική φάση επεξεργασίας"
+
+            subgraph cluster_3{
+                avrged;
+                decimop;
+                label="Μέθοδοι";
+            }
+        }
+        subgraph cluster_2{
+            fontcolor="#D4C9AF";
+            style=filled;
+            fillcolor="#285162";
+            node[style=filled; color=white];
+            choosfilt;
+            filterconst;
+            fir;
+            iir;
+            apply;
+            welch;
+            filt_type;
+            label= "Συχνοτικά φίλτρα";
+        }
+        subgraph cluster_4{
+            graphs -> results [color=forestgreen, style=bold]
+            label="Αποτελέσματα"
+        }
     }
-    subgraph cluster_1{
-        // fontcolor=red;
-        style=filled;
-        fillcolor=forestgreen;
-        node[style=filled; color=white];
-        aliasing;
-        averg;
-        label= "Αρχική φάση επεξεργασίας"
-    }
-    subgraph cluster_2{
-        fontcolor="#D4C9AF";
-        style=filled;
-        fillcolor="#285162";
-        node[style=filled; color=white];
-        fftmethod ->
-        choosfilt[color=red, style=bold];
-        choosfilt;
-        filterconst;
-        fir;
-        iir;
-        apply;
-        welch;
-        filt_type;
-        label= "Συχνοτικά φίλτρα";
-    }
-    {rank=same; fftmethod; choosfilt;}
+    {rank=same; fftmethod; timedom;}
+    {rank=same; aliasing; averg; choosfilt;}
+    {rank=same; graphs; avrged; filt_type;}
+    {rank=same; filterconst; decimop;}
     // filter related
     fir [label="FIR"]
     iir [label="IIR"]
@@ -50,18 +62,18 @@ digraph processing {
     filt_type [label="Διέλευσης χαμηλών \n συχνοτήτων \n (low-pass)"]
 
     // aliasing
-    decimop [label="Αποδεκατισμός \n ανά 5 και 50 δείγματα \n (decimation)"]
+    decimop [label="Αποδεκατισμός \n ανά 10 και 100 δείγματα \n (decimation)"]
     timedom [label="Πεδίο του χρόνου \n καταγραφή"]
 
     //general bubbles
     graphs [label="Γραφήματα"]
     fftmethod [label= "Πεδίο συνχότητας \n (fft algorithm)" ]
     choosfilt [label="Επιλογή επιθυμητών \n συχνοτήτων \n(cutoff frequency)"]
-    results [label="Σύγκριση αποτελεσμάτων"]
+    results [label="Σύγκριση μεθόδων"]
     avrged [label="average(signal, fs) \n \n Ανάλογα με την \n συχνότητα \n καταγραφής, fs"]
     welch [label="Μέθοδος Welch \n (Spectral density)"]
     // start the graph at last 🫠
-    fftmethod -> timedom -> fftmethod[style=dotted, arrowhead=];
+    fftmethod -> timedom -> fftmethod[style=dotted,];
     // filtering path
     choosfilt ->
     filterconst [color=red, style=bold];
@@ -78,13 +90,14 @@ digraph processing {
     decimop ->
     // apply ->
     graphs[color=blueviolet , style=dashed]
+    fftmethod ->
+    choosfilt[color=red, style=dotted];
 
     // aliasing path
     timedom ->
     averg ->
     avrged ->
     // apply ->
-    graphs [color=magenta, style=dashed]
+    graphs [color=magenta, style=dashed, ]
 
-    graphs -> results [color=forestgreen, style=bold]
 }

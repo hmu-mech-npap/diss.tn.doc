@@ -1,20 +1,27 @@
 digraph regexp  {
-    // size= "4,6!"
-    "Pitot-tube" ->
-    "H/Y" ->
-    "Αρχείο δεδομένων" ->
-    "Αρχικό σήμα πρoς επεξεργασία" ->
-    "Περιπτώσεις πειράματος" ->
-    {"Συμπιεσμένος αέρας"  "Αεροσύραγκα" } [color=red]
-
-    "Συμπιεσμένος αέρας" -> "5, 10 m/s" [color=forestgreen]
-
-    "Αεροσύραγκα" -> "5, 10, 15, 20 m/s" [color=magenta]
-
-    {"5, 10, 15, 20 m/s" "5, 10 m/s" }
-    -> {"Ανοιχτός Inverter" "Κλειστός Inverter"}[color = blueviolet,
-                                                 arrowhead = diamond,
-                                                 arrowsize = 1.4 ]
-
-    "Pitot-tube" -> "Αρχικό σήμα πρoς επεξεργασία"
+    compound=true;
+    // graph [fontsize=12 fontname="Computer Modern" compound=true];
+    // node [fontsize=12 fontname="Computer Modern"];
+    subgraph cluster_1{
+        fontcolor="#D4C9AF";
+        style=filled;
+        color="#285162";
+        node [style=filled, color=white];
+        // "Περιπτώσεις πειράματος" ->
+        // {"Συμπιεσμένος \n αέρας"  "Αεροσύραγκα" } [color=red]
+        "Συμπιεσμένος \n αέρας" -> {"5" "10"} [color=forestgreen, style=dashed]
+        "Αεροσήραγγα" -> {"5" "10" "15" "20"} [color=black, lhead=cluster_2]
+        label = "Περιπτώσεις πειράματος";
+        {rank=same;"Αεροσήραγγα";"Συμπιεσμένος \n αέρας";}[dir="back"];
+        // color=blue
+        subgraph cluster_2{
+            "5" "10" "15" "20";
+            label="Ταχύτητες σε m/s"
+        }
+    }
+    {rank=same;"Ανοιχτός Inverter";"Κλειστός Inverter";}
+    {"5" "10" "15" "20"} ->
+    {"Ανοιχτός Inverter" "Κλειστός Inverter"}[color=black]
+    {"5" "10" } ->
+    {"Ανοιχτός Inverter" "Κλειστός Inverter"}[color=forestgreen, style=dashed]
 }
