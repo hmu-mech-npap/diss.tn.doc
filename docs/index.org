@@ -1,2 +1,0 @@
-* use pandoc for html
-[[file:./my_document]]
