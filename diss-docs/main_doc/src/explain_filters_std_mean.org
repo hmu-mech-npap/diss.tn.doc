@@ -4,6 +4,7 @@
 * standard deviation
 
 Pretty much self explanatory...
+```python
 #+begin_src jupyter-python :results raw drawer :exports code
 from data import *
 import numpy as np
@@ -53,21 +54,21 @@ plt.savefig("./std.png", bbox_inches="tight")
 :results:
 [[file:./.ob-jupyter/ed2eb4b7181d70a7205da09683be974ed72d4ff2.png]]
 :end:
+```
 
 [[file:./std.png]]
 * Whisker plot for mean value comparison
 The documentation says:
-
-
-#+begin_example :exports results
+```python
+"""
 #          Q2-1.5IQR   Q1   median  Q3   Q3+1.5IQR
 #                       |-----:-----|
 #       o      |--------|     :     |--------|  o  o
 #                       |-----:-----|
 #   lier                <----------->          fliers
 #                            IQR
-#+end_example
-
+"""
+```
 - autorangebool, default: False
     When True and the data are distributed such that the 25th and 75th
     percentiles are equal, whis is set to (0, 100) such that the whisker ends
@@ -76,6 +77,7 @@ The documentation says:
 *reference* :
     - https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html
 
+```python
 #+begin_src jupyter-python :results raw drawer :exports code
 # %%
 """"""
@@ -101,6 +103,7 @@ plt.ylabel("Mean value of recorded signal")
 # plt.show()
 plt.savefig("./whiskr.png", bbox_inches="tight")
 #+end_src
+```
 
 #+RESULTS:
 :results:
