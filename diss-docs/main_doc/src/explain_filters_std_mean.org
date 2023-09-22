@@ -4,7 +4,7 @@
 * standard deviation
 
 Pretty much self explanatory...
-#+begin_src jupyter-python :results raw drawer :exports both
+#+begin_src jupyter-python :results raw drawer :exports code
 from data import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -44,17 +44,14 @@ plt.title("Comparison for Wind Tunnel measurements and inverter On and Off")
 plt.xlabel("O m/s airflow")
 plt.ylabel("standard deviation")
 plt.bar(x_axis, y_axis)
-plt.show()
+# plt.show()
+plt.savefig("./std.png")
 
 #+end_src
 
-#+RESULTS:
-:results:
-[[file:./.ob-jupyter/ed2eb4b7181d70a7205da09683be974ed72d4ff2.png]]
-:end:
-
+[[file:./std.png]]
 * Whisker plot for mean value comparison
-#+begin_src jupyter-python :results raw drawer :exports both
+#+begin_src jupyter-python :results raw drawer :exports code
 # %%
 """
 # TODO Explain the whisker plot in the document
@@ -96,10 +93,9 @@ plt.title("Wind Tunnel measurements with airflow O m/s")
 plt.xlabel("Filtering technics")
 plt.ylabel("Mean value of recorded signal")
 # plt.ylim(1.52, 1.72)
-plt.show()
+# plt.show()
+plt.savefig("./whiskr.png")
 #+end_src
 
-#+RESULTS:
-:results:
-[[file:./.ob-jupyter/4ab9526540375e0a63b0b11294bf542bb3995c7b.png]]
-:end:
+
+[[file:./whiskr.png]]
