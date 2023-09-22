@@ -56,11 +56,6 @@ plt.savefig("./std.png", bbox_inches="tight")
 
 [[file:./std.png]]
 * Whisker plot for mean value comparison
-#+begin_src jupyter-python :results raw drawer :exports code
-# %%
-"""
-# TODO Explain the whisker plot in the document
-
 The documentation says:
 
 
@@ -76,9 +71,12 @@ The documentation says:
     percentiles are equal, whis is set to (0, 100) such that the whisker ends
     are at the minimum and maximum of the data.
 
-,*reference* :
+*reference* :
     - https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html
-"""
+
+#+begin_src jupyter-python :results raw drawer :exports code
+# %%
+""""""
 labels = ["Inverter Off",
           "Inverter On",
           "Butterworth\nlow-pass\nat 200Hz(IIR)",
