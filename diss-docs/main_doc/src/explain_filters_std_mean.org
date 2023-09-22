@@ -59,12 +59,14 @@ plt.savefig("./std.png", bbox_inches="tight")
 The documentation says:
 
 
+#+begin_example :exports results
 #          Q2-1.5IQR   Q1   median  Q3   Q3+1.5IQR
 #                       |-----:-----|
 #       o      |--------|     :     |--------|  o  o
 #                       |-----:-----|
 #   lier                <----------->          fliers
 #                            IQR
+#+end_example
 
 - autorangebool, default: False
     When True and the data are distributed such that the 25th and 75th
