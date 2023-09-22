@@ -1,5 +1,8 @@
 #+title: Explain Filters Std Mean
 #+startup: latexpreview fold
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+EXCLUDE_TAGS: noexport
+#+TAGS:  noexport(n)
 
 * standard deviation
 
@@ -56,28 +59,36 @@ plt.savefig("./std.png", bbox_inches="tight")
 
 [[file:./std.png]]
 * Whisker plot for mean value comparison
+** info :noexport:
+The documentation says:
+#+begin_example
+
+          Q2-1.5IQR   Q1   median  Q3   Q3+1.5IQR
+                       |-----:-----|
+       o      |--------|     :     |--------|  o  o
+                       |-----:-----|
+   lier                <----------->          fliers
+                            IQR
+#+end_example
+** usefull info from matplotlib
+
+- autorangebool, default: False
+  When True and the data are distributed such that the 25th and 75th
+  percentiles are equal, whis is set to (0, 100) such that the whisker ends
+  are at the minimum and maximum of the data.
+
+*reference* :
+    - https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html
+** plot
 #+begin_src jupyter-python :results raw drawer :exports code
 # %%
 """
-# TODO Explain the whisker plot in the document
-
-The documentation says:
-
-
-            Q2-1.5IQR   Q1   median  Q3   Q3+1.5IQR
-                         |-----:-----|
-         o      |--------|     :     |--------|  o  o
-                         |-----:-----|
-     lier                <----------->          fliers
-                              IQR
-
-- autorangebool, default: False
-    When True and the data are distributed such that the 25th and 75th
-    percentiles are equal, whis is set to (0, 100) such that the whisker ends
-    are at the minimum and maximum of the data.
-
-,*reference* :
-    - https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html
+          Q2-1.5IQR   Q1   median  Q3   Q3+1.5IQR
+                       |-----:-----|
+       o      |--------|     :     |--------|  o  o
+                       |-----:-----|
+   lier                <----------->          fliers
+                            IQR
 """
 labels = ["Inverter Off",
           "Inverter On",
