@@ -1,7 +1,7 @@
 digraph rec_proc {
     compound=true;
     pitot[label="Pitot-tube"]
-    rec_card[label="Native Instruments\n(model)"]
+    rec_card[label="National Instruments\n(model)"]
     pc[label="H/Y"]
     dataframe[label="Αρχείο δεδομένων\n(.tdms)"]
     finished_prod[label="Αρχικό σήμα πρoς επεξεργασία"]
