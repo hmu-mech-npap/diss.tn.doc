@@ -45,9 +45,14 @@ plt.xlabel("O m/s airflow")
 plt.ylabel("standard deviation")
 plt.bar(x_axis, y_axis)
 # plt.show()
-plt.savefig("./std.png")
+plt.savefig("./std.png", bbox_inches="tight")
 
 #+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/ed2eb4b7181d70a7205da09683be974ed72d4ff2.png]]
+:end:
 
 [[file:./std.png]]
 * Whisker plot for mean value comparison
@@ -94,8 +99,13 @@ plt.xlabel("Filtering technics")
 plt.ylabel("Mean value of recorded signal")
 # plt.ylim(1.52, 1.72)
 # plt.show()
-plt.savefig("./whiskr.png")
+plt.savefig("./whiskr.png", bbox_inches="tight")
 #+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/64e7a82649644a3e29e958cac85f18a16177f84b.png]]
+:end:
 
 
 [[file:./whiskr.png]]
