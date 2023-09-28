@@ -14,19 +14,16 @@ fir_filt_coeff = firwin(numtaps=22,
                         fs=fs_noise,
                         cutoff=200,
                         )
-sos_fir_mode = tf2sos(fir_filt_coeff, 1)
-filt_on_fir_std = sosfilt(sos_fir_mode, noise_chan.data)
+filt_on_fir_std = sosfilt(tf2sos(fir_filt_coeff, 1), noise_chan.data)
 
 
-b, a = butter(2,
-              200,   # This is in Hz !!!!
-              # [min(noise_frequencies[L]), max(noise_frequencies[L]-1)],
-              btype="low", fs=fs_noise)
+sos = butter(2,
+             200,   # This is in Hz !!!!
+             # [min(noise_frequencies[L]), max(noise_frequencies[L]-1)],
+             btype="low", fs=fs_noise, output='sos')
 
 # Apply filter
-sos_out = tf2sos(b, a)
-filtered_signal = sosfilt(sos_out, noise_chan.data)
-filt_on_iir_std = np.std(filtered_signal)
+filt_on_iir_std = np.std(sosfilt(sos, noise_chan.data))
 # function to add value labels
 
 # Bar graph:
@@ -70,7 +67,7 @@ labels = ["Inverter Off",
           "Butterworth low-pass\nat 200Hz(IIR)",
           "Simple window low-pass\nat 200Hz(FIR)"]
 
-plt.boxplot([clean_chan_off_0, noise_chan, filtered_signal, filt_on_fir_std],
+plt.boxplot([clean_chan_off_0, noise_chan, sosfilt(sos, noise_chan.data), filt_on_fir_std],
             labels=labels,
             # notch=True,
             vert=True,
