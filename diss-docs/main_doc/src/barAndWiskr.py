@@ -3,11 +3,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import butter, tf2sos, sosfilt, firwin
-from data import noise_chan, clean_chan_off_0, fs_noise
+from data import noise_chan, fs_noise
 
 # zero speed graph
 noise_on_std = np.std(noise_chan.data)
-clean_off_std = np.std(clean_chan_off_0)
+# clean_off_std = np.std(clean_chan_off_0)
 
 
 fir_filt_coeff = firwin(numtaps=22,
@@ -29,13 +29,16 @@ filt_on_iir_std = np.std(sosfilt(sos, noise_chan.data))
 # Bar graph:
 #       Adding the comparison for standard deviation to backup my filter
 #       strategy.
-x_axis = ['Inverter Off', 'Inverter On',
+#       'Inverter Off',
+#       "raw",
+x_axis = ['Inverter On',
           'Filtered IIR On \n(order 2)', 'Filtered FIR On \n(order 22)']
-y_axis = [clean_off_std, noise_on_std, filt_on_iir_std, np.std(filt_on_fir_std)]
-labels = ["raw", "raw", "order 2", "order 22"]
+# clean_off_std,
+y_axis = [noise_on_std, filt_on_iir_std, np.std(filt_on_fir_std)]
+labels = ["raw", "order 2", "order 22"]
 
-plt.title("Comparison for Wind Tunnel measurements and inverter On and Off")
-plt.xlabel("O m/s airflow")
+plt.title("Comparison for wind tunnel measurements and inverter On and Off")
+plt.xlabel("20 m/s airflow")
 plt.ylabel("standard deviation")
 plt.bar(x_axis, y_axis)
 plt.show()
@@ -62,12 +65,14 @@ The documentation says:
 *reference* :
     - https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html
 """
-labels = ["Inverter Off",
-          "Inverter On",
+# "Inverter Off",
+# clean_chan_off_0,
+
+labels = ["Inverter On",
           "Butterworth low-pass\nat 200Hz(IIR)",
           "Simple window low-pass\nat 200Hz(FIR)"]
 
-plt.boxplot([clean_chan_off_0, noise_chan, sosfilt(sos, noise_chan.data), filt_on_fir_std],
+plt.boxplot([noise_chan, sosfilt(sos, noise_chan.data), filt_on_fir_std],
             labels=labels,
             # notch=True,
             vert=True,
@@ -77,7 +82,7 @@ plt.boxplot([clean_chan_off_0, noise_chan, sosfilt(sos, noise_chan.data), filt_o
             autorange=True,
             showfliers=False
             )
-plt.title("Wind Tunnel measurements with airflow O m/s")
+plt.title("wind tunnel measurements with airflow 20 m/s")
 plt.xlabel("Filtering technics")
 plt.ylabel("Mean value of recorded signal")
 # plt.ylim(1.52, 1.72)
