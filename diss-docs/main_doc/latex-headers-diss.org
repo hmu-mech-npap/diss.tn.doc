@@ -12,11 +12,10 @@
 #+LATEX_HEADER: \usepackage{graphicx}
 #+LATEX_HEADER: \graphicspath{{figures/}}
 #+LATEX_HEADER: \usepackage{array}
-#+LATEX_HEADER: \usepackage[demo]{graphicx}
 #+LATEX_HEADER: \usepackage[utf8]{inputenc}
 #+LATEX_HEADER: \usepackage[LGR]{fontenc}
 #+LATEX_HEADER: \usepackage[T1]{fontenc}
-#+LATEX_HEADER: \usepackage[english,greek]{babel}
+#+LATEX_HEADER: \usepackage[english,greek,csquotes]{babel}
 
 #+LATEX_HEADER: \newcommand{\en}[1]{\foreignlanguage{english}{#1}}
 #+LATEX_HEADER: \usepackage{minted}
@@ -28,7 +27,6 @@
 
 #+LATEX: \onehalfspacing
 #+LATEX: \frontmatter
-#+LATEX: \decimalpoint
 
 # Fancy headers
 #+latex_header: \usepackage{fancyhdr}

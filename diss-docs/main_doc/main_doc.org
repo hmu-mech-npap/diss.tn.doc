@@ -10,7 +10,6 @@
 #+INCLUDE: title_page_latex.org
 :END:
 :LATEX:
-\numcommafalse
 \clearpage
 \tableofcontents
 #+TOC: tables
@@ -1199,21 +1198,22 @@ from scipy import signal
 import matplotlib.pyplot as plt
 import math
 import numpy as np
-bb, ab  = signal.butter (4, 0.8, 'low', analog=False,output='ba')
-wb, hb = signal.freqz(bb, ab)
-wb = wb/(2*math.pi)
+bb, ab  = signal.butter (4, 100, 'low', analog=True, output='ba')
+wb, hb = signal.freqs(bb, ab)
 
-plt.plot(wb, abs(np.array(hb)))
+plt.semilogx(wb, 20 * np.log10(abs(hb)))
 plt.title('Butterworth filter frequency response')
 plt.xlabel('Frequency [cycles/sample]')
 plt.ylabel('Amplitute [dB]')
 plt.margins(0, 0.1)
 plt.grid(which = 'both', axis='both')
+plt.savefig("Butterworth Filter Freq Response.png")
+
 #+end_src
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/98c295f34315b0f02971668dc65193249a255080.png]]
+[[file:./.ob-jupyter/eaaab7d5c083dd0ee189f63887da36c3c1d626bd.png]]
 :end:
 
 #+CAPTION:Butterworth filter frequency response
@@ -1224,21 +1224,21 @@ plt.grid(which = 'both', axis='both')
 #+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
 # 4TH ORDER BESSEL FILTER WITH A GAIN DROP OF 1/sqrt(2)
 # AT 0.4 CYCLES/SAMPLE
-bb, ab = signal.bessel (4, 0.8, 'low', analog=False, output='ba')
-wb, hb = signal.freqz(bb, ab)
-wb = wb/(2*math.pi)
+bb, ab = signal.bessel (4, 100, 'low', analog=True, output='ba')
+wb, hb = signal.freqs(bb, ab)
 
-plt.plot(wb, abs(np.array(hb)))
+plt.semilogx(wb, 20 * np.log10(abs(hb)))
 plt.title('Bessel filter frequency response')
 plt.xlabel('Frequency [cycles/sample]')
 plt.ylabel('Amplitute [dB]')
 plt.margins(0, 0.1)
 plt.grid(which= 'both', axis= 'both')
+plt.savefig("Bessel Filter Freq Response.png")
 #+end_src
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/47597dd876fd4b667b7dacefadc37d6179395293.png]]
+[[file:./.ob-jupyter/78058ea99362bb5c5b41749da7647804861ed9a8.png]]
 :end:
 
 [[file:./Bessel Filter Freq Response.png]]
@@ -1246,21 +1246,21 @@ plt.grid(which= 'both', axis= 'both')
 #+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
 #4TH ORDER CHEBYSHEV FILTER TYPE 1 (ONLY IN PASSBAND RIPPLES)
 # WITH MAX RIPPLES=2 AND THE GAIN DROP AT 1.5 CYCLES/SAMPLE
-bb, ab = signal.cheby1 (4, 2, 0.3, 'low', analog=False, output='ba')
-wb, hb = signal.freqz(bb, ab)
-wb = wb/(2*math.pi)
+bb, ab = signal.cheby1 (4, 2, 100, 'low', analog=True, output='ba')
+wb, hb = signal.freqs(bb, ab)
 
-plt.plot(wb, abs(np.array(hb)))
+plt.semilogx(wb, 20 * np.log10(abs(hb)))
 plt.title('Chebyshev filter frequency response')
 plt.xlabel('Frequency [cycles/sample]')
 plt.ylabel('Amplitute [dB]')
 plt.margins(0, 0.1)
 plt.grid(which= 'both', axis= 'both')
+plt.savefig("Chebyshev Filter Freq Response.png")
 #+end_src
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/7c09dfb582346e4cb49ed3fc05b279aa521034f2.png]]
+[[file:./.ob-jupyter/7e3e1bf99a0aa94a901858d872df4e7fce38a204.png]]
 :end:
 
 [[file:./Chebyshev Filter Freq Response.png]]
@@ -1268,21 +1268,21 @@ plt.grid(which= 'both', axis= 'both')
 #+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
 # 4TH ORDER ELLIPTIC FILTER WITH MAX RIPPLES =2dB IN PASSBAND,
 # MIN ATTENUATION =8dB IN STOP BAND AT 0.25 CYCLES/SAMPLE
-bb, ab = signal.ellip (4, 2, 8, 0.5, 'low', analog=False, output='ba')
-wb, hb = signal.freqz(bb, ab)
-wb = wb/(2*math.pi)
+bb, ab = signal.ellip (4, 2, 8, 100, 'low', analog=True, output='ba')
+wb, hb = signal.freqs(bb, ab)
 
-plt.plot(wb, abs(np.array(hb)))
+plt.semilogx(wb, 20 * np.log10(abs(hb)))
 plt.title('Elliptic filter frequency response')
 plt.xlabel('Frequency [cycles/sample]')
 plt.ylabel('Amplitute [dB]')
 plt.margins(0, 0.1)
 plt.grid(which= 'both', axis= 'both')
+plt.savefig("Elliptic Filter Freq Response.png")
 #+end_src
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/16e7ff124636d39cb84dec0dbd1c5a76d6f82f05.png]]
+[[file:./.ob-jupyter/5c074498f43bd4cd516b8e37e5ba7415905216ee.png]]
 :end:
 
 [[file:./Elliptic Filter Freq Response.png]]
@@ -1467,8 +1467,8 @@ digraph processing {
     compound=true;
     // root of operations
     // filt [label="Απομείωση θορυβου"]
-    aliasing [label="Έλεγχος \n αλλοίωσης"]
-    averg [label="Υπολογισμός \n μέσης τιμής \n σήματος"]
+    //  aliasing [label="Έλεγχος \n αλλοίωσης"]
+    //  averg [label="Υπολογισμός \n μέσης τιμής \n σήματος"]
 
     //clusters for clarity
     subgraph cluster_0{
@@ -1485,15 +1485,15 @@ digraph processing {
             style=filled;
             fillcolor=forestgreen;
             node[style=filled; color=white];
-            aliasing;
-            averg;
+            // aliasing;
+            // averg;
             label= "Αρχική φάση επεξεργασίας"
 
-            subgraph cluster_3{
-                avrged;
-                decimop;
-                label="Μέθοδοι";
-            }
+            // subgraph cluster_3{
+            //     avrged;
+            //     decimop;
+            //     label="Μέθοδοι";
+            // }
         }
         subgraph cluster_2{
             fontcolor="#D4C9AF";
@@ -1502,10 +1502,10 @@ digraph processing {
             node[style=filled; color=white];
             choosfilt;
             filterconst;
-            fir;
-            iir;
-            apply;
-            welch;
+            // fir;
+            // iir;
+            // apply;
+            // welch;
             filt_type;
             label= "Συχνοτικά φίλτρα";
         }
@@ -1515,52 +1515,53 @@ digraph processing {
         }
     }
     {rank=same; fftmethod; timedom;}
-    {rank=same; aliasing; averg; choosfilt;}
-    {rank=same; graphs; avrged; filt_type;}
-    {rank=same; filterconst; decimop;}
+    // {rank=same; aliasing; averg; choosfilt;}
+    {rank=same; graphs; choosfilt;}
+    // {rank=same; filterconst; decimop;}  avrged;
     // filter related
-    fir [label="FIR"]
-    iir [label="IIR"]
-    apply [label="Εφαρμογή φίλτρων"]
+    // fir [label="FIR"]
+    // iir [label="IIR"]
+    // apply [label="Εφαρμογή φίλτρων"]
     filterconst [label="Κατασκευή \n φίλτρων"]
     filt_type [label="Διέλευσης χαμηλών \n συχνοτήτων \n (low-pass)"]
 
     // aliasing
-    decimop [label="Αποδεκατισμός \n ανά 10 και 100 δείγματα \n (decimation)"]
-    timedom [label="Πεδίο του χρόνου \n καταγραφή"]
+    // decimop [label="Αποδεκατισμός \n ανά 10 και 100 δείγματα \n (decimation)"]
+    timedom [label="Πεδίο του χρόνου"]
 
     //general bubbles
     graphs [label="Γραφήματα"]
-    fftmethod [label= "Πεδίο συχνότητας \n (fft algorithm)" ]
+    fftmethod [label= "Πεδίο συχνότητας" ]
     choosfilt [label="Επιλογή επιθυμητών \n συχνοτήτων \n(cutoff frequency)"]
-    results [label="Σύγκριση μεθόδων"]
-    avrged [label="average(signal, fs) \n \n Ανάλογα με την \n συχνότητα \n καταγραφής, fs"]
-    welch [label="Μέθοδος Welch \n (Spectral density)"]
+    results [label="Σύγκριση μεθόδων \n(τυπική απόκλιση/\nμέση τιμή)"]
+    // avrged [label="average(signal, fs) \n \n Ανάλογα με την \n συχνότητα \n καταγραφής, fs"]
+    // welch [label="Μέθοδος Welch \n (Spectral density)"]
     // start the graph at last 🫠
-    fftmethod -> timedom -> fftmethod[style=dotted,];
+    fftmethod -> timedom[style=dotted, label="ifft"];
+    timedom -> fftmethod[style=dotted, label="fft"];
     // filtering path
     choosfilt ->
     filterconst [color=red, style=bold];
 
-    filterconst -> {fir iir} ->
+    filterconst ->
     filt_type ->
-    apply ->
-    welch ->
+    // apply ->
+    // welch ->
     graphs [style=bold, color=red]
 
     // aliasing path
-    timedom ->
-    aliasing ->
-    decimop ->
-    // apply ->
-    graphs[color=blueviolet , style=dashed]
+    // timedom ->
+    // // aliasing ->
+    // // decimop ->
+    // // apply ->
+    // graphs[color=blueviolet , style=dashed]
     fftmethod ->
     choosfilt[color=red, style=dotted];
 
     // aliasing path
     timedom ->
-    averg ->
-    avrged ->
+    // averg ->
+    // avrged ->
     // apply ->
     graphs [color=magenta, style=dashed, ]
 
