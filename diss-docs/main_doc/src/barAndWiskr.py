@@ -1,4 +1,3 @@
-#!/usr/bin/env ipython
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
@@ -64,6 +63,8 @@ The documentation says:
 
 *reference* :
     - https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html
+    - https://www.hackmath.net/en/calculator/quartile-q1-q3
+    - https://www.quora.com/What-is-the-difference-between-a-candlestick-chart-and-a-box-and-whisker-chart
 """
 # "Inverter Off",
 # clean_chan_off_0,
