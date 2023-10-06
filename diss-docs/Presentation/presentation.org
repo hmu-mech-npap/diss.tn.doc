@@ -3,7 +3,7 @@
 #+REVEAL_HLEVEL: 2
 #+REVEAL_TITLE_SLIDE: <h2>%t</h2> <h3>%s</h3> <p>%a</p> <p>%d</<p>
 #+OPTIONS: num:nil timestamp:nil toc:nil
-#+REVEAL_INIT_OPTIONS: width:1920, height:1080, controlsLayout: 'edges'
+#+REVEAL_INIT_OPTIONS: width:1920, height:1080, controlsLayout: 'edges', hash: true
 :END:
 :ORG_PROPERTIES:
 
@@ -47,95 +47,147 @@
 
 #+ATTR_REVEAL: :frag (appear)
 - Περιοδική συμπεριφορά
-#+ATTR_REVEAL: :frag (fade-in-then-out)
+  #+ATTR_REVEAL: :frag (fade-in-then-out)
   + Η επανάληψη στο χρόνο είναι από τα σημαντικότερα χαρακτηριστικά των σημάτων.
 ** χρησεις
 #+ATTR_REVEAL: :frag (fade-left)
-+ Συνήθως για συμπίεση πληροφορίας
++ Ως μέτρο αναφοράς και σε μετρητικές συσκευές
 + Επικοινωνία-Διαδίκτυο
-+ Ως μέτρο αναφοράς και μετρητικές συσκευές
-*** συμπιεση πληροφοριων
-Εδω καλο ειναι να πω για την δυνατοτητα αποθήκευσης μεγαλου ογκου πληροφοριων με λιγο αποθηκευτικο χωρο και να μπω λιγο στην εννοια της κωδικοποιησης-αποκωδικοποιησης σηματων βαζω ανετα αλλες 2 διαφανειες
-*** παγκοσμιος ιστοτοπος
-εδω μπορω να αναφερθω στην σημασία των σηματων σε  ιντερνετ και τηλεπικοινωνια.
++ Για συμπίεση πληροφορίας
 *** συσκευες / επικοινωνια
-μετρητικές συσκευες, διαπασον και αλλες ωραιες εικονες.
-#+REVEAL_HTML: <div style="display:flex;align-items:center;width:240%;">
+#+REVEAL_HTML: <div style="display:flex;align-items:center;width:180%;">
     #+ATTR_REVEAL: :frag (fade-left)
     #+ATTR_HTML: :align left
     - Μετρητής ταλαντώσεων
       #+ATTR_HTML: :align left
-      [[file:./viberx2t.png]]
+      [[file:./assets/viberx2t.png]]
 
     #+ATTR_REVEAL: :frag (fade-right)
     #+ATTR_HTML: :align right
     - Συσκεύη κουρδίσματος
       #+ATTR_HTML: :align right
-      [[file:./diapasont.png]]
+      [[file:./assets/diapasont.png]]
 
-    #+ATTR_REVEAL: :frag (fade-right)
+    #+ATTR_REVEAL: :frag (fade-up)
     #+ATTR_HTML: :align right
     - Καλώδιο επικοινωνίας
       #+ATTR_HTML: :align right
-      [[file:./cat7-cable.png]]
+      [[file:./assets/cat7-cable.png]]
 
 #+BEGIN_NOTES
-1. ηλεκτρικό σήμα -> πληροφορία συχνότητας
+1. ηλεκτρικό σήμα -> πληροφορία συχνότητας επιταχυνσιόμετρο
 2. προκαθορισμένη συχνότητα->συντονισμό χορδής και της συσκευής.
 3. μεταφορά δεδομένων -> cat7
 #+END_NOTES
-** διαχειρηση δεδομενων
-Η καταγραφή καθώς και ο τρόπος αποθήκευσης καθορίζονται από τον όγκο τους σε mB. Ένας επίσης καθοριστικός παράγοντας είναι το όριο που μπορεί να μεταφερθεί μέσω διαδικτύου καθώς πολλές φορές οι ερευνητές βρίσκονται σε διαφορετικές ηπείρους. Έτσι είναι αναγκαίο να καθοριστεί ο απαραίτητος όγκος δεδομένων για την εξαγωγή συμπερασμάτων.
+*** συμπιεση / κωδικοποιηση
+Με τις απαιτήσεις για ολοένα και περισσότερο όγκο πληροφορίας προς κωδικοποίηση και αποστολή σε συνεχώς μεγαλύτερες αποστάσεις, αναπτύσσονται βελτιστοποιήσεις αλλά και νέοι αλγόριθμοι για αυτό τον σκοπό. Η παρακάτω φράση παρουσιάζεται κωδικοποιημένη χρησιμοποιώντας τον Κώδικα (Σήματα) Morse. Αποτέλεσε την πρώτη μορφή επικοινωνίας εξ' αποστάσεως με την χρήση συνεχόμενων καλωδίων.
+
+#+BEGIN_QUOTE Einstein
+Despite the fact that I analyzed nine problems correctly, no one congratulated me. But when I
+made one mistake, everyone started laughing. This means that even if a person is successful,
+society will notice his slightest mistake. And they'll like that.
+
+So don't let criticism destroy your dreams. The only person who never makes a mistake is
+someone who does nothing.
+-- Albert Einstein
+#+END_QUOTE
+
+#+BEGIN_SRC morse
+-.././.../.--./../-/. -/..../. ..-./.-/-.-./- -/..../.-/- .. .-/-./.-/.-../-.--/--.././-.. -./../-./. .--./.-./---/-.../.-.././--/... -.-./---/.-./.-././-.-./-/.-../-.--/--..-- -./--- ---/-./. -.-./---/-./--./.-./.-/-/..-/.-../.-/-/./-.. --/./.-.-.- -.../..-/- .--/...././-. ..
+--/.-/-../. ---/-./. --/../.../-/.-/-.-/./--..-- ./...-/./.-./-.--/---/-./. .../-/.-/.-./-/./-.. .-../.-/..-/--./..../../-./--./.-.-.- -/..../../... --/./.-/-./... -/..../.-/- ./...-/./-. ../..-. .- .--././.-./.../---/-. ../... .../..-/-.-./-.-././.../.../..-./..-/.-../--..--
+.../---/-.-./.././-/-.-- .--/../.-../.-.. -./---/-/../-.-./. ..../../... .../.-../../--./..../-/./.../- --/../.../-/.-/-.-/./.-.-.- .-/-./-.. -/...././-.--/.----./.-../.-.. .-../../-.-/. -/..../.-/-/.-.-.-
+
+.../--- -../---/-./.----./- .-.././- -.-./.-./../-/../-.-./../.../-- -.././.../-/.-./---/-.-- -.--/---/..-/.-. -../.-././.-/--/.../.-.-.- -/..../. ---/-./.-../-.-- .--././.-./.../---/-. .--/..../--- -././...-/./.-. --/.-/-.-/./... .- --/../.../-/.-/-.-/. ../...
+.../---/--/./---/-./. .--/..../--- -../---/./... -./---/-/..../../-./--./.-.-.-
+#+END_SRC
+** Εργαστηριακη εγκατασταση
+#+ATTR_REVEAL: :frag (fade-in-then-semi-out)
+[[file:./assets/inv_sketch_wt.png]]
+*** αισθητηρες ανεμου
+[[file:./assets/sensor_inner.png]]
+[[file:./assets/lab-1scaledit.png]]
+* διαχειρηση δεδομενων
+Εμφανίζεται θόρυβος μόλις ο μετασχηματιστής ενεργοποιείται. Παρακάτω συγκρίνονται τα σήματα για 0 και 10 m/s αριστερά και δεξιά. Φαίνεται ξεκάθαρα η επιρροή από την Η/Μ ακτινοβολία του μετασχηματιστή και μπορούμε να υποθέσουμε ότι επιδρά σε φάσμα υψηλών συχνοτήτων αφού η πλειοψηφία των δειγμάτων δεν αποκλίνει πολύ από την μέση τιμή του σήματος.
+
+file:./assets/s1_Comp_th-ws0.png.png
+file:./assets/s1_Comp_th-ws10.png.png
 *** καταγραφη
-Σήμερα με τον εκθετικό ρυθμό ανάπτυξης της τεχνολογίας συσκευές καταγραφής ηλεκτρικών σημάτων με πολλές δυνατότητες, όπως παλμογράφο σε σύνδεση με USB ή/και ανάλυση φάσματος, υπάρχουν σε προσιτές τιμές.
-
+Μετά την καταγραφή κάποιου σήματος και πριν την όποια επεξεργασία, συνηστάται να ελεγχθεί για τυχών αλλοίωση λόγω ανεπαρκούς συχνότητας καταγραφής και του θεωρήματος δειγματοληψίας Nyquist. Για τα σήματα που εξετάστηκαν, εφαρμόστηκαν διαφορετικές συχνότητες καταγραφής για μηδενική ταχύτητα ανέμου για να διαπιστωθεί ο βαθμός της αλλοίωσης που ενδέχεται να εμπεριέχει το αρχικό σήμα.
+[[file:./assets/fsComp.png]]
 *** επεξεργασια
-Συνήθως γίνεται σε μεταγενέστερο χρόνο και τις περισσότερες φορές απαιτεί μεγάλη υπολογιστική ισχύ σχετικά με τον όγκο τους. *βαλε παραδειγμα εδω*
-* συγκριση
+Εκτώς από την απόρριψη συχνοτήτων με φίλτρα, πραγματοποιήθηκε έλεγχος του σήματος για καταστρεπτικά φαινόμενα. Με την χρήση αποδεκατισμού, συμπεριλαμβανομένου και φίλτρου κατά της αλλοίωσης, λόγω μεταβολής της αρχικής συχνότητας του σήματος μπορούμε να διακρίνουμε με πορτοκαλί χρώμα το επεξεργασμένο σήμα και με πράσινο το καταγεγραμμένο αρχικά στην ίδια συχνότητα με το αποδεκατισμένο σήμα.
 
-#+ATTR_REVEAL: :frag (roll-in)
-Φίλτρα διέλευσης χαμηλών συχνοτήτων
-
-#+REVEAL_HTML: <div style="display:flex;align-items:center;width:240%;">
-    #+ATTR_REVEAL: :frag (roll-in)
-    #+ATTR_HTML: :align left
-    - IIR ☟
-      #+ATTR_REVEAL: :frag (fade-in)
-      #+ATTR_HTML: :align left
-      [[file:./iir-filt-raw-lp.png]]
-    #+ATTR_REVEAL: :frag (roll-in)
-    #+ATTR_HTML: :align right
-    - FIR ☟
-      #+ATTR_REVEAL: :frag (fade-in)
-      #+ATTR_HTML: :align right
-      file:./fir-filt-raw-huge-order.png
-    #+ATTR_REVEAL: :frag (roll-in)
-    #+ATTR_HTML: :align right
-    - με διάφορες αποκρίσεις ☟
-      #+ATTR_REVEAL: :frag (fade-in)
-      #+ATTR_HTML: :align right
-      #+REVEAL_HTML: <div style="display:flex;align-items:center;width:100%;">
-      - [[file:./Bessel Filter Freq Response.png]]
-      - [[file:./Chebyshev Filter Freq Response.png]]
+[[file:./assets/anti_aliasing_fir.png]]
+* φιλτρα συχνοτητων
+# #+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:40%;">
+# [[file:./assets/explain_graphs_attrs.png]]
+file:./assets/s2-PS-WS10-filt2000-remaster-explaining.png
 ** IIR
 Φίλτρα άπειρης κρουστικής απόκρισης
 #+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;width:70%;">
 Σε αντίθεση με τα FIR έχουν την δυνατότητα μεγάλης μείωσης της ισχύος των συχνοτήτων μετά την συχνότητα κατακρημνισμού (cut-off frequency), με ελάχιστη επιρροή των συχνοτήτων στο φάσμα διέλευσης. Η ακρίβειά τους οφείλεται στην μέθοδο της ανάδρασης, χρησιμοποιώντας την έξοδο του φίλτρου κατά την διαδικασία για την βελτιστοποίηση των χαρακτηριστικών του πριν την επόμενη εφαρμογή.
 
 #+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:240%;">
-[[file:./iir-filt-raw-lp.png]]
+[[file:./assets/iir-filt-raw-lp.png]]
 ** FIR
 Φίλτρα πεπερασμένης κρουστικής απόκρισης
 #+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;width:70%;">
 Έχουν την δυνατότητα απόρριψης συχνοτήτων που απέχουν κατά ένα ποσό από την συχνότητα αποκοπής του φίλτρου. Όπως θα παρατηρήσουμε και στο διάγραμμα δεξιά υπάρχει σημαντική καθυστέρηση από την επιλεγμένη συχνότητα και την απομείωση του φάσματος από αυτήν και μετά. Αυτό είναι χαρακτηριστικό των συστημάτων FIR καθώς δεν εφαρμόζουν την τεχνική της ανάδρασης.
 
 #+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:240%;">
-[[file:./fir-filt-raw-huge-order.png]]
-* Εργαστηριακη εγκατασταση
+[[file:./assets/fir-filt-raw-huge-order.png]]
+*** συγκριση φιλτρων
+Φίλτρα διέλευσης χαμηλών συχνοτήτων
 
-#+ATTR_REVEAL: :height 85%
-#+ATTR_REVEAL: :frag (fade-in-then-semi-out)
-[[file:./Wind_Tunnel_setup_lab.png]]
+#+REVEAL_HTML: <div style="display:flex;align-items:center;width:240%;">
+    #+ATTR_HTML: :align left
+    - IIR ☟
+      #+ATTR_REVEAL: :frag (fade-in)
+      #+ATTR_HTML: :align left
+      [[file:./assets/iir-filt-raw-lp.png]]
+    #+ATTR_HTML: :align right
+    - FIR ☟
+      #+ATTR_REVEAL: :frag (fade-in)
+      #+ATTR_HTML: :align right
+      file:./assets/fir-filt-raw-huge-order.png
+    #+ATTR_HTML: :align right
+    #+ATTR_REVEAL: :frag (fade-in)
+    - διάφορες αποκρίσεις ☟
+      #+ATTR_HTML: :align right
+      #+REVEAL_HTML: <div style="display:flex;align-items:center;height:28%;width:35%;">
+      [[file:./assets/Chebyshev Filter Freq Response.png]]
+      [[file:./assets/Elliptic Filter Freq Response.png]]
+*** συμπερασματα
+Εδώ καλό είναι να πω για την δυνατότητα των IIR για καλύτερη ανάλυση αλλά και μεγαλύτερο χρόνο εκτέλεσης για μεγάλα σετ δεδομένων.
+#+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;width:100%;">
+- IIR
+  #+ATTR_REVEAL: :frag (fade-in)
+  - Υπέρ
+    #+ATTR_REVEAL: :frag (highlight-blue)
+    - [X] ανάλυση σήματος εξόδου
+    - [X] τάξη φίλτρου (2)
+  - Κατά
+    #+ATTR_REVEAL: :frag (highlight-red)
+    - [X] Χρόνος εκτέλεσης
+    - [X] καθυστέρηση στο σήμα εξόδου
+
+#+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:100%;">
+- FIR
+  #+ATTR_REVEAL: :frag (fade-in)
+  - Υπέρ
+    #+ATTR_REVEAL: :frag (highlight-red)
+    - [X] Χρόνος εκτέλεσης
+    - [X] ελαχιστοποίηση καθυστέρησης στο σήμα εξόδου
+  - Κατά
+    #+ATTR_REVEAL: :frag (highlight-blue)
+    - [X] ανάλυση σήματος εξόδου
+    - [X] τάξη φίλτρου (22)
+
+#+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:100%;">
+#+ATTR_REVEAL: :frag (fade-left)
+- Συνδυασμός φίλτρων:
+
+  Πρώτα θα πρέπει να εφαρμόσουμε το FIR για τον καθαρισμό της πληθώρας του θορύβου με χαμηλή ανάλυση και έπειτα το IIR απομειώνοντας φάσματα θορύβου που αδυνατούμε με το FIR.
 * /Ευχαριστω για τον χρονο σας/
 
 * Buttons :noexport:
