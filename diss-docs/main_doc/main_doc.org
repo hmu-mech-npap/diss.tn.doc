@@ -19,7 +19,6 @@
 :END:
 * Imports :noexport:
 #+begin_src jupyter-python :session python3 :async yes :results drawer
-#%%
 import numpy as np
 import math
 import matplotlib.pyplot as plt
@@ -32,9 +31,7 @@ from pros_noisefiltering.filters.fir import fir_factory_constructor
 :results:
 :end:
 
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer 
-
-#%%
+#+begin_src jupyter-python :session python3 :async yes :results raw drawer
 from pathlib import Path
 from nptdms import TdmsFile
 from pros_noisefiltering.WT_NoiProc import (WT_NoiseChannelProc,
@@ -47,7 +44,7 @@ from pros_noisefiltering.gen_functions import plot_spect_comb2
 :results:
 :end:
 ** Basic folders and data
-#+begin_src jupyter-python :session python3 :async yes :results raw drawer 
+#+begin_src jupyter-python :session python3 :async yes :results raw drawer
 #%%
 FOLDER_FOR_DATA = Path(
     '/mnt/data_folder/measurements_12_05_22/new_record_prop_channel/')
@@ -2201,7 +2198,6 @@ plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
                  figsize = (10, 5),
                  draw_lines=True
                  )
-
 #+end_src
 
 #+CAPTION: Σύγκριση σήματος σε διαφορετικές συχνότητες καταγραφής με τον μετασχηματιστή ανοιχτό και μηδενική ταχύτητα ανέμου.
@@ -2671,5 +2667,12 @@ print(ca1_0.filter(fc_Hz=100).average(100).operations)
 # <(code)>
 # <(diss-notes)>
 # <(edit latex headers file)>
-# <(apa citation file)>
 # <(go to presentation)>
+
+#+begin_src jupyter-python :session pyhton3
+%who
+
+#+end_src
+
+#+RESULTS:
+: Interactive namespace is empty.
