@@ -177,6 +177,8 @@ dfi_i1_w20 = WT_NoiseChannelProc.from_tdms(
     l_tdms_Inv[5][GROUP_NAME][CHAN_NAME],
     desc='Inverter On, WS=20, 100kHz')
 
+font_config = {'size': 12}
+plt.rc('font', **font_config)
 #+end_src
 
 #+RESULTS:
@@ -1065,7 +1067,7 @@ my_example_future(time, np.sin(time), 16)
 #+ATTR_LATEX: :placement [H]
 #+LABEL: fig_explaining_future
 #+RESULTS: fig:explain
-[[file:./.ob-jupyter/df9af7ccc97a3f6be199c3890b5a359c3600fe39.png]]
+[[file:./.ob-jupyter/7f0306cca872362e6c2ba79474271b84f80d3bad.png]]
 
 Η συγκεκριμένη οπτική εντάσσει την έννοια των “παραθύρων” καθώς ένα συρόμενο παράθυρο, πέντε
 τιμών συνεχίζοντας το παράδειγμα, θα ορίσει τις επιλεγμένες τιμές για τον υπολογισμό του
@@ -1188,7 +1190,7 @@ out[z] = - \sum_{f=1}^{T}c(f)out(z-f) + \sum_{f=0}^{I}d(f)in(z-f) \\
 πρότυπου φίλτρου.
 
 \selectlanguage{english}
-#+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
+#+begin_src jupyter-python :session python3 :async no :results drawer :exports code
 # 4TH ORDER BUTTERWORTH FILTER WITH A GAIN DROP OF 1/sqrt(2)
 # AT 0.4 CYCLES/SAMPLE
 from scipy import signal
@@ -1209,9 +1211,7 @@ plt.savefig("Butterworth Filter Freq Response.png")
 #+end_src
 
 #+RESULTS:
-:results:
-[[file:./.ob-jupyter/eaaab7d5c083dd0ee189f63887da36c3c1d626bd.png]]
-:end:
+[[file:./.ob-jupyter/c5c09453014921117b2069a4dd00e2293e581ba1.png]]
 
 \selectlanguage{greek}
 #+CAPTION: Πρότυπο φίλτρο τύπου \(Butterworth\).
@@ -1245,7 +1245,7 @@ A_{dB} = 10 \cdot log_{10}\left[{\frac{I_{1}}{I_{0}}}\right]
 ήταν οι χαμηλές συχνότητες).
 
 \selectlanguage{english}
-#+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
+#+begin_src jupyter-python :session python3 :async no :results drawer :exports code
 # 4TH ORDER BESSEL FILTER WITH A GAIN DROP OF 1/sqrt(2)
 # AT 0.4 CYCLES/SAMPLE
 bb, ab = signal.bessel (4, 100, 'low', analog=True, output='ba')
@@ -1295,7 +1295,7 @@ plt.savefig("Chebyshev Filter Freq Response.png")
 [[file:./Chebyshev Filter Freq Response.png]]
 
 \selectlanguage{english}
-#+begin_src jupyter-python :session python3 :async yes :results drawer :exports code
+#+begin_src jupyter-python :session python3 :async no :results drawer :exports code
 # 4TH ORDER ELLIPTIC FILTER WITH MAX RIPPLES =2dB IN PASSBAND,
 # MIN ATTENUATION =8dB IN STOP BAND AT 0.25 CYCLES/SAMPLE
 bb, ab = signal.ellip (4, 2, 8, 100, 'low', analog=True, output='ba')
@@ -1450,19 +1450,135 @@ digraph regexp  {
 φάνηκε ξεκάθαρα μια περιοχή συχνοτήτων στα σήματα από τα 2000 \(Hz\), επηρεασμένα
 από θόρυβο. Εδώ φαίνονται δύο από τα διαγράμματα της ανάλυσης των φίλτρων, που
 χρησιμοποιήθηκαν στην σύγκριση των μεθόδων απόρριψης του θορύβου.
+
+#+NAME: butter_comparison
+#+begin_src jupyter-python :session python3 :results none :exports none
+# from pros_noisefiltering.plotting_funcs import plot_comparative_response
+from pros_noisefiltering.filters.iir import filt_butter_factory
+from pros_noisefiltering.filters.fir import fir_factory_constructor
+
+def plot_comparative_response_for_doc(wt_obj,   # cutoff frequency
+                              filter_func, response_offset=2e-4,
+                              Kolmogorov_offset=1,
+                              figsize=(16, 9),
+                              nperseg=1024,
+                              xlim=[1e1, 1e5],
+                              ylim=[1e-8, 1e-1],
+                              plot_th=False):
+    """#TOD make this part of WT_NoiProc.
+
+    Args:
+    - wt_obj (Graph_data_container): List of graph containers
+    - response_offset (float, optional): Setting a response offset.
+        - Defaults to 2e-4.
+    - figsize (tuple, optional): Determining the size of the produced figure.
+        - Defaults to (16,9).
+    """
+    sig = wt_obj.data
+    fs_Hz = wt_obj.fs_Hz
+
+    filt_p = filter_func.params
+    sos = signal.butter(N=filt_p['filter order'], Wn=filt_p['fc_Hz'],
+                        btype='lp', fs=fs_Hz, output='sos')
+
+    filtered = filter_func(sig, fs_Hz)
+
+    # calculate spectrum
+    f, Pxx_spec = signal.welch(sig, fs_Hz,
+                               window='flattop', nperseg=nperseg,
+                               scaling='density')
+    f, Pxx_spec_filt = signal.welch(filtered, fs_Hz,
+                                    window='flattop', nperseg=nperseg,
+                                    scaling='density')
+
+    # #TODO: this is for testing
+    # Pxx_spec= Pxx_spec**2
+    # Pxx_spec_filt = Pxx_spec_filt**2
+
+    if plot_th:
+        t = np.arange(0, len(sig), 1,
+                      dtype='int') / fs_Hz
+        # plot time domain
+        fig1, (ax1, ax2) = plt.subplots(2, 1,
+                                        sharex=True, sharey=True,
+                                        figsize=figsize)
+        fig1.suptitle(
+            'Time Domain Filtering of signal with f1=10[Hz], f2=20[Hz] and noise')
+        ax1.plot(t, sig)
+        ax1.set_title('raw signal')
+        # ax1.axis([0, 1, -2, 2])
+        ax2.plot(t, filtered)
+        ax2.set_title('After filter')
+        # ax2.axis([0, 1, -2, 2])
+        ax2.set_xlabel('Time [seconds]')
+        plt.tight_layout()
+
+    wb, hb = signal.sosfreqz(sos, worN=np.logspace(start=1, stop=5),
+                             whole=True, fs=fs_Hz)
+    fb = wb   # /(2*np.pi) # convert rad/s to Hz
+
+    fig2, ax2 = plt.subplots(1, 1, sharex=True,
+                             figsize=figsize)
+    ax2.plot(fb,
+             response_offset*abs(np.array(hb)), '--', lw=3,
+             label='filter response')
+    ax2.semilogy(f, np.sqrt(Pxx_spec), '.', label='raw')
+    ax2.semilogy(f, np.sqrt(Pxx_spec_filt), '.', label='filtered')
+    if Kolmogorov_offset is not None:
+        KOLMOGORV_CONSTANT = - 5.0/3
+        xs = f[1:]
+        ys = xs**(KOLMOGORV_CONSTANT)*Kolmogorov_offset
+        ax2.plot(xs, ys, 'r--', label='Kolmogorov -5/3')
+
+    ax2.set_title('Frequency response\n(cutoff: {}Hz) - {}'.format(
+        filter_func.params.get('fc_Hz', None),
+        wt_obj.description))
+    ax2.set_xlabel('Frequency [Hz]')
+    ax2.set_ylabel('Power Spectrum density [V**2/Hz]')
+    ax2.set_xscale('log')
+    ax2.set_yscale('log')
+    ax2.margins(0, 0.1)
+    ax2.grid(which='both', axis='both')
+    ax2.set_xlim(xlim)
+    ax2.set_ylim(ylim)
+    ax2.legend()
+    # plt.savefig('Bessel Filter Freq Response.png')
+
+# construct the fir filters with 2000 and 200 Hz cutoff
+fir_2000 = fir_factory_constructor(fir_order=60, fc_Hz=2000)
+butter_filter_2000 = filt_butter_factory(filt_order=4, fc_Hz=2000)
+plot_comparative_response_for_doc(df_tdms_0_5, # cutoff frequency
+        filter_func=butter_filter_2000,
+        response_offset=2e-4,
+        Kolmogorov_offset = 4e0,
+        nperseg=NPERSEG
+        ,figsize =(6,8)
+        )
+plt.savefig('./iir-butter-2000')
+
+plot_comparative_response_for_doc(df_tdms_0_5, # cutoff frequency
+        filter_func=fir_2000,
+        response_offset=2e-4,
+        Kolmogorov_offset = 4e0,
+        nperseg=NPERSEG
+        ,figsize =(6,8)
+        )
+plt.savefig('./fir-filter-2000')
+#+end_src
+
 #+NAME: comb-pics
 #+begin_src latex
 \begin{figure}
 \centering
 \begin{subfigure}{.5\textwidth}
 \centering
-\includegraphics[width=.8 \linewidth]{./fir-200.png}
+\includegraphics[width=1. \linewidth]{./fir-filter-2000.png}
 \caption{\(F.I.R.\) φίλτρο}
 \label{fig:sub1}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
 \centering
-\includegraphics[width=.8 \linewidth]{./iir-butter-200.png}
+\includegraphics[width=1. \linewidth]{./iir-butter-2000.png}
 \caption{\(I.I.R.\) φίλτρο}
 \label{fig:sub2}
 \end{subfigure}
@@ -1720,7 +1836,7 @@ digraph processing {
 
 
 \begin{figure}[t]
-\centerline{\includegraphics[scale=.6]{./wt_meas/5_wt_wisk.png}}
+\centerline{\includegraphics[scale=.9]{./src/whiskr.png}}
 \caption{Ταχύτητα ανέμου \(5\ m/s\) διάμεση τιμή αεροσήραγγας.}
 \label{fig:ca-0-mean}
 \end{figure}
@@ -1791,15 +1907,57 @@ dummy(table)
 
 #+CAPTION: Πίνακας τυπικής απόκλισης σημάτων καταγεγραμμένα με διαφορετική παροχή ανέμου (συμπιεσμένος και μή).
 #+RESULTS: std_1st
-|                 | Συμπιεσμένος αέρας                    |                                        |                           Αεροσήραγγα |                                        |
-|-----------------+---------------------------------------+----------------------------------------+---------------------------------------+----------------------------------------|
-| Μετ/στής        | \(\text{\selectlanguage{english}On}\) | \(\text{\selectlanguage{english}Off}\) | \(\text{\selectlanguage{english}On}\) | \(\text{\selectlanguage{english}Off}\) |
-|-----------------+---------------------------------------+----------------------------------------+---------------------------------------+----------------------------------------|
-| ταχ.=0 \(m/s\)  | 0.0364                                |                                 0.0062 |                                0.0392 | 0.0076                                 |
-| ταχ.=5 \(m/s\)  | 0.0434                                |                                 0.0244 |                                0.0385 | -                                      |
-| ταχ.=10 \(m/s\) | 0.0841                                |                                 0.0763 |                                0.0400 | -                                      |
-| ταχ.=15 \(m/s\) | -                                     |                                      - |                                0.0421 | -                                      |
-| ταχ.=20 \(m/s\) | -                                     |                                      - |                                0.0566 | -                                      |
+:RESULTS:
+# [goto error]
+#+begin_example
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[115], line 8[0m
+[1;32m      1[0m [38;5;66;03m#%%[39;00m
+[1;32m      2[0m [38;5;66;03m# from tabulate import tabulate[39;00m
+[1;32m      3[0m table [38;5;241m=[39m ([[[38;5;124m'[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mΣυμπιεσμένος αέρας[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mΑεροσήραγγα[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m'[39m],
+[1;32m      4[0m           [38;5;28;01mNone[39;00m,
+[1;32m      5[0m           [[38;5;124m"[39m[38;5;124mΜετ/στής[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m\[39m[38;5;124m([39m[38;5;130;01m\t[39;00m[38;5;124mext[39m[38;5;124m{[39m[38;5;124m\[39m[38;5;124mselectlanguage[39m[38;5;132;01m{english}[39;00m[38;5;124mOn}[39m[38;5;124m\[39m[38;5;124m)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m\[39m[38;5;124m([39m[38;5;130;01m\t[39;00m[38;5;124mext[39m[38;5;124m{[39m[38;5;124m\[39m[38;5;124mselectlanguage[39m[38;5;132;01m{english}[39;00m[38;5;124mOff}[39m[38;5;124m\[39m[38;5;124m)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m\[39m[38;5;124m([39m[38;5;130;01m\t[39;00m[38;5;124mext[39m[38;5;124m{[39m[38;5;124m\[39m[38;5;124mselectlanguage[39m[38;5;132;01m{english}[39;00m[38;5;124mOn}[39m[38;5;124m\[39m[38;5;124m)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m\[39m[38;5;124m([39m[38;5;130;01m\t[39;00m[38;5;124mext[39m[38;5;124m{[39m[38;5;124m\[39m[38;5;124mselectlanguage[39m[38;5;132;01m{english}[39;00m[38;5;124mOff}[39m[38;5;124m\[39m[38;5;124m)[39m[38;5;124m"[39m],
+[1;32m      6[0m           [38;5;28;01mNone[39;00m,
+[1;32m      7[0m           [[38;5;124m"[39m[38;5;124m/[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m<[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m<[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m"[39m],
+[0;32m----> 8[0m           [[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00m[43mdfi_i0_w0[49m[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter Off,[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mταχ.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m, 100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m"[39m[38;5;124m [39m[38;5;124m\[39m[38;5;124m(m/s[39m[38;5;124m\[39m[38;5;124m)[39m[38;5;124m"[39m,
+[1;32m      9[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(df_tdms_1_0[38;5;241m.[39mdata)),
+[1;32m     10[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(df_tdms_0_0[38;5;241m.[39mdata)),
+[1;32m     11[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i1_w0[38;5;241m.[39mdata)),
+[1;32m     12[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i0_w0[38;5;241m.[39mdata)),
+[1;32m     13[0m            ],
+[1;32m     14[0m           [[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00mdfi_i1_w5[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter On,[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mταχ.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m, 100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m"[39m[38;5;124m [39m[38;5;124m\[39m[38;5;124m(m/s[39m[38;5;124m\[39m[38;5;124m)[39m[38;5;124m"[39m,
+[1;32m     15[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(df_tdms_1_5[38;5;241m.[39mdata)),
+[1;32m     16[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(df_tdms_0_5[38;5;241m.[39mdata)),
+[1;32m     17[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i1_w5[38;5;241m.[39mdata)),
+[1;32m     18[0m            [38;5;124m"[39m[38;5;124m-[39m[38;5;124m"[39m,
+[1;32m     19[0m            ],
+[1;32m     20[0m           [[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00mdfi_i1_w10[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter On,[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mταχ.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m, 100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m"[39m[38;5;124m [39m[38;5;124m\[39m[38;5;124m(m/s[39m[38;5;124m\[39m[38;5;124m)[39m[38;5;124m"[39m,
+[1;32m     21[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(df_tdms_1_10[38;5;241m.[39mdata)),
+[1;32m     22[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(df_tdms_0_10[38;5;241m.[39mdata)),
+[1;32m     23[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i1_w10[38;5;241m.[39mdata)),
+[1;32m     24[0m            [38;5;124m"[39m[38;5;124m-[39m[38;5;124m"[39m],
+[1;32m     25[0m
+[1;32m     26[0m          [[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00mdfi_i1_w15[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter On,[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mταχ.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m, 100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m"[39m[38;5;124m [39m[38;5;124m\[39m[38;5;124m(m/s[39m[38;5;124m\[39m[38;5;124m)[39m[38;5;124m"[39m,
+[1;32m     27[0m           [38;5;124m"[39m[38;5;124m-[39m[38;5;124m"[39m,
+[1;32m     28[0m           [38;5;124m"[39m[38;5;124m-[39m[38;5;124m"[39m,
+[1;32m     29[0m           [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i1_w15[38;5;241m.[39mdata)),
+[1;32m     30[0m           [38;5;124m"[39m[38;5;124m-[39m[38;5;124m"[39m,
+[1;32m     31[0m           ],
+[1;32m     32[0m           [[38;5;124mf[39m[38;5;124m'[39m[38;5;132;01m{[39;00mdfi_i1_w20[38;5;241m.[39mdescription[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mInverter On,[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124mWS[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124mταχ.[39m[38;5;124m"[39m)[38;5;241m.[39mreplace([38;5;124m"[39m[38;5;124m, 100kHz[39m[38;5;124m"[39m,[38;5;250m [39m[38;5;124m"[39m[38;5;124m"[39m)[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m"[39m[38;5;124m [39m[38;5;124m\[39m[38;5;124m(m/s[39m[38;5;124m\[39m[38;5;124m)[39m[38;5;124m"[39m,
+[1;32m     33[0m            [38;5;124m"[39m[38;5;124m-[39m[38;5;124m"[39m,
+[1;32m     34[0m            [38;5;124m"[39m[38;5;124m-[39m[38;5;124m"[39m,
+[1;32m     35[0m            [38;5;124m"[39m[38;5;132;01m{:.4f}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(np[38;5;241m.[39mstd(dfi_i1_w20[38;5;241m.[39mdata)),
+[1;32m     36[0m            [38;5;124m"[39m[38;5;124m-[39m[38;5;124m"[39m,
+[1;32m     37[0m            ],
+[1;32m     38[0m           ])
+[1;32m     40[0m [38;5;66;03m# print(tabulate(table))[39;00m
+[1;32m     41[0m [38;5;66;03m# print(table)[39;00m
+[1;32m     42[0m [38;5;28;01mdef[39;00m [38;5;21mdummy[39m (some):
+
+[0;31mNameError[0m: name 'dfi_i0_w0' is not defined
+#+end_example
+:END:
 ** Εφαρμογή φίλτρων
 Για την παρεμβολή που επηρεάζει το σήμα του αισθητήρα θα εφαρμοστεί ένα φίλτρο
 διέλευσης χαμηλών συχνοτήτων. Είμαστε σε θέση να γνωρίζουμε πως οι χαμηλές
@@ -1887,7 +2045,7 @@ dummy(table)
 αποκλίσεις των εξόδων σχετικά με την είσοδο των φίλτρων.
 
 #+NAME: fc1_5
-#+begin_src jupyter-python :session python3 :async no :exports results
+#+begin_src jupyter-python :session python3 :async yes :exports results
 from pros_noisefiltering.plotting_funcs import plot_comparative_response
 from pros_noisefiltering.filters.iir import filt_butter_factory
 
@@ -1902,10 +2060,32 @@ plot_comparative_response(ca1_5,
                           nperseg=NPERSEG,
                           figsize=(10, 5))
 #+end_src
+
+#+RESULTS: fc1_5
+:RESULTS:
+# [goto error]
+#+begin_example
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[6], line 5[0m
+[1;32m      2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpros_noisefiltering[39;00m[38;5;21;01m.[39;00m[38;5;21;01mfilters[39;00m[38;5;21;01m.[39;00m[38;5;21;01miir[39;00m [38;5;28;01mimport[39;00m filt_butter_factory
+[1;32m      4[0m butter_filter_2000 [38;5;241m=[39m filt_butter_factory(filt_order[38;5;241m=[39m[38;5;241m4[39m, fc_Hz[38;5;241m=[39m[38;5;241m2000[39m)
+[0;32m----> 5[0m ca1_5 [38;5;241m=[39m [43mdf_tdms_1_5[49m
+[1;32m      6[0m ca1_10 [38;5;241m=[39m df_tdms_1_10
+[1;32m      8[0m plot_comparative_response(ca1_5,
+[1;32m      9[0m                           filter_func[38;5;241m=[39mfir_2000,
+[1;32m     10[0m                           response_offset[38;5;241m=[39m[38;5;241m2e-4[39m,
+[1;32m     11[0m                           Kolmogorov_offset[38;5;241m=[39m[38;5;28;01mNone[39;00m,
+[1;32m     12[0m                           nperseg[38;5;241m=[39mNPERSEG,
+[1;32m     13[0m                           figsize[38;5;241m=[39m([38;5;241m10[39m, [38;5;241m5[39m))
+
+[0;31mNameError[0m: name 'df_tdms_1_5' is not defined
+#+end_example
+:END:
+
 #+CAPTION: Διάγραμμα πεπιεσμένου αέρα για ταχύτητα ανέμου 5 \(m/s\) για φίλτρο \(FIR\).
 #+LABEL: fc1_5
-#+RESULTS: fc1_5
-[[file:./.ob-jupyter/4d217fb5b5d7112db00e353a8ae3d377ddb25b64.png]]
+
 
 #+NAME: fc1_10
 #+begin_src jupyter-python :session python3 :async no :exports results
@@ -2117,15 +2297,17 @@ plot_spect_comb2([
                  # alpha=0.2,
                  markersize=0.6,
                  )
+# plt.savefig(f'./test.png',facecolor='white', transparent=False)
 # plt.savefig(f'./500khz_raw_on_off.png',facecolor='white', transparent=False)
 # plt.savefig(f'./100khz_raw_on_off.png',facecolor='white', transparent=False)
 #+end_src
+
 
 #+CAPTION: Σύγκριση σήματος για μηδενική ταχύτητα και τον μετ/στή ανοιχτό και κλειστό καταγεγραμμένο στα \selectlanguage{english}\text{500\ kHz}\selectlanguage{greek}.
 #+NAME: fig:invOpenZero
 #+ATTR_LATEX: :placement [H]
 #+RESULTS: fig:invOpenZero
-[[file:./.ob-jupyter/40faed2780e08fbba7a08055f5e4f70b69b2152d.png]]
+[[file:./.ob-jupyter/ed8f82a7887e5a6295940a1ef5479aaadea66670.png]]
 
 #+NAME: fig:invOpenZero100Ref
 #+begin_src jupyter-python :session python3 :results figure :exports results
@@ -2139,13 +2321,15 @@ plot_spect_comb2([
                  # alpha=0.2,
                  markersize=0.6,
                  )
+# plt.savefig(f'./test2.png',facecolor='white', transparent=False)
 #+end_src
+
 
 #+CAPTION: Σύγκριση σήματος για μηδενική ταχύτητα και τον μετ/στή ανοιχτό και κλειστό καταγεγραμμένο στα \selectlanguage{english}\text{100\ kHz}\selectlanguage{greek}.
 #+NAME: fig:invOpenZero100Ref
 #+ATTR_LATEX: :placement [H]
 #+RESULTS: fig:invOpenZero100Ref
-[[file:./.ob-jupyter/8d88979c589d124e2b6a84c0b11aeb3b9a120aeb.png]]
+[[file:./.ob-jupyter/3dc85c038a26dfbe9ab8a21f2b7f4847212b773c.png]]
 
 #+NAME: fig:invOpenTen
 #+begin_src jupyter-python :session python3 :results figure :exports results
@@ -2166,7 +2350,7 @@ plot_spect_comb2([
                  # alpha=0.2,
                  # markersize=0.8,
                  )
-
+# plt.savefig("./bucket/wt_10_on_off.png")
 #+end_src
 
 Στις εικόνες [[fig:invOpenZero]] και [[fig:invOpenZero100Ref]] φαίνεται ο θόρυβος να μεταφέρεται από τα
@@ -2184,7 +2368,6 @@ plot_spect_comb2([
 #+NAME: fig:invOpenTenRef
 #+ATTR_LATEX: :placement [H]
 #+RESULTS: fig:invOpenTen
-[[file:./.ob-jupyter/861dcda7acfeab2e9480641242a98d00cd115866.png]]
 
 #+NAME: fig:sfreqComp
 #+begin_src jupyter-python :session python3 :results figure :exports results
@@ -2204,7 +2387,7 @@ plot_spect_comb2([ca1_0.set_desc('500 kHz').calc_spectrum( nperseg=NPERSEG),
 #+LABEL: fig:sfreqComp
 #+ATTR_LATEX: :placement [H]
 #+RESULTS: fig:sfreqComp
-[[file:./.ob-jupyter/2a1fa5fb4ca167197da6ec7ce5d20eda33057ad9.png]]
+: None
 
 Στο σχήμα [[fig:sfreqComp]] φαίνεται η επιρροή της μεταβολής συχνότητας καταγραφής
 από επιλογή μέσω του λογισμικού.

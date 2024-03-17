@@ -4,7 +4,12 @@ diss-docs/main_doc/*.odt
 diss-docs/books/edmund-lai-book/*
 
 # file types that should be ignored
+diss-docs/main_doc/*-corrections*
+diss-docs/main_doc/src/*.tex
+diss-docs/main_doc/src/*.pdf
+diss-docs/main_doc/src/wisker*
 *.png
+*.jpg
 *.toc
 *.zip
 *.mp4
@@ -24,3 +29,14 @@ diss-docs/books/edmund-lai-book/*
 # this is for the prefixes emacs and latex uses in generating THE DOC
 pdfs*
 _minted*
+
+# for presentation
+node_modules
+reveal.js
+gimp_edits
+# assets
+dist
+*tmp*
+*~undo-tree~
+*-lock*
+*cache*
