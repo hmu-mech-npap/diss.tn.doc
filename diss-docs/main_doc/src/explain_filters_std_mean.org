@@ -48,13 +48,28 @@ plt.xlabel("O m/s airflow")
 plt.ylabel("standard deviation")
 plt.bar(x_axis, y_axis)
 # plt.show()
-plt.savefig("./std.png", bbox_inches="tight")
+# plt.savefig("./std.png", bbox_inches="tight")
 
 #+end_src
 
 #+RESULTS:
 :results:
-[[file:./.ob-jupyter/ed2eb4b7181d70a7205da09683be974ed72d4ff2.png]]
+# [goto error]
+#+begin_example
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[1], line 6[0m
+[1;32m      4[0m [38;5;28;01mfrom[39;00m [38;5;21;01mscipy[39;00m[38;5;21;01m.[39;00m[38;5;21;01msignal[39;00m [38;5;28;01mimport[39;00m butter, tf2sos, sosfilt, firwin
+[1;32m      5[0m noise_on_std [38;5;241m=[39m np[38;5;241m.[39mstd(noise_chan[38;5;241m.[39mdata)
+[0;32m----> 6[0m clean_off_std [38;5;241m=[39m np[38;5;241m.[39mstd([43mclean_chan_off_0[49m)
+[1;32m      9[0m fir_filt_coeff [38;5;241m=[39m firwin(numtaps[38;5;241m=[39m[38;5;241m22[39m,
+[1;32m     10[0m                         fs[38;5;241m=[39mfs_noise,
+[1;32m     11[0m                         cutoff[38;5;241m=[39m[38;5;241m200[39m,
+[1;32m     12[0m                         )
+[1;32m     13[0m sos_fir_mode [38;5;241m=[39m tf2sos(fir_filt_coeff, [38;5;241m1[39m)
+
+[0;31mNameError[0m: name 'clean_chan_off_0' is not defined
+#+end_example
 :end:
 
 [[file:./std.png]]

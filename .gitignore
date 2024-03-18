@@ -8,7 +8,6 @@ diss-docs/main_doc/*-corrections*
 diss-docs/main_doc/src/*.tex
 diss-docs/main_doc/src/*.pdf
 diss-docs/main_doc/src/wisker*
-diss-docs/main_doc/src/sign_overview/*
 *.png
 *.jpg
 *.toc
@@ -38,7 +37,7 @@ _minted*
 
 # for presentation
 node_modules
-# reveal.js
+reveal.js
 gimp_edits
 # assets
 dist
@@ -46,3 +45,4 @@ dist
 *~undo-tree~
 *-lock*
 *cache*
+sign_overview/butter*

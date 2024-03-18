@@ -1,14 +1,14 @@
 """Attempt to pyqtgraph package."""
 from pathlib import Path
 from nptdms import TdmsFile
-from pros_noisefiltering.WT_NoiProc import (WT_NoiseChannelProc,
-                                            Plotter_Class,
-                                            fir_factory_constructor,
-                                            filt_butter_factory)
+from pros_noisefiltering.WT_NoiProc import WT_NoiseChannelProc
+from pros_noisefiltering.filters.fir import fir_factory_constructor
+from pros_noisefiltering.filters.iir import filt_butter_factory
 # a clone to use the time array for plotting with pyqtgraph
 # added this to qt app cause its much faster and prettier
 # than matplotlib.
 # also more stylish and new looking
+from pros_noisefiltering.plotting_funcs import Plotter_Class
 
 # %%
 FOLDER_FOR_DATA = Path(
@@ -84,5 +84,5 @@ data_to_process = [df_tdms_0_0,
                    df_tdms_1_10]
 signal_analyzer.plot_signal_all_doms(signals=data_to_process,
                                      filt_func=a_butter,
-                                     export_only=True
+                                     export_only=False,
                                      )

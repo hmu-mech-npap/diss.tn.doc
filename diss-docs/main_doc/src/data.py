@@ -1,7 +1,9 @@
 #!/usr/bin/env ipython
-import nptdms
 import sys
+
+import nptdms
 import numpy as np
+
 
 if sys.platform == "linux":
     my_path_noise = "/mnt/data_folder/measurements_12_05_22/new_record_prop_channel/inverter/in1_5.1/Data.tdms"
