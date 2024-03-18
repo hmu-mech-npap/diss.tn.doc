@@ -1792,7 +1792,7 @@ digraph processing {
 της επιρροής του θορύβου.
 
 \begin{figure}[t]
-\centerline{\includegraphics[scale=.5]{./wt_meas/5_wt_stds.png}}
+\centerline{\includegraphics[scale=1.]{./src/std_wt_new.png}}
 \caption{Ταχύτητα ανέμου \(5\ m/s\) τυπική απόκλιση αεροσήραγγας.}
 \label{fig:wt-0-std}
 \end{figure}

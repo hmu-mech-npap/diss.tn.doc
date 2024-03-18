@@ -42,13 +42,6 @@ sos_butter_out = butter(2,
 # Apply filter
 filt_on_iir = sosfiltfilt(sos_butter_out, noise_chan.data)
 
-# plot the time domain of the filtered and raw signals (iir and fir)
-plt.plot(t_noise, noise_chan.data, label='noisy signal')
-plt.plot(t_noise, filt_on_fir, label='FIR low-pass')
-plt.plot(t_noise, filt_on_iir, label='IIR low-pass')
-plt.legend()
-plt.show()
-
 # %%
 # Bar graph:
 #       Adding the comparison for standard deviation to backup my filter
@@ -61,12 +54,13 @@ x_axis = ['Inverter On',
 y_axis = [noise_on_std, np.std(filt_on_iir), np.std(filt_on_fir)]
 labels = ["raw", "order 2", "order 22"]
 
-plt.title("Comparison for wind tunnel measurements and inverter On and Off",
+plt.title("Comparison for wind tunnel measurements\nand inverter On and Off for 10 m/s airflow",
           )
-plt.xlabel("10 m/s airflow")
+# plt.xlabel("10 m/s airflow")
 plt.ylabel("standard deviation")
 plt.bar(x_axis, y_axis)
-plt.show()
+# plt.show()
+plt.savefig('./test_std.png')
 
 
 # %%
@@ -91,45 +85,45 @@ plt.show()
 #     - https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html
 #     - https://www.hackmath.net/en/calculator/quartile-q1-q3
 
-labels = ["Inverter On",
-          "Butterworth\nlow-pass\nat 200Hz(IIR)",
-          "Simple window\nlow-pass\nat 200Hz(FIR)"]
+# labels = ["Inverter On",
+#           "Butterworth\nlow-pass\nat 200Hz(IIR)",
+#           "Simple window\nlow-pass\nat 200Hz(FIR)"]
 
-fig, ax = plt.subplots()
-ax.boxplot([noise_chan, sosfiltfilt(sos_butter_out, noise_chan.data, axis=-1),
-            filt_on_fir],
-           labels=labels,
-           notch=True,
-           vert=True,
-           patch_artist=True,
-           meanline=True,
-           showmeans=True,
-           autorange=True,
-           showfliers=True
-           )
-plt.title("wind tunnel measurements with airflow 10 m/s")
-plt.xlabel("Filtering technics")
-plt.ylabel("Mean value of recorded signal")
-# ax.set_xlim(0.5, 2.5)
-axins = ax.inset_axes([0.7, 0.7, 0.55, 0.55], ylim=(1.96, 2.14))
-# lbl=[]
-axins.boxplot([noise_chan,
-               sosfiltfilt(sos_butter_out,
-                           noise_chan.data, axis=-1),
-               filt_on_fir],
-              # labels=labels,
-              notch=True,
-              vert=True,
-              patch_artist=True,
-              meanline=True,
-              showmeans=True,
-              autorange=True,
-              showfliers=True,
-              )
+# fig, ax = plt.subplots()
+# ax.boxplot([noise_chan, sosfiltfilt(sos_butter_out, noise_chan.data, axis=-1),
+#             filt_on_fir],
+#            labels=labels,
+#            notch=True,
+#            vert=True,
+#            patch_artist=True,
+#            meanline=True,
+#            showmeans=True,
+#            autorange=True,
+#            showfliers=True
+#            )
+# plt.title("wind tunnel measurements with airflow 10 m/s")
+# plt.xlabel("Filtering technics")
+# plt.ylabel("Mean value of recorded signal")
+# # ax.set_xlim(0.5, 2.5)
+# axins = ax.inset_axes([0.7, 0.7, 0.55, 0.55], ylim=(1.96, 2.14))
+# # lbl=[]
+# axins.boxplot([noise_chan,
+#                sosfiltfilt(sos_butter_out,
+#                            noise_chan.data, axis=-1),
+#                filt_on_fir],
+#               # labels=labels,
+#               notch=True,
+#               vert=True,
+#               patch_artist=True,
+#               meanline=True,
+#               showmeans=True,
+#               autorange=True,
+#               showfliers=True,
+#               )
 
-axins.set_xticklabels([])
-ax.indicate_inset_zoom(axins, edgecolor="black")
-plt.savefig("./whiskr.png", bbox_inches="tight")
-plt.show()
+# axins.set_xticklabels([])
+# ax.indicate_inset_zoom(axins, edgecolor="black")
+# plt.savefig("./whiskr.png", bbox_inches="tight")
+# # plt.show()
 
 # %%
