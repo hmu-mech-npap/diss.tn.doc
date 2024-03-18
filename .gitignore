@@ -8,10 +8,13 @@ diss-docs/main_doc/*-corrections*
 diss-docs/main_doc/src/*.tex
 diss-docs/main_doc/src/*.pdf
 diss-docs/main_doc/src/wisker*
+diss-docs/main_doc/src/sign_overview/*
 *.png
 *.jpg
 *.toc
 *.zip
+*.lof
+*.lot
 *.mp4
 *.log
 *.aux
@@ -26,13 +29,16 @@ diss-docs/main_doc/src/wisker*
 !diss-docs/main_doc/sig_proc_plots/*.png
 !diss-docs/Presentation/*.png
 !diss-docs/main_doc/src/*.png
+
+# I use the name output for debug purposes
+diss-docs/main_doc/src/output.png
 # this is for the prefixes emacs and latex uses in generating THE DOC
 pdfs*
 _minted*
 
 # for presentation
 node_modules
-reveal.js
+# reveal.js
 gimp_edits
 # assets
 dist

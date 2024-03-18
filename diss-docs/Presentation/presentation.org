@@ -3,7 +3,7 @@
 #+REVEAL_HLEVEL: 2
 #+REVEAL_TITLE_SLIDE: <h2>%t</h2> <h3>%s</h3> <p>%a</p> <p>%d</<p>
 #+OPTIONS: num:nil timestamp:nil toc:nil
-#+REVEAL_INIT_OPTIONS: width:1920, height:1080, controlsLayout: 'edges', hash: true, history: false, respondToHashChanges: true,
+#+REVEAL_INIT_OPTIONS: width:1920, height:1080, controlsLayout: 'edges', hash: true, history: false, respondToHashChanges: true
 :END:
 :ORG_PROPERTIES:
 
@@ -103,20 +103,33 @@ someone who does nothing.
 .../---/--/./---/-./. .--/..../--- -../---/./... -./---/-/..../../-./--./.-.-.-
 #+END_SRC
 ** Εργαστηριακη εγκατασταση
+#+REVEAL_HTML: <img width="120%">
 #+ATTR_REVEAL: :frag (fade-in-then-semi-out)
 [[file:./assets/inv_sketch_wt.png]]
 *** αισθητηρες ανεμου
-#+REVEAL_HTML: <div style="align-items:center;margin:auto;">
-[[file:./assets/sensor_inner.png]]
-#+REVEAL_HTML: <div style="align-items:center;margin:auto;">
-[[file:./assets/lab-1scaledit.png]]
+#+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;">
+- Διαφορικός αισθητήρας πίεσης
+  #+REVEAL_HTML: <div style="display:flex;align-items:left;width:780px;">
+  [[file:./assets/sensor_inner.png]]
+  #+REVEAL_HTML: <div style="display:flex;align-items:right;">
+  - Μοντέλο: xxx-XXX Some
+  - Εύρος καταγραφής: xxx-XXX Some
+
+
+#+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;">
+- Αισθητήρας ταχύτητας ανέμου (Pitot-tube)
+  #+REVEAL_HTML: <div style="display:flex;align-items:left;width:1080px;">
+  [[file:./assets/lab-1scaledit.png]]
+  #+REVEAL_HTML: <div style="display:flex;align-items:right;">
+  - Μοντέλο: xxx-XXX Some
+  - Εύρος καταγραφής: xxx-XXX Some
 
 #+BEGIN_NOTES
 1) αισθητήρας διαφορικής πίεσης
 2) pitot-tube
 #+END_NOTES
 * δεδομενα εγκαταστασης
- Παρακάτω συγκρίνονται τα σήματα για 0 και 10 m/s αριστερά και δεξιά αντίστοιχα. Φαίνεται ξεκάθαρα η επιρροή από την Η/Μ ακτινοβολία του μετασχηματιστή και μπορούμε να υποθέσουμε ότι επιδρά σε φάσμα υψηλών συχνοτήτων αφού η πλειοψηφία των δειγμάτων δεν αποκλίνει πολύ από την μέση τιμή του σήματος.
+ Παρακάτω συγκρίνονται τα σήματα για 0 και 10 m/s αριστερά και δεξιά αντίστοιχα. Φαίνεται ξεκάθαρα η επιρροή από την Η/Μ ακτινοβολία του μετασχηματιστή.
 
 file:./assets/s1_Comp_th-ws0.png.png
 file:./assets/s1_Comp_th-ws10.png.png
@@ -126,19 +139,19 @@ file:./assets/s1_Comp_th-ws10.png.png
 2. Εντονος θορυβος για να χρησιμοποιηθουν οι μετρήσεις έτσι οπως είναι... δεν μπορούμε να βαθμονομισουμε σωστα
 #+end_notes
 *** καταγραφη
-Μετά την καταγραφή κάποιου σήματος και πριν την όποια επεξεργασία, συνηστάται να ελεγχθεί για τυχών αλλοίωση λόγω ανεπαρκούς συχνότητας καταγραφής και του θεωρήματος δειγματοληψίας Nyquist. Για τα σήματα που εξετάστηκαν, εφαρμόστηκαν διαφορετικές συχνότητες καταγραφής για μηδενική ταχύτητα ανέμου για να διαπιστωθεί ο βαθμός της αλλοίωσης που ενδέχεται να εμπεριέχει το αρχικό σήμα.
+Μετά την καταγραφή κάποιου σήματος και πριν την όποια επεξεργασία, συνηστάται να ελεγχθεί για τυχών αλλοίωση λόγω ανεπαρκούς συχνότητας καταγραφής και του θεωρήματος δειγματοληψίας Nyquist.
 [[file:./assets/fsComp.png]]
 #+begin_notes
 Nyquist -> fs = 2 \cdot f_signal
+1. Για τα σήματα που εξετάστηκαν, εφαρμόστηκαν διαφορετικές συχνότητες καταγραφής για μηδενική ταχύτητα ανέμου για να διαπιστωθεί ο βαθμός της αλλοίωσης που ενδέχεται να εμπεριέχει το αρχικό σήμα.
 #+end_notes
 *** συχνοτητα καταγραφης
-Για τον προσδιορισμό της ελάχιστης συχνότητας που δεν αλλοιώνει την πληροφορία του ανέμου κατά την καταγραφή εφαρμόστηκε η τεχνική του αποδεκατισμού. Επιλέγοντας ένα δείγμα κάθε \(X\) καταγεγραμμένες τιμές του αρχικού, κατασκευάζουμε σήματα με μικρότερο πλήθος δεδομένων, άρα και συχνότητα καταγραφής. Ο συντελεστής \(X\) ονομάζεται και /**συντελεστής αποδεκατισμού (decimation factor)**/,
-
-όπου \(X \in \mathbb{N} \) .
+Για τον προσδιορισμό της ελάχιστης συχνότητας που δεν αλλοιώνει την πληροφορία του ανέμου κατά την καταγραφή εφαρμόστηκε η τεχνική του αποδεκατισμού. Επιλέγοντας ένα δείγμα κάθε \(X\) καταγεγραμμένες τιμές του αρχικού. Ο συντελεστής \(X\) ονομάζεται και /**συντελεστής αποδεκατισμού (decimation factor)**/, όπου \(X \in \mathbb{N} \).
 
 [[file:./assets/anti_aliasing_fir.png]]
 
 #+begin_notes
+κατασκευάζουμε σήματα με μικρότερο πλήθος δεδομένων, άρα και συχνότητα καταγραφής
 - μπλε αρχικό βρομικο σήμα
 - πορτοκαλι αποδεκατισμος και φιλτρο κατα αλλοίωσης
 - πρασινο καταγεγραμμένο σε 5kHz
@@ -148,8 +161,11 @@ Nyquist -> fs = 2 \cdot f_signal
 * φιλτρα συχνοτητων
 Όλα τα φίλτρα που θα παρουσιαστούν ονομάζονται φίλτρα διέλευσης χαμηλών συχνοτήτων και η συχνότητα κατακριμνησμού ορίζει την μέγιστη συχνότητα που *δεν* θα επηρεαστεί από το φίλτρο. Συχνότητες μεγαλύτερες από αυτήν απομειώνονται, ώστε η ισχύ των δειγμάτων να είναι μικρότερη από το φάσμα των συχνοτήτων που βρίσκονται στην περιοχή διέλευσης.
 
-#+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:50%;">
-file:./assets/s2-PS-WS10-filt2000-remaster-explaining.png
+#+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;width:60%">
+[[file:./gimp_edits/s2-PS-WS10-filt2000_cut.png]]
+
+#+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:95%;">
+[[file:./gimp_edits/s2-PS-WS10-filt2000_uncut.png]]
 
 #+begin_notes
 1. kolmogorov για προσδιορισμο φασματος πληρ. ανεμου
@@ -160,15 +176,19 @@ file:./assets/s2-PS-WS10-filt2000-remaster-explaining.png
 ** IIR
 Φίλτρα άπειρης κρουστικής απόκρισης
 #+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;width:70%;">
-Έχουν την δυνατότητα μεγάλης μείωσης της ισχύος των δειγμάτων αμέσος μετά την συχνότητα κατακρημνισμού (cut-off frequency), με επιρροή των συχνοτήτων στο φάσμα διέλευσης χωρίς περαιτέρω επεξεργασία. Η ακρίβειά τους οφείλεται στην μέθοδο της ανάδρασης, χρησιμοποιώντας την έξοδο του φίλτρου κατά την διαδικασία για την βελτιστοποίηση των χαρακτηριστικών του πριν την επόμενη εφαρμογή.
+Έχουν την δυνατότητα μεγάλης μείωσης της ισχύος των δειγμάτων αμέσος μετά την συχνότητα κατακρημνισμού (cut-off frequency), με επιρροή των συχνοτήτων στο φάσμα διέλευσης χωρίς περαιτέρω επεξεργασία.
 
-#+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:240%;">
+#+begin_notes
+ Η ακρίβειά τους οφείλεται στην μέθοδο της ανάδρασης, χρησιμοποιώντας την έξοδο του φίλτρου κατά την διαδικασία για την βελτιστοποίηση των χαρακτηριστικών του πριν την επόμενη εφαρμογή.
+#+end_notes
+
+#+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:380%">
 [[file:./assets/iir-filt-raw-lp.png]]
 ** FIR
 Φίλτρα πεπερασμένης κρουστικής απόκρισης
 #+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;width:70%;">
-- Σημαντική καθυστέρηση από την συχνότητα κατακρημνισμού και την απομείωση του φάσματος (δεν εφαρμόζουν την τεχνική της ανάδρασης).
-- Ταχύτερος υπολογισμός της συνάρτησης που το εκφράζει και του σήματος εξόδου. (ιδανικό για σήματα τάξης kHz MHz και GHz)
+- Σημαντική καθυστέρηση από την συχνότητα κατακρημνισμού και την απομείωση του φάσματος.
+- Ταχύτερος υπολογισμός της συνάρτησης που το εκφράζει και του σήματος εξόδου.
 
 #+REVEAL_HTML: <div style="display:flex;align-items:right;margin:auto;width:240%;">
 [[file:./assets/fir-filt-raw-huge-order.png]]
