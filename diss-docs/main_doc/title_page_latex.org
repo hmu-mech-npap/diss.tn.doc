@@ -37,7 +37,7 @@
 \vfill
 \noindent\textcopyright\ \number \year, \AuthorFull \\
 \MeTitle \\
-Τ.Ε.Ι., Τμήμα Μηχανολόγων Μηχανικών, Ηράκλειο Κρήτης \\
+Ελ.Με.Πα., Τμήμα Μηχανολόγων Μηχανικών, Ηράκλειο Κρήτης \\
 
 \bigskip
 \clearpage
