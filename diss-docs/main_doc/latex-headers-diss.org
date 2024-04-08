@@ -2,7 +2,6 @@
 #+LATEX_CLASS: article
 
 # Options to modify the class. E.g. font size.
-#+LATEX_CLASS_OPTIONS: [breaklines=true, 12pt]
 
 # Other La-TeX code that you'd need in the preamble, notably, using packages.
 #+LATEX_HEADER: \usepackage[margin=2cm]{geometry}
@@ -14,10 +13,11 @@
 #+LATEX_HEADER: \usepackage{array}
 #+LATEX_HEADER: \usepackage[utf8]{inputenc}
 #+LATEX_HEADER: \usepackage[LGR]{fontenc}
+#+LATEX_HEADER: \usepackage{csquotes}
 #+LATEX_HEADER: \usepackage[T1]{fontenc}
-#+LATEX_HEADER: \usepackage[english,greek,csquotes]{babel}
+#+LATEX_HEADER: \usepackage[english,greek]{babel}
 
-#+LATEX_HEADER: \newcommand{\en}[1]{\foreignlanguage{english}{#1}}
+#+LATEX_HEADER: \newcommand{\en}[1]{\selectlanguage{english}\text{#1}\selectlanguage{greek}}
 #+LATEX_HEADER: \usepackage{minted}
 # Options don't need to be in capital letters
 #+latex_header: \hypersetup{colorlinks=true, linkcolor=black, citecolor=green}
@@ -27,6 +27,10 @@
 
 #+LATEX: \onehalfspacing
 #+LATEX: \frontmatter
+#+LATEX: \makeatletter
+#+LATEX: \renewcommand{\fps@figure}{!ht}
+#+LATEX: \renewcommand{\fps@table}{!ht}
+#+LATEX: \makeatother
 
 # Fancy headers
 #+latex_header: \usepackage{fancyhdr}
@@ -36,6 +40,7 @@
 
 #+latex_header: \fancyhead[R]{\leftmark}
 #+latex_header: \renewcommand{\headrulewidth}{0.4pt}
+#+latex_header: \setlength{\headheight}{15pt}
 
 # THE best front matter EVER
 #+latex_header: \newcommand{\MeTitle}{{Φίλτρα συχνοτήτων}}
@@ -44,4 +49,4 @@
 #+latex_header: \newcommand{\AuthorFull}{\mbox{Τοροσιάν Νικόλας ΤΜ6220}}
 #+latex_header: \newcommand{\Supervisor}{\mbox{Καθ. Παπαδάκης Νίκος}}
 #+latex_header: \usepackage{biblatex}
-#+latex_header: \usepackage[hyphens]{url}  % allow line breaks at hyphens
+#+latex_header: \usepackage{url}  % allow line breaks at hyphens
