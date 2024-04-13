@@ -131,8 +131,8 @@ someone who does nothing.
 * δεδομενα εγκαταστασης
  Παρακάτω συγκρίνονται τα σήματα για 0 και 10 m/s αριστερά και δεξιά αντίστοιχα. Φαίνεται ξεκάθαρα η επιρροή από την Η/Μ ακτινοβολία του μετασχηματιστή.
 
-file:./assets/s1_Comp_th-ws0.png.png
-file:./assets/s1_Comp_th-ws10.png.png
+[[file:./assets/s1_Comp_th-ws0.png.png]]
+[[file:./assets/s1_Comp_th-ws10.png.png]]
 
 #+begin_notes
 1. Εμφανίζεται θόρυβος μόλις ο μετασχηματιστής ενεργοποιείται.
@@ -213,6 +213,16 @@ Nyquist -> fs = 2 \cdot f_signal
       #+REVEAL_HTML: <div style="display:flex;align-items:center;height:28%;width:35%;">
       [[file:./assets/Chebyshev Filter Freq Response.png]]
       [[file:./assets/Elliptic Filter Freq Response.png]]
+** συγκριση αποτελεσματων
+# Για τον εντοπισμό διαφορών ανάμεσα στις δύο μεθόδους χρησιμοποιήθηκαν στατιστικές μέθοδοι που θα δούμε παρακάτω.
+*** τυπικη αποκλιση
+Τυπική απόκλιση σημάτων πριν και μετά τα φίλτρα για κάθε πηγή ανέμου.
+[[file:./assets/std_ca.png]]
+[[file:./assets/std_wt.png]]
+*** μεσιανη τιμη
+Μεσιανή τιμή σημάτων πριν και μετά τα φίλτρα για κάθε πηγή ανέμου.
+[[file:./assets/wiskr_ca.png]]
+[[file:./assets/wiskr_wt.png]]
 *** συμπερασματα
 Εδώ καλό είναι να πω για την δυνατότητα των IIR για καλύτερη ανάλυση αλλά και μεγαλύτερο χρόνο εκτέλεσης για μεγάλα σετ δεδομένων.
 #+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;width:100%;">
