@@ -10,9 +10,34 @@
 
 * On the fly
 **  SOS type filter output
-*** TODO [#A] send mail to papadaki for news
-SCHEDULED: <2023-02-17 Παρ 11:00>
+*** DONE [#A] send mail to papadaki for news
+CLOSED: [2024-04-13 Σαβ 13:47] SCHEDULED: <2023-02-17 Παρ 11:00>
+:LOGBOOK:
+- CLOSING NOTE [2024-04-13 Σαβ 13:47] \\
+  maaayyybe....perhaps...
+:END:
 
+** some random filter i liked
+\selectlanguage{english}
+#+begin_src jupyter-python :session none :async no :results none :exports code
+bb, ab = signal.ellip (4, 2, 8, 100, 'low', analog=True, output='ba')
+wb, hb = signal.freqs(bb, ab)
+#+end_src
+#+begin_src jupyter-python :session none :async no :results none :exports none
+# 4TH ORDER ELLIPTIC FILTER WITH MAX RIPPLES =2dB IN PASSBAND,
+# MIN ATTENUATION =8dB IN STOP BAND AT 0.25 CYCLES/SAMPLE
+plt.semilogx(wb, 20 * np.log10(abs(hb)))
+plt.title('Elliptic filter frequency response')
+plt.xlabel('Frequency [cycles/sample]')
+plt.ylabel('Amplitute [dB]')
+plt.margins(0, 0.1)
+plt.grid(which= 'both', axis= 'both')
+plt.savefig("Elliptic Filter Freq Response.png")
+#+end_src
+\selectlanguage{greek}
+#+CAPTION: Πρότυπο φίλτρο τύπου \en{Elliptic} τέταρτης τάξης με συχνότητα κατακρημνισμού εκατό \en{Hz} και μέγιστη αύξηση ισχύος κατά 2 \en{dB} στην περιοχή διέλευσης (κυματισμοί) ενώ οκτώ \en{dB} ελάχιστα στην περιοχή απομείωσης.
+#+ATTR_LATEX: :placement[H] :height 210px
+[[file:./Elliptic Filter Freq Response.png]]
 * 2022
 
 ** 2022-12 Δεκεμβρίου
@@ -49,9 +74,6 @@ CLOSED: [2023-02-16 Πεμ 13:15]
 [[file:~/Documents/dissertation/org-docs/dissertation document/main_doc.org][diss doc]]
 
 ***** This capture works perfect!!
-***** [#A] try to find some papers for
-- [-] FIR
-- [-] IIR
 ** 2023-09 Σεπτεμβρίου
 *** 2023-09-22 Παρασκευή
 
