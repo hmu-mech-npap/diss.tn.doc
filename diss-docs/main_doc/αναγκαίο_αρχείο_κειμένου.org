@@ -1,8 +1,9 @@
 * Τίτλος εργασίας στα Αγγλικά
 Frequency filters and isolation of Electromagnetic induced noise in a wind tunnel environment.
 * Περίληψη
-Στην παρούσα πτυχιακή μελετήθηκε η επηρροή αισθητήριου οργάνου από Η/Μ παρεμβολές σε περιβάλλον αεροσήραγγας. Εξετάστηκαν μετρήσεις από πειραματική εγκατάσταση, στο εργαστήριο Αιολικής Ενέργειας, του τμήματος Μηχανολόγων Μηχανικών του Ελληνικού Μεσογειακού Πανεπιστημίου. Εκεί διαπιστώθηκαν έντονες παρεμβολές που απαιτούσαν αφαίρεση για την εκλ
+Στην παρούσα πτυχιακή μελετήθηκε η επηρροή αισθητήριου οργάνου από Η/Μ παρεμβολές σε περιβάλλον αεροσήραγγας. Εξετάστηκαν μετρήσεις από πειραματική εγκατάσταση, στο εργαστήριο Αιολικής Ενέργειας, του τμήματος Μηχανολόγων Μηχανικών του Ελληνικού Μεσογειακού Πανεπιστημίου. Εκεί διαπιστώθηκαν έντονες παρεμβολές που απαιτούσαν αφαίρεση για την εκλογή εμπεριστατομένων συμπερασμάτων για την ταχύτητα ανέμου που παρείχε η αεροσήραγγα. Εντοπίστηκε το εύρος συχνοτήτων που εμπεριείχε τον θόρυβο και μελετήθηκαν δύο κατηγορίες φίλτρων, τα φίλτρα άπειρης κρουστικής απόκρισης (I.I.R.) και απλού παραθύρου μέσης τρέχουσας τιμής (F.I.R.). Τελικά επιλέχθηκε το F.I.R. λόγω μικρής φασικής διαφοράς μεταξύ των σημάτων εισόδου και εξόδου.
 * Abstract
+This thesis examines the influence of electromagnetic interference (EMI) on a sensing device in a wind tunnel environment. Measurements from an experimental installation at the Wind Energy Laboratory of the Department of Mechanical Engineering of the Hellenic Mediterranean University were examined. The results revealed the presence of strong interferences that required removal in order to make firm conclusions about the wind speed provided by the wind tunnel. The frequency range containing the noise was identified, and two types of filters were studied: the infinite impulse response (IIR) and simple current average window (FIR) filters. The FIR filter was ultimately selected due to its small phase difference between the input and output signals.
 * Λέξεις κλειδία
 - Αγγλικά:
   signal-processing, filtering, EMI, frequency filters, wind tunnel, pitot-tube

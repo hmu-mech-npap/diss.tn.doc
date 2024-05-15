@@ -70,7 +70,7 @@ filt_on_iir = sosfiltfilt(sos_butter_out, noise_chan.data)
 # The documentation says:
 
 
-#             Q2-1.5IQR   Q1   median  Q3   Q3+1.5IQR
+#             Q1-1.5IQR   Q1   median  Q3   Q3+1.5IQR
 #                          |-----:-----|
 #          o      |--------|     :     |--------|  o  o
 #                          |-----:-----|
@@ -124,7 +124,7 @@ axins.boxplot([noise_chan,
               )
 
 axins.set_xticklabels([])
-ax.indicate_inset_zoom(axins, edgecolor="black")
+ax.indicate_inset_zoom(axins, edgecolor="black")  #.set_linestyle(":")
 plt.savefig("./whiskr_ca.png", bbox_inches="tight")
 # plt.show()
 

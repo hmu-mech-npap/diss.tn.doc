@@ -1,4 +1,4 @@
-% Created 2024-04-25 Πεμ 21:04
+% Created 2024-05-15 Τετ 12:09
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -27,7 +27,7 @@
 \usepackage[english, greek, ]{babel}
 \newcommand{\en}[1]{\selectlanguage{english}\text{#1}\selectlanguage{greek}}
 \usepackage{minted}
-\hypersetup{colorlinks=true, linkcolor=black, citecolor=green}
+\hypersetup{colorlinks=true, linkcolor=black, citecolor=black, urlcolor=black}
 \usepackage{bookmark}
 \usepackage{setspace}
 \usepackage{fancyhdr}
@@ -52,8 +52,13 @@
  pdftitle={},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 29.3 (Org mode 9.7)}, 
+ pdfcreator={Emacs 29.3 (Org mode 9.6.24)}, 
  pdflang={Gr}}
+\makeatletter
+\newcommand{\citeprocitem}[2]{\hyper@linkstart{cite}{citeproc_bib_item_#1}#2\hyper@linkend}
+\makeatother
+
+\usepackage[notquote]{hanging}
 \begin{document}
 
 \onehalfspacing
@@ -112,7 +117,7 @@
 \textnormal
 \clearpage
 \section{Εισαγωγή}
-\label{sec:org4937c68}
+\label{sec:org20ea87d}
 Σε πολλές περιπτώσεις η ανάγκη της επεξεργασίας σημάτων, όπως στις
 τηλεπικοινωνίες μετά ή/και πριν την μετάδοση από τον πομπό προς τον
 δέκτη, και η εκλογή πληροφοριών από αυτό, έθεσαν από νωρίς το πρόβλημα
@@ -167,7 +172,7 @@
 Επίσης θα υπάρξει παράθεση των θετικών και αρνητικών που παρατηρήθηκαν κατά την
 διάρκεια εκτέλεσης της επεξεργασίας και καταγραφής των δεδομένων.
 \subsection{Ιστορική αναδρομή}
-\label{sec:orgc868dd7}
+\label{sec:orga80574a}
 Από την εποχή της ανακάλυψης του Απειροστικού λογισμού \en{(calculus)}
 τον 17ο αιώνα, οι επιστήμονες προσπαθούν να εξηγήσουν τα φυσικά
 φαινόμενα με μαθηματικά μοντέλα χρησιμοποιώντας εξισώσεις
@@ -180,7 +185,7 @@
 την βασική αρχή του γρήγορου μετασχηματισμού \en{Fourier} ήδη από το 1805, πριν
 την δημοσίευση της διατριβής, του Γάλλου φυσικού και μαθηματικού πάνω στην
 απεικόνιση αρμονικών σειρών εξισώσεων \selectlanguage{english}
-(Heideman, M. and Johnson, D. and Burrus, C., 1984) \selectlanguage{greek}.
+\citeprocitem{1}{[1]} \selectlanguage{greek}.
 Στις αρχές του 1950, η ανάλυση σημάτων γινόταν κυρίως με
 αναλογικά συστήματα κατασκευασμένα από ηλεκτρονικά κυκλώματα
 ακόμα και με μηχανικές συσκευές. Ενώ οι Η/Υ είχαν κάνει την
@@ -203,7 +208,7 @@
 επιθυμητή εργασία. Παραδείγματα τέτοιων προσομοιώσεων ήταν εκείνες
 που πραγματοποιήθηκαν στο Εργαστήριο Λίνκολν και στα Εργαστήρια Μπελλ
 όπου προσομοιώθηκε ένας κωδικοποιητής φωνής \en{vocoder} \selectlanguage{english}
-(A. J. Goldberg, 1967) \selectlanguage{greek}.
+\citeprocitem{2}{[2]} \selectlanguage{greek}.
 Στην κατασκευή ενός αναλογικού καναλιού κωδικοποιητής φωνής, τα χαρακτηριστικά του
 φίλτρου επηρεάζουν την ποιότητα της φωνής σε βαθμό που ήταν δύσκολο να
 διακριθούν αντικειμενικά. Μέσω προγραμματισμένων προσομοιώσεων
@@ -228,7 +233,7 @@
 
 Μία νέα σκοπιά προς την επεξεργασία σημάτων διακριτού χρόνου επιταχύνθηκε
 με την δημοσίευση ενός αποδοτικού αλγόριθμου, για τον υπολογισμό του
-μετασχηματισμού \en{Fourier} \selectlanguage{english} (James W. Cooley and John W. Tukey, 1965)
+μετασχηματισμού \en{Fourier} \selectlanguage{english} \citeprocitem{3}{[3]}
 \selectlanguage{greek}. Η βελτιστοποιημένη υποκατηγορία αυτή θα γίνει
 αργότερα γνωστή ως Ταχύς Μετασχηματισμός \en{Fourier\ (F.F.T.\ Fast\ Fourier\ Transform)}.
 Ο \en{F.F.T.} ήταν αρκετά σημαντικός για πολλούς λόγους. Βασικό
@@ -270,9 +275,9 @@
 
 \noindent\rule{\textwidth}{0.5pt}
 \section{Θεωρητικό υπόβαθρο}
-\label{sec:orga188906}
+\label{sec:orge5cc6aa}
 \subsection{Τι είναι σήμα?}
-\label{sec:org2c2f55d}
+\label{sec:org6e2d124}
 Ο όρος σήμα \en{(signal)} δίνεται σε κάτι που εμπεριέχει πληροφορία. Γενικά
 τα σήματα χρησιμοποιούνται στην κωδικοποίηση και εξαγωγή πληροφοριών για
 την κατάσταση ή/και την συμπεριφορά ενός φυσικού συστήματος. Συχνά
@@ -331,8 +336,9 @@
 ξεκινώντας από τα χαρακτηριστικά που διέπουν το σήμα και θέτοντας το
 ανάλογο πλαίσιο επεξεργασίας. Εδώ ασχοληθήκαμε μόνο με ψηφιακά σήματα
 καθώς η καταγραφή των σημάτων έγινε με Η/Υ μέσω προγράμματος \en{(Lab-View)}.
+
 \subsubsection{Σήματα συνεχούς χρόνου}
-\label{sec:org6ffa281}
+\label{sec:org329b808}
 Στην εισαγωγή αναφερθήκαμε στον γενικό ορισμό των σημάτων και τις διαφορές
 που τα κατηγοριοποιούν σε αρχικό βαθμό. Επειδή ο στόχος της παρούσας εργασίας
 ήταν η απόρριψη θορύβου δεν θα γίνει η πρέπουσα ανάλυση στην θεωρία των σημάτων,
@@ -372,7 +378,7 @@ A &= [0, \ldots ,n],\ t \in [a,b] n \in \mathbb{Z}
 πλεονεκτήματα ήταν πολλά και τελικά επικράτησαν. Παρακάτω θα παρατεθούν
 κάποιες βασικές έννοιες και αρχές που τα διέπουν.
 \subsubsection{Σήματα διακριτού χρόνου}
-\label{sec:orgcb242f3}
+\label{sec:org58deeb7}
 Σήμα διακριτού χρόνου ονομάζεται μια ακολουθία αριθμών καταγεγραμμένες
 ανά συγκεκριμένο χρονικό διάστημα, π.χ. κάθε 0.01 δευτερόλεπτο. Το
 διάστημα αυτό ορίζει την ταχύτητα καταγραφής του σήματος από την
@@ -389,7 +395,7 @@ fs = \frac{1}{0.01} [Hz]
 δυνατόν πιο πολύ στο συνεχές σήμα που καταγράφηκε στην αρχή. Θα
 αναφερθούμε αργότερα στο εν λόγω θεώρημα του φυσικού \en{Nyquist}.
 \subsubsection{Μοναδιαίο διακριτό σήμα}
-\label{sec:org36105f4}
+\label{sec:orge297494}
 Μοναδιαίο ονομάζεται το σήμα που αποτελείται από έναν κρουστικού
 χαρακτήρα παλμό και έχει μηδενική ισχύ πριν και μετά την εμφάνισή
 του. Αν υποθέσουμε μια συνάρτηση \en{y(t)},
@@ -406,7 +412,7 @@ y(t) = [\ldots, 0, 1, 0, \ldots]
 y(t) = [\ldots, 0, 1, 1, 1, \ldots]
 \end{align}
 \subsubsection{Τυχαίο σήμα}
-\label{sec:orgce9d68f}
+\label{sec:orge1db513}
 Τα τυχαία σήματα αποτελούν μία ειδική υποκατηγορία που χρησιμοποιείται
 ευρέως στην ανάλυση ψηφιακών σημάτων. Αναπτύχθηκαν για να καλύψουν την
 ανάγκη επιβεβαίωσης των συσκευών επεξεργασίας κυματομορφών. Με την
@@ -423,7 +429,7 @@ y(t) = [\ldots, 0, 1, 1, 1, \ldots]
 που χρησιμοποιήθηκαν για την καταγραφή έχουν την δυνατότητα απόρριψης
 παρόμοιου τύπου θόρυβο.
 \subsubsection{Διακριτά σήματα και ακολουθίες}
-\label{sec:orgcbafd0d}
+\label{sec:orgf4fd8c2}
 Για τον ορισμό του διακριτού σήματος αρκεί να υποθέσουμε μια μαθηματική
 ακολουθία αριθμών \en{x}, όπου το νιοστό στοιχείο της θα γραφόταν ως \en{x[n]}.
 Ορθότερα μπορούμε να γράψουμε την εξής έκφραση:
@@ -450,7 +456,7 @@ x[n] = x_{a} nT,\ -\infty < n < \infty
 τα στοιχεία της ακολουθίας για συντομία και όχι στο τελευταίο στοιχείο
 αυτής.
 \subsubsection{Διαχείριση και βασικές τεχνικές μετασχηματισμών}
-\label{sec:orga7c28cf}
+\label{sec:org86778e2}
 Κατά την διαδικασία της ανάλυσης σημάτων είναι συχνά απαραίτητη η επέμβαση
 στο σήμα εισόδου ή εξόδου. Οι πράξεις του πολλαπλασιασμού και της πρόσθεσης
 δυο σημάτων μεταξύ τους λαμβάνει χώρα στοιχείο προς στοιχείο, όπως πράξεις
@@ -487,7 +493,7 @@ s[n] = Cb^{n}
 σήματος, την μορφολογία της κυματομορφής αλλά και την ισχύ των συχνοτήτων
 που μας ενδιαφέρουν. Η ισχύ στο παράδειγμά μας θα ήταν \en{C}.
 \subsubsection{Συνδυάζοντας ακολουθίες}
-\label{sec:org93d44c4}
+\label{sec:org81a5ae5}
 Ίσως από τις πιο συχνά αναλυμένες μορφές σημάτων αποτελούν τα ημιτονοειδή
 και συνημιτονοειδή. Η γενική μορφή ορίζεται όπως θα δειχθεί παρακάτω και
 θα αναφερθούμε στην σχέση που αναδύεται από τα μαθηματικά, της εκθετικής
@@ -539,7 +545,7 @@ y[n]&&=C \cos[(\omega_{0} + 2\pi r)n + \phi]\\
 πρέπει βρίσκεται σε μια περιοχή που δεν θα επιτρέπει τέτοιες συμπεριφορές
 για απλοποίηση.
 \subsubsection{Συστήματα διακριτού χρόνου}
-\label{sec:orga5049fe}
+\label{sec:orgc84bccd}
 Διακριτό σύστημα ορίζεται ως η μετατροπή που απαιτείται για την
 ταύτιση του σήματος εξόδου με εκείνο της εισόδου. Σχηματικά
 αναπαρίσταται συνήθως, με ένα κουτί που αντιπροσωπεύει τις διεργασίες
@@ -566,7 +572,7 @@ out[n] = G\{in[n]\}
 out[n] = \frac{1}{M_{1}+M_{2}+1}\sum_{k=-M_{1}}^{M_{2}} in[n-k]
 \end{align}
 \subsubsection{Γραμμικότητα συστημάτων}
-\label{sec:org8d5c2aa}
+\label{sec:org8e6040b}
 Τα συστήματα που εμφανίζουν γραμμική συμπεριφορά είναι εξ´ ορισμού
 παραγόμενα από την αρχή της υπέρθεσης. Πιο συγκεκριμένα αν δύο διαδοχικές
 τιμές του σήματος εισόδου παράγουν δυο αντίστοιχες τιμές εξόδου, το σύστημα
@@ -605,7 +611,7 @@ r[u] = \log_{10}(|x[u]|)
 
 Η ενότητα αυτή θα μπορούσε να γεμίσει το περιεχόμενο της παρούσας εργασίας
 και άλλες τόσες μαζί. Έχουν γραφεί πολλά βιβλία που αναλύουν το ζήτημα,
-\selectlanguage{english} (McClellan, J.H. and Schafer, R.W. and Yoder, M.A., 2003) (Oppenheim, Alan V. and Schafer, Ronald W. and Buck, John R., 1999)
+\selectlanguage{english} \citeprocitem{4}{[4]} \citeprocitem{5}{[5]}
 \selectlanguage{greek},
 παρέχοντας στον αναγνώστη εκτεταμένες βάσεις για την επεξεργασία
 και μαθηματική αναπαράσταση σημάτων και συστημάτων. Εδώ αναφέρθηκαν οι βασικές
@@ -613,7 +619,7 @@ r[u] = \log_{10}(|x[u]|)
 απομείωσης θορύβου σε σήματα. Στην συνέχεια θα ασχοληθούμε με την καταγραφή
 ψηφιακών σημάτων και μερικά από τα σημαντικά προβλήματα κατά την διαδικασία.
 \subsection{Φαινόμενα καταγραφής σημάτων}
-\label{sec:org608b000}
+\label{sec:org844642b}
     Σε αυτή την ενότητα θα περιγραφούν, οι βασικές θεωρίες που χρησιμοποιούνται
 για την ψηφιακή καταγραφή και επεξεργασία σημάτων, καθώς και κάποια προβλήματα
 που μπορεί να εμφανιστούν κατά τις διαδικασίες αυτές. Μια από τις σημαντικότερες
@@ -625,7 +631,7 @@ r[u] = \log_{10}(|x[u]|)
 από την καταγραφή σημάτων συνεχούς χρόνου, όπως επίσης και ο τρόπος που αυτό
 γίνεται εφικτό από συστήματα καταγραφής σε Η/Υ.
 \subsubsection{Μέθοδος καταγραφής}
-\label{sec:org6c2abc0}
+\label{sec:org389ffae}
 Ο πιο συνήθης τρόπος εξαγωγής ενός διακριτού σήματος είναι μέσω της περιοδικής
 καταγραφής κάποιου συνεχούς σήματος. Στην πράξη αυτό σημαίνει πως καταγράφεται
 μία τιμή του σήματος εισόδου σε ένα σύστημα ανά προκαθορισμένο χρονικό διάστημα,
@@ -652,7 +658,7 @@ r[u] = \log_{10}(|x[u]|)
 χρήσης των σημάτων είναι η κωδικοποίηση αυτής, όπως ήδη έχει αναφερθεί
 στην εισαγωγή.
 \subsubsection{Θεώρημα δειγματοληψίας}
-\label{sec:org3ecf6f9}
+\label{sec:org6393481}
 Στο θεώρημα καταγραφής σημάτων ορίζεται η ελάχιστη συχνότητα δειγματοληψίας με
 σκοπό την δυνατότητα ανακατασκευής του αρχικού αναλογικού σήματος. Ο ορισμός αναφέρει
 πως, αν ένα συνεχές σήμα δεν περιέχει πληροφορία πάνω από κάποια συχνότητα Α σε
@@ -682,7 +688,7 @@ f_{s} \geq 2A
 πληροφορίας, και γι' αυτό πολλές φορές στην μαθηματική βιβλιογραφία
 αναφέρεται και θεώρημα δειγματοληψίας \en{WKS} από τα αρχικά των παραπάνω.
 \subsubsection{Αναπαράσταση στο πεδίο συχνοτήτων}
-\label{sec:orgad7ef89}
+\label{sec:orgf947a9d}
 Το θεώρημα της δειγματοληψίας μπορεί να αποδειχθεί μαθηματικά. Όμως
 οι ιδιότητες και οι αιτίες που το προκαλούν, φαίνονται πιο ξεκάθαρα
 εξετάζοντας την διαδικασία της μετατροπής αναλογικού σε διακριτό σήμα,
@@ -723,7 +729,7 @@ x_{a}(cT) &= \cos(2 \pi cT \cdot (f_{z}+f_{s})+ \phi) \Rightarrow\\
 μετρήσεις του εργαστηρίου από το φαινόμενο αυτό, καθώς η μέγιστη συχνότητα
 καταγραφής που επιτεύχθηκε ήταν στα 500 \en{kHz}.
 \subsubsection{Αλλοίωση}
-\label{sec:org21a29e8}
+\label{sec:org8bd13aa}
 Ως αλλοίωση αναφερόμαστε εδώ στο αποτέλεσμα καταγραφής ενός σήματος,
 όπου η έξοδος αποτελείται από διαφορετικά σήματα και δεν είναι δυνατό να
 επαναδημιουργιθεί το αρχικό. Συνήθως η έξοδος είναι μετατοπισμένη ως
@@ -782,7 +788,7 @@ x_{a}(cT) &= \cos(2 \pi cT \cdot (f_{z}+f_{s})+ \phi) \Rightarrow\\
 \caption{Αποδεκατισμένο σήμα ανά 100 δείγματα (5 \en{kHz}) μαζί με το αρχικά καταγεγραμμένο σε μικρότερη συχνότητα 5 \en{kHz} σε σύγκριση με εκείνο στα 500 \en{kHz}.}
 \end{figure}
 \subsection{Μείωση αριθμού δειγμάτων}
-\label{sec:orgb3fa50b}
+\label{sec:org652374b}
 Η τεχνική αυτή εφαρμόζεται σε ψηφιακά σήματα με πολλά δείγματα ανά
 χρονικό διάστημα που όμως η τυπική απόκλιση προδίδει μια περιοδική
 κίνηση που σχετίζεται με ταλάντωση. Τότε είναι εύλογο να χωριστεί το
@@ -799,7 +805,7 @@ x_{a}(cT) &= \cos(2 \pi cT \cdot (f_{z}+f_{s})+ \phi) \Rightarrow\\
 ένα σύστημα ψηφιακής καταγραφής σημάτων πολλαπλών συχνοτήτων. Αργότερα
 θα αναλυθεί η σημασία τέτοιων συστημάτων.
 \subsubsection{Ορισμός}
-\label{sec:org050d90a}
+\label{sec:org100fac5}
 Αποδεκατισμός ενός ψηφιακού σήματος σημαίνει η αποθήκευση τελικώς του
 κάθε 10ου π.χ. δείγματος από το αρχικό καταγεγραμμένο σήμα με συγκεκριμένη
 συχνότητα καταγραφής. Αυτό έχει επεκταθεί ορίζοντας τον αποδεκατισμό
@@ -817,7 +823,7 @@ H ανάγκη να λαμβάνει ο παράγοντας αυτός μια �
 μια αλληλουχία δειγμάτων ενός σήματος ή μιας συνεχούς συνάρτησης, παράγεται
 μια προσομοίωση του καταγεγραμμένου με μικρότερη συχνότητα.
 \subsubsection{Ένα φίλτρο ως παράδειγμα}
-\label{sec:org6361407}
+\label{sec:orgf8dfac5}
 Όταν το φίλτρο κατά της αλλοίωσης είναι σχεδιασμένο με πρότυπο \en{IIR}, τα
 οποία θα αναλυθούν παρακάτω, η διαδικασία βασίζεται στην ανάδραση της
 εξόδου στην είσοδο του φίλτρου πριν την έναρξη του δεύτερου σταδίου. Για
@@ -862,7 +868,7 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 διαδικασία ονομάστηκε στα αγγλικά \en{the\ first\ Noble\ identity} και εφαρμόζεται σε
 διάφορες πολυφασικές μεθόδους.
 \subsection{Κατηγορίες Φίλτρων}
-\label{sec:org88a3e8b}
+\label{sec:org627b0f5}
 Λόγω των πολλών εφαρμογών που έχουν και την εκθετική αύξηση της χρήσης
 ηλεκτρονικών συσκευών στην καθημερινότητα, οι δυνατότητες επεξεργασίας
 ψηφιακών σημάτων αποτελεί πρακτικά απαραίτητη προϋπόθεση. Έτσι η ανάγκη
@@ -880,7 +886,7 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 απορρίπτει όσες βρίσκονται πριν και μετά, ονομάζεται φίλτρο διέλευσης
 εύρους συχνοτήτων (\en{band-pass\ filter}).
 \subsubsection{Φίλτρα διέλευσης και απόρριψης συχνοτήτων}
-\label{sec:org521d12b}
+\label{sec:org8ba16f7}
 Τα φίλτρα διέλευσης ορίζονται ως εκείνα που επιτρέπουν την διατήρηση του
 εύρους συχνοτήτων που βρίσκονται στην ουδέτερη περιοχή του φίλτρου από την είσοδο στην
 έξοδο. Για τα φίλτρα χαμηλών συχνοτήτων το εύρος είναι από την συχνότητα
@@ -900,7 +906,7 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 φίλτρα απόρριψης όταν είναι ξεκάθαρο ένα ενδιάμεσο εύρος συχνοτήτων που κρίνεται
 ως θόρυβος, αλλά οφείλουμε να διατηρήσουμε όλο το εύρος πριν και μετά από αυτό.
 \subsection{Φίλτρο μέσης τρέχουσας τιμής}
-\label{sec:org26da7b7}
+\label{sec:orgaa7f96f}
 Στα προηγούμενα κεφάλαια επικεντρωθήκαμε περισσότερο στην μαθηματική αναπαράσταση
 των σημάτων, με μια μικρή αναφορά στα γραμμικά συστήματα. Τα φίλτρα αποτελούν γραμμικά
 συστήματα και ως εκ τούτου αντιμετωπίζονται, λαμβάνοντας υπόψη τις ανάλογες ιδιότητες
@@ -914,7 +920,7 @@ y[n]=\sum_{k=0}^{K-1}x[nM-k] \cdot h[k],
 επανέλθουμε στον όρο της γραμμικότητας και θα αναφερθούμε και στην χρονική αμεταβλητότητα
 που συνδυασμένες καλύπτουν ένα ευρύ φάσμα της εν' λόγω κατηγορίας.
 \subsubsection{Μέση τρέχουσα τιμή και σχεδιασμός συστήματος}
-\label{sec:org7a2ec1b}
+\label{sec:org9fed8a8}
 Ένας από τους πιο διαδεδομένους τρόπους μετασχηματισμού σημάτων είναι ο υπολογισμός
 της μέσης τιμής για δύο ή παραπάνω δείγματα, με σκοπό την αφαίρεση έντονων στιγμιαίων
 διακυμάνσεων του σήματος γύρω από κάποια επιθυμητή τιμή. Λόγω της πληθώρας αλγόριθμων
@@ -954,7 +960,7 @@ out[n] = \frac{1}{k} \cdot \sum_{z}^{{k-1}}in[n+z], k=5
 τιμών συνεχίζοντας το παράδειγμα, θα ορίσει τις επιλεγμένες τιμές για τον υπολογισμό του
 σήματος εξόδου \en{out[n]}.
 \subsubsection{Σχεδιασμός και εφαρμογή φίλτρων}
-\label{sec:orgc2d7dcc}
+\label{sec:orgcca9402}
 Ένα \en{F.I.R.} φίλτρο κατασκευάζεται από την γενική εξίσωση διαφορών που θα δούμε παρακάτω,
 όμως αξίζει να αναφέρουμε ένα χαρακτηριστικό. Για τα φίλτρα που κατασκευάζονται
 χρησιμοποιώντας στοιχεία του παρελθόντος από το σήμα εισόδου για τον υπολογισμό της μέσης τιμής,
@@ -996,7 +1002,7 @@ out[x] &= \sum_{z=0}^{4}a_{z}in[x-z]\\
 εξίσωσης του φίλτρου ή όπως ονομάζεται στα περισσότερα όργανα ηλεκτρονικής μουσικής
 \en{release\ value}.
 \subsection{Φίλτρο άπειρης κρουστικής απόκρισης}
-\label{sec:orga5982d4}
+\label{sec:org44b819e}
 Τα φίλτρα άπειρης κρουστικής απόκρισης είναι, όπως προδίδει και το όνομά τους,
 ακριβώς το αντίθετο από εκείνα της πεπερασμένης. Πρακτικά αυτό σημαίνει
 πως η διάρκεια της κρουστικής απόκρισης είναι άπειρη. Συμπερασματικά, καθώς ο
@@ -1031,7 +1037,7 @@ out[z] = - \sum_{f=1}^{T}c(f)out(z-f) + \sum_{f=0}^{I}d(f)in(z-f)
 λεπτομέρειες θα αναφέρουμε στην συνέχεια.
 \clearpage
 \subsubsection{Παραδείγματα με κώδικα}
-\label{sec:orge7532d5}
+\label{sec:org04e6dda}
 \selectlanguage{greek}
 Εδώ φαίνονται μερικά από τα βασικότερα φίλτρα άπειρης κρουστικής απόκρισης, που
 από εδώ και πέρα θα αναφερόμαστε σε αυτά ως \en{IIR}. Οι τύποι των παρακάτω φίλτρων
@@ -1130,17 +1136,18 @@ bb, ab = signal.ellip (4, 2, 8, 100, 'low', analog=True, output='ba')
 wb, hb = signal.freqs(bb, ab)
 \end{minted}
 \selectlanguage{greek}
-\begin{figure}[htbp]
-\centering
+\selectlanguage{english}
+\begin{center}
 \includegraphics[height=210px]{./Elliptic Filter Freq Response.png}
-\caption{\label{ellipt}\en{Elliptic} τέταρτης τάξης με συχνότητα κατακρημνισμού εκατό \en{Hz} και μέγιστη αύξηση ισχύος κατά 2 \en{dB} στην περιοχή διέλευσης (κυματισμοί) ενώ οκτώ \en{dB} ελάχιστα στην περιοχή απομείωσης.}
-\end{figure}
+\label{ellipt}
+\end{center}
+\selectlanguage{greek}
 
 \vfill
 \section{Μεθοδολογία}
-\label{sec:org78e8986}
+\label{sec:org17418fa}
 \subsection{Εγκατάσταση εργαστηρίου}
-\label{sec:orge495cd8}
+\label{sec:orgbeec3db}
     Η εγκατάσταση που χρησιμοποιήθηκε για την συλλογή των δεδομένων
 αποτελείται από μία αεροσήραγγα την οποία τροφοδοτεί με σταθερή ταχύτητα
 αέρα, ηλεκτροκινητήρας προσδεδεμένος σε έναν έλικα. Στην μέση της
@@ -1162,7 +1169,7 @@ wb, hb = signal.freqs(bb, ab)
 πως η κατασκεύη έγινε στην Κρήτη με την συμβολή ξυλουργού που ενήργησε με την
 καθοδήγηση σχεδίων από προσωπικό της σχολής.
 \subsection{Μεθοδολογία καταγραφής}
-\label{sec:org419a60a}
+\label{sec:org6ec8bcc}
 Για την σύνδεση της κάρτας επεξεργασίας χρησιμοποιήθηκε σειριακή θύρα \en{USB} και
 για την καταγραφή το λογισμικό \en{Lab\ View}, όπου αποθήκευσε τα δεδομένα σε μορφή
 \en{.tdms}. Για την αποκωδικοποίηση των αρχείων υπάρχουν βιβλιοθήκες σχεδόν για όλες
@@ -1176,7 +1183,7 @@ wb, hb = signal.freqs(bb, ab)
 \caption{Διάγραμμα ροής για την μέθοδο καταγραφής και τις περιπτώσεις που εξετάστηκαν.}
 \end{figure}
 \subsection{Μεθοδολογία επεξεργασίας}
-\label{sec:org11fdbd6}
+\label{sec:orge2a50b2}
 Ένας λόγος που δεν χρησιμοποιήθηκε επεξεργασία σε πραγματικό χρόνο είναι
 ότι η εγκατάσταση που χρησιμοποιήθηκε για την συλλογή των δεδομένων,
 κατασκευάστηκε με σκοπό την σύνδεσή του σε κεντρική μονάδα επικοινωνίας,
@@ -1192,11 +1199,9 @@ wb, hb = signal.freqs(bb, ab)
 βαθμονόμιση του φίλτρου, για να μην προστεθεί περαιτέρω σφάλμα στην
 μέτρηση. Παρακάτω φαίνεται ένα διάγραμμα της συνδεσμολογίας και του τρόπου
 καταγραφής του σήματος.
-\begin{figure}[htbp]
-\centering
-\includegraphics[height=252px]{./flowcharts/test-first.png}
-\caption{\label{big_graph}Διάγραμμα ροής για την μέθοδο καταγραφής και τις περιπτώσεις που εξετάστηκαν.}
-\end{figure}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./flowcharts/test-first.png}
+\end{center}
 
 Για την επεξεργασία των δεδομένων έπρεπε αρχικά να σιγουρευτούμε πως οι
 μετρήσεις δεν υπέφεραν από το φαινόμενο της αλλοίωσης. Έτσι καθίσταται
@@ -1245,10 +1250,10 @@ wb, hb = signal.freqs(bb, ab)
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./flowcharts/proc-meth.png}
-\caption{\label{more_in_depth}Μέθοδος ανάλυσης και επεξεργασίας σημάτων για την εκλογή καταλληλότερου φίλτρου διέλευσης χαμηλών συχνοτήτων.}
+\caption{Μέθοδος ανάλυσης και επεξεργασίας σημάτων για την εκλογή καταλληλότερου φίλτρου διέλευσης χαμηλών συχνοτήτων.}
 \end{figure}
 \subsection{Μεθοδολογία σύγκρισης}
-\label{sec:org25d6d08}
+\label{sec:org93bedab}
 Για να συγκρίνουμε τις δυο διαφορετικές διαδικασίες είναι προφανές ότι δεν
 ωφελεί να επικεντρωθούμε στην ταχύτητα έκδοσης αποτελεσμάτων. Θα πρέπει λοιπόν
 να εξετάσουμε τις διαστρεβλώσεις σε χαμηλές συχνότητες που εντάσσει η κάθε
@@ -1354,9 +1359,9 @@ wb, hb = signal.freqs(bb, ab)
 δυνατότητα για ακριβέστερο έλεγχο του εύρους των συχνοτήτων στην έξοδό τους.
 \clearpage
 \section{Αποτελέσματα καταγραφής και επεξεργασίας}
-\label{sec:orgd0b90b9}
+\label{sec:org733f801}
 \subsection{Επεξεργασία δεδομένων ανέμου}
-\label{sec:org1f69957}
+\label{sec:orgd8b101d}
 Όπως φαίνεται και στο παραπάνω διάγραμμα ροής, για την ικανοποιητική σύγκριση
 της επιρροής του φίλτρου στο σήμα που καταγράφηκε από τον αισθητήρα μέτρησης
 της ταχύτητας ανέμου, προέχει ο έλεγχος της αλλοίωσης λόγω ανεπαρκούς
@@ -1371,22 +1376,25 @@ wb, hb = signal.freqs(bb, ab)
 φορά που πειραματιζόμασταν με διάφορα χαρακτηριστικά του εκάστοτε φίλτρου.
 
 \begin{table}[htbp]
-\caption{\label{std_1st}Πίνακας τυπικής απόκλισης σημάτων καταγεγραμμένα με διαφορετική παροχή ανέμου (συμπιεσμένος και μή).}
+\caption{Πίνακας τυπικής απόκλισης σημάτων καταγεγραμμένα με διαφορετική παροχή ανέμου (συμπιεσμένος και μή).}
 \centering
-\begin{tabular}{lllrl}
- & Συμπιεσμένος αέρας &  & Αεροσήραγγα & \\
+\begin{tabular}{|c|cc|cc|}
+Πηγή ανέμου & \multicolumn{2}{c}{Συμπιεσμένος αέρας} & \multicolumn{2}{c}{Αεροσήραγγα} &  & \\[0pt]
 \hline
-Μετ/στής & \en{On} & \en{Off} & \en{On} & \en{Off}\\
+Μετ/στής & \en{On} & \en{Off} & \en{On} & \en{Off}\\[0pt]
 \hline
-ταχ.=0 \en{m/s} & 0.0364 & 0.0062 & 0.0392 & 0.0076\\
-ταχ.=5 \en{m/s} & 0.0434 & 0.0244 & 0.0385 & -\\
-ταχ.=10 \en{m/s} & 0.0841 & 0.0763 & 0.0400 & -\\
-ταχ.=15 \en{m/s} & - & - & 0.0421 & -\\
-ταχ.=20 \en{m/s} & - & - & 0.0566 & -\\
+ταχ. ανέμου &  &  &  & \\[0pt]
+\hline
+0 \en{m/s} & 0.0364 & 0.0062 & 0.0392 & 0.0076\\[0pt]
+5 \en{m/s} & 0.0434 & 0.0244 & 0.0385 & -\\[0pt]
+10 \en{m/s} & 0.0841 & 0.0763 & 0.0400 & -\\[0pt]
+15 \en{m/s} & - & - & 0.0421 & -\\[0pt]
+20 \en{m/s} & - & - & 0.0566 & -\\[0pt]
+\hline
 \end{tabular}
 \end{table}
 \subsection{Εφαρμογή φίλτρων}
-\label{sec:orgace62b8}
+\label{sec:org987e84c}
 Για την παρεμβολή που επηρεάζει το σήμα του αισθητήρα θα εφαρμοστεί ένα φίλτρο
 διέλευσης χαμηλών συχνοτήτων. Είμαστε σε θέση να γνωρίζουμε πως οι χαμηλές
 συχνότητες του σήματος εμπεριέχουν όλο το ποσό της πληροφορίας που αποτελεί
@@ -1419,7 +1427,7 @@ wb, hb = signal.freqs(bb, ab)
 ισχύος του σήματος με την μέθοδο του \en{Welch}, ώστε να εκλεγεί το κατάλληλο
 προς εφαρμογή φίλτρο.
 \subsection{Αποτελέσματα επεξεργασίας}
-\label{sec:org33d97f4}
+\label{sec:org02bec69}
 Για κάθε σήμα που καταγράφηκε εφαρμόστηκαν οι δύο από τις τρείς μεθόδους και
 φάνηκε πως, ενώ για τα φίλτρα \en{IIR} είχαμε αποδεκτό βαθμό αλλοίωσης, ελέγχοντας την τυπική απόκλιση του σήματος εξόδου με εκείνη της εισόδου, τα \en{FIR}
 φίλτρα παρέχουν καλύτερα αποτελέσματα. Ο τύπος του θορύβου που επηρεάζει το
@@ -1429,7 +1437,7 @@ wb, hb = signal.freqs(bb, ab)
 παραμένει, επομένως κρίθηκε πως πρόκειται για παρεμβολή μεγαλύτερης συχνότητας
 από τις δυνατότητες καταγραφής του συστήματος που διαθέτουμε.
 \subsubsection{Απομείωση θορύβου}
-\label{sec:orge5e9e68}
+\label{sec:orge43e1d8}
 Για την επιλογή του κατάλληλου φίλτρου εξετάστηκαν οι δύο βασικές
 κατηγορίες, συγκρίνοντας την τιμή της τυπικής απόκλισης του σήματος, πριν
 και μετά την εφαρμογή.  Από τους σημαντικότερους παράγοντες
@@ -1452,7 +1460,7 @@ wb, hb = signal.freqs(bb, ab)
 σωστά. Τέλος, θα δειχθεί πως και οι δύο μέθοδοι είναι αποδεκτοί για την
 συγκεκριμένη εφαρμογή, υπό προϋποθέσεις που θα συζητηθούν στα συμπεράσματα.
 \subsubsection{Διαγράμματα πυκνότητας ισχύος εισόδου και εξόδου φίλτρων}
-\label{sec:orgb742b7e}
+\label{sec:org438abd0}
 Η βασική ανάλυση των σημάτων γίνεται στο πεδίο των συχνοτήτων και κυρίως
 μέσω της μεθόδου \en{Welch}. Αυτό συμβαίνει
 καθώς απεικονίζοντας το σήμα στο πεδίο του χρόνου, εκτός της μεταβολής της
@@ -1559,9 +1567,9 @@ wb, hb = signal.freqs(bb, ab)
 
 \clearpage
 \section{Σύγκριση αποτελεσμάτων}
-\label{sec:org32a7fa2}
+\label{sec:orgd670f6f}
 \subsection{Επιρροή μετασχηματιστή στον αισθητήρα}
-\label{sec:orgbce3263}
+\label{sec:orga841f7c}
 Όπως θα γίνει αντιληπτό παρακάτω, απεικονίζοντας τις μετρήσεις για τον
 μετασχηματιστή ανοιχτό και κλειστό σε αντίστοιχες ταχύτητες ανέμου, μπορούμε
 να συμπεράνουμε δύο βασικά χαρακτηριστικά. Το πρώτο αναφέρεται στο εύρος των
@@ -1608,7 +1616,7 @@ wb, hb = signal.freqs(bb, ab)
 Στο σχήμα \ref{fig:sfreqComp} φαίνεται η επιρροή της μεταβολής συχνότητας καταγραφής
 από επιλογή μέσω του λογισμικού.
 \subsection{Αποδεκατισμός σήματος}
-\label{sec:org87e4662}
+\label{sec:org41614dc}
 \label{sec:decimation-chapter}
 Η τεχνική του αποδεκατισμού εφαρμόστηκε κυρίως στην αρχή της επεξεργασίας
 για να ελεγχθεί η διαδικασία καταγραφής. Κατέστη αναγκαίο να μπορέσουμε
@@ -1620,7 +1628,7 @@ wb, hb = signal.freqs(bb, ab)
 χρειαζόμασταν πολύ χρόνο. Στα παρακάτω διαγράμματα αποτυπώνεται ο τρόπος
 που επηρεάζει το σήμα η διαδικασία αυτή.
 \subsubsection{\textbf{Διαγράμματα αποδεκατισμού με και χωρίς αλλοίωση στο πεδίο των συχνοτήτων}}
-\label{sec:org50b220e}
+\label{sec:orgfe29318}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=500px,height=280px]{./decimation/with_aliasing.png}
@@ -1641,7 +1649,7 @@ wb, hb = signal.freqs(bb, ab)
 
 \clearpage
 \subsubsection{\textbf{Πίνακες επαλήθευσης μεθόδων στο πεδίο των συχνοτήτων}}
-\label{sec:orgfb12b98}
+\label{sec:orgb6b6a42}
 
 Όπως φαίνεται παρακάτω, ο αριθμός των δειγμάτων καθώς
 εφαρμόζουμε την μέθοδο του αποδεκατισμού παραμένει σταθερός, γεγονός που
@@ -1656,38 +1664,39 @@ wb, hb = signal.freqs(bb, ab)
 δύο πρώτους φαίνεται πως η μείωση των δειγμάτων αποφέρει όμοιο σήμα με
 καταγραφή σε εφάμιλλη συχνότητα.
 
-\begin{table}[htbp]
+\begin{table}[h]
 \caption{\label{some_ref}Αποδεκατισμένο σήμα από 500 \en{kHz} για σήμα του πεπιεσμένου αέρα για ταχύτητα 0 \en{m/s}}
 \centering
-\begin{tabular}{lrrr}
+\begin{tabular}{X[1lm]X[2lm]}
 \hline
-Αριθμός δειγμάτων & χωρίς αποδεκατισμό & ανά 10 & ανά 100\\
+Αριθμός δειγμάτων & χωρίς αποδεκατισμό & ανά 10 & ανά 100\\[0pt]
 \hline
-Συχνοτήτων & 32769 & 3277 & 328\\
-Ισχύος & 32769 & 3277 & 328\\
+Συχνοτήτων & 32769 & 3277 & 328\\[0pt]
+Ισχύος & 32769 & 3277 & 328\\[0pt]
 \end{tabular}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[h]
 \caption{\label{rec_low_fs_ref}Καταγεγραμμένο σήμα του πεπιεσμένου αέρα για 0 \en{m/s} σε μικρότερες συχνότητες}
 \centering
-\begin{tabular}{lrr}
-Αριθμός δειγμάτων & 50 \en{kHz} & 5 \en{kHz}\\
+\begin{tabular}{X[1lm]X[2lm]}
 \hline
-Συχνοτήτων & 3277 & 328\\
-Ισχύος & 3277 & 328\\
+Αριθμός δειγμάτων & 50 \en{kHz} & 5 \en{kHz}\\[0pt]
+\hline
+Συχνοτήτων & 3277 & 328\\[0pt]
+Ισχύος & 3277 & 328\\[0pt]
 \end{tabular}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[h]
 \caption{\label{dec_fir_ref}Αποδεκατισμός με φίλτρο κατά της αλλοίωσης τύπου \en{F.I.R.} για το ανωτέρω σήμα}
 \centering
-\begin{tabular}{lr}
-Αριθμός δειγμάτων & 5 \en{kHz}\\
+\begin{tabular}{X[1lm]X[2lm]}
 \hline
+Αριθμός δειγμάτων & 5 \en{kHz}\\[0pt]
 \hline
-Συχνοτήτων & 328\\
-Ισχύος & 328\\
+Συχνοτήτων & 328\\[0pt]
+Ισχύος & 328\\[0pt]
 \end{tabular}
 \end{table}
 
@@ -1701,22 +1710,19 @@ wb, hb = signal.freqs(bb, ab)
 \caption{\label{dec_anti_aliased}Πίνακας τυπικής απόκλησης για το σήμα πεπιεσμένου αέρα με ταχύτητα 0 \en{m/s} αποδεκατισμένο με φίλτρο κατά της αλλοίωσης τύπου \en{F.I.R.}.}
 \centering
 \begin{tabular}{X[1lm]X[2lm]}
-\toprule
- &  & \en{decimation} & \\
-\midrule
-\en{fs} & \en{recorded at origin} & \en{decimated with anti-aliasing} & \\
-\midrule
-\en{5 kHz} & 0.0350 & 0.0058 & \\
-\en{50 kHz} & 0.0366 & 0.0105 & \\
-\en{500 kHz} & 0.0364 & - & \\
-\midrule
- & \en{filtering operations} & \en{ in respect to cutoff frequency} & \\
-\midrule
-\en{low-pass filter} & \en{2 kHz} & \en{200 Hz} & \\
-\midrule
-\en{butterworth IIR} & 0.0035 & 0.0029 & \\
-\en{simple FIR} & 0.0054 & 0.0054 & \\
-\bottomrule
+ &  &  & \\[0pt]
+\en{fs} & \en{recorded at origin} & \en{decimated with anti-aliasing} & \\[0pt]
+\hline
+\en{5 kHz} & 0.0350 & 0.0058 & \\[0pt]
+\en{50 kHz} & 0.0366 & 0.0105 & \\[0pt]
+\en{500 kHz} & 0.0364 & - & \\[0pt]
+\hline
+ & \en{filtering operations} & \en{ in respect to cutoff frequency} & \\[0pt]
+\hline
+\en{low-pass filter} & \en{2 kHz} & \en{200 Hz} & \\[0pt]
+\hline
+\en{butterworth IIR} & 0.0035 & 0.0029 & \\[0pt]
+\en{simple FIR} & 0.0054 & 0.0054 & \\[0pt]
 \end{tabular}
 \end{table}
 
@@ -1732,7 +1738,7 @@ wb, hb = signal.freqs(bb, ab)
 πολύ μεταξύ τους.
 \vfill
 \section{Συμπεράσματα}
-\label{sec:org50202ef}
+\label{sec:org85fa3ba}
 Όπως αναφέρθηκε αρκετές φορές και οι δύο κατηγορίες φίλτρων αποφέρουν αποδεκτά
 αποτελέσματα. Η σύγκριση μπορεί να γίνει λοιπόν στην ταχύτητα
 υπολογισμού των εξόδων όμως, αυτή \textbf{εξαρτάται ισχυρά} από την ποσότητα των
@@ -1799,42 +1805,30 @@ m/s\}).
 φιλτραρίσματος κρίνονται επαρκείς.
 \clearpage
 \section{Βιβλιογραφία}
-\label{sec:orgfb1110e}
+\label{sec:orge449185}
 \selectlanguage{english}
-\noindent
-A. J. Goldberg (1967). \emph{Vocoded speech in the absence of the laryngeal frequency}, Lexington, M.I.T..
+\hypertarget{citeproc_bib_item_1}{[1] M. Heideman, D. Johnson, and C. Burrus, “Gauss and the history of the fast fourier transform,” in \textit{Ieee assp magazine}, 1984, pp. 14–21. doi: \href{https://doi.org/10.1109/MASSP.1984.1162257}{10.1109/MASSP.1984.1162257}.}
 
-\noindent
-Edmund Lai (2003). \emph{Practical Digital Signal Processing}, Newnes.
+\hypertarget{citeproc_bib_item_2}{[2] A. J. Goldberg, “Vocoded speech in the absence of the laryngeal frequency,” B. Gold, Ed., Massachusetts Institute of Technology: Lexington, M.I.T., 1967. Available: \url{https://apps.dtic.mil/sti/tr/pdf/AD0651253.pdf}}
 
-\noindent
-Heideman, M. and Johnson, D. and Burrus, C. (1984). \emph{Gauss and the history of the fast fourier transform}, IEEE ASSP Magazine.
+\hypertarget{citeproc_bib_item_3}{[3] J. W. Cooley and J. W. Tukey, “An algorithm for the machine calculation of complex Fourier series,” in \textit{Mathematics of computation}, 1965, pp. 297–301.}
 
-\noindent
-Ibrahim Abdulhadi Sulaiman and Hussain Mohammad Hassan and Mohammad Danish and Munendra Singh and P.K. Singh and Manisha Rajoriya (2022). \emph{Design, comparison and analysis of low pass FIR filter using window techniques method}, Materials Today: Proceedings.
+\hypertarget{citeproc_bib_item_4}{[4] J. McClellan, R. Schafer, and M. Yoder, “Signal processing first,” in Signal processing first, no. \$\tau\$. 1. Pearson/Prentice Hall, 2003.}
 
-\noindent
-James W. Cooley and John W. Tukey (1965). \emph{{An algorithm for the machine calculation of complex Fourier series}}, Mathematics of Computation.
+\hypertarget{citeproc_bib_item_5}{[5] A. V. Oppenheim, R. W. Schafer, and J. R. Buck, “Discrete-time signal processing,” Prentice-hall Englewood Cliffs, 1999.}
 
-\noindent
-Koichi Ichige and Naohisa Otsuka and Rokuya Ishii (1997). \emph{An automatic design procedure of IIR digital filters from an analog low-pass filter}, Signal Processing.
+\hypertarget{citeproc_bib_item_6}{[6] R. B. Spelay, K. F. Adane, R. S. Sanders, R. J. Sumner, and R. G. Gillies, “The effect of low reynolds number flows on pitot tube measurements,” in \textit{Flow measurement and instrumentation}, 2015, pp. 247–254. doi: \url{https://doi.org/https://doi.org/10.1016/j.flowmeasinst.2015.06.008}.}
 
-\noindent
-McClellan, J.H. and Schafer, R.W. and Yoder, M.A. (2003). \emph{Signal Processing First}, Pearson/Prentice Hall.
+\hypertarget{citeproc_bib_item_7}{[7] Y. M. Choi \textit{et al.}, “Revisit the pitot static tubes in the standards,” in \textit{Flow measurement and instrumentation}, 2021, p. 102074. doi: \url{https://doi.org/https://doi.org/10.1016/j.flowmeasinst.2021.102074}.}
 
-\noindent
-N. Agrawal and A. Kumar and Varun Bajaj and G.K. Singh (2021). \emph{Design of digital IIR filter: A research survey}, Applied Acoustics.
+\hypertarget{citeproc_bib_item_8}{[8] E. Lai, “Practical digital signal processing,” in \textit{Practical digital signal processing}, E. Lai, Ed., Oxford: Newnes, 2003. Available: \url{https://www.sciencedirect.com/book/9780750657983}}
 
-\noindent
-Oppenheim, Alan V. and Schafer, Ronald W. and Buck, John R. (1999). \emph{Discrete-Time Signal Processing}, Prentice-hall Englewood Cliffs.
+\hypertarget{citeproc_bib_item_9}{[9] S. W. Smith, “Continuous signal processing,” in \textit{Digital signal processing}, S. W. Smith, Ed., Boston: Newnes, 2003, pp. 243–260. Available: \url{https://www.sciencedirect.com/book/9780750674447/}}
 
-\noindent
-Ryan B. Spelay and Kofi Freeman Adane and R. Sean Sanders and Robert J. Sumner and Randall G. Gillies (2015). \emph{The effect of low Reynolds number flows on pitot tube measurements}, Flow Measurement and Instrumentation.
+\hypertarget{citeproc_bib_item_10}{[10] N. Agrawal, A. Kumar, V. Bajaj, and G. Singh, “Design of digital iir filter: A research survey,” in \textit{Applied acoustics}, 2021, p. 107669. doi: \url{https://doi.org/https://doi.org/10.1016/j.apacoust.2020.107669}.}
 
-\noindent
-Steven W. Smith (2003). \emph{Continuous Signal Processing}, Newnes.
+\hypertarget{citeproc_bib_item_11}{[11] K. Ichige, N. Otsuka, and R. Ishii, “An automatic design procedure of iir digital filters from an analog low-pass filter,” in \textit{Signal processing}, 1997, pp. 223–231. doi: \url{https://doi.org/https://doi.org/10.1016/S0165-1684(97)00005-4}.}
 
-\noindent
-Yong Moon Choi and Yoshiya Terao and Noboru Kurihara and Aya Iwai and Tatsuya Funaki and Woong Kang and Doan Trang Nguyen (2021). \emph{Revisit the Pitot static tubes in the standards}, Flow Measurement and Instrumentation.
+\hypertarget{citeproc_bib_item_12}{[12] I. A. Sulaiman, H. M. Hassan, M. Danish, M. Singh, P. Singh, and M. Rajoriya, “Design, comparison and analysis of low pass fir filter using window techniques method,” in \textit{Materials today: Proceedings}, 2022, pp. 3117–3121. doi: \url{https://doi.org/https://doi.org/10.1016/j.matpr.2020.10.952}.}\bigskip
 \selectlanguage{greek}
 \end{document}

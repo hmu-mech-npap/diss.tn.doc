@@ -6,6 +6,7 @@ diss-docs/books/edmund-lai-book/*
 # file types that should be ignored
 diss-docs/main_doc/*-corrections*
 diss-docs/main_doc/src/*.tex
+diss-docs/books/*.pdf
 diss-docs/main_doc/src/*.pdf
 diss-docs/main_doc/src/wisker*
 *.png
@@ -46,3 +47,6 @@ dist
 *-lock*
 *cache*
 sign_overview/butter*
+
+# config files
+.pylintrc

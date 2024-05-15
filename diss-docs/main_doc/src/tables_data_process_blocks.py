@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from scipy import signal
 from tabulate import tabulate
 from tabulate import SEPARATING_LINE
-from pros_noisefiltering.WT_NoiProc import fir_factory_constructor
+from pros_noisefiltering.filters.fir import fir_factory_constructor
 
 #%%
 from pathlib import Path
