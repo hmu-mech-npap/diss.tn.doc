@@ -1,0 +1,3 @@
+[submodule "diss-docs/Presentation/revealjs"]
+	path = diss-docs/Presentation/revealjs
+	url = https://github.com/hakimel/reveal.js
