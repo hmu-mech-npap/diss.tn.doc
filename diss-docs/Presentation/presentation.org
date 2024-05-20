@@ -19,7 +19,7 @@
 #+TITLE: Φιλτρα συχνοτητων
 #+SUBTITLE: Τ.Ε.Ι. Κρητης
 #+AUTHOR: Νικολας Τοροσιαν
-#+DATE:[2023-06-25 16:00]
+#+DATE:[2024-05-28 Τρι]
 :END:
 * Καθηγητες
 #+REVEAL_HTML: <div style="align-items:center;width:100%;">
