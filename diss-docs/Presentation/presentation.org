@@ -110,7 +110,7 @@ someone who does nothing.
 #+REVEAL_HTML: <img width="120%">
 #+ATTR_REVEAL: :frag (fade-in-then-semi-out)
 [[file:./assets/inv_sketch_wt.png]]
-*** αισθητηρες ανεμου
+*** περιφεριακα/αισθητηρες
 #+REVEAL_HTML: <div style="display:flex;align-items:left;margin:auto;">
 - Διαφορικός αισθητήρας πίεσης
   #+REVEAL_HTML: <div style="display:flex;align-items:left;width:780px;">
